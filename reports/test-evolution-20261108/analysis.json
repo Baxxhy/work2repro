@@ -1,0 +1,202 @@
+{
+  "prbench": {
+    "overlap": {
+      "MuMuTestUp+TestSyncer+TestUpdater": 185,
+      "MuMuTestUp+TestUpdater": 220,
+      "MuMuTestUp": 78,
+      "MuMuTestUp+TestSyncer": 18,
+      "none": 41,
+      "TestUpdater": 21,
+      "TestSyncer+TestUpdater": 7,
+      "TestSyncer": 1
+    },
+    "focal_subgroups": {
+      "changed": {
+        "total": 245,
+        "MuMuTestUp": 219,
+        "TestSyncer": 175,
+        "TestUpdater": 224
+      },
+      "unchanged": {
+        "total": 326,
+        "MuMuTestUp": 282,
+        "TestSyncer": 36,
+        "TestUpdater": 209
+      }
+    },
+    "joint_evaluated_n": 184,
+    "joint_metrics": {
+      "MuMuTestUp": {
+        "line": 86.71368468790041,
+        "branch": 71.12000026835192,
+        "mutation": 77.62283455589791,
+        "line_n": 184,
+        "branch_n": 91,
+        "mutation_n": 184
+      },
+      "TestUpdater": {
+        "line": 81.1238287247069,
+        "branch": 49.867467697138025,
+        "mutation": 60.07169350352493,
+        "line_n": 184,
+        "branch_n": 91,
+        "mutation_n": 184
+      },
+      "TestSyncer": {
+        "line": 81.08899037465116,
+        "branch": 49.9538099263374,
+        "mutation": 60.68159076077866,
+        "line_n": 184,
+        "branch_n": 91,
+        "mutation_n": 184
+      }
+    },
+    "unique_success_examples": {
+      "MuMuTestUp": {
+        "project": "damianszczepanik/cucumber-reporting",
+        "index": 3,
+        "statuses": {
+          "MuMuTestUp": "pass",
+          "TestSyncer": "compile_error",
+          "TestUpdater": "compile_error"
+        },
+        "old_test": "@Test\n    public void addDurationSumsDurations() {\n\n        // give\n        StepObject step = new StepObject(\"ble bla ble\");\n\n        // when\n        step.addDuration(20L, Status.PASSED);\n        step.addDuration(5L, Status.PASSED);\n        step.addDuration(700L, Status.UNDEFINED);\n\n        // then\n        assertThat(step.getDurations()).isEqualTo(725L);\n        assertThat(step.getTotalOccurrences()).isEqualTo(3);\n        assertThat(step.getStatus()).isEqualTo(Status.FAILED);\n    }",
+        "developer_test": "@Test\n    public void addDurationSumsDurations() {\n\n        // give\n        StepObject step = new StepObject(\"ble bla ble\");\n\n        // when\n        step.addDuration(20L, Status.PASSED);\n        step.addDuration(5L, Status.PASSED);\n        step.addDuration(700L, Status.UNDEFINED);\n\n        // then\n        assertThat(step.getDuration()).isEqualTo(725L);\n        assertThat(step.getTotalOccurrences()).isEqualTo(3);\n        assertThat(step.getStatus()).isEqualTo(Status.FAILED);\n    }",
+        "sources": {
+          "MuMuTestUp": "/root/Baxxhy/work2/reproductions/mumutestup/runs/luna571-20261104/projects/damianszczepanik/cucumber-reporting/samples/0003.json",
+          "TestSyncer": "/root/Baxxhy/work2/reproductions/testsyncer/runs/prbench-luna-20261107/prbench/damianszczepanik__cucumber-reporting/samples/0003.json",
+          "TestUpdater": "/root/Baxxhy/work2/reproductions/testupdater/runs/luna-full-20261105/prbench/damianszczepanik__cucumber-reporting/samples/0003.json"
+        }
+      },
+      "TestUpdater": {
+        "project": "damianszczepanik/cucumber-reporting",
+        "index": 63,
+        "statuses": {
+          "MuMuTestUp": "run_fail",
+          "TestSyncer": "run_fail",
+          "TestUpdater": "pass"
+        },
+        "old_test": "@Test\n    public void shouldRenderFeaturePageWithTableInStepsCorrectly() throws Exception {\n        List<String> jsonReports = new ArrayList<>();\n        jsonReports.add(new File(ReportBuilderTest.class.getClassLoader().getResource(\"net/masterthought/cucumber/tableErrorExample.json\").toURI()).getAbsolutePath());\n        ReportBuilder reportBuilder = new ReportBuilder(jsonReports, configuration);\n        reportBuilder.generateReports();\n\n        File input = new File(configuration.getReportDirectory(), \"com-cme-falcon-acceptancetests-FrameworkTests-FIX_Inbound_Outbound-NewOrderOverrides-feature.html\");\n        Document doc = Jsoup.parse(input, \"UTF-8\", \"\");\n\n        Elements rows = fromClass(\"arguments-table\", doc).get(2).getElementsByTag(\"tr\");\n        Elements firstRow = rows.get(0).getElementsByTag(\"td\");\n        Elements secondRow = rows.get(1).getElementsByTag(\"td\");\n\n        assertThat(rows.size(),is(2));\n        assertThat(firstRow.size(),is(6));\n        assertThat(secondRow.size(),is(6));\n\n        assertThat(firstRow.get(0).text(),is(\"ordType\"));\n        assertThat(firstRow.get(1).text(),is(\"securityDescription\"));\n        assertThat(firstRow.get(2).text(),is(\"price\"));\n        assertThat(firstRow.get(3).text(),is(\"side\"));\n        assertThat(firstRow.get(4).text(),is(\"orderQty\"));\n        assertThat(firstRow.get(5).text(),is(\"timeInForce\"));\n\n        assertThat(secondRow.get(0).text(),is(\"limit\"));\n        assertThat(secondRow.get(1).text(),is(\"GEZ0\"));\n        assertThat(secondRow.get(2).text(),is(\"175.0\"));\n        assertThat(secondRow.get(3).text(),is(\"bid\"));\n        assertThat(secondRow.get(4).text(),is(\"1\"));\n        assertThat(secondRow.get(5).text(),is(\"session\"));\n\n        assertThat(fromId(\"page-title\", doc).text(), is(\"Result for New Inbound Order Overrides, build number 1, project cucumber-reporting\"));\n        assertStatsHeader(doc);\n    }",
+        "developer_test": "@Test\n    public void shouldRenderFeaturePageWithTableInStepsCorrectly() throws Exception {\n        List<String> jsonReports = new ArrayList<>();\n        jsonReports.add(new File(ReportBuilderTest.class.getClassLoader().getResource(\"net/masterthought/cucumber/tableErrorExample.json\").toURI()).getAbsolutePath());\n        ReportBuilder reportBuilder = new ReportBuilder(jsonReports, configuration);\n        reportBuilder.generateReports();\n\n        File input = new File(configuration.getReportDirectory(), \"com-cme-falcon-acceptancetests-FrameworkTests-FIX_Inbound_Outbound-NewOrderOverrides-feature.html\");\n        Document doc = Jsoup.parse(input, \"UTF-8\", \"\");\n\n        Elements rows = fromClass(\"arguments-table\", doc).get(2).getElementsByTag(\"tr\");\n        Elements firstRow = rows.get(0).getElementsByTag(\"td\");\n        Elements secondRow = rows.get(1).getElementsByTag(\"td\");\n\n        assertThat(rows.size(),is(2));\n        assertThat(firstRow.size(),is(6));\n        assertThat(secondRow.size(),is(6));\n\n        assertThat(firstRow.get(0).text(),is(\"ordType\"));\n        assertThat(firstRow.get(1).text(),is(\"securityDescription\"));\n        assertThat(firstRow.get(2).text(),is(\"price\"));\n        assertThat(firstRow.get(3).text(),is(\"side\"));\n        assertThat(firstRow.get(4).text(),is(\"orderQty\"));\n        assertThat(firstRow.get(5).text(),is(\"timeInForce\"));\n\n        assertThat(secondRow.get(0).text(),is(\"limit\"));\n        assertThat(secondRow.get(1).text(),is(\"GEZ0\"));\n        assertThat(secondRow.get(2).text(),is(\"175.0\"));\n        assertThat(secondRow.get(3).text(),is(\"bid\"));\n        assertThat(secondRow.get(4).text(),is(\"1\"));\n        assertThat(secondRow.get(5).text(),is(\"session\"));\n\n        assertStatsHeader(doc);\n    }",
+        "sources": {
+          "MuMuTestUp": "/root/Baxxhy/work2/reproductions/mumutestup/runs/luna571-20261104/projects/damianszczepanik/cucumber-reporting/samples/0063.json",
+          "TestSyncer": "/root/Baxxhy/work2/reproductions/testsyncer/runs/prbench-luna-20261107/prbench/damianszczepanik__cucumber-reporting/samples/0063.json",
+          "TestUpdater": "/root/Baxxhy/work2/reproductions/testupdater/runs/recovery-20261105/prbench/damianszczepanik__cucumber-reporting/samples/0032.json"
+        }
+      },
+      "TestSyncer": {
+        "project": "neo4j/neo4j-java-driver",
+        "index": 23,
+        "statuses": {
+          "MuMuTestUp": "compile_error",
+          "TestSyncer": "pass",
+          "TestUpdater": "harness_error"
+        },
+        "old_test": "@Test\n    public void acquiresConnectionsFromThePool()\n    {\n        BoltServerAddress address = BoltServerAddress.LOCAL_DEFAULT;\n        Connection connection1 = mock( Connection.class );\n        Connection connection2 = mock( Connection.class );\n\n        ConnectionPool pool = poolMock( address, connection1, connection2 );\n        DirectConnectionProvider provider = new DirectConnectionProvider( address, pool );\n\n        assertSame( connection1, getBlocking( provider.acquireConnection( READ ) ) );\n        assertSame( connection2, getBlocking( provider.acquireConnection( WRITE ) ) );\n    }",
+        "developer_test": "@Test\n    public void acquiresConnectionsFromThePool()\n    {\n        BoltServerAddress address = BoltServerAddress.LOCAL_DEFAULT;\n        Connection connection1 = mock( Connection.class );\n        Connection connection2 = mock( Connection.class );\n\n        ConnectionPool pool = poolMock( address, connection1, connection2 );\n        DirectConnectionProvider provider = new DirectConnectionProvider( address, pool );\n\n        assertSame( connection1, await( provider.acquireConnection( READ ) ) );\n        assertSame( connection2, await( provider.acquireConnection( WRITE ) ) );\n    }",
+        "sources": {
+          "MuMuTestUp": "/root/Baxxhy/work2/reproductions/mumutestup/runs/luna571-20261104/projects/neo4j/neo4j-java-driver/samples/0023.json",
+          "TestSyncer": "/root/Baxxhy/work2/reproductions/testsyncer/runs/prbench-luna-20261107/prbench/neo4j__neo4j-java-driver/samples/0023.json",
+          "TestUpdater": "/root/Baxxhy/work2/reproductions/testupdater/runs/recovery5-20261105/prbench/neo4j__neo4j-java-driver/samples/0001.json"
+        }
+      }
+    }
+  },
+  "updates4j": {
+    "overlap": {
+      "MuMuTestUp+TestSyncer+TestUpdater": 100,
+      "MuMuTestUp+TestUpdater": 46,
+      "MuMuTestUp+TestSyncer": 15,
+      "none": 4,
+      "MuMuTestUp": 17,
+      "TestUpdater": 1,
+      "TestSyncer+TestUpdater": 4,
+      "TestSyncer": 8
+    },
+    "focal_subgroups": {
+      "changed": {
+        "total": 195,
+        "MuMuTestUp": 178,
+        "TestSyncer": 127,
+        "TestUpdater": 151
+      }
+    },
+    "joint_evaluated_n": 99,
+    "joint_metrics": {
+      "MuMuTestUp": {
+        "line": 82.94309325825104,
+        "branch": 63.34541202844774,
+        "mutation": 67.98221008871633,
+        "line_n": 99,
+        "branch_n": 56,
+        "mutation_n": 99
+      },
+      "TestUpdater": {
+        "line": 80.35703234411626,
+        "branch": 51.568201144094004,
+        "mutation": 60.090041651093344,
+        "line_n": 99,
+        "branch_n": 56,
+        "mutation_n": 99
+      },
+      "TestSyncer": {
+        "line": 79.86905961789901,
+        "branch": 51.07571248196248,
+        "mutation": 59.87070543175712,
+        "line_n": 99,
+        "branch_n": 56,
+        "mutation_n": 99
+      }
+    },
+    "unique_success_examples": {
+      "MuMuTestUp": {
+        "project": "apache/shenyu",
+        "index": 32,
+        "statuses": {
+          "MuMuTestUp": "pass",
+          "TestSyncer": "compile_error",
+          "TestUpdater": "compile_error"
+        },
+        "old_test": "@Test\n    public void testFilter() {\n        ServerWebExchange exchangeNoHeader = MockServerWebExchange.from(MockServerHttpRequest\n                .get(\"http://localhost:8080\")\n                .build());\n        WebFilterChain chainNoHeader = mock(WebFilterChain.class);\n        when(chainNoHeader.filter(exchangeNoHeader)).thenReturn(Mono.empty());\n        CrossFilter filterNoHeader = new CrossFilter();\n        StepVerifier.create(filterNoHeader.filter(exchangeNoHeader, chainNoHeader))\n                .expectSubscription()\n                .verifyComplete();\n\n        ServerWebExchange exchangeNormal = MockServerWebExchange.from(MockServerHttpRequest\n                .get(\"http://localhost:8080\")\n                .header(\"Origin\", \"test\")\n                .build());\n        WebFilterChain chainNormal = mock(WebFilterChain.class);\n        when(chainNormal.filter(exchangeNormal)).thenReturn(Mono.empty());\n        CrossFilter filterNormal = new CrossFilter();\n        StepVerifier.create(filterNormal.filter(exchangeNormal, chainNormal))\n                .expectSubscription()\n                .verifyComplete();\n\n        ServerWebExchange exchangeOption = MockServerWebExchange.from(MockServerHttpRequest\n                .options(\"http://localhost:8080\")\n                .header(\"Origin\", \"test\")\n                .build());\n        WebFilterChain chainOption = mock(WebFilterChain.class);\n        when(chainOption.filter(exchangeOption)).thenReturn(Mono.empty());\n        CrossFilter filterOption = new CrossFilter();\n        StepVerifier.create(filterOption.filter(exchangeOption, chainOption))\n                .expectSubscription()\n                .verifyComplete();\n    }",
+        "developer_test": "@Test\n    public void testFilter() {\n        ServerWebExchange exchangeNoHeader = MockServerWebExchange.from(MockServerHttpRequest\n                .get(\"http://localhost:8080\")\n                .build());\n        WebFilterChain chainNoHeader = mock(WebFilterChain.class);\n        when(chainNoHeader.filter(exchangeNoHeader)).thenReturn(Mono.empty());\n        CrossFilter filterNoHeader = new CrossFilter(new ShenyuConfig.CrosFilterConfig());\n        StepVerifier.create(filterNoHeader.filter(exchangeNoHeader, chainNoHeader))\n                .expectSubscription()\n                .verifyComplete();\n\n        ServerWebExchange exchangeNormal = MockServerWebExchange.from(MockServerHttpRequest\n                .get(\"http://localhost:8080\")\n                .header(\"Origin\", \"test\")\n                .build());\n        WebFilterChain chainNormal = mock(WebFilterChain.class);\n        when(chainNormal.filter(exchangeNormal)).thenReturn(Mono.empty());\n        CrossFilter filterNormal = new CrossFilter(new ShenyuConfig.CrosFilterConfig());\n        StepVerifier.create(filterNormal.filter(exchangeNormal, chainNormal))\n                .expectSubscription()\n                .verifyComplete();\n\n        ServerWebExchange exchangeOption = MockServerWebExchange.from(MockServerHttpRequest\n                .options(\"http://localhost:8080\")\n                .header(\"Origin\", \"test\")\n                .build());\n        WebFilterChain chainOption = mock(WebFilterChain.class);\n        when(chainOption.filter(exchangeOption)).thenReturn(Mono.empty());\n        CrossFilter filterOption = new CrossFilter(new ShenyuConfig.CrosFilterConfig());\n        StepVerifier.create(filterOption.filter(exchangeOption, chainOption))\n                .expectSubscription()\n                .verifyComplete();\n    }",
+        "sources": {
+          "MuMuTestUp": "/root/Baxxhy/work2/reproductions/mumutestup/runs/updates4j-fixed-v3-20261107/projects/apache/shenyu/samples/0032.json",
+          "TestSyncer": "/root/Baxxhy/work2/reproductions/testsyncer/runs/updates4j-luna-20261108/updates4j/verified_apache_shenyu/samples/0032.json",
+          "TestUpdater": "/root/Baxxhy/work2/reproductions/testupdater/runs/recovery5-20261105/updates4j/verified_apache_shenyu/samples/0000.json"
+        }
+      },
+      "TestUpdater": {
+        "project": "apache/shenyu",
+        "index": 38,
+        "statuses": {
+          "MuMuTestUp": "compile_error",
+          "TestSyncer": "compile_error",
+          "TestUpdater": "pass"
+        },
+        "old_test": "@SneakyThrows\n    @Test\n    public void testRegistered() {\n        AtomicBoolean registered = (AtomicBoolean) ReflectUtils.getFieldValue(prometheusBootService, \"registered\");\n        registered.set(true);\n        String jmxConfig = GsonUtils.getInstance().toJson(\"whitelistObjectNames:org.apache.cassandra.metrics:type=ColumnFamily\");\n        MetricsConfig metricsConfig = new MetricsConfig(\"test\", \"\", 10119, false, 1, jmxConfig, null);\n        prometheusBootService.start(metricsConfig);\n        Field field = PrometheusBootService.class.getDeclaredField(\"server\");\n        field.setAccessible(true);\n        HTTPServer httpServer = (HTTPServer) field.get(prometheusBootService);\n        assertNotNull(httpServer);\n        assertThat(httpServer.getPort(), is(10119));\n        assertTrue(prometheusBootService.getRegistered().get());\n    }",
+        "developer_test": "@SneakyThrows\n    @Test\n    public void testRegistered() {\n        AtomicBoolean registered = (AtomicBoolean) ReflectUtils.getFieldValue(prometheusBootService, \"registered\");\n        registered.set(true);\n        String jmxConfig = GsonUtils.getInstance().toJson(\"whitelistObjectNames:org.apache.cassandra.metrics:type=ColumnFamily\");\n        MetricsConfig metricsConfig = new MetricsConfig(\"test\", \"\", 10119, false, 1, jmxConfig, null);\n        prometheusBootService.start(metricsConfig, new PrometheusMetricsRegister());\n        Field field = PrometheusBootService.class.getDeclaredField(\"server\");\n        field.setAccessible(true);\n        HTTPServer httpServer = (HTTPServer) field.get(prometheusBootService);\n        assertNotNull(httpServer);\n        assertThat(httpServer.getPort(), is(10119));\n        assertTrue(prometheusBootService.getRegistered().get());\n    }",
+        "sources": {
+          "MuMuTestUp": "/root/Baxxhy/work2/reproductions/mumutestup/runs/updates4j-fixed-v3-20261107/projects/apache/shenyu/samples/0038.json",
+          "TestSyncer": "/root/Baxxhy/work2/reproductions/testsyncer/runs/updates4j-luna-20261108/updates4j/verified_apache_shenyu/samples/0038.json",
+          "TestUpdater": "/root/Baxxhy/work2/reproductions/testupdater/runs/recovery-20261105/updates4j/verified_apache_shenyu/samples/0025.json"
+        }
+      },
+      "TestSyncer": {
+        "project": "prebid/prebid-server-java",
+        "index": 0,
+        "statuses": {
+          "MuMuTestUp": "run_fail",
+          "TestSyncer": "pass",
+          "TestUpdater": "compile_error"
+        },
+        "old_test": "    @Test\n    public void skipAuctionShouldReturnFailedFutureWhenRequestIsRejected() {\n        // given\n        final AuctionContext givenAuctionContext = AuctionContext.builder()\n                .requestRejected(true)\n                .build();\n\n        // when\n        final Future<AuctionContext> result = target.skipAuction(givenAuctionContext);\n\n        // then\n        assertThat(result.succeeded()).isTrue();\n        final BidResponse expectedBidResponse = BidResponse.builder().seatbid(emptyList()).build();\n        assertThat(result.result()).isEqualTo(givenAuctionContext.with(expectedBidResponse));\n\n        verifyNoInteractions(storedResponseProcessor, bidResponseCreator);\n    }",
+        "developer_test": "    @Test\n    public void skipAuctionShouldReturnFailedFutureWhenRequestIsRejected() {\n        // given\n        final AuctionContext givenAuctionContext = AuctionContext.builder()\n                .requestRejected(true)\n                .build();\n\n        // when\n        final Future<AuctionContext> result = target.skipAuction(givenAuctionContext);\n\n        // then\n        assertThat(result.failed()).isTrue();\n        assertThat(result.cause()).hasMessage(\"Rejected request cannot be skipped\");\n        verifyNoInteractions(storedResponseProcessor, bidResponseCreator);\n    }",
+        "sources": {
+          "MuMuTestUp": "/root/Baxxhy/work2/reproductions/mumutestup/runs/updates4j-fixed-v3-20261107/projects/prebid/prebid-server-java/samples/0000.json",
+          "TestSyncer": "/root/Baxxhy/work2/reproductions/testsyncer/runs/updates4j-luna-20261108/updates4j/verified_prebid_prebid-server-java/samples/0000.json",
+          "TestUpdater": "/root/Baxxhy/work2/reproductions/testupdater/runs/luna-full-20261105/updates4j/verified_prebid_prebid-server-java/samples/0000.json"
+        }
+      }
+    }
+  }
+}

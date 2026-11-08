@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+set -euo pipefail
+export MUMU_LUNA_OUTPUT=/root/Baxxhy/work2/reproductions/mumutestup/runs/updates4j-env36-20261107
+export MUMU_LUNA_BRIDGE_URL=http://127.0.0.1:8013/v1
+source /root/Baxxhy/work2/reproductions/mumutestup/deployment/runtime-luna.sh
+export MUMU_REPOS_DIR=/root/Baxxhy/work2/reproductions/testupdater/repos
+exec python -u "$MUMU_ROOT/deployment/run_mumu_luna.py" --upstream "$MUMU_LUNA_UPSTREAM" --dataset-root "$MUMU_ROOT/datasets/updates4j" --output "$MUMU_LUNA_OUTPUT" --workers 3 --selection-file /root/Baxxhy/work2/reproductions/mumutestup/runs/updates4j-env36-20261107/selection.json --resume

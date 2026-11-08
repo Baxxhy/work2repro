@@ -1,0 +1,93 @@
+[
+  {
+    "dataset": "prbench",
+    "winner": "MuMuTestUp",
+    "project": "damianszczepanik/cucumber-reporting",
+    "index": 3,
+    "outputs": {
+      "MuMuTestUp": {
+        "code": "@Test\npublic void addDurationSumsDurations() {\n    StepObject step = new StepObject(\"ble bla ble\");\n    step.addDuration(20L, Status.PASSED);\n    step.addDuration(5L, Status.PASSED);\n    step.addDuration(700L, Status.UNDEFINED);\n\n    assertThat(step.getDuration()).isEqualTo(725L);\n    assertThat(step.getTotalOccurrences()).isEqualTo(3);\n    assertThat(step.getStatus()).isEqualTo(Status.FAILED);\n}",
+        "error": null
+      },
+      "TestSyncer": {
+        "code": "@Test\npublic void addDurationSumsDurations() {\n\n    // give\n    StepObject step = new StepObject(\"ble bla ble\");\n\n    // when\n    step.addDuration(20L, Status.PASSED);\n    step.addDuration(5L, Status.PASSED);\n    step.addDuration(700L, Status.UNDEFINED);\n\n    // then\n    assertThat(step.getDurations()).isEqualTo(725L);\n    assertThat(step.getTotalOccurrences()).isEqualTo(3);\n    assertThat(step.getStatus()).isEqualTo(Status.FAILED);\n}",
+        "error": [
+          "[ERROR] COMPILATION ERROR : ",
+          "[ERROR] /root/Baxxhy/work2/reproductions/testsyncer/repos/damianszczepanik/cucumber-reporting/src/test/java/net/masterthought/cucumber/json/support/StepObjectTest.java:[65,20] cannot find symbol",
+          "[ERROR] Failed to execute goal org.apache.maven.plugins:maven-compiler-plugin:3.6.0:testCompile (default-testCompile) on project cucumber-reporting: Compilation failure",
+          "[ERROR] /root/Baxxhy/work2/reproductions/testsyncer/repos/damianszczepanik/cucumber-reporting/src/test/java/net/masterthought/cucumber/json/support/StepObjectTest.java:[65,20] cannot find symbol",
+          "[ERROR]   symbol:   method getDurations()",
+          "[ERROR]   location: variable step of type net.masterthought.cucumber.json.support.StepObject",
+          "[ERROR] -> [Help 1]",
+          "[ERROR] ",
+          "[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.",
+          "[ERROR] Re-run Maven using the -X switch to enable full debug logging.",
+          "[ERROR] ",
+          "[ERROR] For more information about the errors and possible solutions, please read the following articles:",
+          "[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/MojoFailureException"
+        ]
+      },
+      "TestUpdater": {
+        "code": "@Test\npublic void addDurationSumsDurations() {\n\n    // give\n    StepObject step = new StepObject(\"ble bla ble\");\n\n    // when\n    step.addDuration(20L, Status.PASSED);\n    step.addDuration(5L, Status.PASSED);\n    step.addDuration(700L, Status.UNDEFINED);\n\n    // then\n    assertThat(step.getDurations()).isEqualTo(725L);\n    assertThat(step.getTotalOccurrences()).isEqualTo(3);\n    assertThat(step.getStatus()).isEqualTo(Status.FAILED);\n}",
+        "error": null
+      }
+    }
+  },
+  {
+    "dataset": "prbench",
+    "winner": "TestUpdater",
+    "project": "damianszczepanik/cucumber-reporting",
+    "index": 63,
+    "outputs": {
+      "MuMuTestUp": {
+        "code": "@Test\npublic void shouldRenderFeaturePageWithTableInStepsCorrectly() throws Exception {\n    List<String> jsonReports = new ArrayList<>();\n    jsonReports.add(new File(\n            ReportBuilderTest.class.getClassLoader()\n                    .getResource(\"net/masterthought/cucumber/tableErrorExample.json\")\n                    .toURI()).getAbsolutePath());\n\n    ReportBuilder reportBuilder = new ReportBuilder(jsonReports, configuration);\n    reportBuilder.generateReports();\n\n    File input = new File(\n            configuration.getReportDirectory(),\n            \"com-cme-falcon-acceptancetests-FrameworkTests-FIX_Inbound_Outbound-NewOrderOverrides-feature.html\");\n    Document doc = Jsoup.parse(input, \"UTF-8\", \"\");\n    Elements rows = fromClass(\"arguments-table\", doc).get(2).getElementsByTag(\"tr\");\n    Elements firstRow = rows.get(0).getElementsByTag(\"td\");\n    Elements secondRow = rows.get(1).getElementsByTag(\"td\");\n\n    assertThat(rows.size(), is(2));\n    assertThat(firstRow.size(), is(6));\n    assertThat(secondRow.size(), is(6));\n    assertThat(firstRow.get(0).text(), is(\"ordType\"));\n    assertThat(firstRow.get(1).text(), is(\"securityDescription\"));\n    assertThat(firstRow.get(2).text(), is(\"price\"));\n    assertThat(firstRow.get(3).text(), is(\"side\"));\n    assertThat(firstRow.get(4).text(), is(\"orderQty\"));\n    assertThat(firstRow.get(5).text(), is(\"timeInForce\"));\n    assertThat(secondRow.get(0).text(), is(\"limit\"));\n    assertThat(secondRow.get(1).text(), is(\"GEZ0\"));\n    assertThat(secondRow.get(2).text(), is(\"175.0\"));\n    assertThat(secondRow.get(3).text(), is(\"bid\"));\n    assertThat(secondRow.get(4).text(), is(\"1\"));\n    assertThat(secondRow.get(5).text(), is(\"session\"));\n    assertThat(fromId(\"page-title\", doc).text(),\n            is(\"Result for New Inbound Order Overrides, build number 1, project cucumber-reporting\"));\n    assertStatsHeader(doc);\n}",
+        "error": "java.lang.NullPointerException"
+      },
+      "TestSyncer": {
+        "code": "@Test\npublic void shouldRenderFeaturePageWithTableInStepsCorrectly() throws Exception {\n    List<String> jsonReports = new ArrayList<>();\n    jsonReports.add(new File(ReportBuilderTest.class.getClassLoader().getResource(\"net/masterthought/cucumber/tableErrorExample.json\").toURI()).getAbsolutePath());\n    ReportBuilder reportBuilder = new ReportBuilder(jsonReports, configuration);\n    reportBuilder.generateReports();\n\n    File input = new File(configuration.getReportDirectory(), \"com-cme-falcon-acceptancetests-FrameworkTests-FIX_Inbound_Outbound-NewOrderOverrides-feature.html\");\n    Document doc = Jsoup.parse(input, \"UTF-8\", \"\");\n\n    Elements rows = fromClass(\"arguments-table\", doc).get(2).getElementsByTag(\"tr\");\n    Elements firstRow = rows.get(0).getElementsByTag(\"td\");\n    Elements secondRow = rows.get(1).getElementsByTag(\"td\");\n\n    assertThat(rows.size(), is(2));\n    assertThat(firstRow.size(), is(6));\n    assertThat(secondRow.size(), is(6));\n\n    assertThat(firstRow.get(0).text(), is(\"ordType\"));\n    assertThat(firstRow.get(1).text(), is(\"securityDescription\"));\n    assertThat(firstRow.get(2).text(), is(\"price\"));\n    assertThat(firstRow.get(3).text(), is(\"side\"));\n    assertThat(firstRow.get(4).text(), is(\"orderQty\"));\n    assertThat(firstRow.get(5).text(), is(\"timeInForce\"));\n\n    assertThat(secondRow.get(0).text(), is(\"limit\"));\n    assertThat(secondRow.get(1).text(), is(\"GEZ0\"));\n    assertThat(secondRow.get(2).text(), is(\"175.0\"));\n    assertThat(secondRow.get(3).text(), is(\"bid\"));\n    assertThat(secondRow.get(4).text(), is(\"1\"));\n    assertThat(secondRow.get(5).text(), is(\"session\"));\n\n    assertThat(fromId(\"page-title\", doc).text(), is(\"Result for New Inbound Order Overrides, build number 1, project cucumber-reporting\"));\n    assertStatsHeader(doc);\n}",
+        "error": [
+          "[ERROR] Tests run: 1, Failures: 0, Errors: 1, Skipped: 0, Time elapsed: 0.597 s <<< FAILURE! -- in net.masterthought.cucumber.ReportBuilderTest",
+          "[ERROR] net.masterthought.cucumber.ReportBuilderTest.shouldRenderFeaturePageWithTableInStepsCorrectly -- Time elapsed: 0.550 s <<< ERROR!",
+          "[ERROR] Errors: ",
+          "[ERROR]   ReportBuilderTest.shouldRenderFeaturePageWithTableInStepsCorrectly:97 NullPointer",
+          "[ERROR] Tests run: 1, Failures: 0, Errors: 1, Skipped: 0",
+          "[ERROR] Failed to execute goal org.apache.maven.plugins:maven-surefire-plugin:3.2.2:test (default-test) on project cucumber-reporting: ",
+          "[ERROR] ",
+          "[ERROR] Please refer to /root/Baxxhy/work2/reproductions/testsyncer/repos/damianszczepanik/cucumber-reporting/target/surefire-reports for the individual test results.",
+          "[ERROR] Please refer to dump files (if any exist) [date].dump, [date]-jvmRun[N].dump and [date].dumpstream.",
+          "[ERROR] -> [Help 1]",
+          "[ERROR] ",
+          "[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.",
+          "[ERROR] Re-run Maven using the -X switch to enable full debug logging.",
+          "[ERROR] ",
+          "[ERROR] For more information about the errors and possible solutions, please read the following articles:",
+          "[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/MojoFailureException"
+        ]
+      },
+      "TestUpdater": {
+        "code": "@Test\npublic void shouldRenderFeaturePageWithTableInStepsCorrectly() throws Exception {\n    List<String> jsonReports = new ArrayList<>();\n    jsonReports.add(new File(ReportBuilderTest.class.getClassLoader()\n            .getResource(\"net/masterthought/cucumber/tableErrorExample.json\").toURI()).getAbsolutePath());\n    ReportBuilder reportBuilder = new ReportBuilder(jsonReports, configuration);\n    reportBuilder.generateReports();\n\n    File input = new File(configuration.getReportDirectory(),\n            \"com-cme-falcon-acceptancetests-FrameworkTests-FIX_Inbound_Outbound-NewOrderOverrides-feature.html\");\n    Document doc = Jsoup.parse(input, \"UTF-8\", \"\");\n\n    Elements rows = fromClass(\"arguments-table\", doc).get(2).getElementsByTag(\"tr\");\n    Elements firstRow = rows.get(0).getElementsByTag(\"td\");\n    Elements secondRow = rows.get(1).getElementsByTag(\"td\");\n\n    assertThat(rows.size(), is(2));\n    assertThat(firstRow.size(), is(6));\n    assertThat(secondRow.size(), is(6));\n\n    assertThat(firstRow.get(0).text(), is(\"ordType\"));\n    assertThat(firstRow.get(1).text(), is(\"securityDescription\"));\n    assertThat(firstRow.get(2).text(), is(\"price\"));\n    assertThat(firstRow.get(3).text(), is(\"side\"));\n    assertThat(firstRow.get(4).text(), is(\"orderQty\"));\n    assertThat(firstRow.get(5).text(), is(\"timeInForce\"));\n\n    assertThat(secondRow.get(0).text(), is(\"limit\"));\n    assertThat(secondRow.get(1).text(), is(\"GEZ0\"));\n    assertThat(secondRow.get(2).text(), is(\"175.0\"));\n    assertThat(secondRow.get(3).text(), is(\"bid\"));\n    assertThat(secondRow.get(4).text(), is(\"1\"));\n    assertThat(secondRow.get(5).text(), is(\"session\"));\n\n    assertStatsHeader(doc);\n}",
+        "error": null
+      }
+    }
+  },
+  {
+    "dataset": "updates4j",
+    "winner": "TestSyncer",
+    "project": "prebid/prebid-server-java",
+    "index": 0,
+    "outputs": {
+      "MuMuTestUp": {
+        "code": "@Test\npublic void skipAuctionShouldReturnFailedFutureWhenRequestIsRejected() {\n    // given\n    final AuctionContext givenAuctionContext = AuctionContext.builder()\n            .requestRejected(true)\n            .build();\n\n    // when\n    final Future<AuctionContext> result = target.skipAuction(givenAuctionContext);\n\n    // then\n    assertThat(result.failed()).isTrue();\n    assertThat(result.cause()).hasMessage(\"Rejected request cannot be skipped\");\n    verifyNoInteractions(storedResponseProcessor, bidResponseCreator);\n}",
+        "error": "Tests run: 0, Failures: 0, Errors: 0"
+      },
+      "TestSyncer": {
+        "code": "@Test\n    public void skipAuctionShouldReturnFailedFutureWhenRequestIsRejected() {\n        // given\n        final AuctionContext givenAuctionContext = AuctionContext.builder()\n                .requestRejected(true)\n                .build();\n\n        // when\n        final Future<AuctionContext> result = target.skipAuction(givenAuctionContext);\n\n        // then\n        assertThat(result.failed()).isTrue();\n        assertThat(result.cause()).hasMessage(\"Rejected request cannot be skipped\");\n\n        verifyNoInteractions(storedResponseProcessor, bidResponseCreator);\n    }",
+        "error": null
+      },
+      "TestUpdater": {
+        "code": "@Test\npublic void skipAuctionShouldReturnFailedFutureWhenRequestIsRejected() {\n    // given\n    final AuctionContext givenAuctionContext = AuctionContext.builder()\n            .requestRejected(true)\n            .build();\n\n    // when\n    final Future<AuctionContext> result = target.skipAuction(givenAuctionContext);\n\n    // then\n    assertThat(result.failed()).isTrue();\n\n    verifyNoInteractions(storedResponseProcessor, bidResponseCreator);\n}",
+        "error": null
+      }
+    }
+  }
+]
