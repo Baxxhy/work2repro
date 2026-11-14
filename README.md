@@ -1,5 +1,19 @@
 # 测试演化复现与分析
 
+## 本次新增：从软件规格生成测试（2026-11-14 完成）
+
+Codex CLI 0.160.0 + GPT-6 Luna，思考等级 medium。
+
+| Benchmark | 范围 | 最终核心指标 |
+|---|---|---|
+| TestSuiteBench | **165/165 全量** | Validity **74.67%**；Mutation Score **16.11%** |
+| Req2Test-Bench | **160/160 固定子集，实际计分 159 条** | Pass@1 **27.57%**；KillComplete@1 **12.53%** |
+
+[本轮完整复现报告与目录导航](reports/test-generation-20261114/README.md) · [官方报告与逐任务指标](results/test-generation-20261114/reports/) · [325 条生成产物索引](results/test-generation-20261114/task-artifacts.json) · [输入与规格](data/test-generation-20261114/) · [运行代码](code/test-generation-20261114/)
+
+本轮追加了 325 条正式任务的生成结果、生成文件、可见轨迹节选、环境和恢复记录。Req2Test 为 8 个项目各 20 条，不是 eval 的 2051 条全量；结果按官方项目等权口径报告。完整原始日志及大型评测数据留在服务器。下面保留此前三方法测试演化实验的原始结果。
+
+
 MuMuTestUp、TestUpdater、TestSyncer 在 PRBench 和 Updates4J 上的同模型复现。
 
 模型为 GPT-6 Luna，思考等级 medium。仓库保留复现代码、766 条实验输入、2,298 条最终生成记录、逐样本指标、汇总表和调研报告。

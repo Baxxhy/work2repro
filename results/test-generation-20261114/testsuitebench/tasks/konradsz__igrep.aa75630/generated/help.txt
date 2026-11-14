@@ -1,0 +1,47 @@
+Interactive Grep
+
+Usage: executable [OPTIONS] --type-list <PATTERN> [PATHS]...
+
+Arguments:
+  <PATTERN>   Regular expression used for searching
+  [PATHS]...  Files or directories to search. Directories are searched recursively. If not specified, searching starts from current directory
+
+Options:
+      --editor <EDITOR>
+          Text editor used to open selected match [possible values: vim, neovim, nvim, nano, code, vscode, code-insiders, emacs, emacsclient, hx, helix, subl, sublime-text, micro, intellij, goland, pycharm, less, fresh]
+      --custom-command <CUSTOM_COMMAND>
+          Custom command used to open selected match. Must contain {file_name} and {line_number} tokens [env: IGREP_CUSTOM_EDITOR=]
+      --theme <THEME>
+          UI color theme [default: dark] [possible values: light, dark]
+  -i, --ignore-case
+          Searches case insensitively
+  -S, --smart-case
+          Searches case insensitively if the pattern is all lowercase. Search case sensitively otherwise
+  -., --hidden
+          Search hidden files and directories. By default, hidden files and directories are skipped
+  -L, --follow
+          Follow symbolic links while traversing directories
+  -w, --word-regexp
+          Only show matches surrounded by word boundaries
+  -F, --fixed-strings
+          Exact matches with no regex. Useful when searching for a string full of delimiters
+  -U, --multiline
+          Search with pattern contains newline character ('\n')
+  -g, --glob <GLOB>
+          Include files and directories for searching that match the given glob. Multiple globs may be provided
+      --type-list
+          Show all supported file types and their corresponding globs
+  -t, --type <TYPE_MATCHING>
+          Only search files matching TYPE. Multiple types may be provided
+  -T, --type-not <TYPE_NOT>
+          Do not search files matching TYPE-NOT. Multiple types-not may be provided
+      --context-viewer <CONTEXT_VIEWER>
+          Context viewer position at startup [default: none] [possible values: none, vertical, horizontal]
+      --sort <SORT_BY>
+          Sort results, see ripgrep for details [possible values: path, modified, created, accessed]
+      --sortr <SORT_BY_REVERSE>
+          Sort results reverse, see ripgrep for details [possible values: path, modified, created, accessed]
+  -h, --help
+          Print help
+  -V, --version
+          Print version

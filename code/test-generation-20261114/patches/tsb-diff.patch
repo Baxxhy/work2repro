@@ -1,0 +1,69 @@
+diff --git a/scripts/docker/egress-squid.conf b/scripts/docker/egress-squid.conf
+index a3e1146..8a36e7e 100644
+--- a/scripts/docker/egress-squid.conf
++++ b/scripts/docker/egress-squid.conf
+@@ -17,3 +17,7 @@ http_access deny all
+ # No caching: agent traffic must not be stored on the host.
+ cache deny all
+ access_log none
++
++# Reuse the host proxy while retaining the provider API allowlist above.
++cache_peer 172.29.1.1 parent 17890 0 no-query default
++never_direct allow all
+diff --git a/scripts/docker/programbench_image.Dockerfile b/scripts/docker/programbench_image.Dockerfile
+index 7b06b84..68f78b3 100644
+--- a/scripts/docker/programbench_image.Dockerfile
++++ b/scripts/docker/programbench_image.Dockerfile
+@@ -32,7 +32,7 @@ RUN chmod 0755 /usr/local/libexec/programbench-apt-flock \
+ # image, so it reveals nothing about the task; the cache itself lives on the
+ # host and is mounted only into build containers.
+ ARG SCCACHE_VERSION=0.10.0
+-RUN curl -fsSL "https://github.com/mozilla/sccache/releases/download/v${SCCACHE_VERSION}/sccache-v${SCCACHE_VERSION}-x86_64-unknown-linux-musl.tar.gz" \
++RUN curl --retry 4 --retry-all-errors --connect-timeout 20 -fsSL "https://gh-proxy.com/https://github.com/mozilla/sccache/releases/download/v${SCCACHE_VERSION}/sccache-v${SCCACHE_VERSION}-x86_64-unknown-linux-musl.tar.gz" \
+       | tar -xz -C /tmp \
+   && install -m 0755 "/tmp/sccache-v${SCCACHE_VERSION}-x86_64-unknown-linux-musl/sccache" /usr/local/bin/sccache \
+   && rm -rf "/tmp/sccache-v${SCCACHE_VERSION}-x86_64-unknown-linux-musl" \
+@@ -44,7 +44,7 @@ RUN curl -fsSL "https://github.com/mozilla/sccache/releases/download/v${SCCACHE_
+ # install pulls in is therefore shared, and only the CLI itself is withheld.
+ ARG NODE_MAJOR=24
+ RUN install -d -m 0755 /etc/apt/keyrings \
+-  && curl -fsSL https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key \
++  && curl --retry 4 --retry-all-errors --connect-timeout 20 -fsSL https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key \
+        | gpg --dearmor -o /etc/apt/keyrings/nodesource.gpg \
+   && echo "deb [signed-by=/etc/apt/keyrings/nodesource.gpg] https://deb.nodesource.com/node_${NODE_MAJOR}.x nodistro main" \
+        > /etc/apt/sources.list.d/nodesource.list \
+@@ -70,12 +70,23 @@ ARG MUSE_ADAPTER_VERSION=0.3.2
+ RUN set -eu; \
+     case "${AGENT}" in \
+       codex) \
+-        npm install -g "@openai/codex@${CODEX_VERSION}"; \
++        curl --retry 4 --retry-all-errors --connect-timeout 20 -fsSL \
++          "https://gh-proxy.com/https://github.com/openai/codex/releases/download/rust-v${CODEX_VERSION}/codex-x86_64-unknown-linux-musl.tar.gz" \
++          -o /tmp/codex.tar.gz; \
++        tar -xzf /tmp/codex.tar.gz -C /tmp; \
++        install -m 0755 /tmp/codex-x86_64-unknown-linux-musl /usr/local/bin/codex; \
++        curl --retry 4 --retry-all-errors --connect-timeout 20 -fsSL \
++          "https://gh-proxy.com/https://github.com/openai/codex/releases/download/rust-v${CODEX_VERSION}/codex-code-mode-host-x86_64-unknown-linux-musl.tar.gz" \
++          -o /tmp/codex-code-mode-host.tar.gz; \
++        tar -xzf /tmp/codex-code-mode-host.tar.gz -C /tmp; \
++        install -m 0755 /tmp/codex-code-mode-host-x86_64-unknown-linux-musl /usr/local/bin/codex-code-mode-host; \
++        rm -f /tmp/codex-code-mode-host.tar.gz /tmp/codex-code-mode-host-x86_64-unknown-linux-musl; \
++        rm -f /tmp/codex.tar.gz /tmp/codex-x86_64-unknown-linux-musl; \
+         npm cache clean --force >/dev/null 2>&1; rm -rf /root/.npm; \
+         codex --version; \
+         ;; \
+       claude) \
+-        curl -fsSL https://claude.ai/install.sh | bash -s "${CLAUDE_VERSION}"; \
++        curl --retry 4 --retry-all-errors --connect-timeout 20 -fsSL https://claude.ai/install.sh | bash -s "${CLAUDE_VERSION}"; \
+         /root/.local/bin/claude --version; \
+         ;; \
+       gemini) \
+@@ -94,7 +105,7 @@ RUN set -eu; \
+         dsh --version; \
+         ;; \
+       glm) \
+-        curl -fsSL "https://cdn-zcode.z.ai/zcode/electron/releases/${ZCODE_VERSION}/linux-x64/ZCode-${ZCODE_VERSION}-linux-x64.deb" -o /tmp/zcode.deb; \
++        curl --retry 4 --retry-all-errors --connect-timeout 20 -fsSL "https://cdn-zcode.z.ai/zcode/electron/releases/${ZCODE_VERSION}/linux-x64/ZCode-${ZCODE_VERSION}-linux-x64.deb" -o /tmp/zcode.deb; \
+         mkdir -p /opt/zcode; \
+         dpkg-deb -x /tmp/zcode.deb /opt/zcode; \
+         rm /tmp/zcode.deb; \

@@ -1,0 +1,17 @@
+name: Verify test-generation artifacts
+on:
+  push:
+    branches: [main]
+  pull_request:
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Verify published inputs, generated files and official metrics
+        run: python3 scripts/verify_test_generation.py
+      - name: Run offline recovery regression checks
+        working-directory: code/test-generation-20261114/controller
+        run: python3 -m unittest -v test_generation_outcome.py test_seed_evaluation.py

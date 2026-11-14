@@ -1,0 +1,33 @@
+You are creating a test suite.
+
+## Workspace
+
+The workspace contains a program specification.
+
+## Task
+
+Create a comprehensive test suite under `/workspace/eval`.
+
+## Evaluation Design
+
+- The test suite will go through mutation testing. It will be evaluated against fresh workspaces containing the program under test at `/workspace/executable`.
+- The specification is available only while authoring the suite.
+- Tests must invoke `/workspace/executable`, or compute it robustly relative to `eval`.
+- Do not hard-code `./executable` inside tests that run after `run.sh` has changed into `/workspace/eval`.
+
+## Rules
+
+- Cover documented functional behavior thoroughly. The test suite must kill any mutants that go against the spec, while it has to pass any implementation as long as it follows the spec.
+- Pay particular attention to explicitly numbered or sectioned requirements in the specification. Cover each documented behavior with at least one meaningful test.
+- When creating tests, please break them down into smaller, focused tests rather than writing one huge test function; tests that kill the ground truth are not used when calculating the mutation score.
+
+## Output
+
+- `/workspace/eval/run.sh` must exist and be executable.
+- `/workspace/eval/run.sh` must always write valid JUnit XML to `/workspace/eval/results.xml`.
+- `/workspace/eval/run.sh` must run the whole generated suite, even after individual test failures.
+- The report must have a `<testsuites>` root containing `<testsuite>` elements (or a single `<testsuite>` root) and one named `<testcase>` per test. Represent non-passing outcomes with a nested `<failure>`, `<error>`, or `<skipped>` element.
+- For pytest suites, this is achieved simply by running `pytest --junitxml=results.xml` from `/workspace/eval`.
+- JUnit XML must escape XML metacharacters and must not contain raw control characters or binary stdout/stderr; encode such output with `repr`, base64, or another XML-safe textual representation.
+- When performing parametrized testing, always provide short, descriptive `ids=` values. Never allow large strings, bytes, or object representations to become test IDs.
+- Put all helper files, fixtures, scripts, and generated test assets under `/workspace/eval`.

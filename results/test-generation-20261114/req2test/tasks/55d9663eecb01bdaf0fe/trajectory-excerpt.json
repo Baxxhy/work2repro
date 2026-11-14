@@ -1,0 +1,871 @@
+{
+  "original_record": "/root/lby-docker/req2test/user/runs/req2test-subset160-20261112-v1/generation/55d9663eecb01bdaf0fe/attempt-1/workspaces/0000.log",
+  "complete_trace": false,
+  "string_limit": 4000,
+  "events": [
+    {
+      "type": "thread.started",
+      "thread_id": "01a1cfb6-20cf-73d0-a40f-8a68447305e2"
+    },
+    {
+      "type": "turn.started"
+    },
+    {
+      "type": "item.completed",
+      "item": {
+        "id": "item_0",
+        "type": "agent_message",
+        "text": "I’ll inspect the retained API suite contexts, the promotion production endpoints/models, and the feature setup to match the project’s existing request and assertion conventions. Then I’ll add only the needed Api context code (plus explicit service wiring if necessary)."
+      }
+    },
+    {
+      "type": "item.started",
+      "item": {
+        "id": "item_1",
+        "type": "command_execution",
+        "command": "/usr/bin/bash -lc ls",
+        "aggregated_output": "",
+        "exit_code": null,
+        "status": "in_progress"
+      }
+    },
+    {
+      "type": "item.completed",
+      "item": {
+        "id": "item_1",
+        "type": "command_execution",
+        "command": "/usr/bin/bash -lc ls",
+        "aggregated_output": "repo\n",
+        "exit_code": 0,
+        "status": "completed"
+      }
+    },
+    {
+      "type": "item.started",
+      "item": {
+        "id": "item_2",
+        "type": "command_execution",
+        "command": "/usr/bin/bash -lc 'rg --files repo/src/Sylius/Behat'",
+        "aggregated_output": "",
+        "exit_code": null,
+        "status": "in_progress"
+      }
+    },
+    {
+      "type": "item.completed",
+      "item": {
+        "id": "item_2",
+        "type": "command_execution",
+        "command": "/usr/bin/bash -lc 'rg --files repo/src/Sylius/Behat'",
+        "aggregated_output": "/usr/bin/bash: line 1: /usr/bin/rg: Permission denied\n",
+        "exit_code": 126,
+        "status": "failed"
+      }
+    },
+    {
+      "type": "item.started",
+      "item": {
+        "id": "item_3",
+        "type": "command_execution",
+        "command": "/usr/bin/bash -lc 'rg -n \"catalog promotion|CatalogPromotion|catalog_promotions|promotion\" repo/src/Sylius/Behat repo/src/Sylius/Bundle repo/src/Sylius/Component | head -200'",
+        "aggregated_output": "",
+        "exit_code": null,
+        "status": "in_progress"
+      }
+    },
+    {
+      "type": "item.completed",
+      "item": {
+        "id": "item_3",
+        "type": "command_execution",
+        "command": "/usr/bin/bash -lc 'rg -n \"catalog promotion|CatalogPromotion|catalog_promotions|promotion\" repo/src/Sylius/Behat repo/src/Sylius/Bundle repo/src/Sylius/Component | head -200'",
+        "aggregated_output": "/usr/bin/bash: line 1: /usr/bin/rg: Permission denied\n",
+        "exit_code": 0,
+        "status": "completed"
+      }
+    },
+    {
+      "type": "item.started",
+      "item": {
+        "id": "item_4",
+        "type": "command_execution",
+        "command": "/usr/bin/bash -lc \"sed -n '1,180p' repo/sylius/features/admin/promotion/managing_catalog_promotions/creating_catalog_promotion.feature; sed -n '1,200p' repo/TARGET_CONTRACTS.md\"",
+        "aggregated_output": "",
+        "exit_code": null,
+        "status": "in_progress"
+      }
+    },
+    {
+      "type": "item.completed",
+      "item": {
+        "id": "item_4",
+        "type": "command_execution",
+        "command": "/usr/bin/bash -lc \"sed -n '1,180p' repo/sylius/features/admin/promotion/managing_catalog_promotions/creating_catalog_promotion.feature; sed -n '1,200p' repo/TARGET_CONTRACTS.md\"",
+        "aggregated_output": "sed: can't read repo/sylius/features/admin/promotion/managing_catalog_promotions/creating_catalog_promotion.feature: No such file or directory\n# TARGET_CONTRACTS — Sylius 2.3 API arm\n\nCommon reviewed declaration and behavior supplement for both checked-interface hidden views.\n\nUpstream source: `70cf6ca686ec3efa4635a451bdd2b1358ab71d42`.\nCurrent readable projection: `source_files_digest 85ee08d44e42ae299ae6ce03da46c76c1255914a8a6c9b0eb0a5cfd6c71d8d76`; `runtime_seed_digest 4684969ad20842711c1d8a4150f3d8b1d195ae9eee597739663cc8313ced098a`; 11073 files; collection tag `sylius-checked-interfaces-v2-collection-20260920`. The runtime refresh changes only the recorder.\n\nThe reviewed API text below is preserved from `onb-sprint-3-sylius`. Its selection-count and review-history notes describe the historical maps/samples, not this 319-implementation census. Current eligibility is 666 of 1,950 requirements, with 1,284 reviewed exclusions. The current map selects only eligible entries; historical fallback targets are not used.\n\nThis supplement covers **the 160 declarations in 102 classes that the final map\nhides**, and nothing else. 159 of those declarations in 101 classes are hidden on\na target-bearing requirement; the 160th, `MessengerPersistProcessor::process`, is\nhidden only as the labelled fallback of the 1,277 excluded items (§16). It replaces the DRAFT scaffold carried from\n`maps/sylius/TARGET_CONTRACTS.md` at `c7f91589`, which was written for the draft\nmap's principal set.\n\nNo declaration below promises inherited framework defaults unless explicitly cited.\n\n## How to read an entry\n\nEach class gets its declaration line and its registration (service id, registry\ntag, API Platform operation, or Doctrine resource entry), then one entry per\nhidden body:\n\n* the **full signature** as declared — visibility, `static`/`final`, name, typed\n  parameters with defaults, return type — with the body's line span;\n* the **interface or abstract method it implements**, with that declaration's own\n  docblock where it has one;\n* the declaration's **own docblock**;\n* the **exceptions** it declares (`@throws`) or constructs (`throw new`);\n* one **behavioural contract** sentence, written from the requirements that select\n  the body and from its callers. Every clause names its source in italics.\n\nA contract sentence says what a caller may rely on. It deliberately does **not**\nsay how the body computes it: a reader with only this file can write a test that\npins the behaviour, and cannot reconstruct the implementation. Where the only\nhonest statement is the declaration itself, the entry says **signature only** and\ngives the reason — for a private helper whose sole caller is another hidden body,\nno caller-observable contract exists to state.\n\nTwo source labels need a word:\n\n* *(requirement `sylius/features/...:N`)* cites a release item whose gold coverage\n  selects this body; the item id is checked against the map's own selection for\n  that declaration, so a citation here is never decorative.\n* *(caller `src/...php:N`)* cites a first-party call site in a file that imports\n  the declaring class or one of its interfaces. Call sites in `tests/` and in\n  same-named methods of unrelated classes are excluded.\n\n## What this supplement does not promise\n\n* It does not describe the 1,277 items the ruling excludes from the level-2\n  sample; those items hide only the labelled fallback principal\n  (`MessengerPersistProcessor::process`, §16).\n* It does not restate the readable source. Constructors, class constants,\n  interfaces, DTO commands, constraint classes, form types and service\n  configuration all stay visible in every view; where a contract fact lives in\n  one of them, this file cites it rather than copying it.\n* It makes no claim about Symfony, Doctrine, API Platform or Webmozart\n  behaviour beyond the signatures Sylius declares against them.\n* Under `all_hidden` the view replaces **every** production body, not only these 160.\n  This file documents the map's targe\n[TRUNCATED: full original retained on experiment server]",
+        "exit_code": 0,
+        "status": "completed"
+      }
+    },
+    {
+      "type": "item.started",
+      "item": {
+        "id": "item_5",
+        "type": "command_execution",
+        "command": "/usr/bin/bash -lc \"find repo/src/Sylius/Behat -type f | head; find repo -path '*creating_catalog_promotion.feature'\"",
+        "aggregated_output": "",
+        "exit_code": null,
+        "status": "in_progress"
+      }
+    },
+    {
+      "type": "item.completed",
+      "item": {
+        "id": "item_5",
+        "type": "command_execution",
+        "command": "/usr/bin/bash -lc \"find repo/src/Sylius/Behat -type f | head; find repo -path '*creating_catalog_promotion.feature'\"",
+        "aggregated_output": "repo/src/Sylius/Behat/tests/NotificationTypeTest.php\nrepo/src/Sylius/Behat/tests/Service/DriverHelperTest.php\nrepo/src/Sylius/Behat/tests/Service/Resolver/CurrentPageResolverTest.php\nrepo/src/Sylius/Behat/tests/Service/Setter/ChannelContextSetterTest.php\nrepo/src/Sylius/Behat/tests/Service/SharedStorageTest.php\nrepo/src/Sylius/Behat/tests/Service/Generator/UploadedImagePathGeneratorTest.php\nrepo/src/Sylius/Behat/tests/Service/Generator/ford.jpg\nrepo/src/Sylius/Behat/tests/Service/Converter/IriConverterTest.php\nrepo/src/Sylius/Behat/tests/Service/NotificationCheckerTest.php\nrepo/src/Sylius/Behat/tests/Service/SharedSecurityServiceTest.php\nrepo/features/admin/promotion/managing_catalog_promotions/creating_catalog_promotion.feature\n",
+        "exit_code": 0,
+        "status": "completed"
+      }
+    },
+    {
+      "type": "item.started",
+      "item": {
+        "id": "item_6",
+        "type": "command_execution",
+        "command": "/usr/bin/bash -lc 'find repo/src/Sylius/Behat/Context -maxdepth 4 -type f'",
+        "aggregated_output": "",
+        "exit_code": null,
+        "status": "in_progress"
+      }
+    },
+    {
+      "type": "item.started",
+      "item": {
+        "id": "item_7",
+        "type": "command_execution",
+        "command": "/usr/bin/bash -lc 'rg -n \"class .*CatalogPromotion|catalog-promotions|catalog_promotions\" repo/src/Sylius/Bundle/ApiBundle repo/src/Sylius/Component/CatalogPromotion repo/src/Sylius/Bundle/CatalogPromotionBundle | head -150'",
+        "aggregated_output": "",
+        "exit_code": null,
+        "status": "in_progress"
+      }
+    },
+    {
+      "type": "item.completed",
+      "item": {
+        "id": "item_7",
+        "type": "command_execution",
+        "command": "/usr/bin/bash -lc 'rg -n \"class .*CatalogPromotion|catalog-promotions|catalog_promotions\" repo/src/Sylius/Bundle/ApiBundle repo/src/Sylius/Component/CatalogPromotion repo/src/Sylius/Bundle/CatalogPromotionBundle | head -150'",
+        "aggregated_output": "/usr/bin/bash: line 1: /usr/bin/rg: Permission denied\n",
+        "exit_code": 0,
+        "status": "completed"
+      }
+    },
+    {
+      "type": "item.completed",
+      "item": {
+        "id": "item_6",
+        "type": "command_execution",
+        "command": "/usr/bin/bash -lc 'find repo/src/Sylius/Behat/Context -maxdepth 4 -type f'",
+        "aggregated_output": "repo/src/Sylius/Behat/Context/Setup/TaxonomyContext.php\nrepo/src/Sylius/Behat/Context/Setup/TaxationContext.php\nrepo/src/Sylius/Behat/Context/Setup/CheckoutContext.php\nrepo/src/Sylius/Behat/Context/Setup/ProductOptionContext.php\nrepo/src/Sylius/Behat/Context/Setup/CalendarContext.php\nrepo/src/Sylius/Behat/Context/Setup/ProductTaxonContext.php\nrepo/src/Sylius/Behat/Context/Setup/AdminSecurityContext.php\nrepo/src/Sylius/Behat/Context/Setup/ZoneContext.php\nrepo/src/Sylius/Behat/Context/Setup/ProductReviewContext.php\nrepo/src/Sylius/Behat/Context/Setup/LocaleContext.php\nrepo/src/Sylius/Behat/Context/Setup/ShippingCategoryContext.php\nrepo/src/Sylius/Behat/Context/Setup/ProductAssociationContext.php\nrepo/src/Sylius/Behat/Context/Setup/ShippingContext.php\nrepo/src/Sylius/Behat/Context/Setup/AddressContext.php\nrepo/src/Sylius/Behat/Context/Setup/PaymentContext.php\nrepo/src/Sylius/Behat/Context/Setup/UserContext.php\nrepo/src/Sylius/Behat/Context/Setup/CustomerGroupContext.php\nrepo/src/Sylius/Behat/Context/Setup/PriceHistoryContext.php\nrepo/src/Sylius/Behat/Context/Setup/PromotionContext.php\nrepo/src/Sylius/Behat/Context/Setup/CustomerContext.php\nrepo/src/Sylius/Behat/Context/Setup/CartContext.php\nrepo/src/Sylius/Behat/Context/Setup/ProductAttributeContext.php\nrepo/src/Sylius/Behat/Context/Setup/ChannelContext.php\nrepo/src/Sylius/Behat/Context/Setup/Checkout/ShippingContext.php\nrepo/src/Sylius/Behat/Context/Setup/Checkout/AddressContext.php\nrepo/src/Sylius/Behat/Context/Setup/Checkout/PaymentContext.php\nrepo/src/Sylius/Behat/Context/Setup/CurrencyContext.php\nrepo/src/Sylius/Behat/Context/Setup/PaymentRequestContext.php\nrepo/src/Sylius/Behat/Context/Setup/ExchangeRateContext.php\nrepo/src/Sylius/Behat/Context/Setup/ShopSecurityContext.php\nrepo/src/Sylius/Behat/Context/Setup/CatalogPromotionContext.php\nrepo/src/Sylius/Behat/Context/Setup/AdminUserContext.php\nrepo/src/Sylius/Behat/Context/Setup/ProductContext.php\nrepo/src/Sylius/Behat/Context/Setup/GeographicalContext.php\nrepo/src/Sylius/Behat/Context/Setup/ThemeContext.php\nrepo/src/Sylius/Behat/Context/Setup/OrderContext.php\nrepo/src/Sylius/Behat/Context/Hybrid/Setup/SecurityContext.php\nrepo/src/Sylius/Behat/Context/Hybrid/Setup/CartContext.php\nrepo/src/Sylius/Behat/Context/Transform/CouponContext.php\nrepo/src/Sylius/Behat/Context/Transform/CountryContext.php\nrepo/src/Sylius/Behat/Context/Transform/ShippingCalculatorContext.php\nrepo/src/Sylius/Behat/Context/Transform/ProductOptionContext.php\nrepo/src/Sylius/Behat/Context/Transform/ShopUserContext.php\nrepo/src/Sylius/Behat/Context/Transform/ZoneMemberContext.php\nrepo/src/Sylius/Behat/Context/Transform/TaxRateContext.php\nrepo/src/Sylius/Behat/Context/Transform/TaxCategoryContext.php\nrepo/src/Sylius/Behat/Context/Transform/PaymentMethodContext.php\nrepo/src/Sylius/Behat/Context/Transform/ZoneContext.php\nrepo/src/Sylius/Behat/Context/Transform/ProductReviewContext.php\nrepo/src/Sylius/Behat/Context/Transform/LocaleContext.php\nrepo/src/Sylius/Behat/Context/Transform/ShippingCategoryContext.php\nrepo/src/Sylius/Behat/Context/Transform/AddressContext.php\nrepo/src/Sylius/Behat/Context/Transform/DateTimeContext.php\nrepo/src/Sylius/Behat/Context/Transform/LexicalContext.php\nrepo/src/Sylius/Behat/Context/Transform/UserContext.php\nrepo/src/Sylius/Behat/Context/Transform/CustomerGroupContext.php\nrepo/src/Sylius/Behat/Context/Transform/ProductOptionValueContext.php\nrepo/src/Sylius/Behat/Context/Transform/TaxonContext.php\nrepo/src/Sylius/Behat/Context/Transform/SharedStorageContext.php\nrepo/src/Sylius/Behat/Context/Transform/PromotionContext.php\nrepo/src/Sylius/Behat/Context/Transform/ProductAssociationTypeContext.php\nrepo/src/Sylius/Behat/Context/Transform/ProductVariantContext.php\nrepo/src/Sylius/Behat/Context/Transform/CustomerContext.php\nrepo/src/Sylius/Behat/Context/Transform/CartContext.php\nrepo/src/Sylius/Behat/Context/Transform/ProductAttributeContext.php\nrepo/src/Sylius/Behat/Context/Transform/ChannelContext.php\nrepo/src/Sylius/Behat/Context/Transf\n[TRUNCATED: full original retained on experiment server]",
+        "exit_code": 0,
+        "status": "completed"
+      }
+    },
+    {
+      "type": "item.started",
+      "item": {
+        "id": "item_8",
+        "type": "command_execution",
+        "command": "/usr/bin/bash -lc \"sed -n '1,150p' repo/features/admin/promotion/managing_catalog_promotions/creating_catalog_promotion.feature; find repo/src/Sylius/Behat/Context/Api -type f 2>/dev/null\"",
+        "aggregated_output": "",
+        "exit_code": null,
+        "status": "in_progress"
+      }
+    },
+    {
+      "type": "item.completed",
+      "item": {
+        "id": "item_8",
+        "type": "command_execution",
+        "command": "/usr/bin/bash -lc \"sed -n '1,150p' repo/features/admin/promotion/managing_catalog_promotions/creating_catalog_promotion.feature; find repo/src/Sylius/Behat/Context/Api -type f 2>/dev/null\"",
+        "aggregated_output": "@managing_catalog_promotions\nFeature: Creating a catalog promotion\n    In order to set up a catalog promotion for some special occasions\n    As an Administrator\n    I want to have an option to configure such a promotion\n\n    Background:\n        Given the store operates on a single channel in \"United States\"\n        And the store has \"Clothes\" taxonomy\n        And the store has a \"T-Shirt\" configurable product\n        And this product belongs to \"Clothes\"\n        And this product has \"PHP T-Shirt\" variant priced at \"$20.00\"\n        And this product has \"Kotlin T-Shirt\" variant priced at \"$40.00\"\n        And I am logged in as an administrator\n\n    @api @ui\n    Scenario: Creating a simple catalog promotion only with code and name\n        When I create a new catalog promotion with \"winter_sale\" code and \"Winter sale\" name\n        Then there should be 1 new catalog promotion on the list\n        And it should have \"winter_sale\" code and \"Winter sale\" name\n\n    @api @ui @mink:chromedriver\n    Scenario: Creating an enabled catalog promotion\n        When I want to create a new catalog promotion\n        And I specify its code as \"winter_sale\"\n        And I name it \"Winter sale\"\n        And I specify its label as \"Winter -50%\" in \"English (United States)\"\n        And I describe it as \"This promotion gives a 50% discount on all products\" in \"English (United States)\"\n        And I add scope that applies on variants \"PHP T-Shirt\" variant and \"Kotlin T-Shirt\" variant\n        And I add action that gives \"50%\" percentage discount\n        And I make it available in channel \"United States\"\n        And I enable it\n        And I add it\n        Then there should be 1 new catalog promotion on the list\n        And it should have \"winter_sale\" code and \"Winter sale\" name\n        And \"Winter sale\" catalog promotion should apply to \"PHP T-Shirt\" variant and \"Kotlin T-Shirt\" variant\n        And it should have \"50.00%\" discount\n        And it should be active\n        And \"PHP T-Shirt\" variant and \"Kotlin T-Shirt\" variant should be discounted\n\n    @api @ui @mink:chromedriver\n    Scenario: Creating a disabled catalog promotion\n        When I want to create a new catalog promotion\n        And I specify its code as \"winter_sale\"\n        And I name it \"Winter sale\"\n        And I specify its label as \"Winter -50%\" in \"English (United States)\"\n        And I describe it as \"This promotion gives a 50% discount on all products\" in \"English (United States)\"\n        And I add scope that applies on variants \"PHP T-Shirt\" variant and \"Kotlin T-Shirt\" variant\n        And I add action that gives \"50%\" percentage discount\n        And I disable it\n        And I add it\n        Then there should be 1 new catalog promotion on the list\n        And it should have \"winter_sale\" code and \"Winter sale\" name\n        And \"Winter sale\" catalog promotion should apply to \"PHP T-Shirt\" variant and \"Kotlin T-Shirt\" variant\n        And it should have \"50.00%\" discount\n        And it should be inactive\n        And \"PHP T-Shirt\" variant and \"Kotlin T-Shirt\" variant should not be discounted\n\n    @api @ui\n    Scenario: Creating a catalog promotion for channel\n        When I want to create a new catalog promotion\n        And I specify its code as \"winter_sale\"\n        And I name it \"Winter sale\"\n        And I make it available in channel \"United States\"\n        And I add it\n        Then there should be 1 new catalog promotion on the list\n        And it should have \"winter_sale\" code and \"Winter sale\" name\n        And the catalog promotion \"Winter sale\" should be available in channel \"United States\"\n\n    @api @ui @mink:chromedriver\n    Scenario: Creating a catalog promotion with fixed discount action\n        When I want to create a new catalog promotion\n        And I specify its code as \"winter_sale\"\n        And I name it \"Winter sale\"\n        And I add scope that applies on \"Clothes\" taxon\n        And I add action that gives \"$10.00\" of fixed discount in the \"United States\" channel\n        And\n[TRUNCATED: full original retained on experiment server]",
+        "exit_code": 1,
+        "status": "failed"
+      }
+    },
+    {
+      "type": "item.started",
+      "item": {
+        "id": "item_9",
+        "type": "command_execution",
+        "command": "/usr/bin/bash -lc \"find repo/src/Sylius/Behat/Client repo/src/Sylius/Behat/Service -type f | head -30; find repo/src/Sylius/Bundle/ApiBundle/Resources/config -iname '*catalog*'\"",
+        "aggregated_output": "",
+        "exit_code": null,
+        "status": "in_progress"
+      }
+    },
+    {
+      "type": "item.completed",
+      "item": {
+        "id": "item_9",
+        "type": "command_execution",
+        "command": "/usr/bin/bash -lc \"find repo/src/Sylius/Behat/Client repo/src/Sylius/Behat/Service -type f | head -30; find repo/src/Sylius/Bundle/ApiBundle/Resources/config -iname '*catalog*'\"",
+        "aggregated_output": "repo/src/Sylius/Behat/Client/ResponseCheckerInterface.php\nrepo/src/Sylius/Behat/Client/ApiSecurityClientInterface.php\nrepo/src/Sylius/Behat/Client/ApiPlatformClient.php\nrepo/src/Sylius/Behat/Client/RequestInterface.php\nrepo/src/Sylius/Behat/Client/ContentTypeGuide.php\nrepo/src/Sylius/Behat/Client/ContentTypeGuideInterface.php\nrepo/src/Sylius/Behat/Client/ResponseChecker.php\nrepo/src/Sylius/Behat/Client/RequestFactory.php\nrepo/src/Sylius/Behat/Client/RequestFactoryInterface.php\nrepo/src/Sylius/Behat/Client/RequestBuilder.php\nrepo/src/Sylius/Behat/Client/ApiPlatformSecurityClient.php\nrepo/src/Sylius/Behat/Client/ApiClientInterface.php\nrepo/src/Sylius/Behat/Client/Request.php\nrepo/src/Sylius/Behat/Client/RequestBuilderInterface.php\nrepo/src/Sylius/Behat/Service/RememberMeAwareSecurityServiceInterface.php\nrepo/src/Sylius/Behat/Service/Resolver/CurrentPageResolver.php\nrepo/src/Sylius/Behat/Service/Resolver/CurrentPageResolverInterface.php\nrepo/src/Sylius/Behat/Service/Setter/CookieSetter.php\nrepo/src/Sylius/Behat/Service/Setter/CookieSetterInterface.php\nrepo/src/Sylius/Behat/Service/Setter/ChannelContextSetterInterface.php\nrepo/src/Sylius/Behat/Service/Setter/ChannelContextSetter.php\nrepo/src/Sylius/Behat/Service/AutocompleteHelper.php\nrepo/src/Sylius/Behat/Service/SessionManager.php\nrepo/src/Sylius/Behat/Service/SharedStorage.php\nrepo/src/Sylius/Behat/Service/SprintfResponseEscaper.php\nrepo/src/Sylius/Behat/Service/PaymentRequest/CommandHandler/Offline/NotifyPaymentRequestHandler.php\nrepo/src/Sylius/Behat/Service/PaymentRequest/Command/Offline/NotifyPaymentRequest.php\nrepo/src/Sylius/Behat/Service/PaymentRequest/CommandProvider/Offline/NotifyPaymentRequestCommandProvider.php\nrepo/src/Sylius/Behat/Service/PaymentRequest/Provider/DummyNotifyPaymentProvider.php\nrepo/src/Sylius/Behat/Service/ResponseLoaderInterface.php\nrepo/src/Sylius/Bundle/ApiBundle/Resources/config/serialization/CatalogPromotion.xml\nrepo/src/Sylius/Bundle/ApiBundle/Resources/config/serialization/CatalogPromotionTranslation.xml\nrepo/src/Sylius/Bundle/ApiBundle/Resources/config/serialization/CatalogPromotionScope.xml\nrepo/src/Sylius/Bundle/ApiBundle/Resources/config/serialization/CatalogPromotionAction.xml\nrepo/src/Sylius/Bundle/ApiBundle/Resources/config/api_platform/resources/shop/CatalogPromotion.xml\nrepo/src/Sylius/Bundle/ApiBundle/Resources/config/api_platform/resources/admin/CatalogPromotion.xml\nrepo/src/Sylius/Bundle/ApiBundle/Resources/config/api_platform/resources/admin/CatalogPromotionTranslation.xml\nrepo/src/Sylius/Bundle/ApiBundle/Resources/config/api_platform/resources/admin/CatalogPromotionScope.xml\nrepo/src/Sylius/Bundle/ApiBundle/Resources/config/api_platform/resources/admin/CatalogPromotionAction.xml\nrepo/src/Sylius/Bundle/ApiBundle/Resources/config/api_platform/properties/CatalogPromotion.xml\nrepo/src/Sylius/Bundle/ApiBundle/Resources/config/api_platform/properties/CatalogPromotionTranslation.xml\nrepo/src/Sylius/Bundle/ApiBundle/Resources/config/api_platform/properties/CatalogPromotionScope.xml\nrepo/src/Sylius/Bundle/ApiBundle/Resources/config/api_platform/properties/CatalogPromotionAction.xml\n",
+        "exit_code": 0,
+        "status": "completed"
+      }
+    },
+    {
+      "type": "item.started",
+      "item": {
+        "id": "item_10",
+        "type": "command_execution",
+        "command": "/usr/bin/bash -lc \"sed -n '1,200p' repo/src/Sylius/Behat/Context/Setup/CatalogPromotionContext.php; sed -n '1,200p' repo/src/Sylius/Behat/Context/Transform/CatalogPromotionContext.php\"",
+        "aggregated_output": "",
+        "exit_code": null,
+        "status": "in_progress"
+      }
+    },
+    {
+      "type": "item.completed",
+      "item": {
+        "id": "item_10",
+        "type": "command_execution",
+        "command": "/usr/bin/bash -lc \"sed -n '1,200p' repo/src/Sylius/Behat/Context/Setup/CatalogPromotionContext.php; sed -n '1,200p' repo/src/Sylius/Behat/Context/Transform/CatalogPromotionContext.php\"",
+        "aggregated_output": "<?php\n\n/*\n * This file is part of the Sylius package.\n *\n * (c) Sylius Sp. z o.o.\n *\n * For the full copyright and license information, please view the LICENSE\n * file that was distributed with this source code.\n */\n\ndeclare(strict_types=1);\n\nnamespace Sylius\\Behat\\Context\\Setup;\n\nuse Behat\\Behat\\Context\\Context;\nuse Behat\\Step\\Given;\nuse Behat\\Step\\When;\nuse Doctrine\\ORM\\EntityManagerInterface;\nuse Sylius\\Abstraction\\StateMachine\\StateMachineInterface;\nuse Sylius\\Behat\\Service\\SharedStorageInterface;\nuse Sylius\\Bundle\\CoreBundle\\CatalogPromotion\\Calculator\\FixedDiscountPriceCalculator;\nuse Sylius\\Bundle\\CoreBundle\\CatalogPromotion\\Calculator\\PercentageDiscountPriceCalculator;\nuse Sylius\\Bundle\\CoreBundle\\CatalogPromotion\\Checker\\InForProductScopeVariantChecker;\nuse Sylius\\Bundle\\CoreBundle\\CatalogPromotion\\Checker\\InForTaxonsScopeVariantChecker;\nuse Sylius\\Bundle\\CoreBundle\\CatalogPromotion\\Checker\\InForVariantsScopeVariantChecker;\nuse Sylius\\Bundle\\CoreBundle\\Fixture\\Factory\\ExampleFactoryInterface;\nuse Sylius\\Component\\Channel\\Repository\\ChannelRepositoryInterface;\nuse Sylius\\Component\\Core\\Formatter\\StringInflector;\nuse Sylius\\Component\\Core\\Model\\CatalogPromotionInterface;\nuse Sylius\\Component\\Core\\Model\\ChannelInterface;\nuse Sylius\\Component\\Core\\Model\\ProductInterface;\nuse Sylius\\Component\\Core\\Model\\ProductVariantInterface;\nuse Sylius\\Component\\Core\\Model\\TaxonInterface;\nuse Sylius\\Component\\Promotion\\Event\\CatalogPromotionCreated;\nuse Sylius\\Component\\Promotion\\Event\\CatalogPromotionUpdated;\nuse Sylius\\Component\\Promotion\\Model\\CatalogPromotionActionInterface;\nuse Sylius\\Component\\Promotion\\Model\\CatalogPromotionScopeInterface;\nuse Sylius\\Component\\Promotion\\Model\\CatalogPromotionStates;\nuse Sylius\\Component\\Promotion\\Model\\CatalogPromotionTransitions;\nuse Sylius\\Resource\\Factory\\FactoryInterface;\nuse Symfony\\Component\\Messenger\\MessageBusInterface;\n\nfinal class CatalogPromotionContext implements Context\n{\n    public function __construct(\n        private ExampleFactoryInterface $catalogPromotionExampleFactory,\n        private FactoryInterface $catalogPromotionScopeFactory,\n        private FactoryInterface $catalogPromotionActionFactory,\n        private EntityManagerInterface $entityManager,\n        private ChannelRepositoryInterface $channelRepository,\n        private StateMachineInterface $stateMachine,\n        private MessageBusInterface $eventBus,\n        private SharedStorageInterface $sharedStorage,\n    ) {\n    }\n\n    #[Given('there is a catalog promotion with :code code and :name name')]\n    #[Given('there is also a catalog promotion with :code code and :name name')]\n    public function thereIsACatalogPromotionWithCodeAndName(string $code, string $name): void\n    {\n        $this->createCatalogPromotion($name, $code);\n\n        $this->entityManager->flush();\n    }\n\n    #[Given('/^(it) is enabled$/')]\n    public function itIsEnabled(CatalogPromotionInterface $catalogPromotion): void\n    {\n        $catalogPromotion->setEnabled(true);\n        $this->entityManager->flush();\n\n        $this->eventBus->dispatch(new CatalogPromotionUpdated($catalogPromotion->getCode()));\n    }\n\n    #[Given('/^(this catalog promotion) is disabled$/')]\n    public function thisCatalogPromotionIsDisabled(CatalogPromotionInterface $catalogPromotion): void\n    {\n        $catalogPromotion->setEnabled(false);\n        $this->entityManager->flush();\n\n        $this->eventBus->dispatch(new CatalogPromotionUpdated($catalogPromotion->getCode()));\n    }\n\n    #[Given('there are catalog promotions named :firstName and :secondName')]\n    #[Given('there is a catalog promotion named :name')]\n    public function thereAreCatalogPromotionsNamed(string ...$names): void\n    {\n        foreach ($names as $name) {\n            $this->createCatalogPromotion($name);\n        }\n\n        $this->entityManager->flush();\n    }\n\n    #[Given('the catalog promotion :catalogPromotion is available in :channel')]\n    #[Given('/^(this catalog promotion) is(?:| also) available in th\n[TRUNCATED: full original retained on experiment server]",
+        "exit_code": 0,
+        "status": "completed"
+      }
+    },
+    {
+      "type": "item.started",
+      "item": {
+        "id": "item_11",
+        "type": "command_execution",
+        "command": "/usr/bin/bash -lc \"sed -n '1,180p' repo/src/Sylius/Behat/Context/Api/ 2>/dev/null; sed -n '1,200p' repo/src/Sylius/Behat/Context/Setup/ProductContext.php; sed -n '1,150p' repo/src/Sylius/Behat/Context/Transform/ProductContext.php\"",
+        "aggregated_output": "",
+        "exit_code": null,
+        "status": "in_progress"
+      }
+    },
+    {
+      "type": "item.started",
+      "item": {
+        "id": "item_12",
+        "type": "command_execution",
+        "command": "/usr/bin/bash -lc \"sed -n '1,200p' repo/src/Sylius/Bundle/ApiBundle/Resources/config/api_platform/resources/admin/CatalogPromotion.xml; sed -n '1,180p' repo/src/Sylius/Bundle/ApiBundle/Resources/config/api_platform/resources/admin/CatalogPromotionScope.xml; sed -n '1,150p' repo/src/Sylius/Bundle/ApiBundle/Resources/config/api_platform/resources/admin/CatalogPromotionAction.xml\"",
+        "aggregated_output": "",
+        "exit_code": null,
+        "status": "in_progress"
+      }
+    },
+    {
+      "type": "item.completed",
+      "item": {
+        "id": "item_11",
+        "type": "command_execution",
+        "command": "/usr/bin/bash -lc \"sed -n '1,180p' repo/src/Sylius/Behat/Context/Api/ 2>/dev/null; sed -n '1,200p' repo/src/Sylius/Behat/Context/Setup/ProductContext.php; sed -n '1,150p' repo/src/Sylius/Behat/Context/Transform/ProductContext.php\"",
+        "aggregated_output": "<?php\n\n/*\n * This file is part of the Sylius package.\n *\n * (c) Sylius Sp. z o.o.\n *\n * For the full copyright and license information, please view the LICENSE\n * file that was distributed with this source code.\n */\n\ndeclare(strict_types=1);\n\nnamespace Sylius\\Behat\\Context\\Setup;\n\nuse Behat\\Behat\\Context\\Context;\nuse Behat\\Gherkin\\Node\\TableNode;\nuse Behat\\Mink\\Element\\NodeElement;\nuse Behat\\Step\\Given;\nuse Doctrine\\Persistence\\ObjectManager;\nuse Sylius\\Behat\\Service\\SharedStorageInterface;\nuse Sylius\\Component\\Core\\Event\\ProductUpdated;\nuse Sylius\\Component\\Core\\Formatter\\StringInflector;\nuse Sylius\\Component\\Core\\Model\\ChannelInterface;\nuse Sylius\\Component\\Core\\Model\\ChannelPricingInterface;\nuse Sylius\\Component\\Core\\Model\\ProductImageInterface;\nuse Sylius\\Component\\Core\\Model\\ProductInterface;\nuse Sylius\\Component\\Core\\Model\\ProductTaxonInterface;\nuse Sylius\\Component\\Core\\Model\\ProductTranslationInterface;\nuse Sylius\\Component\\Core\\Model\\ProductVariantInterface;\nuse Sylius\\Component\\Core\\Model\\TaxonInterface;\nuse Sylius\\Component\\Core\\Repository\\ProductRepositoryInterface;\nuse Sylius\\Component\\Core\\Repository\\ProductVariantRepositoryInterface;\nuse Sylius\\Component\\Core\\Uploader\\ImageUploaderInterface;\nuse Sylius\\Component\\Product\\Factory\\ProductFactoryInterface;\nuse Sylius\\Component\\Product\\Generator\\ProductVariantGeneratorInterface;\nuse Sylius\\Component\\Product\\Generator\\SlugGeneratorInterface;\nuse Sylius\\Component\\Product\\Model\\ProductOption;\nuse Sylius\\Component\\Product\\Model\\ProductOptionInterface;\nuse Sylius\\Component\\Product\\Model\\ProductOptionValueInterface;\nuse Sylius\\Component\\Product\\Model\\ProductVariantTranslationInterface;\nuse Sylius\\Component\\Product\\Resolver\\ProductVariantResolverInterface;\nuse Sylius\\Component\\Shipping\\Model\\ShippingCategoryInterface;\nuse Sylius\\Component\\Taxation\\Model\\TaxCategoryInterface;\nuse Sylius\\Resource\\Factory\\FactoryInterface;\nuse Symfony\\Component\\HttpFoundation\\File\\UploadedFile;\nuse Symfony\\Component\\Messenger\\MessageBusInterface;\nuse Webmozart\\Assert\\Assert;\n\nfinal readonly class ProductContext implements Context\n{\n    /**\n     * @param ProductRepositoryInterface<ProductInterface> $productRepository\n     * @param ProductFactoryInterface<ProductInterface> $productFactory\n     * @param FactoryInterface<ProductTranslationInterface> $productTranslationFactory\n     * @param FactoryInterface<ProductVariantInterface> $productVariantFactory\n     * @param FactoryInterface<ProductVariantTranslationInterface> $productVariantTranslationFactory\n     * @param FactoryInterface<ChannelPricingInterface> $channelPricingFactory\n     * @param FactoryInterface<ProductOptionInterface> $productOptionFactory\n     * @param FactoryInterface<ProductOptionValueInterface> $productOptionValueFactory\n     * @param FactoryInterface<ProductImageInterface> $productImageFactory\n     * @param FactoryInterface<ProductTaxonInterface> $productTaxonFactory\n     * @param ProductVariantRepositoryInterface<ProductVariantInterface> $productVariantRepository\n     */\n    public function __construct(\n        private SharedStorageInterface $sharedStorage,\n        private ProductRepositoryInterface $productRepository,\n        private ProductFactoryInterface $productFactory,\n        private FactoryInterface $productTranslationFactory,\n        private FactoryInterface $productVariantFactory,\n        private FactoryInterface $productVariantTranslationFactory,\n        private FactoryInterface $channelPricingFactory,\n        private FactoryInterface $productOptionFactory,\n        private FactoryInterface $productOptionValueFactory,\n        private FactoryInterface $productImageFactory,\n        private FactoryInterface $productTaxonFactory,\n        private ObjectManager $objectManager,\n        private ProductVariantGeneratorInterface $productVariantGenerator,\n        private ProductVariantRepositoryInterface $productVariantRepository,\n        private ProductVariantResolverInterface $defaultVariantResolver,\n        private ImageUpl\n[TRUNCATED: full original retained on experiment server]",
+        "exit_code": 0,
+        "status": "completed"
+      }
+    },
+    {
+      "type": "item.completed",
+      "item": {
+        "id": "item_12",
+        "type": "command_execution",
+        "command": "/usr/bin/bash -lc \"sed -n '1,200p' repo/src/Sylius/Bundle/ApiBundle/Resources/config/api_platform/resources/admin/CatalogPromotion.xml; sed -n '1,180p' repo/src/Sylius/Bundle/ApiBundle/Resources/config/api_platform/resources/admin/CatalogPromotionScope.xml; sed -n '1,150p' repo/src/Sylius/Bundle/ApiBundle/Resources/config/api_platform/resources/admin/CatalogPromotionAction.xml\"",
+        "aggregated_output": "<?xml version=\"1.0\" encoding=\"UTF-8\" ?>\n\n<!--\n\n This file is part of the Sylius package.\n\n (c) Sylius Sp. z o.o.\n\n For the full copyright and license information, please view the LICENSE\n file that was distributed with this source code.\n\n-->\n\n<resources\n    xmlns=\"https://api-platform.com/schema/metadata/resources-3.0\"\n    xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\n    xsi:schemaLocation=\"https://api-platform.com/schema/metadata/resources-3.0 https://api-platform.com/schema/metadata/resources-3.0.xsd\"\n>\n    <resource class=\"%sylius.model.catalog_promotion.class%\">\n        <operations>\n            <operation\n                name=\"sylius_api_admin_catalog_promotion_get_collection\"\n                class=\"ApiPlatform\\Metadata\\GetCollection\"\n                uriTemplate=\"/admin/catalog-promotions\"\n            >\n                <normalizationContext>\n                    <values>\n                        <value name=\"groups\">\n                            <values>\n                                <value>sylius:admin:catalog_promotion:index</value>\n                            </values>\n                        </value>\n                    </values>\n                </normalizationContext>\n                <filters>\n                    <filter>sylius_api.search_filter.admin.catalog_promotion</filter>\n                    <filter>sylius_api.boolean_filter.admin.catalog_promotion</filter>\n                    <filter>sylius_api.date_filter.admin.catalog_promotion</filter>\n                    <filter>sylius_api.channel_search_filter.admin.channel_aware</filter>\n                    <filter>sylius_api.order_filter.admin.catalog_promotion</filter>\n                </filters>\n            </operation>\n\n            <operation\n                name=\"sylius_api_admin_catalog_promotion_get\"\n                class=\"ApiPlatform\\Metadata\\Get\"\n                uriTemplate=\"/admin/catalog-promotions/{code}\"\n            >\n                <normalizationContext>\n                    <values>\n                        <value name=\"groups\">\n                            <values>\n                                <value>sylius:admin:catalog_promotion:show</value>\n                            </values>\n                        </value>\n                    </values>\n                </normalizationContext>\n            </operation>\n\n            <operation\n                name=\"sylius_api_admin_catalog_promotion_post\"\n                class=\"ApiPlatform\\Metadata\\Post\"\n                uriTemplate=\"/admin/catalog-promotions\"\n            >\n                <denormalizationContext>\n                    <values>\n                        <value name=\"groups\">\n                            <values>\n                                <value>sylius:admin:catalog_promotion:create</value>\n                            </values>\n                        </value>\n                    </values>\n                </denormalizationContext>\n                <normalizationContext>\n                    <values>\n                        <value name=\"groups\">\n                            <values>\n                                <value>sylius:admin:catalog_promotion:show</value>\n                            </values>\n                        </value>\n                    </values>\n                </normalizationContext>\n                <validationContext>\n                    <values>\n                        <value name=\"groups\">\n                            <values>\n                                <value>sylius</value>\n                            </values>\n                        </value>\n                    </values>\n                </validationContext>\n            </operation>\n\n            <operation\n                name=\"sylius_api_admin_catalog_promotion_put\"\n                class=\"ApiPlatform\\Metadata\\Put\"\n                uriTemplate=\"/admin/catalog-promotions/{code}\"\n            >\n                <denormalizationContext>\n                    <values>\n                        <value name=\"groups\">\n                  \n[TRUNCATED: full original retained on experiment server]",
+        "exit_code": 0,
+        "status": "completed"
+      }
+    },
+    {
+      "type": "item.started",
+      "item": {
+        "id": "item_13",
+        "type": "command_execution",
+        "command": "/usr/bin/bash -lc \"sed -n '1,180p' repo/src/Sylius/Behat/Client/RequestFactoryInterface.php; sed -n '1,180p' repo/src/Sylius/Behat/Client/ApiClientInterface.php; sed -n '1,180p' repo/src/Sylius/Behat/Client/ResponseCheckerInterface.php; sed -n '1,140p' repo/src/Sylius/Behat/Service/SharedStorageInterface.php\"",
+        "aggregated_output": "",
+        "exit_code": null,
+        "status": "in_progress"
+      }
+    },
+    {
+      "type": "item.completed",
+      "item": {
+        "id": "item_13",
+        "type": "command_execution",
+        "command": "/usr/bin/bash -lc \"sed -n '1,180p' repo/src/Sylius/Behat/Client/RequestFactoryInterface.php; sed -n '1,180p' repo/src/Sylius/Behat/Client/ApiClientInterface.php; sed -n '1,180p' repo/src/Sylius/Behat/Client/ResponseCheckerInterface.php; sed -n '1,140p' repo/src/Sylius/Behat/Service/SharedStorageInterface.php\"",
+        "aggregated_output": "<?php\n\n/*\n * This file is part of the Sylius package.\n *\n * (c) Sylius Sp. z o.o.\n *\n * For the full copyright and license information, please view the LICENSE\n * file that was distributed with this source code.\n */\n\ndeclare(strict_types=1);\n\nnamespace Sylius\\Behat\\Client;\n\ninterface RequestFactoryInterface\n{\n    public function index(\n        ?string $section,\n        string $resource,\n        string $authorizationHeader,\n        ?string $token = null,\n    ): RequestInterface;\n\n    /**\n     * @param array<string, mixed> $queryParameters\n     */\n    public function subResourceIndex(\n        string $section,\n        string $resource,\n        string $id,\n        string $subResource,\n        array $queryParameters = [],\n    ): RequestInterface;\n\n    public function show(\n        string $section,\n        string $resource,\n        string $id,\n        string $authorizationHeader,\n        ?string $token = null,\n    ): RequestInterface;\n\n    public function create(\n        string $section,\n        string $resource,\n        string $authorizationHeader,\n        ?string $token = null,\n    ): RequestInterface;\n\n    public function update(\n        string $section,\n        string $uri,\n        string $authorizationHeader,\n        ?string $token = null,\n    ): RequestInterface;\n\n    public function delete(\n        string $section,\n        string $resource,\n        string $id,\n        string $authorizationHeader,\n        ?string $token = null,\n    ): RequestInterface;\n\n    public function upload(\n        string $section,\n        string $resource,\n        array $files,\n        string $authorizationHeader,\n        ?string $token = null,\n    ): RequestInterface;\n\n    public function transition(\n        string $section,\n        string $resource,\n        string $id,\n        string $transition,\n    ): RequestInterface;\n\n    public function customItemAction(\n        string $section,\n        string $resource,\n        string $id,\n        string $type,\n        string $action,\n    ): RequestInterface;\n\n    public function custom(\n        string $url,\n        string $method,\n        array $additionalHeaders = [],\n        ?string $token = null,\n    ): RequestInterface;\n\n    public function default(\n        string $section,\n        string $url,\n        string $method,\n        array $queryParameters = [],\n        array $additionalHeaders = [],\n        ?string $token = null,\n    ): RequestInterface;\n}\n<?php\n\n/*\n * This file is part of the Sylius package.\n *\n * (c) Sylius Sp. z o.o.\n *\n * For the full copyright and license information, please view the LICENSE\n * file that was distributed with this source code.\n */\n\ndeclare(strict_types=1);\n\nnamespace Sylius\\Behat\\Client;\n\nuse Symfony\\Component\\HttpFoundation\\File\\UploadedFile;\nuse Symfony\\Component\\HttpFoundation\\Response;\n\ninterface ApiClientInterface\n{\n    public function request(?RequestInterface $request = null, bool $forgetResponse = false): Response;\n\n    /** @param array<string, mixed> $queryParameters */\n    public function index(string $resource, array $queryParameters = [], bool $forgetResponse = false): Response;\n\n    public function showByIri(string $iri, bool $forgetResponse = false): Response;\n\n    /** @param array<string, string> $queryParameters */\n    public function subResourceIndex(string $resource, string $subResource, string $id, array $queryParameters = [], bool $forgetResponse = false): Response;\n\n    public function show(string $resource, string $id, bool $forgetResponse = false): Response;\n\n    public function create(?RequestInterface $request = null, bool $forgetResponse = false): Response;\n\n    public function update(bool $forgetResponse = false): Response;\n\n    public function delete(string $resource, string $id, bool $forgetResponse = false): Response;\n\n    public function filter(): Response;\n\n    /** @param array<string, mixed> $sorting */\n    public function sort(array $sorting): Response;\n\n    /** @param array<string, mixed> $content */\n    public function applyTransition(strin\n[TRUNCATED: full original retained on experiment server]",
+        "exit_code": 0,
+        "status": "completed"
+      }
+    },
+    {
+      "type": "item.started",
+      "item": {
+        "id": "item_14",
+        "type": "command_execution",
+        "command": "/usr/bin/bash -lc \"sed -n '1,220p' repo/src/Sylius/Behat/Client/ApiPlatformClient.php\"",
+        "aggregated_output": "",
+        "exit_code": null,
+        "status": "in_progress"
+      }
+    },
+    {
+      "type": "item.completed",
+      "item": {
+        "id": "item_14",
+        "type": "command_execution",
+        "command": "/usr/bin/bash -lc \"sed -n '1,220p' repo/src/Sylius/Behat/Client/ApiPlatformClient.php\"",
+        "aggregated_output": "<?php\n\n/*\n * This file is part of the Sylius package.\n *\n * (c) Sylius Sp. z o.o.\n *\n * For the full copyright and license information, please view the LICENSE\n * file that was distributed with this source code.\n */\n\ndeclare(strict_types=1);\n\nnamespace Sylius\\Behat\\Client;\n\nuse Sylius\\Behat\\Service\\SharedStorageInterface;\nuse Symfony\\Component\\BrowserKit\\AbstractBrowser;\nuse Symfony\\Component\\HttpFoundation\\File\\UploadedFile;\nuse Symfony\\Component\\HttpFoundation\\Request as HttpRequest;\nuse Symfony\\Component\\HttpFoundation\\Response;\n\nfinal class ApiPlatformClient implements ApiClientInterface\n{\n    private ?RequestInterface $request = null;\n\n    private ?Response $lastResponse = null;\n\n    public function __construct(\n        private readonly AbstractBrowser $client,\n        private readonly SharedStorageInterface $sharedStorage,\n        private readonly RequestFactoryInterface $requestFactory,\n        private readonly ResponseCheckerInterface $responseChecker,\n        private readonly string $authorizationHeader,\n        private readonly string $section,\n    ) {\n    }\n\n    public function index(string $resource, array $queryParameters = [], bool $forgetResponse = false): Response\n    {\n        $this->request = $this\n            ->requestFactory\n            ->index($this->section, $resource, $this->authorizationHeader, $this->getToken(), $queryParameters)\n        ;\n\n        return $this->request($this->request, $forgetResponse);\n    }\n\n    public function showByIri(string $iri, bool $forgetResponse = false): Response\n    {\n        $request = $this->requestFactory->custom($iri, HttpRequest::METHOD_GET);\n        $request->authorize($this->getToken(), $this->authorizationHeader);\n\n        return $this->request($request, $forgetResponse);\n    }\n\n    /** @param array<string, string> $queryParameters */\n    public function subResourceIndex(string $resource, string $subResource, string $id, array $queryParameters = [], bool $forgetResponse = false): Response\n    {\n        $this->request = $this->requestFactory->subResourceIndex($this->section, $resource, $id, $subResource, $queryParameters);\n        $this->request->authorize($this->getToken(), $this->authorizationHeader);\n\n        return $this->request($this->request, $forgetResponse);\n    }\n\n    public function show(string $resource, string $id, bool $forgetResponse = false): Response\n    {\n        return $this->request(\n            $this->requestFactory->show(\n                $this->section,\n                $resource,\n                $id,\n                $this->authorizationHeader,\n                $this->getToken(),\n            ),\n            $forgetResponse,\n        );\n    }\n\n    public function create(?RequestInterface $request = null, bool $forgetResponse = false): Response\n    {\n        return $this->request($request ?? $this->request, $forgetResponse);\n    }\n\n    public function update(bool $forgetResponse = false): Response\n    {\n        return $this->request($this->request, $forgetResponse);\n    }\n\n    public function resend(bool $forgetResponse = false): Response\n    {\n        return $this->request($this->request, $forgetResponse);\n    }\n\n    public function delete(string $resource, string $id, bool $forgetResponse = false): Response\n    {\n        return $this->request(\n            $this->requestFactory->delete(\n                $this->section,\n                $resource,\n                $id,\n                $this->authorizationHeader,\n                $this->getToken(),\n            ),\n            $forgetResponse,\n        );\n    }\n\n    public function filter(): Response\n    {\n        return $this->request($this->request);\n    }\n\n    public function sort(array $sorting): Response\n    {\n        if ($this->request === null) {\n            throw new \\RuntimeException('There is no request to sort.');\n        }\n\n        $this->request->updateParameters(['order' => $sorting]);\n\n        return $this->request($this->request);\n    }\n\n    /** @param array<string, mixed> $content */\n    pub\n[TRUNCATED: full original retained on experiment server]",
+        "exit_code": 0,
+        "status": "completed"
+      }
+    },
+    {
+      "type": "item.started",
+      "item": {
+        "id": "item_15",
+        "type": "command_execution",
+        "command": "/usr/bin/bash -lc \"find repo/src/Sylius/Behat/Context/Api -type f 2>/dev/null | wc -l; sed -n '1,150p' repo/src/Sylius/Behat/Context/Setup/AdminSecurityContext.php; sed -n '1,100p' repo/src/Sylius/Behat/Context/Setup/ProductContext.php | grep -n 'SharedStorage\\\\|set('\"",
+        "aggregated_output": "",
+        "exit_code": null,
+        "status": "in_progress"
+      }
+    },
+    {
+      "type": "item.completed",
+      "item": {
+        "id": "item_15",
+        "type": "command_execution",
+        "command": "/usr/bin/bash -lc \"find repo/src/Sylius/Behat/Context/Api -type f 2>/dev/null | wc -l; sed -n '1,150p' repo/src/Sylius/Behat/Context/Setup/AdminSecurityContext.php; sed -n '1,100p' repo/src/Sylius/Behat/Context/Setup/ProductContext.php | grep -n 'SharedStorage\\\\|set('\"",
+        "aggregated_output": "0\n<?php\n\n/*\n * This file is part of the Sylius package.\n *\n * (c) Sylius Sp. z o.o.\n *\n * For the full copyright and license information, please view the LICENSE\n * file that was distributed with this source code.\n */\n\ndeclare(strict_types=1);\n\nnamespace Sylius\\Behat\\Context\\Setup;\n\nuse Behat\\Behat\\Context\\Context;\nuse Behat\\Step\\Given;\nuse Sylius\\Behat\\Service\\SecurityServiceInterface;\nuse Sylius\\Behat\\Service\\SharedStorageInterface;\nuse Sylius\\Bundle\\CoreBundle\\Fixture\\Factory\\ExampleFactoryInterface;\nuse Sylius\\Component\\User\\Repository\\UserRepositoryInterface;\nuse Webmozart\\Assert\\Assert;\n\nfinal class AdminSecurityContext implements Context\n{\n    public function __construct(\n        private SharedStorageInterface $sharedStorage,\n        private SecurityServiceInterface $securityService,\n        private ExampleFactoryInterface $userFactory,\n        private UserRepositoryInterface $userRepository,\n    ) {\n    }\n\n    #[Given('I am logged in as an administrator')]\n    #[Given('there is logged in the administrator')]\n    public function iAmLoggedInAsAnAdministrator()\n    {\n        $user = $this->userFactory->create(['email' => 'sylius@example.com', 'password' => 'sylius', 'api' => true]);\n        $this->userRepository->add($user);\n\n        $this->securityService->logIn($user);\n\n        $this->sharedStorage->set('administrator', $user);\n    }\n\n    #[Given('/^I am logged in as \"([^\"]+)\" administrator$/')]\n    public function iAmLoggedInAsAdministrator($email)\n    {\n        $user = $this->userRepository->findOneByEmail($email);\n        Assert::notNull($user);\n\n        $this->securityService->logIn($user);\n\n        $this->sharedStorage->set('administrator', $user);\n    }\n\n    #[Given('I have been logged out from administration')]\n    public function iHaveBeenLoggedOutFromAdministration()\n    {\n        $this->securityService->logOut();\n\n        $this->sharedStorage->set('administrator', null);\n    }\n}\n21:use Sylius\\Behat\\Service\\SharedStorageInterface;\n66:        private SharedStorageInterface $sharedStorage,\n",
+        "exit_code": 0,
+        "status": "completed"
+      }
+    },
+    {
+      "type": "item.started",
+      "item": {
+        "id": "item_16",
+        "type": "command_execution",
+        "command": "/usr/bin/bash -lc \"sed -n '1,220p' repo/src/Sylius/Bundle/ApiBundle/Resources/config/serialization/CatalogPromotion.xml; sed -n '1,140p' repo/src/Sylius/Bundle/ApiBundle/Resources/config/serialization/CatalogPromotionScope.xml; sed -n '1,140p' repo/src/Sylius/Bundle/ApiBundle/Resources/config/serialization/CatalogPromotionAction.xml\"",
+        "aggregated_output": "",
+        "exit_code": null,
+        "status": "in_progress"
+      }
+    },
+    {
+      "type": "item.completed",
+      "item": {
+        "id": "item_16",
+        "type": "command_execution",
+        "command": "/usr/bin/bash -lc \"sed -n '1,220p' repo/src/Sylius/Bundle/ApiBundle/Resources/config/serialization/CatalogPromotion.xml; sed -n '1,140p' repo/src/Sylius/Bundle/ApiBundle/Resources/config/serialization/CatalogPromotionScope.xml; sed -n '1,140p' repo/src/Sylius/Bundle/ApiBundle/Resources/config/serialization/CatalogPromotionAction.xml\"",
+        "aggregated_output": "<?xml version=\"1.0\" ?>\n\n<!--\n This file is part of the Sylius package.\n (c) Sylius Sp. z o.o.\n For the full copyright and license information, please view the LICENSE\n file that was distributed with this source code.\n-->\n\n<serializer xmlns=\"http://symfony.com/schema/dic/serializer-mapping\"\n            xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\n            xsi:schemaLocation=\"http://symfony.com/schema/dic/serializer-mapping https://symfony.com/schema/dic/serializer-mapping/serializer-mapping-1.0.xsd\"\n>\n    <class name=\"Sylius\\Component\\Promotion\\Model\\CatalogPromotion\">\n        <attribute name=\"id\">\n            <group>sylius:admin:catalog_promotion:index</group>\n            <group>sylius:admin:catalog_promotion:show</group>\n            <group>sylius:admin:catalog_promotion:create</group>\n            <group>sylius:admin:catalog_promotion:update</group>\n            <group>sylius:admin:product_variant:index</group>\n            <group>sylius:admin:product_variant:show</group>\n            <group>sylius:shop:catalog_promotion:show</group>\n        </attribute>\n\n        <attribute name=\"code\">\n            <group>sylius:admin:catalog_promotion:index</group>\n            <group>sylius:admin:catalog_promotion:show</group>\n            <group>sylius:admin:catalog_promotion:create</group>\n            <group>sylius:admin:product_variant:index</group>\n            <group>sylius:admin:product_variant:show</group>\n        </attribute>\n\n        <attribute name=\"name\">\n            <group>sylius:admin:catalog_promotion:index</group>\n            <group>sylius:admin:catalog_promotion:show</group>\n            <group>sylius:admin:catalog_promotion:create</group>\n            <group>sylius:admin:catalog_promotion:update</group>\n        </attribute>\n\n        <attribute name=\"channels\">\n            <group>sylius:admin:catalog_promotion:index</group>\n            <group>sylius:admin:catalog_promotion:show</group>\n            <group>sylius:admin:catalog_promotion:create</group>\n            <group>sylius:admin:catalog_promotion:update</group>\n        </attribute>\n\n        <attribute name=\"startDate\">\n            <group>sylius:admin:catalog_promotion:index</group>\n            <group>sylius:admin:catalog_promotion:show</group>\n            <group>sylius:admin:catalog_promotion:create</group>\n            <group>sylius:admin:catalog_promotion:update</group>\n        </attribute>\n\n        <attribute name=\"endDate\">\n            <group>sylius:admin:catalog_promotion:index</group>\n            <group>sylius:admin:catalog_promotion:show</group>\n            <group>sylius:admin:catalog_promotion:create</group>\n            <group>sylius:admin:catalog_promotion:update</group>\n        </attribute>\n\n        <attribute name=\"priority\">\n            <group>sylius:admin:catalog_promotion:index</group>\n            <group>sylius:admin:catalog_promotion:show</group>\n            <group>sylius:admin:catalog_promotion:create</group>\n            <group>sylius:admin:catalog_promotion:update</group>\n        </attribute>\n\n        <attribute name=\"state\">\n            <group>sylius:admin:catalog_promotion:index</group>\n            <group>sylius:admin:catalog_promotion:show</group>\n        </attribute>\n\n        <attribute name=\"label\">\n            <group>sylius:shop:catalog_promotion:show</group>\n        </attribute>\n\n        <attribute name=\"translations\">\n            <group>sylius:admin:catalog_promotion:index</group>\n            <group>sylius:admin:catalog_promotion:show</group>\n            <group>sylius:admin:catalog_promotion:create</group>\n            <group>sylius:admin:catalog_promotion:update</group>\n        </attribute>\n\n        <attribute name=\"scopes\">\n            <group>sylius:admin:catalog_promotion:index</group>\n            <group>sylius:admin:catalog_promotion:show</group>\n            <group>sylius:admin:catalog_promotion:create</group>\n            <group>sylius:admin:catalog_promotion:update</group>\n        </attribute>\n\n        <attribute name=\"actions\">\n            <\n[TRUNCATED: full original retained on experiment server]",
+        "exit_code": 0,
+        "status": "completed"
+      }
+    },
+    {
+      "type": "item.completed",
+      "item": {
+        "id": "item_17",
+        "type": "agent_message",
+        "text": "The retained Setup and Transform contexts already cover the background and turn quoted product names into entities. I’m adding one API context for the creation/list/check steps, using the documented admin catalog-promotion endpoint and the product’s public code for the product scope."
+      }
+    },
+    {
+      "type": "item.started",
+      "item": {
+        "id": "item_18",
+        "type": "file_change",
+        "changes": [
+          {
+            "path": "/root/lby-docker/req2test/user/runs/req2test-subset160-20261112-v1/generation/55d9663eecb01bdaf0fe/attempt-1/workspaces/0000/repo/src/Sylius/Behat/Context/Api/Admin/ManagingCatalogPromotionsContext.php",
+            "kind": "add"
+          }
+        ],
+        "status": "in_progress"
+      }
+    },
+    {
+      "type": "item.completed",
+      "item": {
+        "id": "item_18",
+        "type": "file_change",
+        "changes": [
+          {
+            "path": "/root/lby-docker/req2test/user/runs/req2test-subset160-20261112-v1/generation/55d9663eecb01bdaf0fe/attempt-1/workspaces/0000/repo/src/Sylius/Behat/Context/Api/Admin/ManagingCatalogPromotionsContext.php",
+            "kind": "add"
+          }
+        ],
+        "status": "completed"
+      }
+    },
+    {
+      "type": "item.started",
+      "item": {
+        "id": "item_19",
+        "type": "command_execution",
+        "command": "/usr/bin/bash -lc \"sed -n '1,150p' repo/src/Sylius/Behat/Client/RequestFactory.php; sed -n '1,130p' repo/src/Sylius/Behat/Client/Request.php\"",
+        "aggregated_output": "",
+        "exit_code": null,
+        "status": "in_progress"
+      }
+    },
+    {
+      "type": "item.completed",
+      "item": {
+        "id": "item_19",
+        "type": "command_execution",
+        "command": "/usr/bin/bash -lc \"sed -n '1,150p' repo/src/Sylius/Behat/Client/RequestFactory.php; sed -n '1,130p' repo/src/Sylius/Behat/Client/Request.php\"",
+        "aggregated_output": "<?php\n\n/*\n * This file is part of the Sylius package.\n *\n * (c) Sylius Sp. z o.o.\n *\n * For the full copyright and license information, please view the LICENSE\n * file that was distributed with this source code.\n */\n\ndeclare(strict_types=1);\n\nnamespace Sylius\\Behat\\Client;\n\nuse Symfony\\Component\\HttpFoundation\\Request as HttpRequest;\n\nfinal class RequestFactory implements RequestFactoryInterface\n{\n    private const LINKED_DATA_JSON_CONTENT_TYPE = 'application/ld+json';\n\n    private const UPLOAD_FILE_CONTENT_TYPE = 'multipart/form-data';\n\n    public function __construct(\n        private readonly ContentTypeGuideInterface $contentTypeGuide,\n        private readonly string $apiUrlPrefix,\n    ) {\n    }\n\n    public function index(\n        ?string $section,\n        string $resource,\n        string $authorizationHeader,\n        ?string $token = null,\n        array $queryParameters = [],\n    ): RequestInterface {\n        $builder = RequestBuilder::createGet(\n            sprintf('%s/%s/%s%s', $this->apiUrlPrefix, $section, $resource, $this->getQueryString($queryParameters)),\n        );\n        $builder->withHeader('HTTP_ACCEPT', self::LINKED_DATA_JSON_CONTENT_TYPE);\n\n        if ($token) {\n            $builder->withHeader('HTTP_' . $authorizationHeader, 'Bearer ' . $token);\n        }\n\n        return $builder->build();\n    }\n\n    public function subResourceIndex(\n        string $section,\n        string $resource,\n        string $id,\n        string $subResource,\n        array $queryParameters = [],\n    ): RequestInterface {\n        $builder = RequestBuilder::createGet(\n            sprintf(\n                '%s/%s/%s/%s/%s%s',\n                $this->apiUrlPrefix,\n                $section,\n                $resource,\n                $id,\n                $subResource,\n                $this->getQueryString($queryParameters),\n            ),\n        );\n        $builder->withHeader('HTTP_ACCEPT', self::LINKED_DATA_JSON_CONTENT_TYPE);\n\n        return $builder->build();\n    }\n\n    public function show(\n        string $section,\n        string $resource,\n        string $id,\n        string $authorizationHeader,\n        ?string $token = null,\n    ): RequestInterface {\n        $builder = RequestBuilder::createGet(\n            sprintf('%s/%s/%s/%s', $this->apiUrlPrefix, $section, $resource, $id),\n        );\n        $builder->withHeader('HTTP_ACCEPT', self::LINKED_DATA_JSON_CONTENT_TYPE);\n\n        if ($token) {\n            $builder->withHeader('HTTP_' . $authorizationHeader, 'Bearer ' . $token);\n        }\n\n        return $builder->build();\n    }\n\n    public function create(\n        string $section,\n        string $resource,\n        string $authorizationHeader,\n        ?string $token = null,\n    ): RequestInterface {\n        $builder = RequestBuilder::createPost(\n            sprintf('%s/%s/%s', $this->apiUrlPrefix, $section, $resource),\n        );\n        $builder->withHeader('HTTP_ACCEPT', self::LINKED_DATA_JSON_CONTENT_TYPE);\n        $builder->withHeader('CONTENT_TYPE', self::LINKED_DATA_JSON_CONTENT_TYPE);\n\n        if ($token) {\n            $builder->withHeader('HTTP_' . $authorizationHeader, 'Bearer ' . $token);\n        }\n\n        return $builder->build();\n    }\n\n    public function update(\n        string $section,\n        string $uri,\n        string $authorizationHeader,\n        ?string $token = null,\n    ): RequestInterface {\n        $builder = RequestBuilder::createPut(sprintf('%s/%s/%s', $this->apiUrlPrefix, $section, $uri))\n            ->withHeader('HTTP_ACCEPT', self::LINKED_DATA_JSON_CONTENT_TYPE)\n            ->withHeader('CONTENT_TYPE', $this->contentTypeGuide->guide(HttpRequest::METHOD_PUT))\n        ;\n\n        if ($token) {\n            $builder->withHeader('HTTP_' . $authorizationHeader, 'Bearer ' . $token);\n        }\n\n        return $builder->build();\n    }\n\n    public function delete(\n        string $section,\n        string $resource,\n        string $id,\n        string $authorizationHeader,\n        ?string $token = null,\n    ): RequestInterfa\n[TRUNCATED: full original retained on experiment server]",
+        "exit_code": 0,
+        "status": "completed"
+      }
+    },
+    {
+      "type": "item.started",
+      "item": {
+        "id": "item_20",
+        "type": "command_execution",
+        "command": "/usr/bin/bash -lc \"grep -R \\\"percentage_discount\\\\|for_product\\\\|InForProductScope\\\" -n repo/src/Sylius/Bundle/CoreBundle repo/src/Sylius/Component/Core | head -50\"",
+        "aggregated_output": "",
+        "exit_code": null,
+        "status": "in_progress"
+      }
+    },
+    {
+      "type": "item.completed",
+      "item": {
+        "id": "item_20",
+        "type": "command_execution",
+        "command": "/usr/bin/bash -lc \"grep -R \\\"percentage_discount\\\\|for_product\\\\|InForProductScope\\\" -n repo/src/Sylius/Bundle/CoreBundle repo/src/Sylius/Component/Core | head -50\"",
+        "aggregated_output": "repo/src/Sylius/Bundle/CoreBundle/CatalogPromotion/Checker/InForProductScopeVariantChecker.php:20:final class InForProductScopeVariantChecker implements VariantInScopeCheckerInterface\nrepo/src/Sylius/Bundle/CoreBundle/CatalogPromotion/Checker/InForProductScopeVariantChecker.php:22:    public const TYPE = 'for_products';\nrepo/src/Sylius/Bundle/CoreBundle/CatalogPromotion/Calculator/PercentageDiscountPriceCalculator.php:21:    public const TYPE = 'percentage_discount';\nrepo/src/Sylius/Bundle/CoreBundle/tests/CatalogPromotion/Checker/InForProductScopeVariantCheckerTest.php:18:use Sylius\\Bundle\\CoreBundle\\CatalogPromotion\\Checker\\InForProductScopeVariantChecker;\nrepo/src/Sylius/Bundle/CoreBundle/tests/CatalogPromotion/Checker/InForProductScopeVariantCheckerTest.php:24:final class InForProductScopeVariantCheckerTest extends TestCase\nrepo/src/Sylius/Bundle/CoreBundle/tests/CatalogPromotion/Checker/InForProductScopeVariantCheckerTest.php:26:    private InForProductScopeVariantChecker $inForProductScopeVariantChecker;\nrepo/src/Sylius/Bundle/CoreBundle/tests/CatalogPromotion/Checker/InForProductScopeVariantCheckerTest.php:30:        $this->inForProductScopeVariantChecker = new InForProductScopeVariantChecker();\nrepo/src/Sylius/Bundle/CoreBundle/tests/Form/Type/CatalogPromotion/CatalogPromotionActionTypeTest.php:66:    public function it_updates_amount_of_percentage_discount(): void\nrepo/src/Sylius/Bundle/CoreBundle/tests/Form/Type/CatalogPromotion/CatalogPromotionActionTypeTest.php:76:            'type' => 'percentage_discount',\nrepo/src/Sylius/Bundle/CoreBundle/tests/Form/Type/CatalogPromotion/CatalogPromotionActionTypeTest.php:86:        $this->assertSame('percentage_discount', $catalogPromotionAction->getType());\nrepo/src/Sylius/Bundle/CoreBundle/tests/Form/Type/CatalogPromotion/CatalogPromotionActionTypeTest.php:118:    public function it_changes_action_to_percentage_discount(): void\nrepo/src/Sylius/Bundle/CoreBundle/tests/Form/Type/CatalogPromotion/CatalogPromotionActionTypeTest.php:128:            'type' => 'percentage_discount',\nrepo/src/Sylius/Bundle/CoreBundle/tests/Form/Type/CatalogPromotion/CatalogPromotionActionTypeTest.php:138:        $this->assertSame('percentage_discount', $catalogPromotionAction->getType());\nrepo/src/Sylius/Bundle/CoreBundle/tests/Form/Type/CatalogPromotion/CatalogPromotionActionTypeTest.php:143:    public function it_changes_action_to_percentage_discount_with_empty_amount(): void\nrepo/src/Sylius/Bundle/CoreBundle/tests/Form/Type/CatalogPromotion/CatalogPromotionActionTypeTest.php:153:            'type' => 'percentage_discount',\nrepo/src/Sylius/Bundle/CoreBundle/tests/Form/Type/CatalogPromotion/CatalogPromotionActionTypeTest.php:163:        $this->assertSame('percentage_discount', $catalogPromotionAction->getType());\nrepo/src/Sylius/Bundle/CoreBundle/tests/Form/Type/CatalogPromotion/CatalogPromotionActionTypeTest.php:249:    public function it_updates_percentage_discount_with_not_valid_amount(): void\nrepo/src/Sylius/Bundle/CoreBundle/tests/Form/Type/CatalogPromotion/CatalogPromotionActionTypeTest.php:259:            'type' => 'percentage_discount',\nrepo/src/Sylius/Bundle/CoreBundle/tests/Form/Type/CatalogPromotion/CatalogPromotionActionTypeTest.php:269:        $this->assertSame('percentage_discount', $catalogPromotionAction->getType());\nrepo/src/Sylius/Bundle/CoreBundle/tests/Form/Type/CatalogPromotion/CatalogPromotionActionTypeTest.php:295:                'percentage_discount' => new PercentageDiscountActionConfigurationType(),\nrepo/src/Sylius/Bundle/CoreBundle/tests/Form/Type/CatalogPromotion/CatalogPromotionActionTypeTest.php:315:        $percentageDiscount->setType('percentage_discount');\nrepo/src/Sylius/Bundle/CoreBundle/tests/Fixture/PromotionFixtureTest.php:125:            'type' => 'order_percentage_discount',\nrepo/src/Sylius/Bundle/CoreBundle/Resources/config/validation/PromotionAction.xml:20:                    <value>sylius_promotion_action_order_percentage_discount</value>\nrepo/src/Sylius/Bu\n[TRUNCATED: full original retained on experiment server]",
+        "exit_code": 0,
+        "status": "completed"
+      }
+    },
+    {
+      "type": "item.started",
+      "item": {
+        "id": "item_21",
+        "type": "command_execution",
+        "command": "/usr/bin/bash -lc \"php -l repo/src/Sylius/Behat/Context/Api/Admin/ManagingCatalogPromotionsContext.php; grep -R \\\"adminClient.*create\\\\|requestFactory->create\\\" -n repo/src/Sylius/Behat\"",
+        "aggregated_output": "",
+        "exit_code": null,
+        "status": "in_progress"
+      }
+    },
+    {
+      "type": "item.completed",
+      "item": {
+        "id": "item_21",
+        "type": "command_execution",
+        "command": "/usr/bin/bash -lc \"php -l repo/src/Sylius/Behat/Context/Api/Admin/ManagingCatalogPromotionsContext.php; grep -R \\\"adminClient.*create\\\\|requestFactory->create\\\" -n repo/src/Sylius/Behat\"",
+        "aggregated_output": "No syntax errors detected in repo/src/Sylius/Behat/Context/Api/Admin/ManagingCatalogPromotionsContext.php\nrepo/src/Sylius/Behat/Context/Api/Admin/ManagingCatalogPromotionsContext.php:83:        $request = $this->requestFactory->create('admin', 'catalog-promotions', '');\nrepo/src/Sylius/Behat/Context/Api/Admin/ManagingCatalogPromotionsContext.php:85:        $response = $this->adminClient->create($request);\n",
+        "exit_code": 0,
+        "status": "completed"
+      }
+    },
+    {
+      "type": "item.started",
+      "item": {
+        "id": "item_22",
+        "type": "command_execution",
+        "command": "/usr/bin/bash -lc \"sed -n '300,390p' repo/src/Sylius/Behat/Client/ApiPlatformClient.php; grep -n \\\"function default\\\" -A35 repo/src/Sylius/Behat/Client/RequestFactory.php; grep -n \\\"catalog_promotion\\\" repo/src/Sylius/Bundle/ApiBundle/Resources/config/serialization/CatalogPromotionAction.xml\"",
+        "aggregated_output": "",
+        "exit_code": null,
+        "status": "in_progress"
+      }
+    },
+    {
+      "type": "item.completed",
+      "item": {
+        "id": "item_22",
+        "type": "command_execution",
+        "command": "/usr/bin/bash -lc \"sed -n '300,390p' repo/src/Sylius/Behat/Client/ApiPlatformClient.php; grep -n \\\"function default\\\" -A35 repo/src/Sylius/Behat/Client/RequestFactory.php; grep -n \\\"catalog_promotion\\\" repo/src/Sylius/Bundle/ApiBundle/Resources/config/serialization/CatalogPromotionAction.xml\"",
+        "aggregated_output": "\n        $this->request = $this\n            ->requestFactory\n            ->default($this->section, $uri, HttpRequest::METHOD_GET, $queryParameters, $headers)\n            ->authorize($this->getToken(), $this->authorizationHeader)\n        ;\n\n        return $this->request();\n    }\n\n    public function requestPatch(string $uri, array $body = [], array $queryParameters = [], array $headers = []): Response\n    {\n        $this->validateUri($uri);\n\n        $this->request = $this\n            ->requestFactory\n            ->default($this->section, $uri, HttpRequest::METHOD_PATCH, $queryParameters, $headers)\n            ->authorize($this->getToken(), $this->authorizationHeader)\n        ;\n\n        $this->request->setContent($body);\n\n        return $this->request();\n    }\n\n    public function requestDelete(string $uri): Response\n    {\n        $this->request = $this\n            ->requestFactory\n            ->default($this->section, $uri, HttpRequest::METHOD_DELETE)\n            ->authorize($this->getToken(), $this->authorizationHeader)\n        ;\n\n        return $this->request();\n    }\n\n    public function request(?RequestInterface $request = null, bool $forgetResponse = false): Response\n    {\n        if ($request === null) {\n            $request = $this->request;\n        }\n\n        $this->setServerParameters();\n\n        $this->client->request(\n            $request->method(),\n            $request->url(),\n            $request->parameters(),\n            $request->files(),\n            $request->headers(),\n            $request->content(),\n        );\n\n        /** @var Response $response */\n        $response = $this->client->getResponse();\n\n        if (!$response->isSuccessful() && $response->getStatusCode() >= 400) {\n            $this->responseChecker->appendError($response);\n        }\n\n        if (false === $forgetResponse) {\n            $this->lastResponse = $response;\n        }\n\n        return $response;\n    }\n\n    private function setServerParameters(): void\n    {\n        if ($this->sharedStorage->has('hostname')) {\n            $this->client->setServerParameter('HTTP_HOST', $this->sharedStorage->get('hostname'));\n        }\n\n        if ($this->sharedStorage->has('current_locale_code')) {\n            $this->client->setServerParameter('HTTP_ACCEPT_LANGUAGE', $this->sharedStorage->get('current_locale_code'));\n        }\n    }\n\n    private function validateUri(string $uri): void\n    {\n        if (str_starts_with($uri, '/')) {\n            throw new \\InvalidArgumentException('URI should not start with a slash.');\n        }\n\n        if (str_starts_with($uri, 'http')) {\n            throw new \\InvalidArgumentException('URI should not start with \"http\".');\n        }\n\n        if (str_starts_with($uri, 'api')) {\n            throw new \\InvalidArgumentException('URI should not start with \"api\".');\n        }\n206:    public function default(string $section, string $url, string $method, array $queryParameters = [], array $additionalHeaders = [], ?string $token = null): RequestInterface\n207-    {\n208-        return $this->custom(\n209-            sprintf('%s/%s/%s', $this->apiUrlPrefix, $section, $url) . $this->getQueryString($queryParameters),\n210-            $method,\n211-            $additionalHeaders,\n212-            $token,\n213-        );\n214-    }\n215-\n216-    private function getQueryString(array $queryParameters): string\n217-    {\n218-        return count($queryParameters) > 0 ? '?' . http_build_query($queryParameters) : '';\n219-    }\n220-}\n16:            <group>sylius:admin:catalog_promotion:index</group>\n17:            <group>sylius:admin:catalog_promotion:show</group>\n20:            <group>sylius:admin:catalog_promotion:index</group>\n21:            <group>sylius:admin:catalog_promotion:show</group>\n22:            <group>sylius:admin:catalog_promotion:create</group>\n23:            <group>sylius:admin:catalog_promotion:update</group>\n26:            <group>sylius:admin:catalog_promotion:index</group>\n27:            <group>sylius:admin:catalog_promotion:show<\n[TRUNCATED: full original retained on experiment server]",
+        "exit_code": 0,
+        "status": "completed"
+      }
+    },
+    {
+      "type": "item.started",
+      "item": {
+        "id": "item_23",
+        "type": "file_change",
+        "changes": [
+          {
+            "path": "/root/lby-docker/req2test/user/runs/req2test-subset160-20261112-v1/generation/55d9663eecb01bdaf0fe/attempt-1/workspaces/0000/repo/src/Sylius/Behat/Context/Api/Admin/ManagingCatalogPromotionsContext.php",
+            "kind": "update"
+          }
+        ],
+        "status": "in_progress"
+      }
+    },
+    {
+      "type": "item.completed",
+      "item": {
+        "id": "item_23",
+        "type": "file_change",
+        "changes": [
+          {
+            "path": "/root/lby-docker/req2test/user/runs/req2test-subset160-20261112-v1/generation/55d9663eecb01bdaf0fe/attempt-1/workspaces/0000/repo/src/Sylius/Behat/Context/Api/Admin/ManagingCatalogPromotionsContext.php",
+            "kind": "update"
+          }
+        ],
+        "status": "completed"
+      }
+    },
+    {
+      "type": "item.started",
+      "item": {
+        "id": "item_24",
+        "type": "command_execution",
+        "command": "/usr/bin/bash -lc 'behat-scenario repo/features/admin/promotion/managing_catalog_promotions/creating_catalog_promotion.feature:97'",
+        "aggregated_output": "",
+        "exit_code": null,
+        "status": "in_progress"
+      }
+    },
+    {
+      "type": "item.completed",
+      "item": {
+        "id": "item_24",
+        "type": "command_execution",
+        "command": "/usr/bin/bash -lc 'behat-scenario repo/features/admin/promotion/managing_catalog_promotions/creating_catalog_promotion.feature:97'",
+        "aggregated_output": "\nIn DefinitionErrorExceptionPass.php line 48:\n                                                                                                                                                                                                                                                                                                                                                                                                      \n  Cannot autowire service \"Sylius\\Behat\\Context\\Api\\Admin\\ManagingCatalogPromotionsContext\": argument \"$adminClient\" of method \"__construct()\" references interface \"Sylius\\Behat\\Client\\ApiClientInterface\" but no such service exists. You should maybe alias this interface to one of these existing services: \"sylius.behat.api_platform_client.shop\", \"sylius.behat.api_platform_client.admin\".  \n                                                                                                                                                                                                                                                                                                                                                                                                      \n\n",
+        "exit_code": 1,
+        "status": "failed"
+      }
+    },
+    {
+      "type": "item.started",
+      "item": {
+        "id": "item_25",
+        "type": "file_change",
+        "changes": [
+          {
+            "path": "/root/lby-docker/req2test/user/runs/req2test-subset160-20261112-v1/generation/55d9663eecb01bdaf0fe/attempt-1/workspaces/0000/repo/behat_services.yml",
+            "kind": "add"
+          }
+        ],
+        "status": "in_progress"
+      }
+    },
+    {
+      "type": "item.completed",
+      "item": {
+        "id": "item_25",
+        "type": "file_change",
+        "changes": [
+          {
+            "path": "/root/lby-docker/req2test/user/runs/req2test-subset160-20261112-v1/generation/55d9663eecb01bdaf0fe/attempt-1/workspaces/0000/repo/behat_services.yml",
+            "kind": "add"
+          }
+        ],
+        "status": "completed"
+      }
+    },
+    {
+      "type": "item.started",
+      "item": {
+        "id": "item_26",
+        "type": "command_execution",
+        "command": "/usr/bin/bash -lc 'behat-scenario repo/features/admin/promotion/managing_catalog_promotions/creating_catalog_promotion.feature:97'",
+        "aggregated_output": "",
+        "exit_code": null,
+        "status": "in_progress"
+      }
+    },
+    {
+      "type": "item.completed",
+      "item": {
+        "id": "item_26",
+        "type": "command_execution",
+        "command": "/usr/bin/bash -lc 'behat-scenario repo/features/admin/promotion/managing_catalog_promotions/creating_catalog_promotion.feature:97'",
+        "aggregated_output": "@managing_catalog_promotions\nFeature: Creating a catalog promotion\n  In order to set up a catalog promotion for some special occasions\n  As an Administrator\n  I want to have an option to configure such a promotion\n\n  Background:\n    Given the store operates on a single channel in \"United States\"\n    And the store has \"Clothes\" taxonomy\n    And the store has a \"T-Shirt\" configurable product\n    And this product belongs to \"Clothes\"\n    And this product has \"PHP T-Shirt\" variant priced at \"$20.00\"\n    And this product has \"Kotlin T-Shirt\" variant priced at \"$40.00\"\n    And I am logged in as an administrator\n\n  @api @ui @mink:chromedriver\n  Scenario: Creating a catalog promotion for product\n    When I want to create a new catalog promotion\n    And I specify its code as \"winter_sale\"\n    And I name it \"Winter sale\"\n    And I add scope that applies on \"T-Shirt\" product\n    And I add action that gives \"50%\" percentage discount\n    And I add it\n      Fatal error: Unknown format specifier \"a\" (Behat\\Testwork\\Call\\Exception\\FatalThrowableError)\n    Then there should be 1 new catalog promotion on the list\n    And it should have \"winter_sale\" code and \"Winter sale\" name\n    And the \"Winter sale\" catalog promotion should apply to all variants of \"T-Shirt\" product\n\n--- Failed scenarios:\n\n    /var/www/html/features/admin/promotion/managing_catalog_promotions/creating_catalog_promotion.feature:97 (on line 103)\n\n1 scenario (1 failed)\n16 steps (12 passed, 1 failed, 3 skipped)\n0m4.74s (244.26Mb)\n",
+        "exit_code": 1,
+        "status": "failed"
+      }
+    },
+    {
+      "type": "item.started",
+      "item": {
+        "id": "item_27",
+        "type": "file_change",
+        "changes": [
+          {
+            "path": "/root/lby-docker/req2test/user/runs/req2test-subset160-20261112-v1/generation/55d9663eecb01bdaf0fe/attempt-1/workspaces/0000/repo/src/Sylius/Behat/Context/Api/Admin/ManagingCatalogPromotionsContext.php",
+            "kind": "update"
+          }
+        ],
+        "status": "in_progress"
+      }
+    },
+    {
+      "type": "item.completed",
+      "item": {
+        "id": "item_27",
+        "type": "file_change",
+        "changes": [
+          {
+            "path": "/root/lby-docker/req2test/user/runs/req2test-subset160-20261112-v1/generation/55d9663eecb01bdaf0fe/attempt-1/workspaces/0000/repo/src/Sylius/Behat/Context/Api/Admin/ManagingCatalogPromotionsContext.php",
+            "kind": "update"
+          }
+        ],
+        "status": "completed"
+      }
+    },
+    {
+      "type": "item.started",
+      "item": {
+        "id": "item_28",
+        "type": "command_execution",
+        "command": "/usr/bin/bash -lc 'behat-scenario repo/features/admin/promotion/managing_catalog_promotions/creating_catalog_promotion.feature:97'",
+        "aggregated_output": "",
+        "exit_code": null,
+        "status": "in_progress"
+      }
+    },
+    {
+      "type": "item.completed",
+      "item": {
+        "id": "item_28",
+        "type": "command_execution",
+        "command": "/usr/bin/bash -lc 'behat-scenario repo/features/admin/promotion/managing_catalog_promotions/creating_catalog_promotion.feature:97'",
+        "aggregated_output": "@managing_catalog_promotions\nFeature: Creating a catalog promotion\n  In order to set up a catalog promotion for some special occasions\n  As an Administrator\n  I want to have an option to configure such a promotion\n\n  Background:\n    Given the store operates on a single channel in \"United States\"\n    And the store has \"Clothes\" taxonomy\n    And the store has a \"T-Shirt\" configurable product\n    And this product belongs to \"Clothes\"\n    And this product has \"PHP T-Shirt\" variant priced at \"$20.00\"\n    And this product has \"Kotlin T-Shirt\" variant priced at \"$40.00\"\n    And I am logged in as an administrator\n\n  @api @ui @mink:chromedriver\n  Scenario: Creating a catalog promotion for product\n    When I want to create a new catalog promotion\n    And I specify its code as \"winter_sale\"\n    And I name it \"Winter sale\"\n    And I add scope that applies on \"T-Shirt\" product\n    And I add action that gives \"50%\" percentage discount\n    And I add it\n      Expected a value equal to 201. Got: 422 (Webmozart\\Assert\\InvalidArgumentException)\n    Then there should be 1 new catalog promotion on the list\n    And it should have \"winter_sale\" code and \"Winter sale\" name\n    And the \"Winter sale\" catalog promotion should apply to all variants of \"T-Shirt\" product\n\n--- Failed scenarios:\n\n    /var/www/html/features/admin/promotion/managing_catalog_promotions/creating_catalog_promotion.feature:97 (on line 103)\n\n1 scenario (1 failed)\n16 steps (12 passed, 1 failed, 3 skipped)\n0m0.52s (259.22Mb)\n",
+        "exit_code": 1,
+        "status": "failed"
+      }
+    },
+    {
+      "type": "item.started",
+      "item": {
+        "id": "item_29",
+        "type": "file_change",
+        "changes": [
+          {
+            "path": "/root/lby-docker/req2test/user/runs/req2test-subset160-20261112-v1/generation/55d9663eecb01bdaf0fe/attempt-1/workspaces/0000/repo/src/Sylius/Behat/Context/Api/Admin/ManagingCatalogPromotionsContext.php",
+            "kind": "update"
+          }
+        ],
+        "status": "in_progress"
+      }
+    },
+    {
+      "type": "item.completed",
+      "item": {
+        "id": "item_29",
+        "type": "file_change",
+        "changes": [
+          {
+            "path": "/root/lby-docker/req2test/user/runs/req2test-subset160-20261112-v1/generation/55d9663eecb01bdaf0fe/attempt-1/workspaces/0000/repo/src/Sylius/Behat/Context/Api/Admin/ManagingCatalogPromotionsContext.php",
+            "kind": "update"
+          }
+        ],
+        "status": "completed"
+      }
+    },
+    {
+      "type": "item.started",
+      "item": {
+        "id": "item_30",
+        "type": "command_execution",
+        "command": "/usr/bin/bash -lc 'behat-scenario repo/features/admin/promotion/managing_catalog_promotions/creating_catalog_promotion.feature:97'",
+        "aggregated_output": "",
+        "exit_code": null,
+        "status": "in_progress"
+      }
+    },
+    {
+      "type": "item.completed",
+      "item": {
+        "id": "item_30",
+        "type": "command_execution",
+        "command": "/usr/bin/bash -lc 'behat-scenario repo/features/admin/promotion/managing_catalog_promotions/creating_catalog_promotion.feature:97'",
+        "aggregated_output": "@managing_catalog_promotions\nFeature: Creating a catalog promotion\n  In order to set up a catalog promotion for some special occasions\n  As an Administrator\n  I want to have an option to configure such a promotion\n\n  Background:\n    Given the store operates on a single channel in \"United States\"\n    And the store has \"Clothes\" taxonomy\n    And the store has a \"T-Shirt\" configurable product\n    And this product belongs to \"Clothes\"\n    And this product has \"PHP T-Shirt\" variant priced at \"$20.00\"\n    And this product has \"Kotlin T-Shirt\" variant priced at \"$40.00\"\n    And I am logged in as an administrator\n\n  @api @ui @mink:chromedriver\n  Scenario: Creating a catalog promotion for product\n    When I want to create a new catalog promotion\n    And I specify its code as \"winter_sale\"\n    And I name it \"Winter sale\"\n    And I add scope that applies on \"T-Shirt\" product\n    And I add action that gives \"50%\" percentage discount\n    And I add it\n      {\"@context\":\"\\/api\\/v2\\/contexts\\/ConstraintViolation\",\"@id\":\"\\/api\\/v2\\/validation_errors\\/04b91c99-a946-4221-afc5-e65ebac401eb\",\"@type\":\"ConstraintViolation\",\"status\":422,\"violations\":[{\"propertyPath\":\"actions[0].configuration[amount]\",\"message\":\"The percentage discount amount must be between 0% and 100%.\",\"code\":\"04b91c99-a946-4221-afc5-e65ebac401eb\"}],\"detail\":\"actions[0].configuration[amount]: The percentage discount amount must be between 0% and 100%.\",\"type\":\"\\/validation_errors\\/04b91c99-a946-4221-afc5-e65ebac401eb\",\"hydra:description\":\"actions[0].configuration[amount]: The percentage discount amount must be between 0% and 100%.\",\"hydra:title\":\"An error occurred\"} (RuntimeException)\n    Then there should be 1 new catalog promotion on the list\n    And it should have \"winter_sale\" code and \"Winter sale\" name\n    And the \"Winter sale\" catalog promotion should apply to all variants of \"T-Shirt\" product\n\n--- Failed scenarios:\n\n    /var/www/html/features/admin/promotion/managing_catalog_promotions/creating_catalog_promotion.feature:97 (on line 103)\n\n1 scenario (1 failed)\n16 steps (12 passed, 1 failed, 3 skipped)\n0m0.56s (259.22Mb)\n",
+        "exit_code": 1,
+        "status": "failed"
+      }
+    },
+    {
+      "type": "item.started",
+      "item": {
+        "id": "item_31",
+        "type": "file_change",
+        "changes": [
+          {
+            "path": "/root/lby-docker/req2test/user/runs/req2test-subset160-20261112-v1/generation/55d9663eecb01bdaf0fe/attempt-1/workspaces/0000/repo/src/Sylius/Behat/Context/Api/Admin/ManagingCatalogPromotionsContext.php",
+            "kind": "update"
+          }
+        ],
+        "status": "in_progress"
+      }
+    },
+    {
+      "type": "item.completed",
+      "item": {
+        "id": "item_31",
+        "type": "file_change",
+        "changes": [
+          {
+            "path": "/root/lby-docker/req2test/user/runs/req2test-subset160-20261112-v1/generation/55d9663eecb01bdaf0fe/attempt-1/workspaces/0000/repo/src/Sylius/Behat/Context/Api/Admin/ManagingCatalogPromotionsContext.php",
+            "kind": "update"
+          }
+        ],
+        "status": "completed"
+      }
+    },
+    {
+      "type": "item.started",
+      "item": {
+        "id": "item_32",
+        "type": "command_execution",
+        "command": "/usr/bin/bash -lc 'behat-scenario repo/features/admin/promotion/managing_catalog_promotions/creating_catalog_promotion.feature:97'",
+        "aggregated_output": "",
+        "exit_code": null,
+        "status": "in_progress"
+      }
+    },
+    {
+      "type": "item.completed",
+      "item": {
+        "id": "item_32",
+        "type": "command_execution",
+        "command": "/usr/bin/bash -lc 'behat-scenario repo/features/admin/promotion/managing_catalog_promotions/creating_catalog_promotion.feature:97'",
+        "aggregated_output": "@managing_catalog_promotions\nFeature: Creating a catalog promotion\n  In order to set up a catalog promotion for some special occasions\n  As an Administrator\n  I want to have an option to configure such a promotion\n\n  Background:\n    Given the store operates on a single channel in \"United States\"\n    And the store has \"Clothes\" taxonomy\n    And the store has a \"T-Shirt\" configurable product\n    And this product belongs to \"Clothes\"\n    And this product has \"PHP T-Shirt\" variant priced at \"$20.00\"\n    And this product has \"Kotlin T-Shirt\" variant priced at \"$40.00\"\n    And I am logged in as an administrator\n\n  @api @ui @mink:chromedriver\n  Scenario: Creating a catalog promotion for product\n    When I want to create a new catalog promotion\n    And I specify its code as \"winter_sale\"\n    And I name it \"Winter sale\"\n    And I add scope that applies on \"T-Shirt\" product\n    And I add action that gives \"50%\" percentage discount\n    And I add it\n      Expected a value equal to 201. Got: 500 (Webmozart\\Assert\\InvalidArgumentException)\n    Then there should be 1 new catalog promotion on the list\n    And it should have \"winter_sale\" code and \"Winter sale\" name\n    And the \"Winter sale\" catalog promotion should apply to all variants of \"T-Shirt\" product\n\n--- Failed scenarios:\n\n    /var/www/html/features/admin/promotion/managing_catalog_promotions/creating_catalog_promotion.feature:97 (on line 103)\n\n1 scenario (1 failed)\n16 steps (12 passed, 1 failed, 3 skipped)\n0m1.22s (261.41Mb)\n",
+        "exit_code": 1,
+        "status": "failed"
+      }
+    },
+    {
+      "type": "item.started",
+      "item": {
+        "id": "item_33",
+        "type": "file_change",
+        "changes": [
+          {
+            "path": "/root/lby-docker/req2test/user/runs/req2test-subset160-20261112-v1/generation/55d9663eecb01bdaf0fe/attempt-1/workspaces/0000/repo/src/Sylius/Behat/Context/Api/Admin/ManagingCatalogPromotionsContext.php",
+            "kind": "update"
+          }
+        ],
+        "status": "in_progress"
+      }
+    },
+    {
+      "type": "item.completed",
+      "item": {
+        "id": "item_33",
+        "type": "file_change",
+        "changes": [
+          {
+            "path": "/root/lby-docker/req2test/user/runs/req2test-subset160-20261112-v1/generation/55d9663eecb01bdaf0fe/attempt-1/workspaces/0000/repo/src/Sylius/Behat/Context/Api/Admin/ManagingCatalogPromotionsContext.php",
+            "kind": "update"
+          }
+        ],
+        "status": "completed"
+      }
+    },
+    {
+      "type": "item.started",
+      "item": {
+        "id": "item_34",
+        "type": "command_execution",
+        "command": "/usr/bin/bash -lc 'behat-scenario repo/features/admin/promotion/managing_catalog_promotions/creating_catalog_promotion.feature:97'",
+        "aggregated_output": "",
+        "exit_code": null,
+        "status": "in_progress"
+      }
+    },
+    {
+      "type": "item.completed",
+      "item": {
+        "id": "item_34",
+        "type": "command_execution",
+        "command": "/usr/bin/bash -lc 'behat-scenario repo/features/admin/promotion/managing_catalog_promotions/creating_catalog_promotion.feature:97'",
+        "aggregated_output": "@managing_catalog_promotions\nFeature: Creating a catalog promotion\n  In order to set up a catalog promotion for some special occasions\n  As an Administrator\n  I want to have an option to configure such a promotion\n\n  Background:\n    Given the store operates on a single channel in \"United States\"\n    And the store has \"Clothes\" taxonomy\n    And the store has a \"T-Shirt\" configurable product\n    And this product belongs to \"Clothes\"\n    And this product has \"PHP T-Shirt\" variant priced at \"$20.00\"\n    And this product has \"Kotlin T-Shirt\" variant priced at \"$40.00\"\n    And I am logged in as an administrator\n\n  @api @ui @mink:chromedriver\n  Scenario: Creating a catalog promotion for product\n    When I want to create a new catalog promotion\n    And I specify its code as \"winter_sale\"\n    And I name it \"Winter sale\"\n    And I add scope that applies on \"T-Shirt\" product\n    And I add action that gives \"50%\" percentage discount\n    And I add it\n      {\"@context\":\"\\/api\\/v2\\/contexts\\/Error\",\"@id\":\"\\/api\\/v2\\/errors\\/500\",\"@type\":\"hydra:Error\",\"detail\":\"Internal Server Error\",\"status\":500,\"type\":\"\\/errors\\/500\",\"hydra:description\":\"Internal Server Error\",\"hydra:title\":\"An error occurred\"} (RuntimeException)\n    Then there should be 1 new catalog promotion on the list\n    And it should have \"winter_sale\" code and \"Winter sale\" name\n    And the \"Winter sale\" catalog promotion should apply to all variants of \"T-Shirt\" product\n\n--- Failed scenarios:\n\n    /var/www/html/features/admin/promotion/managing_catalog_promotions/creating_catalog_promotion.feature:97 (on line 103)\n\n1 scenario (1 failed)\n16 steps (12 passed, 1 failed, 3 skipped)\n0m0.55s (260.95Mb)\n",
+        "exit_code": 1,
+        "status": "failed"
+      }
+    },
+    {
+      "type": "item.started",
+      "item": {
+        "id": "item_35",
+        "type": "file_change",
+        "changes": [
+          {
+            "path": "/root/lby-docker/req2test/user/runs/req2test-subset160-20261112-v1/generation/55d9663eecb01bdaf0fe/attempt-1/workspaces/0000/repo/src/Sylius/Behat/Context/Api/Admin/ManagingCatalogPromotionsContext.php",
+            "kind": "update"
+          }
+        ],
+        "status": "in_progress"
+      }
+    },
+    {
+      "type": "item.completed",
+      "item": {
+        "id": "item_35",
+        "type": "file_change",
+        "changes": [
+          {
+            "path": "/root/lby-docker/req2test/user/runs/req2test-subset160-20261112-v1/generation/55d9663eecb01bdaf0fe/attempt-1/workspaces/0000/repo/src/Sylius/Behat/Context/Api/Admin/ManagingCatalogPromotionsContext.php",
+            "kind": "update"
+          }
+        ],
+        "status": "completed"
+      }
+    },
+    {
+      "type": "item.started",
+      "item": {
+        "id": "item_36",
+        "type": "command_execution",
+        "command": "/usr/bin/bash -lc 'php -l repo/src/Sylius/Behat/Context/Api/Admin/ManagingCatalogPromotionsContext.php; git -C repo status --short'",
+        "aggregated_output": "",
+        "exit_code": null,
+        "status": "in_progress"
+      }
+    },
+    {
+      "type": "item.completed",
+      "item": {
+        "id": "item_36",
+        "type": "command_execution",
+        "command": "/usr/bin/bash -lc 'php -l repo/src/Sylius/Behat/Context/Api/Admin/ManagingCatalogPromotionsContext.php; git -C repo status --short'",
+        "aggregated_output": "No syntax errors detected in repo/src/Sylius/Behat/Context/Api/Admin/ManagingCatalogPromotionsContext.php\nfatal: not a git repository (or any parent up to mount point /root/lby-docker/req2test/user/runs/req2test-subset160-20261112-v1/generation/55d9663eecb01bdaf0fe/attempt-1/workspaces)\nStopping at filesystem boundary (GIT_DISCOVERY_ACROSS_FILESYSTEM not set).\n",
+        "exit_code": 128,
+        "status": "failed"
+      }
+    },
+    {
+      "type": "item.completed",
+      "item": {
+        "id": "item_37",
+        "type": "agent_message",
+        "text": "Added [ManagingCatalogPromotionsContext.php](/root/lby-docker/req2test/user/runs/req2test-subset160-20261112-v1/generation/55d9663eecb01bdaf0fe/attempt-1/workspaces/0000/repo/src/Sylius/Behat/Context/Api/Admin/ManagingCatalogPromotionsContext.php) and [behat_services.yml](/root/lby-docker/req2test/user/runs/req2test-subset160-20261112-v1/generation/55d9663eecb01bdaf0fe/attempt-1/workspaces/0000/repo/behat_services.yml) for the creation and assertion steps. The PHP file passes syntax checking.\n\nI ran the requested scenario, but it did not pass: the API returned 422 when the action amount was `50` and 500 when it was `0.5`. So the step definitions are in place, but the scenario still needs the correct action payload to pass."
+      }
+    },
+    {
+      "type": "turn.completed",
+      "usage": {
+        "input_tokens": 831711,
+        "cached_input_tokens": 277376,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 5348,
+        "reasoning_output_tokens": 1232
+      }
+    }
+  ],
+  "other_output": [
+    "",
+    "run_agent: exit 0 after 24 LLM call(s)",
+    "run_agent: the agent's network refused github.com:443, refused chatgpt.com:443 (2x), refused api.github.com:443, refused ab.chatgpt.com:443 (4x)"
+  ]
+}

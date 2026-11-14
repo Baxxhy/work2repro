@@ -1,0 +1,98 @@
+diff --git a/scripts/docker/egress-squid.conf b/scripts/docker/egress-squid.conf
+index a3e1146..8a36e7e 100644
+--- a/scripts/docker/egress-squid.conf
++++ b/scripts/docker/egress-squid.conf
+@@ -17,3 +17,7 @@ http_access deny all
+ # No caching: agent traffic must not be stored on the host.
+ cache deny all
+ access_log none
++
++# Reuse the host proxy while retaining the provider API allowlist above.
++cache_peer 172.29.1.1 parent 17890 0 no-query default
++never_direct allow all
+diff --git a/scripts/docker/programbench_image.Dockerfile b/scripts/docker/programbench_image.Dockerfile
+index 7b06b84..862817c 100644
+--- a/scripts/docker/programbench_image.Dockerfile
++++ b/scripts/docker/programbench_image.Dockerfile
+@@ -1,4 +1,5 @@
+ ARG BASE_IMAGE
++FROM programbench/abishekvashok_1776_cmatrix.5c082c6:task_cleanroom_codex AS tsb_codex_bootstrap
+ FROM ${BASE_IMAGE}
+ 
+ # The one image every ProgramBench step runs in, except mutant/reference builds.
+@@ -17,7 +18,8 @@ ARG AGENT=none
+ 
+ # curl and ca-certificates are needed by the sccache and Claude installs below;
+ # git and util-linux are part of the baseline agent workspace.
+-RUN apt-get update && apt-get install -y --no-install-recommends \
++RUN sed -i 's#http://archive.ubuntu.com/#https://archive.ubuntu.com/#g;s#http://security.ubuntu.com/#https://security.ubuntu.com/#g' /etc/apt/sources.list \
++  && apt-get -o Acquire::Retries=4 update && apt-get -o Acquire::Retries=4 install -y --no-install-recommends \
+       ca-certificates curl git gnupg util-linux \
+   && rm -rf /var/lib/apt/lists/*
+ 
+@@ -32,8 +34,9 @@ RUN chmod 0755 /usr/local/libexec/programbench-apt-flock \
+ # image, so it reveals nothing about the task; the cache itself lives on the
+ # host and is mounted only into build containers.
+ ARG SCCACHE_VERSION=0.10.0
+-RUN curl -fsSL "https://github.com/mozilla/sccache/releases/download/v${SCCACHE_VERSION}/sccache-v${SCCACHE_VERSION}-x86_64-unknown-linux-musl.tar.gz" \
+-      | tar -xz -C /tmp \
++RUN curl --retry 4 --retry-all-errors --connect-timeout 20 -fsSL "https://gh-proxy.com/https://github.com/mozilla/sccache/releases/download/v${SCCACHE_VERSION}/sccache-v${SCCACHE_VERSION}-x86_64-unknown-linux-musl.tar.gz" \
++      -o /tmp/programbench-sccache.tar.gz \
++  && tar -xzf /tmp/programbench-sccache.tar.gz -C /tmp \
+   && install -m 0755 "/tmp/sccache-v${SCCACHE_VERSION}-x86_64-unknown-linux-musl/sccache" /usr/local/bin/sccache \
+   && rm -rf "/tmp/sccache-v${SCCACHE_VERSION}-x86_64-unknown-linux-musl" \
+   && sccache --version
+@@ -44,12 +47,12 @@ RUN curl -fsSL "https://github.com/mozilla/sccache/releases/download/v${SCCACHE_
+ # install pulls in is therefore shared, and only the CLI itself is withheld.
+ ARG NODE_MAJOR=24
+ RUN install -d -m 0755 /etc/apt/keyrings \
+-  && curl -fsSL https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key \
++  && curl --retry 4 --retry-all-errors --connect-timeout 20 -fsSL https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key \
+        | gpg --dearmor -o /etc/apt/keyrings/nodesource.gpg \
+   && echo "deb [signed-by=/etc/apt/keyrings/nodesource.gpg] https://deb.nodesource.com/node_${NODE_MAJOR}.x nodistro main" \
+        > /etc/apt/sources.list.d/nodesource.list \
+-  && apt-get update \
+-  && apt-get install -y --no-install-recommends nodejs \
++  && apt-get -o Acquire::Retries=4 update \
++  && apt-get -o Acquire::Retries=4 install -y --no-install-recommends nodejs=24.22.2-1nodesource1 \
+   && rm -rf /var/lib/apt/lists/* \
+   && node --version
+ # Agent CLI. Deliberately absent from the grading image (AGENT=none): a
+@@ -67,15 +70,15 @@ ARG QWEN_VERSION=0.24.0
+ ARG DEEPSEEK_VERSION=0.1.5-rc.3
+ ARG ZCODE_VERSION=3.14.3
+ ARG MUSE_ADAPTER_VERSION=0.3.2
+-RUN set -eu; \
++RUN --mount=type=bind,from=tsb_codex_bootstrap,source=/usr/local/bin/codex,target=/tmp/tsb-codex-bootstrap --mount=type=bind,from=tsb_codex_bootstrap,source=/usr/local/bin/codex-code-mode-host,target=/tmp/tsb-code-mode-host-bootstrap set -eu; \
+     case "${AGENT}" in \
+       codex) \
+-        npm install -g "@openai/codex@${CODEX_VERSION}"; \
+-        npm cache clean --force >/dev/null 2>&1; rm -rf /root/.npm; \
++        install -m 0755 /tmp/tsb-codex-bootstrap /usr/local/bin/codex; \
++        install -m 0755 /tmp/tsb-code-mode-host-bootstrap /usr/local/bin/codex-code-mode-host; \
+         codex --version; \
+         ;; \
+       claude) \
+-        curl -fsSL https://claude.ai/install.sh | bash -s "${CLAUDE_VERSION}"; \
++        curl --retry 4 --retry-all-errors --connect-timeout 20 -fsSL https://claude.ai/install.sh | bash -s "${CLAUDE_VERSION}"; \
+         /root/.local/bin/claude --version; \
+         ;; \
+       gemini) \
+@@ -94,7 +97,7 @@ RUN set -eu; \
+         dsh --version; \
+         ;; \
+       glm) \
+-        curl -fsSL "https://cdn-zcode.z.ai/zcode/electron/releases/${ZCODE_VERSION}/linux-x64/ZCode-${ZCODE_VERSION}-linux-x64.deb" -o /tmp/zcode.deb; \
++        curl --retry 4 --retry-all-errors --connect-timeout 20 -fsSL "https://cdn-zcode.z.ai/zcode/electron/releases/${ZCODE_VERSION}/linux-x64/ZCode-${ZCODE_VERSION}-linux-x64.deb" -o /tmp/zcode.deb; \
+         mkdir -p /opt/zcode; \
+         dpkg-deb -x /tmp/zcode.deb /opt/zcode; \
+         rm /tmp/zcode.deb; \
+@@ -127,7 +130,7 @@ RUN set -eu; \
+ COPY scripts/docker/pip-constraints.txt /opt/programbench/constraints.txt
+ ENV PIP_CONSTRAINT=/opt/programbench/constraints.txt
+ COPY scripts/docker/eval-runtime-requirements.txt /opt/programbench/requirements.txt
+-RUN python3 -m pip install -q -r /opt/programbench/requirements.txt
++RUN python3 -m pip install --retries 6 --timeout 60 -q -r /opt/programbench/requirements.txt
+ 
+ # Python packages a single reference suite installs that need system libraries or
+ # a build toolchain, which is why they cannot join the flat `pip install -r`

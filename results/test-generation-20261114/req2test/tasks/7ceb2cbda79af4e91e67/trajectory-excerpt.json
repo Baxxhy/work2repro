@@ -1,0 +1,555 @@
+{
+  "original_record": "/root/lby-docker/req2test/user/runs/req2test-recovery8-20261113-v1/generation/7ceb2cbda79af4e91e67/attempt-1/workspaces/0000.log",
+  "complete_trace": false,
+  "string_limit": 4000,
+  "events": [
+    {
+      "type": "thread.started",
+      "thread_id": "01a1d3fc-0462-7343-b157-c1951a2a0cc6"
+    },
+    {
+      "type": "turn.started"
+    },
+    {
+      "type": "item.completed",
+      "item": {
+        "id": "item_0",
+        "type": "agent_message",
+        "text": "I’ll inspect the CLI feature and retained CLI test helpers, then write the single tagged Godog test file with the fixture setup needed to persist and reopen a session."
+      }
+    },
+    {
+      "type": "item.started",
+      "item": {
+        "id": "item_1",
+        "type": "command_execution",
+        "command": "/usr/bin/bash -lc \"rg --files repo/external/cli repo | rg '(TARGET_CONTRACTS|feature|_test\\\\.go)\"'$|cli_tui'\"'\"",
+        "aggregated_output": "",
+        "exit_code": null,
+        "status": "in_progress"
+      }
+    },
+    {
+      "type": "item.completed",
+      "item": {
+        "id": "item_1",
+        "type": "command_execution",
+        "command": "/usr/bin/bash -lc \"rg --files repo/external/cli repo | rg '(TARGET_CONTRACTS|feature|_test\\\\.go)\"'$|cli_tui'\"'\"",
+        "aggregated_output": "/usr/bin/bash: line 1: /usr/bin/rg: Permission denied\n/usr/bin/bash: line 1: /usr/bin/rg: Permission denied\n",
+        "exit_code": 126,
+        "status": "failed"
+      }
+    },
+    {
+      "type": "item.started",
+      "item": {
+        "id": "item_2",
+        "type": "command_execution",
+        "command": "/usr/bin/bash -lc 'find repo/external/cli -maxdepth 3 -type f | head -150'",
+        "aggregated_output": "",
+        "exit_code": null,
+        "status": "in_progress"
+      }
+    },
+    {
+      "type": "item.completed",
+      "item": {
+        "id": "item_2",
+        "type": "command_execution",
+        "command": "/usr/bin/bash -lc 'find repo/external/cli -maxdepth 3 -type f | head -150'",
+        "aggregated_output": "repo/external/cli/sender_test.go\nrepo/external/cli/theme_dark.go\nrepo/external/cli/theme.go\nrepo/external/cli/localshell.go\nrepo/external/cli/run.go\nrepo/external/cli/chat_test.go\nrepo/external/cli/sender.go\nrepo/external/cli/usage.go\nrepo/external/cli/print.go\nrepo/external/cli/status_test.go\nrepo/external/cli/tui/width_test.go\nrepo/external/cli/tui/width.go\nrepo/external/cli/tui/theme.go\nrepo/external/cli/tui/editor_test.go\nrepo/external/cli/tui/sanitize.go\nrepo/external/cli/tui/selectlist.go\nrepo/external/cli/tui/mainscreen_test.go\nrepo/external/cli/tui/loader.go\nrepo/external/cli/tui/terminal_unix.go\nrepo/external/cli/tui/keys.go\nrepo/external/cli/tui/terminal.go\nrepo/external/cli/tui/stdinbuf.go\nrepo/external/cli/tui/doc.go\nrepo/external/cli/tui/terminal_windows.go\nrepo/external/cli/tui/text.go\nrepo/external/cli/tui/mainscreen.go\nrepo/external/cli/tui/markdown.go\nrepo/external/cli/tui/editor.go\nrepo/external/cli/selectors.go\nrepo/external/cli/usage_test.go\nrepo/external/cli/autocomplete.go\nrepo/external/cli/slash.go\nrepo/external/cli/footer.go\nrepo/external/cli/continue.go\nrepo/external/cli/continue_test.go\nrepo/external/cli/backend.go\nrepo/external/cli/theme_light.go\nrepo/external/cli/chat.go\nrepo/external/cli/app.go\nrepo/external/cli/status.go\nrepo/external/cli/header.go\nrepo/external/cli/modals.go\nrepo/external/cli/updates.go\n",
+        "exit_code": 0,
+        "status": "completed"
+      }
+    },
+    {
+      "type": "item.started",
+      "item": {
+        "id": "item_3",
+        "type": "command_execution",
+        "command": "/usr/bin/bash -lc \"find repo -name '*cli_tui*' -o -name '*.feature' -o -name TARGET_CONTRACTS.md; sed -n '1,240p' repo/external/cli/continue_test.go; sed -n '1,240p' repo/external/cli/app.go\"",
+        "aggregated_output": "",
+        "exit_code": null,
+        "status": "in_progress"
+      }
+    },
+    {
+      "type": "item.completed",
+      "item": {
+        "id": "item_3",
+        "type": "command_execution",
+        "command": "/usr/bin/bash -lc \"find repo -name '*cli_tui*' -o -name '*.feature' -o -name TARGET_CONTRACTS.md; sed -n '1,240p' repo/external/cli/continue_test.go; sed -n '1,240p' repo/external/cli/app.go\"",
+        "aggregated_output": "repo/TARGET_CONTRACTS.md\nrepo/features/agent_identity.feature\nrepo/features/background_tasks.feature\nrepo/features/acp_session_integration.feature\nrepo/features/session_export_cli.feature\nrepo/features/subagents_catalog.feature\nrepo/features/background_permissions.feature\nrepo/features/cli_tui.feature\nrepo/features/subagents.feature\nrepo/features/context_compaction.feature\nrepo/features/update.feature\nrepo/features/loop_protection.feature\nrepo/features/subagents_http.feature\nrepo/features/context_compaction_command.feature\nrepo/features/llm_stream_truncation.feature\nrepo/features/background_tasks_http.feature\nrepo/features/llm_transport_retry.feature\nrepo/features/llm_limit_wait.feature\nrepo/features/update_windows.feature\nrepo/features/background_wake.feature\nrepo/features/context_result_eviction.feature\nrepo/features/neuraldeep_auth.feature\nrepo/features/skills_session_workspace.feature\nrepo/features/context_compaction_auto.feature\nrepo/features/llm_retry_ownership.feature\nrepo/features/agents_md_scoping.feature\nrepo/features/ask_mode.feature\nrepo/features/spawn_agent_card.feature\nrepo/features/llamacpp_openai_stream.feature\nrepo/features/mcp_tool_calls.feature\nrepo/features/at_line_range_mention.feature\nrepo/features/plugin_command.feature\nrepo/features/codex_auth.feature\nrepo/features/hooks_project_trust.feature\nrepo/features/acp_permission_answers.feature\nrepo/features/shell_special_characters.feature\nrepo/features/hooks_turn_lifecycle.feature\nrepo/features/session_branch_delete.feature\nrepo/features/workspace_switching.feature\nrepo/features/cli_remote.feature\nrepo/features/mcp_project_trust.feature\nrepo/features/model_stream_toggle.feature\nrepo/features/llm_retry_after.feature\nrepo/features/background_reap.feature\nrepo/features/skills_marketplace.feature\nrepo/features/reasoning_levels_fetch.feature\nrepo/features/neuraldeep_usage.feature\nrepo/features/remote_api.feature\nrepo/features/model_stream_toggle_http.feature\nrepo/features/hooks_tool_calls.feature\nrepo/features/session_export.feature\nrepo/features/ask_mode_http.feature\nrepo/features/rules_agents_dir.feature\nrepo/features/prompt_attachment_encoding.feature\nrepo/features/foreground_timeout_adoption.feature\nrepo/features/config_tools.feature\nrepo/features/edit_line_endings.feature\nrepo/features/hooks_subagents.feature\nrepo/features/question_lenient_args.feature\nrepo/features/remote_client.feature\nrepo/features/mcp_management.feature\nrepo/features/composer_live_watch.feature\n//go:build cli\n\npackage cli\n\nimport (\n\t\"encoding/json\"\n\t\"os\"\n\t\"path/filepath\"\n\t\"testing\"\n\t\"time\"\n\n\t\"github.com/EvilFreelancer/coddy-agent/internal/session\"\n)\n\nfunc writeSnapshotFixture(t *testing.T, root, id, cwd string, updatedAt time.Time) {\n\tt.Helper()\n\tdir := filepath.Join(root, id)\n\tif err := os.MkdirAll(dir, 0o755); err != nil {\n\t\tt.Fatal(err)\n\t}\n\t// Marshal properly: Windows paths carry backslashes that would corrupt\n\t// hand-concatenated JSON.\n\tmeta, err := json.Marshal(map[string]string{\n\t\t\"id\":        id,\n\t\t\"cwd\":       cwd,\n\t\t\"updatedAt\": updatedAt.UTC().Format(time.RFC3339),\n\t})\n\tif err != nil {\n\t\tt.Fatal(err)\n\t}\n\tif err := os.WriteFile(filepath.Join(dir, \"session.json\"), meta, 0o644); err != nil {\n\t\tt.Fatal(err)\n\t}\n}\n\nfunc TestLatestSessionIDPicksTheNewestForThisFolder(t *testing.T) {\n\troot := t.TempDir()\n\twork := filepath.Join(root, \"work\")\n\tother := filepath.Join(root, \"elsewhere\")\n\tstore := &session.FileStore{Root: filepath.Join(root, \"sessions\")}\n\tnow := time.Now()\n\twriteSnapshotFixture(t, store.Root, \"sess-old\", work, now.Add(-2*time.Hour))\n\twriteSnapshotFixture(t, store.Root, \"sess-new\", work, now.Add(-1*time.Minute))\n\twriteSnapshotFixture(t, store.Root, \"sess-other\", other, now)\n\n\tid, err := latestSessionID(store, work)\n\tif err != nil {\n\t\tt.Fatalf(\"latestSessionID: %v\", err)\n\t}\n\tif id != \"sess-new\" {\n\t\tt.Fatalf(\"picked %q, want sess-new\", id)\n\t}\n}\n\nfunc TestLatestSessionIDFailsClearlyWhenTheFolderHasNoSessions(t *testing.T) {\n\troot := t.TempDir()\n\tstore := &session.FileStore{Roo\n[TRUNCATED: full original retained on experiment server]",
+        "exit_code": 0,
+        "status": "completed"
+      }
+    },
+    {
+      "type": "item.completed",
+      "item": {
+        "id": "item_4",
+        "type": "agent_message",
+        "text": "The scenario needs to seed a real session through the manager, then invoke `StartContinue` through the app’s terminal loop. I’m tracing the available backend/runner test doubles and session persistence APIs so the fixture stays entirely local."
+      }
+    },
+    {
+      "type": "item.started",
+      "item": {
+        "id": "item_5",
+        "type": "command_execution",
+        "command": "/usr/bin/bash -lc \"sed -n '1,220p' repo/features/cli_tui.feature; sed -n '1,260p' repo/external/cli/chat_test.go; sed -n '1,200p' repo/external/cli/backend.go; sed -n '1,220p' repo/TARGET_CONTRACTS.md\"",
+        "aggregated_output": "",
+        "exit_code": null,
+        "status": "in_progress"
+      }
+    },
+    {
+      "type": "item.completed",
+      "item": {
+        "id": "item_5",
+        "type": "command_execution",
+        "command": "/usr/bin/bash -lc \"sed -n '1,220p' repo/features/cli_tui.feature; sed -n '1,260p' repo/external/cli/chat_test.go; sed -n '1,200p' repo/external/cli/backend.go; sed -n '1,220p' repo/TARGET_CONTRACTS.md\"",
+        "aggregated_output": "Feature: Interactive console TUI\n  Running coddy with no arguments on a terminal starts an interactive console\n  session that renders the conversation with the same machinery every other\n  surface uses: the session manager, the agent runner, and ACP updates.\n\n  Background:\n    Given a coddy console app over a stub agent runner\n\n  Scenario: Bare start renders the console chrome\n    When the console app starts\n    Then the screen shows the coddy version header\n    And the screen shows the editor between horizontal borders\n    And the footer names the configured default model\n\n  Scenario: A prompt streams into the transcript\n    When the console app starts\n    And the operator submits the prompt \"hello there\"\n    And the stub turn streams the text \"Hi! How can I help?\"\n    Then the transcript shows a user message block containing \"hello there\"\n    And the transcript shows the assistant text \"Hi! How can I help?\"\n    And the footer shows accumulated token usage\n\n  Scenario: A tool call renders as a pending box that completes\n    When the console app starts\n    And the operator submits the prompt \"read the readme\"\n    And the stub turn starts a tool call named \"read\" with argument path \"README.md\"\n    Then the transcript shows a pending tool box titled \"read\"\n    When the stub tool call completes with a preview of 14 lines\n    Then the tool box shows the preview \"preview line 1\"\n    And the tool box shows the expand hint\n\n  Scenario: The status line names what the turn is doing right now\n    When the console app starts\n    And the operator submits the prompt \"read the readme\"\n    Then the status line shows \"Waiting for the model\"\n    When the stub turn starts a tool call named \"read\" with argument path \"README.md\"\n    Then the status line shows \"Reading README.md\"\n    When the stub tool call completes without ending the turn\n    Then the status line shows \"Waiting for the model\"\n\n  Scenario: The status line names the subagent that is running\n    When the console app starts\n    And the operator submits the prompt \"delegate the review\"\n    And the stub turn starts a tool call named \"spawn_agent\" with argument agent \"reviewer\"\n    Then the status line shows \"Running subagent reviewer\"\n\n  Scenario: The status line stays truthful through a permission gate\n    Given the session permission mode is \"ask\"\n    When the console app starts\n    And the operator submits the prompt \"run a gated command\"\n    And the stub turn starts a tool call named \"run_command\" with argument command \"sleep 6\"\n    And the stub turn requests permission for the tool \"run_command\"\n    Then the status line shows \"Waiting for your approval\"\n    When the operator allows the pending permission without ending the turn\n    Then the status line shows \"Running sleep 6\"\n    When the stub tool call completes without ending the turn\n    Then the status line shows \"Waiting for the model\"\n\n  Scenario: Ask permission mode renders a modal and allow continues the turn\n    Given the session permission mode is \"ask\"\n    When the console app starts\n    And the operator submits the prompt \"run a command\"\n    And the stub turn requests permission for the tool \"run_command\"\n    Then the screen shows a permission modal with an allow option\n    When the operator confirms the highlighted permission option\n    Then the stub turn observes the permission outcome \"selected\" with option \"allow\"\n\n  Scenario: Escape cancels the running turn\n    When the console app starts\n    And the operator submits the prompt \"long task\"\n    And the stub turn blocks until cancelled\n    And the operator presses escape\n    Then the stub turn observes cancellation\n    And the transcript shows an interrupt notice\n\n  Scenario: Model selection through the selector persists on the session\n    When the console app starts\n    And the operator switches the model to the second configured model\n    Then the footer names the second configured model\n    And the session state records the second configured model\n\n  Scenario: R\n[TRUNCATED: full original retained on experiment server]",
+        "exit_code": 0,
+        "status": "completed"
+      }
+    },
+    {
+      "type": "item.started",
+      "item": {
+        "id": "item_6",
+        "type": "command_execution",
+        "command": "/usr/bin/bash -lc \"rg -n \\\"newTestApp|type .*Terminal|func \\\\(.*Run\\\\(|StartContinue|godog|StubAgent|stub.*runner\\\" repo/external/cli repo/internal | head -150\"",
+        "aggregated_output": "",
+        "exit_code": null,
+        "status": "in_progress"
+      }
+    },
+    {
+      "type": "item.completed",
+      "item": {
+        "id": "item_6",
+        "type": "command_execution",
+        "command": "/usr/bin/bash -lc \"rg -n \\\"newTestApp|type .*Terminal|func \\\\(.*Run\\\\(|StartContinue|godog|StubAgent|stub.*runner\\\" repo/external/cli repo/internal | head -150\"",
+        "aggregated_output": "/usr/bin/bash: line 1: /usr/bin/rg: Permission denied\n",
+        "exit_code": 0,
+        "status": "completed"
+      }
+    },
+    {
+      "type": "item.started",
+      "item": {
+        "id": "item_7",
+        "type": "command_execution",
+        "command": "/usr/bin/bash -lc \"grep -R -nE 'newTestApp|type .*Terminal|StartContinue|godog|stub.*runner' repo/external/cli repo/internal | head -150\"",
+        "aggregated_output": "",
+        "exit_code": null,
+        "status": "in_progress"
+      }
+    },
+    {
+      "type": "item.completed",
+      "item": {
+        "id": "item_7",
+        "type": "command_execution",
+        "command": "/usr/bin/bash -lc \"grep -R -nE 'newTestApp|type .*Terminal|StartContinue|godog|stub.*runner' repo/external/cli repo/internal | head -150\"",
+        "aggregated_output": "repo/external/cli/run.go:203:\t\t\tstartErr = app.StartContinue(ctx)\nrepo/external/cli/chat_test.go:163:\t\t\ta := newTestApp(t)\nrepo/external/cli/chat_test.go:198:\t\t\ta := newTestApp(t)\nrepo/external/cli/chat_test.go:218:\ta := newTestApp(t)\nrepo/external/cli/chat_test.go:242:\ta := newTestApp(t)\nrepo/external/cli/chat_test.go:265:// newTestApp builds an App with the UI tree but no backend: the dispatch\nrepo/external/cli/chat_test.go:267:func newTestApp(t *testing.T) *App {\nrepo/external/cli/tui/mainscreen_test.go:12:type fakeTerminal struct {\nrepo/external/cli/tui/terminal.go:16:type ProcessTerminal struct {\nrepo/external/cli/tui/mainscreen.go:84:type Terminal interface {\nrepo/external/cli/usage_test.go:580:\ta := newTestApp(t)\nrepo/external/cli/usage_test.go:609:\ta := newTestApp(t)\nrepo/external/cli/app.go:22:type appTerminal interface {\nrepo/external/cli/app.go:1047:// StartContinue reopens the most recent session recorded for this folder\nrepo/external/cli/app.go:1049:func (a *App) StartContinue(ctx context.Context) error { panic(\"implementation hidden\") }\nrepo/internal/remote/remote_test.go:4:// features/remote_client.feature (godog harness in external/httpserver).\nrepo/internal/agent/subagent_test.go:7:// and the run lifecycle. The godog harness in bdd_subagents_test.go covers the\n",
+        "exit_code": 0,
+        "status": "completed"
+      }
+    },
+    {
+      "type": "item.started",
+      "item": {
+        "id": "item_8",
+        "type": "command_execution",
+        "command": "/usr/bin/bash -lc \"sed -n '260,330p' repo/external/cli/chat_test.go; sed -n '84,130p' repo/external/cli/tui/mainscreen.go; sed -n '1,180p' repo/external/cli/run.go; grep -n 'type Config\\\\|type Agent\\\\|Runner' repo/internal/config/config.go\"",
+        "aggregated_output": "",
+        "exit_code": null,
+        "status": "in_progress"
+      }
+    },
+    {
+      "type": "item.completed",
+      "item": {
+        "id": "item_8",
+        "type": "command_execution",
+        "command": "/usr/bin/bash -lc \"sed -n '260,330p' repo/external/cli/chat_test.go; sed -n '84,130p' repo/external/cli/tui/mainscreen.go; sed -n '1,180p' repo/external/cli/run.go; grep -n 'type Config\\\\|type Agent\\\\|Runner' repo/internal/config/config.go\"",
+        "aggregated_output": "\tif got := transcriptText(a); !strings.Contains(got, \"releasing the console\") {\n\t\tt.Fatalf(\"transcript %q hides that the process outlived the release\", got)\n\t}\n}\n\n// newTestApp builds an App with the UI tree but no backend: the dispatch\n// checks under test refuse before anything touches a session.\nfunc newTestApp(t *testing.T) *App {\n\tt.Helper()\n\tcfg := &config.Config{Paths: config.Paths{Home: t.TempDir(), CWD: t.TempDir()}}\n\treturn newApp(cfg, nil, slog.New(slog.DiscardHandler), &bddTerminal{cols: 80, rows: 24}, \"dark\", true)\n}\n\nfunc transcriptText(a *App) string {\n\tvar b strings.Builder\n\tfor _, line := range a.chat.Render(80) {\n\t\tb.WriteString(tui.StripTerminalSequences(line))\n\t\tb.WriteString(\"\\n\")\n\t}\n\treturn b.String()\n}\n\n// A non-zero exit is a normal outcome of an operator command, reported in the\n// block rather than as an application error.\nfunc TestShellBoxReportsNonZeroExit(t *testing.T) {\n\ttheme := newTheme(\"dark\")\n\tbox := newShellBox(theme, \"false\")\n\tbox.Finish(3, nil)\n\tif rendered := renderedRows(box, 60); !rendered[\"exit 3\"] {\n\t\tt.Fatalf(\"box did not report the exit code:\\n%v\", rendered)\n\t}\n}\n\n// A command killed by a signal reports -1 whether or not the operator asked\n// for it, so the block must not call an outside kill a cancellation.\nfunc TestShellBoxSeparatesAStopFromASignalDeath(t *testing.T) {\n\ttheme := newTheme(\"dark\")\n\n\tstopped := newShellBox(theme, \"sleep 300\")\n\tstopped.RequestStop()\n\tstopped.Finish(-1, nil)\n\tif rendered := renderedRows(stopped, 60); !rendered[\"stopped\"] {\n\t\tt.Fatalf(\"an operator stop must say so:\\n%v\", rendered)\n\t}\n\n\tsignalled := newShellBox(theme, \"sh -c 'kill -TERM $$'\")\n\tsignalled.Finish(-1, nil)\n\trendered := renderedRows(signalled, 60)\n\tif rendered[\"stopped\"] || !rendered[\"terminated\"] {\n\t\tt.Fatalf(\"a signal death must not read as a cancellation:\\n%v\", rendered)\n\t}\n}\n\nfunc TestAssistantMessageStartsWithASeparatorRow(t *testing.T) {\n\ttheme := newTheme(\"dark\")\n\tmsg := newAssistantMessage(theme, markdownTheme(theme, false), false)\n\tmsg.AppendText(\"the answer\")\n\tlines := msg.Render(40)\n\tif len(lines) < 2 {\n\t\tt.Fatalf(\"unexpected render: %q\", lines)\n\t}\n\tif visible := tui.StripTerminalSequences(lines[0]); strings.TrimSpace(visible) != \"\" {\n\t\tt.Fatalf(\"first row must be a blank separator, got %q\", lines[0])\n\t}\n}\n\n// --- run.go: the console turn agent and the staged config flow ---\n\n// stagedConfigBackend stands in for an OpenAI-compatible server answering\n// blocking (stream: false) requests. It records the tool names every request\n// offered and, when scripted, drives one self-configuration turn: config_set,\ntype Terminal interface {\n\tWrite(s string)\n\tColumns() int\n\tRows() int\n\tHideCursor()\n\tShowCursor()\n}\n\n// MainScreen renders the component tree inline into the terminal main buffer,\n// diffing against the previous frame (port of pi TuiMainScreen).\ntype MainScreen struct {\n\tmu sync.Mutex\n\n\tRoot *Container\n\n\tterminal Terminal\n\tfocused  Component\n\n\tpreviousLines       []string\n\tpreviousWidth       int\n\tpreviousHeight      int\n\tcursorRow           int\n\thardwareCursorRow   int\n\tmaxLinesRendered    int\n\tpreviousViewportTop int\n\n\tclearOnShrink      bool\n\tshowHardwareCursor bool\n\tstopped            bool\n\n\tlastRender time.Time\n\trenderCh   chan struct{}\n}\n\n// NewMainScreen creates a renderer over t.\nfunc NewMainScreen(t Terminal) *MainScreen {\n\treturn &MainScreen{\n\t\tRoot:          &Container{},\n\t\tterminal:      t,\n\t\tclearOnShrink: true,\n\t\trenderCh:      make(chan struct{}, 1),\n\t}\n}\n\n// SetFocus directs subsequent input to c and updates Focusable state.\nfunc (m *MainScreen) SetFocus(c Component) {\n\tm.mu.Lock()\n//go:build cli\n\npackage cli\n\nimport (\n\t\"context\"\n\t\"errors\"\n\t\"flag\"\n\t\"fmt\"\n\t\"io\"\n\t\"log/slog\"\n\t\"os\"\n\t\"os/signal\"\n\t\"path/filepath\"\n\t\"strings\"\n\t\"syscall\"\n\t\"time\"\n\n\t\"github.com/EvilFreelancer/coddy-agent/external/cli/tui\"\n\t\"github.com/EvilFreelancer/coddy-agent/internal/acp\"\n\t\"github.com/EvilFreelancer/coddy-agent/internal/agent\"\n\t\"github.com/EvilFreelancer/coddy-agent/internal/config\"\n\t\"github.\n[TRUNCATED: full original retained on experiment server]",
+        "exit_code": 1,
+        "status": "failed"
+      }
+    },
+    {
+      "type": "item.started",
+      "item": {
+        "id": "item_9",
+        "type": "command_execution",
+        "command": "/usr/bin/bash -lc \"grep -R -n 'type bddTerminal\\\\|type .*runner\\\\|func .*Run(ctx context.Context.*session.State' repo/external/cli/*_test.go; grep -n 'func (a \\\\*App) Run\\\\|func (a \\\\*App) StartContinue' repo/external/cli/app.go\"",
+        "aggregated_output": "",
+        "exit_code": null,
+        "status": "in_progress"
+      }
+    },
+    {
+      "type": "item.completed",
+      "item": {
+        "id": "item_9",
+        "type": "command_execution",
+        "command": "/usr/bin/bash -lc \"grep -R -n 'type bddTerminal\\\\|type .*runner\\\\|func .*Run(ctx context.Context.*session.State' repo/external/cli/*_test.go; grep -n 'func (a \\\\*App) Run\\\\|func (a \\\\*App) StartContinue' repo/external/cli/app.go\"",
+        "aggregated_output": "289:func (a *App) Run(ctx context.Context) error {\n1049:func (a *App) StartContinue(ctx context.Context) error { panic(\"implementation hidden\") }\n",
+        "exit_code": 0,
+        "status": "completed"
+      }
+    },
+    {
+      "type": "item.started",
+      "item": {
+        "id": "item_10",
+        "type": "command_execution",
+        "command": "/usr/bin/bash -lc \"sed -n '1,120p' repo/external/cli/tui/mainscreen_test.go; sed -n '289,360p' repo/external/cli/app.go; grep -R -n 'func newTestApp\\\\|type bddTerminal' repo/external/cli\"",
+        "aggregated_output": "",
+        "exit_code": null,
+        "status": "in_progress"
+      }
+    },
+    {
+      "type": "item.completed",
+      "item": {
+        "id": "item_10",
+        "type": "command_execution",
+        "command": "/usr/bin/bash -lc \"sed -n '1,120p' repo/external/cli/tui/mainscreen_test.go; sed -n '289,360p' repo/external/cli/app.go; grep -R -n 'func newTestApp\\\\|type bddTerminal' repo/external/cli\"",
+        "aggregated_output": "//go:build cli\n\npackage tui\n\nimport (\n\t\"strings\"\n\t\"testing\"\n)\n\n// fakeTerminal records writes for renderer assertions (stands in for pi's\n// virtual terminal harness).\ntype fakeTerminal struct {\n\tcols, rows int\n\twrites     []string\n\tcursorOps  []string\n}\n\nfunc newFakeTerminal(cols, rows int) *fakeTerminal {\n\treturn &fakeTerminal{cols: cols, rows: rows}\n}\n\nfunc (f *fakeTerminal) Write(s string) { f.writes = append(f.writes, s) }\nfunc (f *fakeTerminal) Columns() int   { return f.cols }\nfunc (f *fakeTerminal) Rows() int      { return f.rows }\nfunc (f *fakeTerminal) HideCursor()    { f.cursorOps = append(f.cursorOps, \"hide\") }\nfunc (f *fakeTerminal) ShowCursor()    { f.cursorOps = append(f.cursorOps, \"show\") }\nfunc (f *fakeTerminal) all() string    { return strings.Join(f.writes, \"\") }\nfunc (f *fakeTerminal) reset()         { f.writes = nil }\n\nfunc TestFirstRenderPrintsAllLinesInsideSynchronizedOutput(t *testing.T) {\n\tterm := newFakeTerminal(40, 10)\n\ts := NewMainScreen(term)\n\ts.Root.AddChild(NewText(\"hello\", 0, 0, nil))\n\ts.RenderNow()\n\tout := term.all()\n\tif !strings.HasPrefix(out, \"\\x1b[?2026h\") {\n\t\tt.Fatalf(\"missing sync begin: %q\", out)\n\t}\n\tif !strings.Contains(out, \"hello\") {\n\t\tt.Fatalf(\"missing content: %q\", out)\n\t}\n\tif !strings.Contains(out, \"\\x1b[?2026l\") {\n\t\tt.Fatalf(\"missing sync end: %q\", out)\n\t}\n\t// First render must not clear the screen.\n\tif strings.Contains(out, \"\\x1b[2J\") {\n\t\tt.Fatalf(\"first render must not clear: %q\", out)\n\t}\n}\n\nfunc TestEveryRenderedLineEndsWithSegmentReset(t *testing.T) {\n\tterm := newFakeTerminal(40, 10)\n\ts := NewMainScreen(term)\n\ts.Root.AddChild(NewText(\"one\\ntwo\", 0, 0, nil))\n\ts.RenderNow()\n\tout := term.all()\n\tif strings.Count(out, \"\\x1b[0m\\x1b]8;;\\x07\") < 2 {\n\t\tt.Fatalf(\"expected per-line segment resets, got %q\", out)\n\t}\n}\n\nfunc TestUnchangedFrameWritesNoLineUpdates(t *testing.T) {\n\tterm := newFakeTerminal(40, 10)\n\ts := NewMainScreen(term)\n\ts.Root.AddChild(NewText(\"stable\", 0, 0, nil))\n\ts.RenderNow()\n\tterm.reset()\n\ts.RenderNow()\n\tout := term.all()\n\tif strings.Contains(out, \"\\x1b[2K\") || strings.Contains(out, \"stable\") {\n\t\tt.Fatalf(\"no-change render must not rewrite lines, got %q\", out)\n\t}\n}\n\nfunc TestSingleLineChangeRewritesOnlyChangedRange(t *testing.T) {\n\tterm := newFakeTerminal(40, 10)\n\ts := NewMainScreen(term)\n\ttop := NewText(\"header\", 0, 0, nil)\n\tspin := NewText(\"frame-1\", 0, 0, nil)\n\ts.Root.AddChild(top)\n\ts.Root.AddChild(spin)\n\ts.RenderNow()\n\tterm.reset()\n\tspin.SetText(\"frame-2\")\n\ts.RenderNow()\n\tout := term.all()\n\tif !strings.Contains(out, \"frame-2\") {\n\t\tt.Fatalf(\"changed line must be rewritten: %q\", out)\n\t}\n\tif strings.Contains(out, \"header\") {\n\t\tt.Fatalf(\"unchanged line must not be rewritten: %q\", out)\n\t}\n\tif !strings.Contains(out, \"\\x1b[2K\") {\n\t\tt.Fatalf(\"changed line must clear before write: %q\", out)\n\t}\n}\n\nfunc TestWidthChangeForcesFullClearRedraw(t *testing.T) {\n\tterm := newFakeTerminal(40, 10)\n\ts := NewMainScreen(term)\n\ts.Root.AddChild(NewText(\"resize me\", 0, 0, nil))\n\ts.RenderNow()\n\tterm.reset()\n\tterm.cols = 60\n\ts.RenderNow()\n\tout := term.all()\n\tif !strings.Contains(out, \"\\x1b[2J\\x1b[H\\x1b[3J\") {\n\t\tt.Fatalf(\"width change must clear screen and scrollback: %q\", out)\n\t}\n}\n\nfunc TestShrinkingContentTriggersClearOnShrink(t *testing.T) {\n\tterm := newFakeTerminal(40, 10)\n\ts := NewMainScreen(term)\n\tbody := NewText(\"a\\nb\\nc\\nd\", 0, 0, nil)\n\ts.Root.AddChild(body)\n\ts.RenderNow()\n\tterm.reset()\n\tbody.SetText(\"a\")\n\ts.RenderNow()\nfunc (a *App) Run(ctx context.Context) error {\n\tdefer close(a.doneCh)\n\tif id := a.readyPending; id != \"\" {\n\t\ta.readyPending = \"\"\n\t\ta.workers.Add(1)\n\t\tgo func() {\n\t\t\tdefer a.workers.Done()\n\t\t\ta.mgr.HandleSessionReady(id)\n\t\t}()\n\t}\n\trender := a.newRenderScheduler()\n\trender.now()\n\tfor {\n\t\tselect {\n\t\tcase <-ctx.Done():\n\t\t\treturn ctx.Err()\n\t\tcase <-a.closed:\n\t\t\t// requestQuit closed the app: leave without waiting for the next\n\t\t\t// event (double ctrl+c used to hang here until another key).\n\t\t\treturn a.quitErr\n\t\tcase data, ok := <-a.inputCh:\n\t\t\tif !ok {\n\t\t\t\treturn nil\n\t\t\t}\n\t\t\ti\n[TRUNCATED: full original retained on experiment server]",
+        "exit_code": 0,
+        "status": "completed"
+      }
+    },
+    {
+      "type": "item.started",
+      "item": {
+        "id": "item_11",
+        "type": "command_execution",
+        "command": "/usr/bin/bash -lc \"grep -R -n 'NewManager\\\\|Append.*Message\\\\|SessionNewParams\\\\|SessionPromptParams' repo/internal/session/*_test.go | head -40; grep -n 'type State\\\\|func NewState\\\\|type FileStore' repo/internal/session/*.go; sed -n '1,160p' repo/external/cli/continue.go\"",
+        "aggregated_output": "",
+        "exit_code": null,
+        "status": "in_progress"
+      }
+    },
+    {
+      "type": "item.completed",
+      "item": {
+        "id": "item_11",
+        "type": "command_execution",
+        "command": "/usr/bin/bash -lc \"grep -R -n 'NewManager\\\\|Append.*Message\\\\|SessionNewParams\\\\|SessionPromptParams' repo/internal/session/*_test.go | head -40; grep -n 'type State\\\\|func NewState\\\\|type FileStore' repo/internal/session/*.go; sed -n '1,160p' repo/external/cli/continue.go\"",
+        "aggregated_output": "repo/internal/session/manager_mcp_reload_test.go:42:\tmgr := NewManager(cfg, nil, nil, slog.Default(), t.TempDir(), nil)\nrepo/internal/session/manager_mcp_reload_test.go:43:\tcreated, err := mgr.HandleSessionNew(context.Background(), acp.SessionNewParams{CWD: t.TempDir()})\nrepo/internal/session/manager_test.go:78:\tm := session.NewManager(cfg, noopSender{}, noopRunner, slog.Default(), \"/tmp\", store)\nrepo/internal/session/manager_test.go:103:\tm := session.NewManager(cfg, noopSender{}, runner, slog.Default(), defaultDir, nil)\nrepo/internal/session/manager_test.go:105:\tres, err := m.HandleSessionNew(context.Background(), acp.SessionNewParams{CWD: \"\"})\nrepo/internal/session/manager_test.go:109:\tif _, err := m.HandleSessionPrompt(context.Background(), acp.SessionPromptParams{\nrepo/internal/session/manager_test.go:135:\tmgr := session.NewManager(cfg, sender, noopRunner, slog.Default(), dir, nil)\nrepo/internal/session/manager_test.go:136:\tcreated, err := mgr.HandleSessionNew(context.Background(), acp.SessionNewParams{CWD: dir})\nrepo/internal/session/manager_test.go:176:\tm := session.NewManager(cfg, noopSender{}, noopRunner, slog.Default(), \"\", nil)\nrepo/internal/session/manager_test.go:178:\tres, err := m.HandleSessionNew(context.Background(), acp.SessionNewParams{CWD: \"/tmp\"})\nrepo/internal/session/manager_test.go:225:\tm := session.NewManager(cfg, noopSender{}, noopRunner, slog.Default(), \"\", nil)\nrepo/internal/session/manager_test.go:227:\tres, err := m.HandleSessionNew(context.Background(), acp.SessionNewParams{CWD: \"/tmp\"})\nrepo/internal/session/manager_test.go:258:\tm := session.NewManager(cfg, sender, noopRunner, slog.Default(), \"\", nil)\nrepo/internal/session/manager_test.go:260:\tres, err := m.HandleSessionNew(context.Background(), acp.SessionNewParams{CWD: \"/tmp\"})\nrepo/internal/session/manager_test.go:312:\tm := session.NewManager(cfg, noopSender{}, noopRunner, slog.Default(), \"\", nil)\nrepo/internal/session/manager_test.go:314:\tres, err := m.HandleSessionNew(context.Background(), acp.SessionNewParams{CWD: \"/tmp\"})\nrepo/internal/session/manager_test.go:351:\tm := session.NewManager(cfg, noopSender{}, noopRunner, slog.Default(), \"\", nil)\nrepo/internal/session/manager_test.go:353:\tres, err := m.HandleSessionNew(context.Background(), acp.SessionNewParams{CWD: \"/tmp\"})\nrepo/internal/session/manager_test.go:401:\tm := session.NewManager(cfg, noopSender{}, noopRunner, slog.Default(), \"/tmp\", store)\nrepo/internal/session/manager_test.go:453:\tm1 := session.NewManager(cfg, noopSender{}, persistRunner, slog.Default(), \"/tmp\", store)\nrepo/internal/session/manager_test.go:455:\tres1, err := m1.HandleSessionNew(ctx, acp.SessionNewParams{CWD: \"/tmp\"})\nrepo/internal/session/manager_test.go:460:\tif _, err := m1.HandleSessionPrompt(ctx, acp.SessionPromptParams{\nrepo/internal/session/manager_test.go:481:\tm2 := session.NewManager(cfg, noopSender{}, peekRunner, slog.Default(), \"/tmp\", store)\nrepo/internal/session/manager_test.go:490:\tif _, err := m2.HandleSessionPrompt(ctx, acp.SessionPromptParams{\nrepo/internal/session/manager_test.go:509:\tmgr := session.NewManager(cfg, noopSender{}, runner, slog.Default(), \"/tmp\", nil)\nrepo/internal/session/manager_test.go:511:\tres, err := mgr.HandleSessionNew(ctx, acp.SessionNewParams{CWD: \"/tmp\"})\nrepo/internal/session/manager_test.go:523:\t\tout, promptErr = mgr.HandleSessionPrompt(ctx, acp.SessionPromptParams{\nrepo/internal/session/manager_test.go:583:\tm := session.NewManager(testConfig(), noopSender{}, runner, slog.Default(), \"/tmp\", nil)\nrepo/internal/session/manager_test.go:584:\tsn, err := m.HandleSessionNew(context.Background(), acp.SessionNewParams{CWD: \"/tmp\"})\nrepo/internal/session/manager_test.go:595:\t\tres, perr = m.HandleSessionPromptWithSender(ctx, acp.SessionPromptParams{\nrepo/internal/session/manager_test.go:618:\tm := session.NewManager(testConfig(), noopSender{}, runner, slog.Default(), \"/tmp\", nil)\nrepo/internal/session/manager_test.go:619:\tsn, err := m.HandleSessionNew(context.Background(), acp.SessionNew\n[TRUNCATED: full original retained on experiment server]",
+        "exit_code": 0,
+        "status": "completed"
+      }
+    },
+    {
+      "type": "item.started",
+      "item": {
+        "id": "item_12",
+        "type": "command_execution",
+        "command": "/usr/bin/bash -lc \"sed -n '440,500p' repo/internal/session/manager_test.go; sed -n '1,110p' repo/internal/session/state.go; sed -n '1,100p' repo/internal/session/filesystem.go; sed -n '1,100p' repo/internal/session/manager_test.go\"",
+        "aggregated_output": "",
+        "exit_code": null,
+        "status": "in_progress"
+      }
+    },
+    {
+      "type": "item.completed",
+      "item": {
+        "id": "item_12",
+        "type": "command_execution",
+        "command": "/usr/bin/bash -lc \"sed -n '440,500p' repo/internal/session/manager_test.go; sed -n '1,110p' repo/internal/session/state.go; sed -n '1,100p' repo/internal/session/filesystem.go; sed -n '1,100p' repo/internal/session/manager_test.go\"",
+        "aggregated_output": "}\n\nfunc TestManagerPersistMessagesAndReload(t *testing.T) {\n\troot := t.TempDir()\n\tstore := &session.FileStore{Root: root}\n\tcfg := testConfig()\n\n\tpersistRunner := func(_ context.Context, st *session.State, _ []acp.ContentBlock, _ acp.UpdateSender) (string, error) {\n\t\tst.AddMessage(llm.Message{Role: llm.RoleUser, Content: \"u\"})\n\t\tst.AddMessage(llm.Message{Role: llm.RoleAssistant, Content: \"a\"})\n\t\treturn string(acp.StopReasonEndTurn), nil\n\t}\n\n\tm1 := session.NewManager(cfg, noopSender{}, persistRunner, slog.Default(), \"/tmp\", store)\n\tctx := context.Background()\n\tres1, err := m1.HandleSessionNew(ctx, acp.SessionNewParams{CWD: \"/tmp\"})\n\tif err != nil {\n\t\tt.Fatal(err)\n\t}\n\tid := res1.SessionID\n\tif _, err := m1.HandleSessionPrompt(ctx, acp.SessionPromptParams{\n\t\tSessionID: id,\n\t\tPrompt:    []acp.ContentBlock{{Type: \"text\", Text: \"ignored-by-test-runner\"}},\n\t}); err != nil {\n\t\tt.Fatal(err)\n\t}\n\n\tsnap, err := store.ReadSnapshot(id)\n\tif err != nil {\n\t\tt.Fatal(err)\n\t}\n\tif len(snap.Messages) != 2 {\n\t\tt.Fatalf(\"expected 2 persisted messages after prompt, got %d\", len(snap.Messages))\n\t}\n\n\tvar afterReload int\n\tpeekRunner := func(_ context.Context, st *session.State, _ []acp.ContentBlock, _ acp.UpdateSender) (string, error) {\n\t\tafterReload = len(st.GetMessages())\n\t\treturn string(acp.StopReasonEndTurn), nil\n\t}\n\n\tm2 := session.NewManager(cfg, noopSender{}, peekRunner, slog.Default(), \"/tmp\", store)\n\tif _, err := m2.HandleSessionLoad(ctx, acp.SessionLoadParams{\n\t\tSessionID:  id,\n\t\tCWD:        \"/tmp\",\n\t\tMCPServers: nil,\n\t}); err != nil {\n\t\tt.Fatal(err)\n\t}\n\n\tif _, err := m2.HandleSessionPrompt(ctx, acp.SessionPromptParams{\n\t\tSessionID: id,\n\t\tPrompt:    []acp.ContentBlock{{Type: \"text\", Text: \"check\"}},\n\t}); err != nil {\n\t\tt.Fatal(err)\n\t}\n\tif afterReload != 2 {\n\t\tt.Fatalf(\"session/load should restore 2 persisted messages before turn runs, got %d\", afterReload)\n\t}\n}\n\n// Package session manages per-session state for the agent.\npackage session\n\nimport (\n\t\"context\"\n\t\"strings\"\n\t\"sync\"\n\t\"time\"\n\n\t\"github.com/EvilFreelancer/coddy-agent/internal/acp\"\n\t\"github.com/EvilFreelancer/coddy-agent/internal/config\"\n\t\"github.com/EvilFreelancer/coddy-agent/internal/llm\"\n\t\"github.com/EvilFreelancer/coddy-agent/internal/mcp\"\n\t\"github.com/EvilFreelancer/coddy-agent/internal/plans\"\n\t\"github.com/EvilFreelancer/coddy-agent/internal/rules\"\n\t\"github.com/EvilFreelancer/coddy-agent/internal/skills\"\n)\n\n// Mode is the current operating mode of a session.\ntype Mode string\n\nconst (\n\tModeAgent Mode = \"agent\"\n\tModePlan  Mode = \"plan\"\n\tModeAsk   Mode = \"ask\"\n)\n\n// IsValidMode reports whether mode names a known session mode.\nfunc IsValidMode(mode string) bool {\n\tswitch Mode(mode) {\n\tcase ModeAgent, ModePlan, ModeAsk:\n\t\treturn true\n\t}\n\treturn false\n}\n\n// State holds the complete state of a session.\ntype State struct {\n\tmu sync.RWMutex\n\n\t// ID is the unique session identifier.\n\tID string\n\n\t// CWD is the session working directory.\n\tCWD string\n\n\t// Mode is the current operating mode.\n\tMode Mode\n\n\t// SelectedModelID overrides agent.model for LLM calls when non-empty.\n\t// when non-empty. Empty means use config defaults for the current mode.\n\tSelectedModelID string\n\n\t// SelectedReasoning overrides the reasoning level for LLM calls when non-empty.\n\t// Resolved against the effective model's levels by EffectiveReasoning.\n\tSelectedReasoning string\n\n\t// HookContext is the context SessionStart hooks handed to the session;\n\t// every system prompt of the session carries it (see docs/hooks.md).\n\tHookContext string\n\n\t// Messages is the conversation history.\n\tMessages []llm.Message\n\n\t// UILog holds UI-only transcript lines (errors, etc.); excluded from LLM prompts.\n\tUILog []UILogEntry\n\n\t// hookNotices remembers which hooks-file notices this live session has\n\t// already recorded (see MarkHookNoticeShown); not persisted.\n\thookNotices map[string]bool\n\n\t// configuredMCPClients come from config.yaml and are replaced on hot reload.\n\tconfiguredMCPClients []*mcp.Client\n\t// sessionMCPClients come from ACP session/n\n[TRUNCATED: full original retained on experiment server]",
+        "exit_code": 0,
+        "status": "completed"
+      }
+    },
+    {
+      "type": "item.started",
+      "item": {
+        "id": "item_13",
+        "type": "command_execution",
+        "command": "/usr/bin/bash -lc \"grep -n 'type Config struct\\\\|func Default' repo/internal/config/config.go; sed -n '1,100p' repo/internal/config/config.go; grep -n 'func (.*Snapshot\\\\|func (.*WriteSnapshot\\\\|AddMessage' repo/internal/session/*.go\"",
+        "aggregated_output": "",
+        "exit_code": null,
+        "status": "in_progress"
+      }
+    },
+    {
+      "type": "item.completed",
+      "item": {
+        "id": "item_13",
+        "type": "command_execution",
+        "command": "/usr/bin/bash -lc \"grep -n 'type Config struct\\\\|func Default' repo/internal/config/config.go; sed -n '1,100p' repo/internal/config/config.go; grep -n 'func (.*Snapshot\\\\|func (.*WriteSnapshot\\\\|AddMessage' repo/internal/session/*.go\"",
+        "aggregated_output": "package config\n\nimport (\n\t\"errors\"\n\t\"fmt\"\n\t\"os\"\n\t\"path/filepath\"\n\t\"strings\"\n)\n\n// LoadFromCLI resolves paths, optionally falls back to $CWD/config.yaml when $CODDY_HOME/config.yaml is missing, and loads YAML.\nfunc LoadFromCLI(cli CLIPaths) (*Config, error) {\n\tpaths, err := Resolve(cli)\n\tif err != nil {\n\t\treturn nil, err\n\t}\n\t// Load $CODDY_HOME/.env before config.yaml is parsed so that ${VAR} references in YAML see the values.\n\t// Existing process environment always takes precedence over .env.\n\tloadDotEnv(paths.Home)\n\texplicitConfig := strings.TrimSpace(cli.Config) != \"\"\n\tif !explicitConfig {\n\t\tif _, err := os.Stat(paths.ConfigPath); errors.Is(err, os.ErrNotExist) {\n\t\t\tcwdCfg := filepath.Join(paths.CWD, defaultConfigName)\n\t\t\tif _, err := os.Stat(cwdCfg); err == nil {\n\t\t\t\tpaths.ConfigPath = cwdCfg\n\t\t\t}\n\t\t}\n\t}\n\treturn readConfigFile(paths, explicitConfig)\n}\n\n// Load reads config from the given path, or resolves $CODDY_HOME/config.yaml (and optional $CWD/config.yaml).\n// If path is non-empty, that file must exist. If path is empty, resolution uses env and $CODDY_HOME/config.yaml.\nfunc Load(path string) (*Config, error) {\n\treturn LoadFromCLI(CLIPaths{Config: strings.TrimSpace(path)})\n}\n\n// LoadWithPaths loads YAML from paths.ConfigPath (explicit path semantics: file must exist).\nfunc LoadWithPaths(paths Paths) (*Config, error) {\n\treturn readConfigFile(paths, true)\n}\n\nfunc readConfigFile(paths Paths, explicitFile bool) (*Config, error) {\n\tdata, err := os.ReadFile(paths.ConfigPath)\n\tif err != nil {\n\t\tif explicitFile {\n\t\t\treturn nil, fmt.Errorf(\"read config %s: %w\", paths.ConfigPath, err)\n\t\t}\n\t\tif errors.Is(err, os.ErrNotExist) {\n\t\t\tcfg := &Config{Paths: paths}\n\t\t\tapplyDefaults(cfg)\n\t\t\tif err := validateSubconfigs(cfg); err != nil {\n\t\t\t\treturn nil, err\n\t\t\t}\n\t\t\treturn cfg, nil\n\t\t}\n\t\treturn nil, fmt.Errorf(\"read config %s: %w\", paths.ConfigPath, err)\n\t}\n\n\toriginalData := append([]byte(nil), data...)\n\texpanded := expandConfigBody(string(data), paths)\n\n\tcfg, err := parseValidateYAMLBytes(expanded, paths)\n\tif err != nil {\n\t\trec, rerr := tryRecoverFromBackup(paths)\n\t\tif rerr == nil && rec != nil {\n\t\t\treturn rec, nil\n\t\t}\n\t\treturn nil, fmt.Errorf(\"config %s: %w\", paths.ConfigPath, err)\n\t}\n\t_ = WriteBackup(paths.ConfigPath, originalData)\n\treturn cfg, nil\n}\n\nfunc validateSubconfigs(cfg *Config) error {\n\tif err := cfg.Logger.Validate(); err != nil {\n\t\treturn fmt.Errorf(\"logger: %w\", err)\n\t}\n\tif err := cfg.Prompts.Validate(); err != nil {\n\t\treturn fmt.Errorf(\"prompts: %w\", err)\n\t}\n\tif err := cfg.Instructions.Validate(); err != nil {\n\t\treturn fmt.Errorf(\"instructions: %w\", err)\n\t}\n\tif err := cfg.Agent.Validate(); err != nil {\n\t\treturn fmt.Errorf(\"agent: %w\", err)\n\t}\n\tif err := cfg.Skills.Validate(); err != nil {\n\t\treturn fmt.Errorf(\"skills: %w\", err)\n\t}\n\tif err := cfg.Rules.Validate(); err != nil {\n\t\treturn fmt.Errorf(\"rules: %w\", err)\n\t}\n\tif err := cfg.MCP.Validate(); err != nil {\n\t\treturn fmt.Errorf(\"mcp: %w\", err)\n\t}\n\tif err := cfg.Subagents.Validate(); err != nil {\n\t\treturn err\n\t}\n\tif err := cfg.Hooks.Validate(); err != nil {\nrepo/internal/session/filesystem.go:73:func (f *FileStore) HasPersistedSnapshot(sessionID string) bool {\nrepo/internal/session/filesystem.go:270:func (f *FileStore) ReadSnapshot(sessionID string) (*LoadedSnapshot, error) {\nrepo/internal/session/filesystem.go:367:func (f *FileStore) ListSnapshots(cwdFilter string, includeSchedulerRuns bool) ([]SessionListEntry, error) {\nrepo/internal/session/filesystem.go:372:func (f *FileStore) ListSnapshotsWith(opts ListOptions) ([]SessionListEntry, error) {\nrepo/internal/session/filesystem.go:456:func (f *FileStore) FilterSnapshotListForSearch(entries []SessionListEntry, q string) ([]SessionListEntry, error) {\nrepo/internal/session/filesystem_concurrent_read_test.go:39:\t\t\tst.AddMessage(llm.Message{Role: llm.RoleAssistant, Content: \"turn output\"})\nrepo/internal/session/filesystem_test.go:65:\tst.AddMessage(llm.Message{Role: llm.RoleUser, Content: \"hi\"})\nrepo/internal/session/filesystem_te\n[TRUNCATED: full original retained on experiment server]",
+        "exit_code": 0,
+        "status": "completed"
+      }
+    },
+    {
+      "type": "item.started",
+      "item": {
+        "id": "item_14",
+        "type": "command_execution",
+        "command": "/usr/bin/bash -lc \"sed -n '45,85p' repo/internal/session/filesystem_test.go; sed -n '38,75p' repo/internal/session/state.go; grep -n 'type Config\\\\|type Paths' repo/internal/config/types.go\"",
+        "aggregated_output": "",
+        "exit_code": null,
+        "status": "in_progress"
+      }
+    },
+    {
+      "type": "item.completed",
+      "item": {
+        "id": "item_14",
+        "type": "command_execution",
+        "command": "/usr/bin/bash -lc \"sed -n '45,85p' repo/internal/session/filesystem_test.go; sed -n '38,75p' repo/internal/session/state.go; grep -n 'type Config\\\\|type Paths' repo/internal/config/types.go\"",
+        "aggregated_output": "\t\tt.Fatalf(\"entry %+v\", snap.UILog[0])\n\t}\n}\n\nfunc TestFileStoreRoundTripMessages(t *testing.T) {\n\troot := t.TempDir()\n\tfs := &FileStore{Root: root}\n\n\tid := \"sess_unit\"\n\tdir, err := fs.EnsureLayout(id)\n\tif err != nil {\n\t\tt.Fatal(err)\n\t}\n\n\tst := &State{\n\t\tID:         id,\n\t\tCWD:        \"/tmp/unit\",\n\t\tMode:       ModeAgent,\n\t\tSessionDir: dir,\n\t}\n\tst.AddMessage(llm.Message{Role: llm.RoleUser, Content: \"hi\"})\n\tst.AddMessage(llm.Message{\n\t\tRole:                llm.RoleAssistant,\n\t\tContent:             \"hello\",\n\t\tReasoning:           \"step one\",\n\t\tReasoningDurationMs: 42,\n\t})\n\n\tif err := fs.Save(st); err != nil {\n\t\tt.Fatal(err)\n\t}\n\n\tsnap, err := fs.ReadSnapshot(id)\n\tif err != nil {\n\t\tt.Fatal(err)\n\t}\n\tif len(snap.Messages) != 2 {\n\t\tt.Fatalf(\"messages roundtrip len=%d\", len(snap.Messages))\n\t}\n\tif snap.Messages[1].Role != llm.RoleAssistant {\n\t\tt.Fatalf(\"second role %+v\", snap.Messages[1].Role)\ntype State struct {\n\tmu sync.RWMutex\n\n\t// ID is the unique session identifier.\n\tID string\n\n\t// CWD is the session working directory.\n\tCWD string\n\n\t// Mode is the current operating mode.\n\tMode Mode\n\n\t// SelectedModelID overrides agent.model for LLM calls when non-empty.\n\t// when non-empty. Empty means use config defaults for the current mode.\n\tSelectedModelID string\n\n\t// SelectedReasoning overrides the reasoning level for LLM calls when non-empty.\n\t// Resolved against the effective model's levels by EffectiveReasoning.\n\tSelectedReasoning string\n\n\t// HookContext is the context SessionStart hooks handed to the session;\n\t// every system prompt of the session carries it (see docs/hooks.md).\n\tHookContext string\n\n\t// Messages is the conversation history.\n\tMessages []llm.Message\n\n\t// UILog holds UI-only transcript lines (errors, etc.); excluded from LLM prompts.\n\tUILog []UILogEntry\n\n\t// hookNotices remembers which hooks-file notices this live session has\n\t// already recorded (see MarkHookNoticeShown); not persisted.\n\thookNotices map[string]bool\n\n\t// configuredMCPClients come from config.yaml and are replaced on hot reload.\n\tconfiguredMCPClients []*mcp.Client\n\t// sessionMCPClients come from ACP session/new or session/load parameters.\n\tsessionMCPClients []*mcp.Client\n5:type Config struct {\n",
+        "exit_code": 0,
+        "status": "completed"
+      }
+    },
+    {
+      "type": "item.started",
+      "item": {
+        "id": "item_15",
+        "type": "command_execution",
+        "command": "/usr/bin/bash -lc \"sed -n '1,35p' repo/internal/config/types.go; grep -n 'func (f \\\\*FileStore) Save\\\\|EnsureLayout' repo/internal/session/filesystem.go\"",
+        "aggregated_output": "",
+        "exit_code": null,
+        "status": "in_progress"
+      }
+    },
+    {
+      "type": "item.completed",
+      "item": {
+        "id": "item_15",
+        "type": "command_execution",
+        "command": "/usr/bin/bash -lc \"sed -n '1,35p' repo/internal/config/types.go; grep -n 'func (f \\\\*FileStore) Save\\\\|EnsureLayout' repo/internal/session/filesystem.go\"",
+        "aggregated_output": "// Package config handles loading and validating agent configuration.\npackage config\n\n// Config is the root configuration struct.\ntype Config struct {\n\tPaths Paths `yaml:\"-\"`\n\n\tProviders    []ProviderConfig  `yaml:\"providers\"`\n\tModels       []ModelEntry      `yaml:\"models\"`\n\tAgent        Agent             `yaml:\"agent\"`\n\tPrompts      Prompts           `yaml:\"prompts\"`\n\tInstructions Instructions      `yaml:\"instructions\"`\n\tSkills       Skills            `yaml:\"skills\"`\n\tRules        Rules             `yaml:\"rules\"`\n\tMCPServers   []MCPServerConfig `yaml:\"mcp_servers\"`\n\tMCP          MCP               `yaml:\"mcp\"`\n\tTools        Tools             `yaml:\"tools\"`\n\tSubagents    Subagents         `yaml:\"subagents\"`\n\tHooks        Hooks             `yaml:\"hooks\"`\n\tLogger       Logger            `yaml:\"logger\"`\n\tSessions     Sessions          `yaml:\"sessions\"`\n\tCompaction   Compaction        `yaml:\"compaction\"`\n\tMemory       MemoryConfig      `yaml:\"memory\"`\n\tHTTPServer   HTTPServerConfig  `yaml:\"httpserver\"`\n\tUI           UIConfig          `yaml:\"ui\"`\n\tScheduler    SchedulerConfig   `yaml:\"scheduler\"`\n\tGateways     GatewayConfig     `yaml:\"gateways\"`\n}\n148:// EnsureLayout creates session.json (if missing), messages.json, assets/, todos/, todos/archive/.\n149:func (f *FileStore) EnsureLayout(sessionID string) (dir string, err error) {\n480:func (f *FileStore) Save(state *State) error {\n",
+        "exit_code": 0,
+        "status": "completed"
+      }
+    },
+    {
+      "type": "item.started",
+      "item": {
+        "id": "item_16",
+        "type": "command_execution",
+        "command": "/usr/bin/bash -lc \"grep -n 'func applyDefaults\\\\|type Paths' repo/internal/config/*.go | head; grep -n 'func (a \\\\*App) Start(' repo/external/cli/app.go\"",
+        "aggregated_output": "",
+        "exit_code": null,
+        "status": "in_progress"
+      }
+    },
+    {
+      "type": "item.completed",
+      "item": {
+        "id": "item_16",
+        "type": "command_execution",
+        "command": "/usr/bin/bash -lc \"grep -n 'func applyDefaults\\\\|type Paths' repo/internal/config/*.go | head; grep -n 'func (a \\\\*App) Start(' repo/external/cli/app.go\"",
+        "aggregated_output": "repo/internal/config/config.go:132:func applyDefaults(cfg *Config) {\nrepo/internal/config/paths.go:60:type Paths struct {\n224:func (a *App) Start(ctx context.Context, sessionID string, resume bool) error { panic(\"implementation hidden\") }\n",
+        "exit_code": 0,
+        "status": "completed"
+      }
+    },
+    {
+      "type": "item.started",
+      "item": {
+        "id": "item_17",
+        "type": "command_execution",
+        "command": "/usr/bin/bash -lc 'cat > /dev/null'",
+        "aggregated_output": "",
+        "exit_code": null,
+        "status": "in_progress"
+      }
+    },
+    {
+      "type": "item.completed",
+      "item": {
+        "id": "item_17",
+        "type": "command_execution",
+        "command": "/usr/bin/bash -lc 'cat > /dev/null'",
+        "aggregated_output": "",
+        "exit_code": 0,
+        "status": "completed"
+      }
+    },
+    {
+      "type": "item.started",
+      "item": {
+        "id": "item_18",
+        "type": "file_change",
+        "changes": [
+          {
+            "path": "/root/lby-docker/req2test/user/runs/req2test-recovery8-20261113-v1/generation/7ceb2cbda79af4e91e67/attempt-1/workspaces/0000/repo/external/cli/bdd_cli_tui_test.go",
+            "kind": "add"
+          }
+        ],
+        "status": "in_progress"
+      }
+    },
+    {
+      "type": "item.completed",
+      "item": {
+        "id": "item_18",
+        "type": "file_change",
+        "changes": [
+          {
+            "path": "/root/lby-docker/req2test/user/runs/req2test-recovery8-20261113-v1/generation/7ceb2cbda79af4e91e67/attempt-1/workspaces/0000/repo/external/cli/bdd_cli_tui_test.go",
+            "kind": "add"
+          }
+        ],
+        "status": "completed"
+      }
+    },
+    {
+      "type": "item.started",
+      "item": {
+        "id": "item_19",
+        "type": "file_change",
+        "changes": [
+          {
+            "path": "/root/lby-docker/req2test/user/runs/req2test-recovery8-20261113-v1/generation/7ceb2cbda79af4e91e67/attempt-1/workspaces/0000/repo/external/cli/bdd_cli_tui_test.go",
+            "kind": "update"
+          }
+        ],
+        "status": "in_progress"
+      }
+    },
+    {
+      "type": "item.completed",
+      "item": {
+        "id": "item_19",
+        "type": "file_change",
+        "changes": [
+          {
+            "path": "/root/lby-docker/req2test/user/runs/req2test-recovery8-20261113-v1/generation/7ceb2cbda79af4e91e67/attempt-1/workspaces/0000/repo/external/cli/bdd_cli_tui_test.go",
+            "kind": "update"
+          }
+        ],
+        "status": "completed"
+      }
+    },
+    {
+      "type": "item.started",
+      "item": {
+        "id": "item_20",
+        "type": "command_execution",
+        "command": "/usr/bin/bash -lc \"cd repo && gofmt -w external/cli/bdd_cli_tui_test.go && go test -tags cli ./external/cli -run '\"'^TestCLITUIFeature$'\"' -count=1\"",
+        "aggregated_output": "",
+        "exit_code": null,
+        "status": "in_progress"
+      }
+    },
+    {
+      "type": "item.completed",
+      "item": {
+        "id": "item_20",
+        "type": "command_execution",
+        "command": "/usr/bin/bash -lc \"cd repo && gofmt -w external/cli/bdd_cli_tui_test.go && go test -tags cli ./external/cli -run '\"'^TestCLITUIFeature$'\"' -count=1\"",
+        "aggregated_output": "# github.com/EvilFreelancer/coddy-agent/external/cli [github.com/EvilFreelancer/coddy-agent/external/cli.test]\nexternal/cli/chat_test.go:270:58: undefined: bddTerminal\nexternal/cli/chat_test.go:407:62: undefined: bddTerminal\nexternal/cli/usage_test.go:459:56: undefined: bddTerminal\nFAIL\tgithub.com/EvilFreelancer/coddy-agent/external/cli [build failed]\nFAIL\n",
+        "exit_code": 1,
+        "status": "failed"
+      }
+    },
+    {
+      "type": "item.started",
+      "item": {
+        "id": "item_21",
+        "type": "command_execution",
+        "command": "/usr/bin/bash -lc \"sed -n '390,420p' repo/external/cli/chat_test.go; sed -n '450,470p' repo/external/cli/usage_test.go\"",
+        "aggregated_output": "",
+        "exit_code": null,
+        "status": "in_progress"
+      }
+    },
+    {
+      "type": "item.completed",
+      "item": {
+        "id": "item_21",
+        "type": "command_execution",
+        "command": "/usr/bin/bash -lc \"sed -n '390,420p' repo/external/cli/chat_test.go; sed -n '450,470p' repo/external/cli/usage_test.go\"",
+        "aggregated_output": "\tts := httptest.NewServer(backend)\n\tt.Cleanup(ts.Close)\n\thome, cwd := t.TempDir(), t.TempDir()\n\tyaml := \"agent:\\n  model: stub/model\\n  max_turns: 35\\n\" +\n\t\t\"providers:\\n  - name: stub\\n    type: openai\\n    api_base: \" + ts.URL + \"\\n    api_key: test\\n\" +\n\t\t\"models:\\n  - model: stub/model\\n    max_tokens: 200\\n    stream: false\\n\" +\n\t\t\"tools:\\n  permission_mode: bypass\\n\" +\n\t\t\"rules:\\n  auto_discover: false\\n\"\n\tpath := filepath.Join(home, \"config.yaml\")\n\tif err := os.WriteFile(path, []byte(yaml), 0o600); err != nil {\n\t\tt.Fatal(err)\n\t}\n\tcfg, err := config.LoadFromCLI(config.CLIPaths{Home: home, CWD: cwd, Config: path})\n\tif err != nil {\n\t\tt.Fatal(err)\n\t}\n\tstore := &session.FileStore{Root: filepath.Join(home, \"sessions\")}\n\tapp := buildApp(cfg, store, slog.New(slog.DiscardHandler), &bddTerminal{cols: 80, rows: 24}, \"dark\", true)\n\tt.Cleanup(app.Close)\n\treturn app, cfg\n}\n\n// runConsoleTurn opens a session and runs one prompt through the manager, so\n// the turn goes through the runner buildApp installed.\nfunc runConsoleTurn(t *testing.T, app *App, text string) {\n\tt.Helper()\n\tctx := context.Background()\n\tres, err := app.mgr.HandleSessionNew(ctx, acp.SessionNewParams{CWD: app.config().Paths.CWD})\n\tif err != nil {\n\t\tt.Fatalf(\"session/new: %v\", err)\n\t}\nfunc TestThemeSwitchKeepsTheUsageLine(t *testing.T) {\n\thome := t.TempDir()\n\tcfg := &config.Config{\n\t\tPaths:     config.Paths{Home: home, CWD: home},\n\t\tProviders: []config.ProviderConfig{{Name: \"neuraldeep\", Type: \"neuraldeep\"}},\n\t\tModels:    []config.ModelEntry{{Model: \"neuraldeep/qwen3.8-27b\", MaxTokens: 100, MaxContextTokens: 1000}},\n\t\tAgent:     config.Agent{Model: \"neuraldeep/qwen3.8-27b\"},\n\t}\n\tmgr := session.NewManager(cfg, nil, nil, slog.New(slog.DiscardHandler), home, nil)\n\ta := newApp(cfg, mgr, slog.New(slog.DiscardHandler), &bddTerminal{cols: 100, rows: 30}, \"dark\", true)\n\ta.modelID = \"neuraldeep/qwen3.8-27b\"\n\ta.refreshFooterModel()\n\ta.foot.now = func() time.Time { return usageNow }\n\ta.applyProviderUsage(*usageFixtureUpdate())\n\tif lines := a.foot.Render(120); len(lines) != 3 {\n\t\tt.Fatalf(\"footer before the switch = %q\", lines)\n\t}\n\ta.switchTheme(\"light\")\n\tlines := a.foot.Render(120)\n\tif len(lines) != 3 || !strings.Contains(plain(lines[2]), \"3h 3% (resets 17:59)\") {\n\t\tt.Fatalf(\"footer after the switch = %q\", lines)\n",
+        "exit_code": 0,
+        "status": "completed"
+      }
+    },
+    {
+      "type": "item.started",
+      "item": {
+        "id": "item_22",
+        "type": "file_change",
+        "changes": [
+          {
+            "path": "/root/lby-docker/req2test/user/runs/req2test-recovery8-20261113-v1/generation/7ceb2cbda79af4e91e67/attempt-1/workspaces/0000/repo/external/cli/bdd_cli_tui_test.go",
+            "kind": "update"
+          }
+        ],
+        "status": "in_progress"
+      }
+    },
+    {
+      "type": "item.completed",
+      "item": {
+        "id": "item_22",
+        "type": "file_change",
+        "changes": [
+          {
+            "path": "/root/lby-docker/req2test/user/runs/req2test-recovery8-20261113-v1/generation/7ceb2cbda79af4e91e67/attempt-1/workspaces/0000/repo/external/cli/bdd_cli_tui_test.go",
+            "kind": "update"
+          }
+        ],
+        "status": "completed"
+      }
+    },
+    {
+      "type": "item.started",
+      "item": {
+        "id": "item_23",
+        "type": "command_execution",
+        "command": "/usr/bin/bash -lc \"cd repo && gofmt -w external/cli/bdd_cli_tui_test.go && go test -tags cli ./external/cli -run '\"'^TestCLITUIFeature$'\"' -count=1\"",
+        "aggregated_output": "",
+        "exit_code": null,
+        "status": "in_progress"
+      }
+    },
+    {
+      "type": "item.completed",
+      "item": {
+        "id": "item_23",
+        "type": "command_execution",
+        "command": "/usr/bin/bash -lc \"cd repo && gofmt -w external/cli/bdd_cli_tui_test.go && go test -tags cli ./external/cli -run '\"'^TestCLITUIFeature$'\"' -count=1\"",
+        "aggregated_output": "ok  \tgithub.com/EvilFreelancer/coddy-agent/external/cli\t0.021s\n",
+        "exit_code": 0,
+        "status": "completed"
+      }
+    },
+    {
+      "type": "item.completed",
+      "item": {
+        "id": "item_24",
+        "type": "agent_message",
+        "text": "[repo/external/cli/bdd_cli_tui_test.go](/root/lby-docker/req2test/user/runs/req2test-recovery8-20261113-v1/generation/7ceb2cbda79af4e91e67/attempt-1/workspaces/0000/repo/external/cli/bdd_cli_tui_test.go)\n\nVerified with `go test -tags cli ./external/cli -run '^TestCLITUIFeature$' -count=1`."
+      }
+    },
+    {
+      "type": "turn.completed",
+      "usage": {
+        "input_tokens": 618747,
+        "cached_input_tokens": 232832,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 3573,
+        "reasoning_output_tokens": 439
+      }
+    }
+  ],
+  "other_output": [
+    "",
+    "run_agent: exit 0 after 23 LLM call(s)",
+    "run_agent: the agent's network refused github.com:443, refused chatgpt.com:443 (2x), refused api.github.com:443, refused ab.chatgpt.com:443 (3x)"
+  ]
+}

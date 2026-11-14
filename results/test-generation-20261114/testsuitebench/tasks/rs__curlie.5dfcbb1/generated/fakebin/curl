@@ -1,0 +1,9 @@
+#!/usr/bin/env python3
+import json, os, sys
+with open(os.environ['CURL_CAPTURE'], 'w') as f:
+    json.dump(sys.argv[1:], f)
+out = os.environ.get('CURL_STDOUT', '')
+err = os.environ.get('CURL_STDERR', '')
+sys.stdout.buffer.write(out.encode('utf-8', 'surrogatepass'))
+sys.stderr.buffer.write(err.encode('utf-8', 'surrogatepass'))
+raise SystemExit(int(os.environ.get('CURL_STATUS', '0')))
