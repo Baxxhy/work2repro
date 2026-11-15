@@ -23,6 +23,10 @@ Req2Test 每个项目随机选取 20 条，共 8 个项目，种子为 20261112�
 - [实际运行代码与环境补丁](code/test-generation-20261114/)
 - [版本、预算、任务选择和环境记录](environment/test-generation-20261114/)
 
+## 最新研究动机报告
+
+[从真实商城案例读起](research/problem-discovery-final/RESEARCH_MOTIVATION_REPORT.md) · [文献、证据册与验证计划](research/problem-discovery-final/README.md)
+
 ## 实证问题分析
 
 2026-11-16 的阶段性研究包含已有结果审计、24 条 Pass-but-Non-Kill 分析，以及业务行为执行与观察缺口复核。
