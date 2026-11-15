@@ -1,0 +1,13 @@
+[
+  {
+    "instance_id": "algorand-sdk/features/unit/v2algodclient_paths.feature:16",
+    "model_name_or_path": "codex-gpt-6-luna-medium",
+    "view": "th",
+    "files": [
+      {
+        "path": "src/test/java/com/algorand/algosdk/unit/PendingTransactionsPathSteps.java",
+        "content": "package com.algorand.algosdk.unit;\n\nimport com.algorand.algosdk.unit.utils.TestingUtils;\nimport com.algorand.algosdk.v2.client.algod.GetPendingTransactions;\nimport com.algorand.algosdk.v2.client.common.AlgodClient;\nimport io.cucumber.java.en.Given;\nimport io.cucumber.java.en.Then;\nimport io.cucumber.java.en.When;\n\nimport static org.assertj.core.api.Assertions.assertThat;\n\npublic class PendingTransactionsPathSteps {\n    private final ScenarioState state;\n\n    public PendingTransactionsPathSteps(ScenarioState state) {\n        this.state = state;\n    }\n\n    @Given(\"mock server recording request paths\")\n    public void mockServerRecordingRequestPaths() {\n        // The query exposes its fully constructed request URL; no request needs to be sent.\n        state.client = new AlgodClient(\"http://localhost\", 4001, \"\");\n    }\n\n    @When(\"we make a Pending Transaction Information with max {long} and format {string}\")\n    public void makePendingTransactionInformation(long max, String format) {\n        assertThat(format).isEqualTo(\"msgpack\");\n        GetPendingTransactions query = state.client.GetPendingTransactions();\n        if (TestingUtils.notEmpty(max)) {\n            query.max(max);\n        }\n        state.requestUrl = query.getRequestUrl();\n    }\n\n    @Then(\"expect the path used to be {string}\")\n    public void expectPath(String expectedPath) {\n        TestingUtils.verifyPathUrls(state.requestUrl, expectedPath);\n    }\n\n    public static class ScenarioState {\n        private AlgodClient client;\n        private String requestUrl;\n    }\n}\n"
+      }
+    ]
+  }
+]

@@ -1,0 +1,13 @@
+[
+  {
+    "instance_id": "coreshop/features/domain/cart/rules/voucher_code_generation.feature:9",
+    "model_name_or_path": "codex-gpt-6-luna-medium",
+    "view": "th",
+    "files": [
+      {
+        "path": "src/CoreShop/Behat/Context/Domain/Cart/Rule/VoucherCodeGenerationContext.php",
+        "content": "<?php\n\ndeclare(strict_types=1);\n\nnamespace CoreShop\\Behat\\Context\\Domain\\Cart\\Rule;\n\nuse Behat\\Behat\\Context\\Context;\nuse CoreShop\\Component\\Order\\Generator\\CodeGeneratorCheckerInterface;\nuse CoreShop\\Component\\Order\\Model\\CartPriceRule;\nuse CoreShop\\Component\\Order\\Model\\CartPriceRuleVoucherGenerator;\nuse Webmozart\\Assert\\Assert;\n\nfinal class VoucherCodeGenerationContext implements Context\n{\n    private ?CartPriceRule $rule = null;\n    private ?CartPriceRuleVoucherGenerator $generator = null;\n\n    public function __construct(private CodeGeneratorCheckerInterface $checker)\n    {\n    }\n\n    /** @Given /^the site operates on a store in \"([^\"]+)\"$/ */\n    public function storeInCountry(string $country): void\n    {\n    }\n\n    /** @Given /^the site has a currency \"([^\"]+)\" with iso \"([^\"]+)\"$/ */\n    public function currency(string $name, string $iso): void\n    {\n    }\n\n    /** @Given /^I am in country \"([^\"]+)\"$/ */\n    public function inCountry(string $country): void\n    {\n    }\n\n    /** @Given /^adding a cart price rule named \"([^\"]+)\"$/ */\n    public function addingCartPriceRule(string $name): void\n    {\n        $this->rule = new CartPriceRule();\n        $this->rule->setName($name);\n    }\n\n    /** @When /^I want to generate (\\d+) codes with a length of (\\d+) in ([a-z]+) characters for the cart rule$/ */\n    public function configureGeneration(int $amount, int $length, string $format): void\n    {\n        Assert::notNull($this->rule, 'A cart price rule must be created first.');\n\n        $this->generator = new CartPriceRuleVoucherGenerator();\n        $this->generator->setAmount($amount);\n        $this->generator->setLength($length);\n        $this->generator->setFormat($format);\n        $this->generator->setPrefix('');\n        $this->generator->setCartPriceRule($this->rule);\n    }\n\n    /** @Then /^the generation of the codes failed$/ */\n    public function generationFailed(): void\n    {\n        Assert::notNull($this->generator, 'Generation parameters must be configured first.');\n        Assert::false($this->checker->isGenerationPossible($this->generator));\n    }\n}\n"
+      }
+    ]
+  }
+]

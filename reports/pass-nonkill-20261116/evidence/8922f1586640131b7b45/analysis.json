@@ -1,0 +1,11 @@
+{
+  "artifact_id": "8922f1586640131b7b45",
+  "category": "E",
+  "requirement_gap_confirmed": false,
+  "adjudication": "CONFIRMED_SCOPE_DIFFERENCE",
+  "representative_mutant": "86f7f3383643ec3a",
+  "analysis": "两套测试都真实 Load/BuildCatalog 并检查 project copy 覆盖 user copy。参考 loader 额外配置 .claude/agents，生成只配置需求列出的 home/agents 和 .coddy/agents。唯一变异将 os.Stat 后的 err!=nil || !info.IsDir() 改为 &&；不存在的额外目录触发错误处理差异。已建目录的正常路径不区分该变异。当前需求没有要求不存在的第三个目录，属于参考准备路径更宽。该解释由代码条件与官方 kill/pass 记录支持，未补跑 panic 复验。",
+  "reference_anchor": "bdd_catalog_test.go|loader := NewLoader",
+  "method": "manual semantic comparison of frozen requirement, code and existing results",
+  "new_execution": false
+}

@@ -1,0 +1,17 @@
+[
+  {
+    "instance_id": "coreshop/features/domain/filter/create_filter.feature:10",
+    "model_name_or_path": "codex-gpt-6-luna-medium",
+    "view": "th",
+    "files": [
+      {
+        "path": "behat_services.yml",
+        "content": "services:\n  CoreShop\\Behat\\Context\\Domain\\Filter\\CreateFilterContext:\n    arguments:\n      $indexRepository: '@coreshop.repository.index'\n      $filterRepository: '@coreshop.repository.filter'\n      $sharedStorage: '@coreshop.behat.shared_storage'\n"
+      },
+      {
+        "path": "src/CoreShop/Behat/Context/Domain/Filter/CreateFilterContext.php",
+        "content": "<?php\n\ndeclare(strict_types=1);\n\nnamespace CoreShop\\Behat\\Context\\Domain\\Filter;\n\nuse Behat\\Behat\\Context\\Context;\nuse CoreShop\\Component\\Index\\Model\\Filter;\nuse CoreShop\\Component\\Index\\Model\\Index;\nuse CoreShop\\Component\\Resource\\Repository\\RepositoryInterface;\nuse CoreShop\\Bundle\\TestBundle\\Service\\SharedStorageInterface;\nuse Webmozart\\Assert\\Assert;\n\nfinal class CreateFilterContext implements Context\n{\n    public function __construct(\n        private RepositoryInterface $indexRepository,\n        private RepositoryInterface $filterRepository,\n        private SharedStorageInterface $sharedStorage,\n    ) {\n    }\n\n    /** @Given /^the site operates on a store in \"([^\"]+)\"$/ */\n    public function siteOperatesOnStore(string $country): void\n    {\n        // Index/filter creation in this scenario is independent of store setup.\n    }\n\n    /** @Given /^the site has a product \"([^\"]+)\" priced at (\\d+)$/ */\n    public function siteHasProduct(string $name, int $price): void\n    {\n        // No product is consumed by this scenario's index/filter operations.\n    }\n\n    /** @Given /^the site has a index \"([^\"]+)\" for class \"([^\"]+)\" with type \"([^\"]+)\"$/ */\n    public function siteHasIndex(string $name, string $class, string $type): void\n    {\n        $index = new Index();\n        $index->setName($name);\n        $index->setClass($class);\n        $index->setWorker($type);\n        $this->indexRepository->add($index);\n        $this->sharedStorage->set('index', $index);\n    }\n\n    /** @Given /^the site has a filter \"([^\"]+)\" for index \"([^\"]+)\"$/ */\n    public function siteHasFilter(string $name, string $indexName): void\n    {\n        $index = $this->indexRepository->findOneBy(['name' => $indexName]);\n        Assert::notNull($index, sprintf('Index \"%s\" was not found.', $indexName));\n\n        $filter = new Filter();\n        $filter->setName($name);\n        $filter->setIndex($index);\n        $this->filterRepository->add($filter);\n        $this->sharedStorage->set('filter', $filter);\n    }\n\n    /** @Then /^there should be a filter with name \"([^\"]+)\"$/ */\n    public function filterShouldExist(string $name): void\n    {\n        $filter = $this->filterRepository->findOneBy(['name' => $name]);\n        Assert::notNull($filter, sprintf('Filter \"%s\" was not found.', $name));\n        Assert::same($name, $filter->getName());\n    }\n}\n"
+      }
+    ]
+  }
+]

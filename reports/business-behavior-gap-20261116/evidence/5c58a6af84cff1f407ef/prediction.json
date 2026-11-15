@@ -1,0 +1,13 @@
+[
+  {
+    "instance_id": "e-petitions/features/admin/all_petitions.feature:109",
+    "model_name_or_path": "codex-gpt-6-luna-medium",
+    "view": "th",
+    "files": [
+      {
+        "path": "features/step_definitions/all_petitions_steps.rb",
+        "content": "Given(/^I am logged in as a moderator$/) do\n  @admin_sso_user = FactoryBot.build(:moderator_sso_user)\n  OmniAuth.config.mock_auth[:example] = @admin_sso_user\n  visit \"/admin/auth/example/callback\"\nend\n\nGiven(/^I log out and login back in as a sysadmin$/) do\n  visit \"/admin/logout\"\n  @admin_sso_user = FactoryBot.build(:sysadmin_sso_user)\n  OmniAuth.config.mock_auth[:example] = @admin_sso_user\n  visit \"/admin/auth/example/callback\"\nend\n\nGiven(/^an open petition exists with action: \"([^\"]*)\"$/) do |action|\n  FactoryBot.create(:open_petition, action: action)\nend\n\nWhen(/^I view all petitions$/) do\n  visit url_to(\"the Admin all petitions page\")\nend\n\nThen(/^I should see \"([^\"]*)\"$/) do |text|\n  expect(page).to have_text(text)\nend\n"
+      }
+    ]
+  }
+]

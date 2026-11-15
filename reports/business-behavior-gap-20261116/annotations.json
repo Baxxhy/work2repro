@@ -1,0 +1,167 @@
+{
+  "old": {
+    "f54d3444bfce11f4c30f": {
+      "class": "A",
+      "status": "CONFIRMED_GAP",
+      "note": "商品存入本地数组，匿名 order 返回同一数组；voucher、地址及多个背景步骤为空。Then 只数自建对象条目。参考 OrderContext.transformCartToOrder 执行生产状态机。候选 direct_calls 仅1条，参考3157条，结合生成源码确认实际购物车转订单未执行。200个存活的需求相关性仍须逐个判断。",
+      "anchor": "transformCartToOrder|new class|count|assertCount|getItems",
+      "witness": ""
+    },
+    "af2db3aaa3d3aed0e730": {
+      "class": "A;B;C",
+      "status": "CONFIRMED_GAP",
+      "note": "自定义 runner 直接 os.WriteFile，tools() 构造 full-agent-tool-set，send() 将输入mode赋给transcript。HTTP入口的部分代码被调用，但需求指定的生产 Agent.Run、真实工具提供和会话模式观察被替代。参考动态记录包含 NewAgent、Agent.Run 和真实transport调用。生成的写文件、工具和模式断言均检查自建结果。toolsets return defs→nil 的存活与未调用该生产路径一致。",
+      "anchor": "WriteFile|full-agent-tool-set|transcript|offeredTools|NewAgent|\\.Run",
+      "witness": "a1947a0f71599b25"
+    },
+    "7627df83491b90a0f0fa": {
+      "class": "B",
+      "status": "CONFIRMED_GAP",
+      "note": "候选和参考动态调用都记录 CompleteOrderHandler 到 CompositeStateMachine.apply，确认下单操作执行。候选读取 sharedStorage 内原 order 的email/currency；参考管理员登录后通过adminClient.show观察currencyCode。明确缺口位于需求指定的管理员读取边界。上一轮包含A的标签应撤回。142个存活中管理查询/序列化路径提供支持，其他变异仍保留未定。",
+      "anchor": "CompleteOrder|currency|Currency|adminClient|Administrator|sharedStorage",
+      "witness": ""
+    },
+    "93eac4b8da28527c6348": {
+      "class": "C",
+      "status": "CONFIRMED_GAP",
+      "note": "动态记录确认真实AccountServiceImpl.delete执行。候选以随机scope和随机ID删除，捕获任意KapuaException并只断言ExceptionCaught。需求明确规定KapuaEntityNotFoundException和消息片段，参考primeException/verifyException检查具体异常。消息格式返回null的变异存活。record_count_anomaly=true保留，按唯一变异ID核对，不清洗掉异常。",
+      "anchor": "ExceptionCaught|KapuaException|deleteRandomAccount|primeException|verifyException|delete\\(",
+      "witness": "f9696266b289835c"
+    },
+    "676d56c1c72dc4237805": {
+      "class": "A_setup",
+      "status": "CONFIRMED_GAP",
+      "note": "候选真实调用Document.add_section；六个linked=True断言也存在。Given只getattr六种header/footer代理，没有建立实际定义。参考载入带定义的文档。删除sentinel_sectPr.remove(hdrftr_ref)后候选通过、参考杀死，参考基线覆盖69行，候选基线未覆盖该行。缺口位于必要前置状态；修正上一轮C标签。",
+      "anchor": "getattr|add_section|is_linked_to_previous|single_section|doc-add-section",
+      "witness": "5d6e664690271921"
+    },
+    "b8a41623500427f1c983": {
+      "class": "C",
+      "status": "GAP_CONFIRMED_CAUSE_UNRESOLVED",
+      "note": "真实网页创建和相似请愿搜索被执行。候选在全页分别检查标题与签名数；参考在带索引petition-item-existing内绑定同一行。需求表的对象—值对应关系未验证。11个存活没有足够证据归因于这一缺口，保留因果未定。",
+      "anchor": "have_content|have_text|petition-item-existing|similar petitions",
+      "witness": ""
+    }
+  },
+  "new": {
+    "1fcd1f9b3387214ac0f8": {
+      "class": "N",
+      "status": "NO_CONFIRMED_GAP",
+      "note": "真实LogicsigSignature检查程序，错误断言对应Examples。候选用Java Base64，参考用SDK Encoder.decodeFromBase64；唯一存活为后者返回null。可解释准备路径不同，未发现明确需求义务缺失。"
+    },
+    "31e31c5b5fcc07f10802": {
+      "class": "N",
+      "status": "NO_CONFIRMED_GAP",
+      "note": "真实lookupAssetByID.execute及asset.index精确断言。参考verifyResponse比对更广响应；存活为Response.getContentType/toString返回null。需求指定asset编号已检查。"
+    },
+    "877b243d5a42b255b243": {
+      "class": "N",
+      "status": "NO_CONFIRMED_GAP",
+      "note": "真实生成账户、地址字符串及解码往返验证。参考Stepdefs.genKey额外执行Mnemonic.toKey(account.toMnemonic())；86个存活主要属于助记词路径。地址需求和助记词准备应分别解释。"
+    },
+    "87e517283a3a24f40b73": {
+      "class": "N",
+      "status": "NO_CONFIRMED_GAP",
+      "note": "启动实际HTTP测试服务器，SDK.execute，捕获请求URI并逐项精确比较。参考使用getRequestUrl辅助路径，五个存活集中于该路径。候选直接观察真实请求提供反例。"
+    },
+    "8d089ce97868b988d5d0": {
+      "class": "N",
+      "status": "NO_CONFIRMED_GAP",
+      "note": "实际AccountInformation.execute，检查返回address字符串。参考比较更广JSON；五个存活含contentType/toString及额外字段路径。未确认明确场景要求遗漏。"
+    },
+    "0dad2d887ac70eb70971": {
+      "class": "E",
+      "status": "INSUFFICIENT_EVIDENCE",
+      "note": "真实保存Product并调用updateSeoMetadata，但只读product.getMetaTitle。参考同时检查headTitle渲染字符串。需求只写product should have meta title，是否必须检查页面head不能仅由参考扩展推出。保留观察边界候选，暂不计入确认缺口。"
+    },
+    "16ee2db43ad5dc134696": {
+      "class": "A_setup",
+      "status": "CONFIRMED_GAP",
+      "note": "Austria商店、USA国家背景步骤只检查输入或为空，未建立要求的实体状态。实际formatter.format及两个locale精确输出断言存在。确认背景准备缺失，但12个存活中的哪些影响格式化语义仍待定。 背景步骤未建立或核验所列状态；缺少初始数据库快照，不能断言环境中这些实体实际不存在。"
+    },
+    "69bf8ff92073d12c569a": {
+      "class": "A_setup",
+      "status": "CONFIRMED_GAP",
+      "note": "商店、商品背景步骤为空。实际Index/Filter持久化并按名字重新查询存在。参考saveIndex还调用worker.createOrUpdateIndexStructures。确认背景义务缺失；物理索引是否构成本场景必要义务及54个存活逐项归因仍待定。 背景步骤未建立或核验所列状态；缺少初始数据库快照，不能断言环境中这些实体实际不存在。"
+    },
+    "8280bb01841ddb55b184": {
+      "class": "E",
+      "status": "INSUFFICIENT_EVIDENCE",
+      "note": "真实执行fixtures/demo命令，但使用--no-interaction，确认步骤只检查前次退出码。参考setInputs(['y'])后execute。存活包括--append true→false及configure删除。确认交互路径不同；无逐变异交互记录，不能将三项存活统称业务操作未执行。"
+    },
+    "9bbc86b22783a2681bce": {
+      "class": "A_setup",
+      "status": "CONFIRMED_GAP",
+      "note": "商店、国家、币种背景为空。真实CartPriceRule/Generator设置及isGenerationPossible(false)检查存在。参考同样通过checker核验不可能生成，故不要求额外调用实际generate。确认背景准备缺口，主要目标行为已被实际检查。 背景步骤未建立或核验所列状态；缺少初始数据库快照，不能断言环境中这些实体实际不存在。"
+    },
+    "03cfd691e00da6e9f8a9": {
+      "class": "B",
+      "status": "CONFIRMED_GAP",
+      "note": "候选走真实SSO callback和访问页面，最终只断言全页没有Anonymize petitions，未核验已登录管理员及实际页面。基线覆盖真实parliaments controller。e9639a04a50dc1ac删除AdminUser.find_or_create_from!的用户构建返回nil，callback源码else跳转login，生成仍通过、参考杀死。参考登录步骤检查目标路径和成功提示。缺失登录/页面状态观察已确认，变异时最终DOM未保存，完整重定向传播仍为有源码支持的推断。",
+      "witness": "e9639a04a50dc1ac"
+    },
+    "3bcfc97a0c899ca20799": {
+      "class": "N",
+      "status": "NO_CONFIRMED_GAP",
+      "note": "真实moderator表单登录、建立12条sponsored petitions、点击链接并核验当前路径。三项存活主要是登录layout/flash/defaultURL差异。目标导航已执行并观察。"
+    },
+    "5c58a6af84cff1f407ef": {
+      "class": "N",
+      "status": "NO_CONFIRMED_GAP",
+      "note": "实际切换moderator/sysadmin并创建及访问列表，检查正向内容。八项存活在认证准备路径；缺少逐变异状态证据，不能从存活推出权限验证失败。"
+    },
+    "65b8816a3476e2107994": {
+      "class": "N",
+      "status": "NO_CONFIRMED_GAP",
+      "note": "真实建立场景数据并搜索ID，精确核验对应petition路径。四项存活在邮箱规范化与日期比较，尚无明确核心搜索需求缺口。"
+    },
+    "6cfa5ed7b21c9e5ebb77": {
+      "class": "C",
+      "status": "CONFIRMED_GAP",
+      "note": "真实搜索Wombles，核验路径；结果表只逐项检查全页title/detail，没有绑定行或排除Common People。需求明确列出搜索结果与排序叙述，参考按nth结果行核验。4639544fe90a683c令search?返回nil；execute_search源码因此跳过查询过滤，生成通过、参考杀死。行关系与过滤判别不足有直接证据，具体变异页面内容没有日志，不能声称已观测实际结果顺序。",
+      "witness": "4639544fe90a683c"
+    },
+    "04a93f7670880967619a": {
+      "class": "N",
+      "status": "NO_CONFIRMED_GAP",
+      "note": "构建latent style，设置priority 42或None并精确读取。参考从已有文档检索样式；八项存活在检索/包读取路径。未确认语义义务缺失。"
+    },
+    "056dd0dc42a69a6e107b": {
+      "class": "N",
+      "status": "NO_CONFIRMED_GAP",
+      "note": "先给footer.paragraphs[0].text赋值形成实际定义，再add_section并比较继承文本及linked状态。唯一存活在关系加载路径，参考采用文件fixture。此案例反驳所有header/footer生成都缺必要准备的说法。"
+    },
+    "067bc7e12bcd4644fab3": {
+      "class": "N",
+      "status": "NO_CONFIRMED_GAP",
+      "note": "实际add_comment，设置已知XML日期并读取timestamp精确比较。参考加载含更多内容的文档。11项存活的附加图像/检索路径不自动成为时间戳需求遗漏。"
+    },
+    "084ecf53bb3c8fdfe96e": {
+      "class": "N",
+      "status": "NO_CONFIRMED_GAP",
+      "note": "真实添加PNG、遍历drawing/image，检查has_picture、PNG类型、filename和sha1形状。参考为JPEG和更复杂文档，60项存活含JPEG解码及包加载。完整字节保真可能值得另查，但当前需求没有指定字节级比较，暂不确认缺口。"
+    },
+    "09cb007b6ad7f3eede22": {
+      "class": "N",
+      "status": "NO_CONFIRMED_GAP",
+      "note": "实际添加0/3个tab后精确检查长度。两个存活属于其他段落集合读取路径，当前义务已有对应断言。"
+    }
+  },
+  "controls": {
+    "fdc12e8888edc5e37221": "真实账户/tealsign及精确签名字节比较。与程序sanity同属加密SDK操作，义务类型匹配弱。",
+    "d7253388ffec908a8a46": "真实TaxRate实体保存、按名称重查、rate精确断言。与SEO只有实体属性设置相近，不能作为同一渲染边界控制。",
+    "fe9e2546002a1ead06c8": "真实访问首页后否定trending文本。与admin案例同属否定UI检查，缺少登录条件；KillComplete不能证明负向预言能区分错误页面。",
+    "9192f0d5efbedd02f926": "实际Document默认latent style读取六个具体属性。同feature属性义务匹配较强，默认状态与可选优先级有所不同。",
+    "00dde303da73b0b7d185": "真实私钥/合约地址和tealsign，精确签名检查。与indexer响应类型匹配弱。",
+    "a78015ec5ff24fc9de78": "真实国家、商店、币种与汇率持久化，converter输出100→110及100→91。与money formatter同币种域，业务操作不同；提供准备状态有效建立的对照。",
+    "34685f171763ee1cd820": "真实首页访问和负向文本检查。与admin hub导航需求匹配弱。",
+    "d5b689224c61c42ba2a9": "with a footer definition分支设置is_linked_to_previous=False形成定义，再精确读取布尔值。与页脚继承同feature，创建/查询和继承操作不同。",
+    "51363211341a39559766": "真实助记词往返。与地址roundtrip同feature，但助记词在本控制中是明确目标，在对应nonkill中是参考额外准备。",
+    "2df76e5b1b5fae49181c": "真实menuBuilder与约30个嵌套节点ID断言。与filter持久化需求匹配弱。",
+    "51402702ed0f9175add9": "真实列表及CSV点击和下载文件名检查；表格同样只全页分别匹配action/detail，缺少同一行绑定。95/95仍KillComplete。确认C关系缺口的反例，说明KillComplete并不证明全部关系义务受检。与admin all_petitions共享列表类型，权限与CSV流程不同。",
+    "8a6054d6ffd781460395": "真实创建comment并精确核验作者、initials、计数。与comment timestamp同域，属性不同。",
+    "033445cbe698bf66e4e9": "真实HTTP请求并捕获URI精确核验。与另一个algod paths场景同feature且同边界，匹配强。",
+    "ce595d4ef543fec8c41f": "真实entity lock、重新加载、鲜状态save成功及旧状态save抛异常。具有跨对象状态验证；与安装命令匹配弱。",
+    "7b39d0b8ffab2eca2d13": "真实归档搜索ID后精确匹配目标路径。与Wombles结果列表同feature但唯一ID跳转和多结果关系义务不同；自动匹配表的target是首页ID搜索。"
+  }
+}

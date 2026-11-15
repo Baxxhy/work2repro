@@ -1,0 +1,13 @@
+[
+  {
+    "instance_id": "python-docx/features/tbl-cell-props.feature:52",
+    "model_name_or_path": "codex-gpt-6-luna-medium",
+    "view": "th",
+    "files": [
+      {
+        "path": "features/steps/tbl_cell_props.py",
+        "content": "from behave import given, when, then\n\nfrom docx import Document\nfrom docx.shared import Inches\n\n\ndef _width_setting(value):\n    \"\"\"Convert the width phrases used by the feature into Length values.\"\"\"\n    value = value.strip()\n    if value == \"no explicit setting\":\n        return None\n    if value == \"1 inch\":\n        return Inches(1)\n    if value == \"2 inches\":\n        return Inches(2)\n    raise AssertionError(\"unexpected width setting %r\" % value)\n\n\n@given(\"a table cell having a width of {width_setting}\")\ndef given_table_cell_width(context, width_setting):\n    document = Document()\n    context.cell = document.add_table(rows=1, cols=1).cell(0, 0)\n    initial_width = _width_setting(width_setting)\n    if initial_width is not None:\n        context.cell.width = initial_width\n\n\n@when(\"I set the cell width to {new_setting}\")\ndef set_cell_width(context, new_setting):\n    context.cell.width = _width_setting(new_setting)\n\n\n@then(\"the reported width of the cell is {reported_width}\")\ndef check_reported_cell_width(context, reported_width):\n    expected = _width_setting(reported_width)\n    actual = context.cell.width\n    assert actual == expected, \"expected width %r, got %r\" % (expected, actual)\n"
+      }
+    ]
+  }
+]

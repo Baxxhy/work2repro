@@ -1,0 +1,13 @@
+[
+  {
+    "instance_id": "python-docx/features/cmt-props.feature:22",
+    "model_name_or_path": "codex-gpt-6-luna-medium",
+    "view": "th",
+    "files": [
+      {
+        "path": "features/steps/cmt_props.py",
+        "content": "import datetime as dt\n\nfrom behave import given, then\n\nfrom docx import Document\n\n\n@given(\"a Comment object\")\ndef given_comment_object(context):\n    document = Document()\n    context.comment = document.comments.add_comment(text=\"A comment\")\n\n    # Use a fixed authored date so the timestamp check is deterministic.\n    context.expected_timestamp = dt.datetime(\n        2024, 5, 17, 12, 34, 56, tzinfo=dt.timezone.utc\n    )\n    context.comment._comment_elm.date = context.expected_timestamp\n\n\n@then(\"comment.timestamp is the date and time the comment was authored\")\ndef then_comment_timestamp_is_authored_datetime(context):\n    assert context.comment.timestamp == context.expected_timestamp, (\n        \"got %r, expected %r\"\n        % (context.comment.timestamp, context.expected_timestamp)\n    )\n"
+      }
+    ]
+  }
+]

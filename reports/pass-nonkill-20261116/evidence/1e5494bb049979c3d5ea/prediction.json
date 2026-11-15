@@ -1,0 +1,13 @@
+[
+  {
+    "instance_id": "e-petitions/features/suzie_views_all_petitions.feature:76",
+    "model_name_or_path": "codex-gpt-6-luna-medium",
+    "view": "th",
+    "files": [
+      {
+        "path": "features/step_definitions/suzie_views_all_petitions_steps.rb",
+        "content": "Given('a petition {string} exists and hasn’t passed the threshold for a debate') do |title|\n  FactoryBot.create(:open_petition, action: title, debate_threshold_reached_at: nil)\nend\n\nGiven('a petition {string} passed the threshold for a debate less than a day ago and has no debate date set') do |title|\n  FactoryBot.create(\n    :awaiting_debate_petition,\n    action: title,\n    debate_threshold_reached_at: 1.hour.ago,\n    debate_scheduled_at: nil,\n    scheduled_debate_date: nil\n  )\nend\n\nGiven('a petition {string} passed the threshold for a debate {int} days ago and has no debate date set') do |title, days|\n  FactoryBot.create(\n    :awaiting_debate_petition,\n    action: title,\n    debate_threshold_reached_at: days.days.ago,\n    debate_scheduled_at: nil,\n    scheduled_debate_date: nil\n  )\nend\n\nGiven('a petition {string} passed the threshold for a debate {int} days ago and has a debate in {int} days') do |title, days_ago, days_until|\n  FactoryBot.create(\n    :scheduled_debate_petition,\n    action: title,\n    debate_threshold_reached_at: days_ago.days.ago,\n    debate_scheduled_at: days_ago.days.ago,\n    scheduled_debate_date: days_until.days.from_now\n  )\nend\n\nWhen('I browse to see only {string} petitions') do |filter|\n  visit petitions_url\n  click_link filter\nend\n\nThen('I should see {string}') do |text|\n  expect(page).to have_content(text)\nend\n\nThen('I should see the following ordered list of petitions:') do |titles|\n  text = page.text\n  positions = titles.raw.flatten.map do |title|\n    expect(page).to have_content(title)\n    text.index(title)\n  end\n  expect(positions).to eq(positions.sort)\nend\n\nThen('the markup should be valid') do\n  document = Nokogiri::HTML5(page.html)\n  expect(document.at_css('html')).not_to be_nil\n  expect(document.at_css('body')).not_to be_nil\n  ids = document.css('[id]').map { |element| element['id'] }\n  expect(ids.uniq).to eq(ids)\nend\n"
+      }
+    ]
+  }
+]

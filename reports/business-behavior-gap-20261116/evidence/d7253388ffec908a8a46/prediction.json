@@ -1,0 +1,17 @@
+[
+  {
+    "instance_id": "coreshop/features/domain/taxation/adding_tax.feature:10",
+    "model_name_or_path": "codex-gpt-6-luna-medium",
+    "view": "th",
+    "files": [
+      {
+        "path": "behat_services.yml",
+        "content": "services:\n  CoreShop\\Behat\\Context\\Domain\\Taxation\\AddingTaxContext:\n    arguments:\n      $taxRateRepository: '@coreshop.repository.tax_rate'\n      $taxRateFactory: '@coreshop.factory.tax_rate'\n"
+      },
+      {
+        "path": "src/CoreShop/Behat/Context/Domain/Taxation/AddingTaxContext.php",
+        "content": "<?php\n\ndeclare(strict_types=1);\n\nnamespace CoreShop\\Behat\\Context\\Domain\\Taxation;\n\nuse Behat\\Behat\\Context\\Context;\nuse CoreShop\\Bundle\\TestBundle\\Service\\SharedStorageInterface;\nuse CoreShop\\Component\\Resource\\Factory\\FactoryInterface;\nuse CoreShop\\Component\\Taxation\\Model\\TaxRateInterface;\nuse CoreShop\\Component\\Taxation\\Repository\\TaxRateRepositoryInterface;\nuse Webmozart\\Assert\\Assert;\n\nfinal class AddingTaxContext implements Context\n{\n    public function __construct(\n        private TaxRateRepositoryInterface $taxRateRepository,\n        private FactoryInterface $taxRateFactory,\n        private SharedStorageInterface $sharedStorage,\n    ) {\n    }\n\n    /**\n     * @Given /^the site has a tax rate \"([^\"]+)\" with \"([^\"]+)\" rate$/\n     */\n    public function theSiteHasATaxRateWithRate(string $name, string $rate): void\n    {\n        /** @var TaxRateInterface $taxRate */\n        $taxRate = $this->taxRateFactory->createNew();\n        $taxRate->setName($name, 'en');\n        $taxRate->setRate((float) rtrim($rate, '%'));\n        $this->taxRateRepository->add($taxRate);\n        $this->sharedStorage->set('tax_rate', $taxRate);\n    }\n\n    /**\n     * @Given /^the tax rate \"([^\"]+)\" is active$/\n     */\n    public function theTaxRateIsActive(string $name): void\n    {\n        $taxRate = $this->sharedStorage->get('tax_rate');\n        Assert::notNull($taxRate);\n        Assert::same($name, $taxRate->getName('en'));\n\n        $taxRate->setActive(true);\n        $this->taxRateRepository->add($taxRate);\n    }\n\n    /**\n     * @Then /^there should be a tax rate \"([^\"]+)\" with \"([^\"]+)\" rate$/\n     */\n    public function thereShouldBeATaxRateWithRate(string $name, string $rate): void\n    {\n        $taxRates = $this->taxRateRepository->findByName($name, 'en');\n        Assert::count($taxRates, 1);\n        Assert::same((float) rtrim($rate, '%'), (float) $taxRates[0]->getRate());\n    }\n}\n"
+      }
+    ]
+  }
+]

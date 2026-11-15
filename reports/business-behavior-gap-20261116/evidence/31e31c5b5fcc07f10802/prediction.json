@@ -1,0 +1,13 @@
+[
+  {
+    "instance_id": "algorand-sdk/features/unit/v2indexerclient_responses.feature:55",
+    "model_name_or_path": "codex-gpt-6-luna-medium",
+    "view": "th",
+    "files": [
+      {
+        "path": "src/test/java/com/algorand/algosdk/unit/IndexerClientV2ResponseSteps.java",
+        "content": "package com.algorand.algosdk.unit;\n\nimport com.algorand.algosdk.unit.utils.ClientMocker;\nimport com.algorand.algosdk.v2.client.common.IndexerClient;\nimport com.algorand.algosdk.v2.client.common.Response;\nimport com.algorand.algosdk.v2.client.indexer.LookupAssetByID;\nimport com.algorand.algosdk.v2.client.model.AssetResponse;\nimport io.cucumber.java.en.Given;\nimport io.cucumber.java.en.Then;\nimport io.cucumber.java.en.When;\n\nimport java.io.File;\n\nimport static org.assertj.core.api.Assertions.assertThat;\n\npublic class IndexerClientV2ResponseSteps {\n    private IndexerClient client;\n    private Response<AssetResponse> response;\n\n    @Given(\"mock http responses in {string} loaded from {string}\")\n    public void mockHttpResponse(String jsonFile, String directory) throws Exception {\n        File body = new File(\"src/test/resources/\" + directory + \"/\" + jsonFile);\n        ClientMocker.oneResponse(200, \"application/json; charset=utf-8\", body);\n        client = new IndexerClient(\"localhost\", 8980, \"\");\n        ClientMocker.infect(client);\n    }\n\n    @When(\"we make any LookupAssetByID call\")\n    public void makeLookupAssetByIdCall() throws Exception {\n        LookupAssetByID query = client.lookupAssetByID(163650L);\n        response = query.execute();\n    }\n\n    @Then(\"expect error string to contain {string}\")\n    public void expectErrorString(String expected) {\n        String actual = response.message();\n        assertThat(actual == null ? \"\" : actual).contains(expected);\n    }\n\n    @Then(\"the parsed LookupAssetByID response should have index {long}\")\n    public void parsedLookupAssetByIdShouldHaveIndex(long index) {\n        assertThat(response.body().asset.index).isEqualTo(index);\n    }\n}\n"
+      }
+    ]
+  }
+]

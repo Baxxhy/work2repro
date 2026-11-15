@@ -1,0 +1,17 @@
+--- reference/src/bin/eureka.rs
++++ repo_4/src/bin/eureka.rs
+@@ -19,6 +19,14 @@
+ 
+ fn main() {
+     pretty_env_logger::init();
++
++    // [MUTATED] resolve the help/version conflict in favor of version.
++    let has_help = std::env::args().any(|arg| arg == "--help" || arg == "-h");
++    let has_version = std::env::args().any(|arg| arg == "--version" || arg == "-V");
++    if has_help && has_version {
++        println!("eureka {}", crate_version!());
++        return;
++    }
+ 
+     let cli_flags = clap::Command::new("eureka")
+         .author(crate_authors!())

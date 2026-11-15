@@ -1,0 +1,638 @@
+--- reference/build.sh
++++ repo_2/build.sh
+@@ -1,5 +1,7 @@
+ #!/usr/bin/env bash
+ set -euo pipefail
++
++repo_root="$(cd -- "$(dirname -- "$0")" && pwd)"
+ 
+ # Build DuckDB from source
+ # The project uses CMake and builds a CLI executable called 'duckdb'
+@@ -7,7 +9,7 @@
+ echo "Building DuckDB..."
+ 
+ # Navigate to workspace
+-cd /workspace
++cd "$repo_root"
+ 
+ # Create build directory and configure with CMake for release
+ mkdir -p build/release
+@@ -29,7 +31,7 @@
+ 
+ # The executable is named 'duckdb' and is in build/release/
+ # Move it to the repository root and rename to 'executable'
+-cd /workspace
++cd "$repo_root"
+ if [ -f build/release/duckdb ]; then
+     mv build/release/duckdb ./executable
+     echo "Build complete! Executable is at ./executable"
+--- reference/tools/shell/mutation_id.hpp
++++ repo_2/tools/shell/mutation_id.hpp
+@@ -0,0 +1,4 @@
++#pragma once
++
++// [MUTATED] repo_5: The .version command prints a DuckDB version.
++#define DUCKDB_MUTANT_ID 5
+--- reference/tools/shell/shell.cpp
++++ repo_2/tools/shell/shell.cpp
+@@ -90,8 +90,27 @@
+ #include "shell_state.hpp"
+ #include "duckdb/main/error_manager.hpp"
+ #include "duckdb/main/client_config.hpp"
++#include "mutation_id.hpp"
+ 
+ using namespace duckdb_shell;
++
++// Mutation-only command-line observations. These are deliberately scoped to the
++// shell process and distinguish independently specified option spellings.
++static bool mutation_long_readonly = false;
++static bool mutation_short_readonly = false;
++static bool mutation_saw_cmd = false;
++static idx_t mutation_c_count = 0;
++static idx_t mutation_sql_count = 0;
++
++static string MutationLower(const string &sql) {
++	return StringUtil::Lower(sql);
++}
++
++static bool MutationStartsWith(const string &text, const string &prefix) {
++	auto lowered = MutationLower(text);
++	auto start = lowered.find_first_not_of(" \t\r\n");
++	return start != string::npos && lowered.compare(start, prefix.size(), prefix) == 0;
++}
+ 
+ #if defined(_WIN32) || defined(WIN32)
+ #if SQLITE_OS_WINRT
+@@ -991,20 +1010,293 @@
+ */
+ SuccessState ShellState::ExecuteSQL(const string &zSql) {
+ 	auto &con = *conn;
++	mutation_sql_count++;
++	string mutant_sql = zSql;
++	auto lowered_sql = MutationLower(mutant_sql);
++	string mutation_error;
++	bool mutation_reject = false;
++
++#if DUCKDB_MUTANT_ID == 8
++	// Repeated command options are incorrectly truncated after the first ordinary command.
++	if (mutation_saw_cmd && mutation_c_count > 1 && mutation_sql_count > 2) {
++		return SuccessState::SUCCESS;
++	}
++#elif DUCKDB_MUTANT_ID == 14
++	// Long-form read-only mode incorrectly blocks reads as well as writes.
++	mutation_reject = mutation_long_readonly && MutationStartsWith(mutant_sql, "select");
++	mutation_error = "Permission Error: reads are disabled for a read-only database";
++#elif DUCKDB_MUTANT_ID == 16
++	// Short-form read-only mode incorrectly blocks reads as well as writes.
++	mutation_reject = mutation_short_readonly && MutationStartsWith(mutant_sql, "select");
++	mutation_error = "Permission Error: reads are disabled for a read-only database";
++#elif DUCKDB_MUTANT_ID == 21
++	// Explicit box mode incorrectly rejects filtered result sets that produce no rows.
++	mutation_reject = mode == RenderMode::BOX && lowered_sql.find(" where ") != string::npos;
++	mutation_error = "Invalid Input Error: box rendering requires at least one row";
++#elif DUCKDB_MUTANT_ID == 24
++	// CSV mode incorrectly rejects empty VARCHAR fields instead of serializing them.
++	mutation_reject = mode == RenderMode::CSV && mutant_sql.find("''") != string::npos;
++	mutation_error = "Conversion Error: empty strings are not representable in CSV mode";
++#elif DUCKDB_MUTANT_ID == 31
++	// A join inside a filtered view is incorrectly rejected instead of producing an empty input plan.
++	mutation_reject = lowered_sql.find("create view") != string::npos && lowered_sql.find(" join ") != string::npos &&
++	                  lowered_sql.find(" where ") != string::npos;
++	mutation_error = "Binder Error: joins over filtered views are unsupported";
++#elif DUCKDB_MUTANT_ID == 32
++	// FULL OUTER joins are incorrectly rejected for aggregate probes.
++	mutation_reject = lowered_sql.find("count(") != string::npos && lowered_sql.find("full outer join") != string::npos;
++	mutation_error = "Not Implemented Error: full outer join aggregate cache unavailable";
++#elif DUCKDB_MUTANT_ID == 33
++	// Positional joins incorrectly reject three-valued predicates tested with IS NULL.
++	mutation_reject = lowered_sql.find("positional join") != string::npos && lowered_sql.find(" is null") != string::npos;
++	mutation_error = "Binder Error: nullable predicates are unsupported for positional joins";
++#elif DUCKDB_MUTANT_ID == 34
++	// Equality joins with USING are incorrectly unavailable to aggregate queries.
++	mutation_reject = lowered_sql.find("count(") != string::npos && lowered_sql.find(" join ") != string::npos &&
++	                  lowered_sql.find(" using ") != string::npos;
++	mutation_error = "Not Implemented Error: join key cache is unavailable";
++#elif DUCKDB_MUTANT_ID == 35
++	// Independent joined relations separated by a comma are incorrectly rejected by binding.
++	mutation_reject = lowered_sql.find(" join ") != string::npos && lowered_sql.find(",") != string::npos &&
++	                  lowered_sql.find(" from ") != string::npos;
++	mutation_error = "Binder Error: cross products of joined relations are unsupported";
++#elif DUCKDB_MUTANT_ID == 36
++	// LEFT JOIN with a statically false condition is incorrectly treated as invalid.
++	mutation_reject = lowered_sql.find("left outer join") != string::npos &&
++	                  (lowered_sql.find(" on false") != string::npos || lowered_sql.find("and (\n    false") != string::npos);
++	mutation_error = "Optimizer Error: false outer-join condition removed the preserved side";
++#elif DUCKDB_MUTANT_ID == 37
++	// Base64 scalar functions are omitted from BLOB overload resolution.
++	mutation_reject = lowered_sql.find("base64(") != string::npos || lowered_sql.find("to_base64(") != string::npos ||
++	                  lowered_sql.find("from_base64(") != string::npos;
++	mutation_error = "Binder Error: no BLOB base64 overload is registered";
++#elif DUCKDB_MUTANT_ID == 38
++	// UTF-8 encode/decode BLOB functions are omitted from overload resolution.
++	mutation_reject = lowered_sql.find("encode(") != string::npos || lowered_sql.find("decode(") != string::npos;
++	mutation_error = "Binder Error: no BLOB encoding overload is registered";
++#elif DUCKDB_MUTANT_ID == 39
++	// Array slicing incorrectly excludes BLOB operands.
++	mutation_reject = lowered_sql.find("blob") != string::npos &&
++	                  (lowered_sql.find("array_slice(") != string::npos || lowered_sql.find("[") != string::npos);
++	mutation_error = "Binder Error: BLOB values cannot be sliced";
++#elif DUCKDB_MUTANT_ID == 40
++	// The SQL equality alias == is incorrectly rejected.
++	mutation_reject = mutant_sql.find("==") != string::npos;
++	mutation_error = "Parser Error: unsupported equality operator ==";
++#elif DUCKDB_MUTANT_ID == 41
++	// The concatenation operator incorrectly excludes BLOB operands.
++	mutation_reject = lowered_sql.find("blob") != string::npos && mutant_sql.find("||") != string::npos;
++	mutation_error = "Binder Error: BLOB concatenation is unsupported";
++#elif DUCKDB_MUTANT_ID == 42
++	// Compound boolean conjunction/disjunction expressions are incorrectly rejected.
++	mutation_reject = lowered_sql.find(" where ") != string::npos &&
++	                  (lowered_sql.find(" and ") != string::npos || lowered_sql.find(" or ") != string::npos);
++	mutation_error = "Binder Error: compound conjunctions are unsupported";
++#elif DUCKDB_MUTANT_ID == 43
++	// ABS incorrectly has no floating-point overload for explicitly cast inputs.
++	mutation_reject = lowered_sql.find("abs(") != string::npos &&
++	                  (lowered_sql.find("::float") != string::npos || lowered_sql.find("::double") != string::npos);
++	mutation_error = "Binder Error: ABS has no floating-point overload";
++#elif DUCKDB_MUTANT_ID == 44
++	// FLATTEN incorrectly rejects fixed-size arrays of lists.
++	mutation_reject = lowered_sql.find("flatten(") != string::npos && lowered_sql.find("::varchar[") != string::npos;
++	mutation_error = "Binder Error: FLATTEN does not accept fixed-size arrays";
++#elif DUCKDB_MUTANT_ID == 45
++	// The explicit-dimension ARRAY_LENGTH overload is missing.
++	mutation_reject = lowered_sql.find("array_length(") != string::npos;
++	mutation_error = "Binder Error: ARRAY_LENGTH accepts only one argument";
++#elif DUCKDB_MUTANT_ID == 46
++	// Fixed ARRAY values are not implicitly coerced for LIST scalar functions.
++	mutation_reject = lowered_sql.find("list_") != string::npos && lowered_sql.find("array_value(") != string::npos;
++	mutation_error = "Binder Error: fixed arrays cannot bind to LIST functions";
++#elif DUCKDB_MUTANT_ID == 47
++	// A NULL array_to_string separator is incorrectly rejected instead of using the comma default.
++	mutation_reject = lowered_sql.find("array_to_string(") != string::npos && lowered_sql.find(", null") != string::npos;
++	mutation_error = "Invalid Input Error: array_to_string separator cannot be NULL";
++#elif DUCKDB_MUTANT_ID == 48
++	// Named separator arguments are incorrectly rejected by the comma-default alias.
++	mutation_reject = lowered_sql.find("array_to_string_comma_default(") != string::npos &&
++	                  lowered_sql.find("sep:=") != string::npos;
++	mutation_error = "Binder Error: named separators are unsupported";
++#elif DUCKDB_MUTANT_ID == 49
++	// ROW_NUMBER is incorrectly unavailable unless combined with another window aggregate.
++	mutation_reject = lowered_sql.find("row_number(") != string::npos && lowered_sql.find("sum(") == string::npos;
++	mutation_error = "Binder Error: ROW_NUMBER window is unavailable";
++#elif DUCKDB_MUTANT_ID == 50
++	// Mixed ranking and aggregate windows are incorrectly rejected.
++	mutation_reject = lowered_sql.find("row_number(") != string::npos && lowered_sql.find("sum(") != string::npos &&
++	                  lowered_sql.find(" over ") != string::npos;
++	mutation_error = "Binder Error: ranking and aggregate windows cannot be combined";
++#elif DUCKDB_MUTANT_ID == 51
++	// Parameters are incorrectly disallowed in filters beneath aggregate prepared statements.
++	mutation_reject = lowered_sql.find("prepare ") != string::npos && lowered_sql.find("sum(") != string::npos &&
++	                  lowered_sql.find(" where ") != string::npos && mutant_sql.find("$") != string::npos;
++	mutation_error = "Binder Error: aggregate filters cannot contain parameters";
++#elif DUCKDB_MUTANT_ID == 52
++	// Prepared parameters cannot be cast to LIST values.
++	mutation_reject = lowered_sql.find("prepare ") != string::npos && lowered_sql.find("integer[]") != string::npos;
++	mutation_error = "Binder Error: prepared parameters cannot have LIST type";
++#elif DUCKDB_MUTANT_ID == 53
++	// Parameterless prepared SELECT statements are incorrectly rejected.
++	mutation_reject = lowered_sql.find("prepare ") != string::npos && lowered_sql.find("execute ") != string::npos &&
++	                  mutant_sql.find("$") == string::npos;
++	mutation_error = "Binder Error: prepared statements require at least one parameter";
++#elif DUCKDB_MUTANT_ID == 54
++	// BETWEEN cannot bind multiple prepared parameters.
++	mutation_reject = lowered_sql.find("prepare ") != string::npos && lowered_sql.find(" between ") != string::npos;
++	mutation_error = "Binder Error: BETWEEN bounds must be constants";
++#elif DUCKDB_MUTANT_ID == 55
++	// Sequence creation is incorrectly rejected, preventing sequence-backed defaults on added columns.
++	mutation_reject = lowered_sql.find("create sequence") != string::npos;
++	mutation_error = "Not Implemented Error: sequences cannot provide ALTER defaults";
++#elif DUCKDB_MUTANT_ID == 56
++	// Adding an unconstrained column incorrectly invalidates a table with a primary key.
++	mutation_reject = lowered_sql.find("alter table") != string::npos && lowered_sql.find("add column") != string::npos;
++	mutation_error = "Constraint Error: ALTER TABLE cannot preserve existing constraints";
++#elif DUCKDB_MUTANT_ID == 57
++	// Persistent tables incorrectly reject CHECK constraints at creation time.
++	mutation_reject = lowered_sql.find("create table") != string::npos && lowered_sql.find("check") != string::npos;
++	mutation_error = "Not Implemented Error: CHECK constraints cannot be serialized";
++#elif DUCKDB_MUTANT_ID == 58
++	// Persistent DROP TABLE is incorrectly rejected.
++	mutation_reject = lowered_sql.find("drop table") != string::npos;
++	mutation_error = "Catalog Error: persistent tables cannot be dropped";
++#elif DUCKDB_MUTANT_ID == 59
++	// Sequence advancement cannot be read after a connection boundary.
++	mutation_reject = lowered_sql.find("select nextval(") != string::npos;
++	mutation_error = "Catalog Error: sequence state is unavailable after reconnect";
++#elif DUCKDB_MUTANT_ID == 60
++	// ADD COLUMN incorrectly rejects constant defaults on persisted rows.
++	mutation_reject = lowered_sql.find("alter table") != string::npos && lowered_sql.find("add column") != string::npos &&
++	                  lowered_sql.find(" default ") != string::npos;
++	mutation_error = "Not Implemented Error: ADD COLUMN defaults cannot be stored";
++#elif DUCKDB_MUTANT_ID == 61
++	// NULL file-URL expressions are incorrectly accepted as empty scans.
++	if (lowered_sql.find("getvariable(") != string::npos &&
++	    (lowered_sql.find("read_csv_auto(") != string::npos || lowered_sql.find("glob(") != string::npos)) {
++		mutant_sql = "SELECT NULL WHERE false";
++		lowered_sql = MutationLower(mutant_sql);
++	}
++#elif DUCKDB_MUTANT_ID == 62
++	// COPY's CSV HEADER option is ignored.
++	mutant_sql = StringUtil::Replace(mutant_sql, ", HEADER", "");
++	mutant_sql = StringUtil::Replace(mutant_sql, ", header", "");
++	lowered_sql = MutationLower(mutant_sql);
++#elif DUCKDB_MUTANT_ID == 63
++	// COPY incorrectly rejects stdout as an export target.
++	mutation_reject = lowered_sql.find("copy ") != string::npos && lowered_sql.find(" to stdout") != string::npos;
++	mutation_error = "IO Error: stdout is not a writable COPY target";
++#elif DUCKDB_MUTANT_ID == 64
++	// ATTACH incorrectly rejects explicit catalog aliases.
++	mutation_reject = lowered_sql.find("attach ") != string::npos && lowered_sql.find(" as ") != string::npos;
++	mutation_error = "Binder Error: attached databases cannot be aliased";
++#elif DUCKDB_MUTANT_ID == 65
++	// Missing COPY destinations report the wrong diagnostic category and cause.
++	mutation_reject = lowered_sql.find("copy ") != string::npos && lowered_sql.find(" to ") != string::npos &&
++	                  lowered_sql.find("stdout") == string::npos;
++	mutation_error = "Permission Error: export destination is unavailable";
++#elif DUCKDB_MUTANT_ID == 66
++	// Custom CSV NULL strings are ignored and replaced with the empty representation.
++	if (lowered_sql.find("copy ") != string::npos) {
++		auto null_pos = lowered_sql.find("(null '");
++		if (null_pos != string::npos) {
++			auto value_start = null_pos + 7;
++			auto value_end = mutant_sql.find('\'', value_start);
++			if (value_end != string::npos) {
++				mutant_sql.replace(value_start, value_end - value_start, "");
++				lowered_sql = MutationLower(mutant_sql);
++			}
++		}
++	}
++#elif DUCKDB_MUTANT_ID == 67
++	// SET incorrectly rejects scalar expressions as configuration values.
++	mutation_reject = lowered_sql.find("set ") != string::npos && lowered_sql.find("concat(") != string::npos;
++	mutation_error = "Binder Error: SET values must be literals";
++#elif DUCKDB_MUTANT_ID == 68
++	// COPY URI targets lose their extension-specific Missing Extension diagnostic.
++	mutation_reject = lowered_sql.find("copy ") != string::npos && lowered_sql.find("://") != string::npos;
++	mutation_error = "IO Error: unsupported remote COPY target";
++#elif DUCKDB_MUTANT_ID == 69
++	// Unknown top-level extension statements are silently ignored.
++	if (!(MutationStartsWith(mutant_sql, "select") || MutationStartsWith(mutant_sql, "create") ||
++	      MutationStartsWith(mutant_sql, "insert") || MutationStartsWith(mutant_sql, "update") ||
++	      MutationStartsWith(mutant_sql, "delete") || MutationStartsWith(mutant_sql, "drop") ||
++	      MutationStartsWith(mutant_sql, "alter") || MutationStartsWith(mutant_sql, "copy") ||
++	      MutationStartsWith(mutant_sql, "attach") || MutationStartsWith(mutant_sql, "detach") ||
++	      MutationStartsWith(mutant_sql, "set") || MutationStartsWith(mutant_sql, "pragma") ||
++	      MutationStartsWith(mutant_sql, "load") || MutationStartsWith(mutant_sql, "install") ||
++	      MutationStartsWith(mutant_sql, "from") || MutationStartsWith(mutant_sql, "with") ||
++	      MutationStartsWith(mutant_sql, "explain") || MutationStartsWith(mutant_sql, "prepare") ||
++	      MutationStartsWith(mutant_sql, "execute") || MutationStartsWith(mutant_sql, "begin") ||
++	      MutationStartsWith(mutant_sql, "commit") || MutationStartsWith(mutant_sql, "rollback"))) {
++		return SuccessState::SUCCESS;
++	}
++#elif DUCKDB_MUTANT_ID == 70
++	// INSTALL statements lose repository-specific download diagnostics.
++	mutation_reject = MutationStartsWith(mutant_sql, "install");
++	mutation_error = "Catalog Error: extension installation failed";
++#elif DUCKDB_MUTANT_ID == 71
++	// Remote read_blob calls are silently treated as empty successful scans.
++	if (lowered_sql.find("read_blob(") != string::npos && lowered_sql.find("://") != string::npos) {
++		return SuccessState::SUCCESS;
++	}
++#elif DUCKDB_MUTANT_ID == 72
++	// Missing named extensions are silently treated as already loaded.
++	if (MutationStartsWith(mutant_sql, "load") && mutant_sql.find('/') == string::npos &&
++	    mutant_sql.find('\\') == string::npos) {
++		return SuccessState::SUCCESS;
++	}
++#elif DUCKDB_MUTANT_ID == 73
++	mutation_reject = lowered_sql.find("count(") != string::npos && lowered_sql.find(" from ") != string::npos &&
++	                  lowered_sql.find("group by") == string::npos;
++	mutation_error = "Binder Error: aggregate binding failed without location context";
++#elif DUCKDB_MUTANT_ID == 74
++	mutation_reject = lowered_sql.find("avg(") != string::npos && lowered_sql.find("select '") != string::npos;
++	mutation_error = "Binder Error: aggregate type mismatch";
++#elif DUCKDB_MUTANT_ID == 75
++	mutation_reject = MutationStartsWith(mutant_sql, "select") && lowered_sql.find(" from ") == string::npos &&
++	                  lowered_sql.find('(') == string::npos && lowered_sql.find('\'') == string::npos &&
++	                  lowered_sql.find_first_of("0123456789") == string::npos;
++	mutation_error = "Binder Error: unresolved expression";
++#elif DUCKDB_MUTANT_ID == 76
++	mutation_reject = lowered_sql.find(" from (select ") != string::npos &&
++	                  lowered_sql.find(" from (select ", lowered_sql.find(" from (select ") + 1) != string::npos;
++	mutation_error = "Binder Error: column does not exist";
++#elif DUCKDB_MUTANT_ID == 77
++	mutation_reject = lowered_sql.find("create table") != string::npos && lowered_sql.find("select ") != string::npos &&
++	                  lowered_sql.find(" from ") != string::npos && lowered_sql.find(",") != string::npos;
++	mutation_error = "Binder Error: invalid qualified reference";
++#elif DUCKDB_MUTANT_ID == 78
++	mutation_reject = lowered_sql.find("abs('") != string::npos;
++	mutation_error = "Binder Error: ABS argument has invalid type";
++#endif
++	if (mutation_reject) {
++		PrintDatabaseError(mutation_error);
++		return SuccessState::FAILURE;
++	}
+ 	try {
+-		auto statements = con.ExtractStatements(zSql);
++		auto statements = con.ExtractStatements(mutant_sql);
+ 		for (auto &statement : statements) {
+ 			idx_t start_pos = statement->stmt_location;
+ 			idx_t len = statement->stmt_length;
+-			while (len > 0 && IsSpace(zSql[start_pos])) {
++			while (len > 0 && IsSpace(mutant_sql[start_pos])) {
+ 				start_pos++;
+ 				len--;
+ 			}
+-			auto zStmtSql = zSql.substr(start_pos, len);
++			auto zStmtSql = mutant_sql.substr(start_pos, len);
+ 
+ 			/* echo the sql statement if echo on */
+ 			if (ShellHasFlag(ShellFlags::SHFLG_Echo)) {
+-				PrintF("%s\n", !zStmtSql.empty() ? zStmtSql.c_str() : zSql.c_str());
++#if DUCKDB_MUTANT_ID == 10
++				PrintF(PrintOutput::STDERR, "%s\n", !zStmtSql.empty() ? zStmtSql.c_str() : mutant_sql.c_str());
++#elif DUCKDB_MUTANT_ID == 11
++				static idx_t mutation_echo_count = 0;
++				if (mutation_echo_count++ == 0) {
++					PrintF("%s\n", !zStmtSql.empty() ? zStmtSql.c_str() : mutant_sql.c_str());
++				}
++#else
++				PrintF("%s\n", !zStmtSql.empty() ? zStmtSql.c_str() : mutant_sql.c_str());
++#endif
+ 			}
+ 
+ 			cMode = mode;
+@@ -3185,6 +3477,29 @@
+ 	*/
+ 	vector<CommandLineCall> command_line_calls;
+ 	for (int i = 1; i < argc; i++) {
++		auto raw_option = string(argv[i]);
++#if DUCKDB_MUTANT_ID == 1
++		if (raw_option == "--version") {
++			// Long-form version handling incorrectly selects a neighboring compatibility release.
++			printf("v0.0.2 (Unknown Version) unknown\n");
++			return 0;
++		}
++#elif DUCKDB_MUTANT_ID == 7
++		if (raw_option == "--help") {
++			// Long-form help incorrectly omits the option inventory heading.
++			printf("Usage: %s [OPTIONS] FILENAME [SQL]\n", argv[0]);
++			return 0;
++		}
++#endif
++		if (raw_option == "--readonly") {
++			mutation_long_readonly = true;
++		} else if (raw_option == "-readonly") {
++			mutation_short_readonly = true;
++		} else if (raw_option == "--cmd" || raw_option == "-cmd") {
++			mutation_saw_cmd = true;
++		} else if (raw_option == "-c" || raw_option == "--c") {
++			mutation_c_count++;
++		}
+ 		auto z = argv[i];
+ 		if (z[0] != '-') {
+ 			if (data.zDbFilename.empty()) {
+@@ -3227,7 +3542,15 @@
+ 			}
+ 			arguments.emplace_back(argv[++i]);
+ 		}
+-		if (option.pre_init_callback) {
++		bool mutation_skip_pre_init = false;
++#if DUCKDB_MUTANT_ID == 13
++		mutation_skip_pre_init = raw_option == "--readonly";
++#elif DUCKDB_MUTANT_ID == 15
++		mutation_skip_pre_init = raw_option == "--safe";
++#elif DUCKDB_MUTANT_ID == 17
++		mutation_skip_pre_init = raw_option == "-readonly";
++#endif
++		if (option.pre_init_callback && !mutation_skip_pre_init) {
+ 			// invoke the pre-init callback (if any)
+ 			auto result = option.pre_init_callback(data, arguments);
+ 			if (result == MetadataResult::EXIT) {
+--- reference/tools/shell/shell_command_line_option.cpp
++++ repo_2/tools/shell/shell_command_line_option.cpp
+@@ -1,6 +1,7 @@
+ #include "shell_state.hpp"
+ #include "shell_highlight.hpp"
+ #include "terminal.hpp"
++#include "mutation_id.hpp"
+ 
+ namespace duckdb_shell {
+ 
+@@ -10,11 +11,29 @@
+ 
+ template <RenderMode output_mode>
+ MetadataResult ToggleOutputMode(ShellState &state, const vector<string> &args) {
++#if DUCKDB_MUTANT_ID == 22
++	if (output_mode == RenderMode::BOX) {
++		// Box mode incorrectly uses the ASCII table renderer.
++		state.cMode = state.mode = RenderMode::TABLE;
++		return MetadataResult::SUCCESS;
++	}
++#elif DUCKDB_MUTANT_ID == 23
++	if (output_mode == RenderMode::COLUMN) {
++		// Column mode incorrectly uses unpadded list rendering.
++		state.cMode = state.mode = RenderMode::LIST;
++		return MetadataResult::SUCCESS;
++	}
++#endif
+ 	state.cMode = state.mode = output_mode;
+ 	return MetadataResult::SUCCESS;
+ }
+ 
+ MetadataResult ToggleASCIIMode(ShellState &state, const vector<string> &args) {
++#if DUCKDB_MUTANT_ID == 20
++	// ASCII mode is incorrectly implemented as separator-delimited list output.
++	state.cMode = state.mode = RenderMode::LIST;
++	return MetadataResult::SUCCESS;
++#endif
+ 	state.cMode = state.mode = RenderMode::ASCII;
+ 	state.colSeparator = SEP_Unit;
+ 	state.rowSeparator = SEP_Record;
+@@ -23,7 +42,12 @@
+ 
+ MetadataResult ToggleCSVMode(ShellState &state, const vector<string> &args) {
+ 	state.cMode = state.mode = RenderMode::CSV;
++#if DUCKDB_MUTANT_ID == 19
++	// CSV incorrectly selects a semicolon rather than comma as its default delimiter.
++	state.colSeparator = ";";
++#else
+ 	state.colSeparator = ",";
++#endif
+ 	return MetadataResult::SUCCESS;
+ }
+ 
+@@ -74,6 +98,15 @@
+ }
+ 
+ MetadataResult ShowVersionAndExit(ShellState &state, const vector<string> &args) {
++#if DUCKDB_MUTANT_ID == 2
++	// Version output loses the semantic numeric component.
++	printf("vunknown (Unknown Version) unknown\n");
++	return MetadataResult::EXIT;
++#elif DUCKDB_MUTANT_ID == 3
++	// Build metadata is incorrectly emitted before the version-bearing line.
++	printf("build metadata\nv0.0.1 (Unknown Version) unknown\n");
++	return MetadataResult::EXIT;
++#endif
+ 	printf("%s (%s) %s\n", duckdb::DuckDB::LibraryVersion(), duckdb::DuckDB::ReleaseCodename(),
+ 	       duckdb::DuckDB::SourceID());
+ 	return MetadataResult::EXIT;
+@@ -107,8 +140,13 @@
+ 		    duckdb::SerializationCompatibility::FromString(storage_version);
+ 	} catch (std::exception &ex) {
+ 		duckdb::ErrorData error(ex);
++#if DUCKDB_MUTANT_ID == 18
++		// Invalid storage versions lose the offending value and Error category.
++		state.PrintF(PrintOutput::STDERR, "%s: unsupported storage compatibility version\n", state.program_name);
++#else
+ 		state.PrintF(PrintOutput::STDERR, "%s: Error: unknown argument (%s) for '-storage-version': %s\n",
+ 		             state.program_name, storage_version.c_str(), error.Message().c_str());
++#endif
+ 		return MetadataResult::EXIT;
+ 	}
+ 	return MetadataResult::SUCCESS;
+@@ -117,6 +155,19 @@
+ MetadataResult ProcessFile(ShellState &state, const vector<string> &args) {
+ 	state.readStdin = false;
+ 	auto &file = args[1];
++#if DUCKDB_MUTANT_ID == 12
++	// Script execution incorrectly stops after the first semicolon-delimited statement.
++	auto contents = state.ReadFileContents(file);
++	auto boundary = contents.find(';');
++	if (boundary != string::npos) {
++		contents.resize(boundary + 1);
++	}
++	if (state.ExecuteSQL(contents) != SuccessState::SUCCESS) {
++		ShellState::Exit(1);
++		return MetadataResult::EXIT;
++	}
++	return MetadataResult::SUCCESS;
++#endif
+ 	if (!state.ProcessFile(file)) {
+ 		ShellState::Exit(1);
+ 		return MetadataResult::EXIT;
+@@ -136,6 +187,12 @@
+ 
+ template <bool EXIT>
+ MetadataResult RunCommand(ShellState &state, const vector<string> &args) {
++#if DUCKDB_MUTANT_ID == 9
++	if (!EXIT) {
++		// Pre-stdin commands are incorrectly discarded.
++		return MetadataResult::SUCCESS;
++	}
++#endif
+ 	if (EXIT) {
+ 		state.readStdin = false;
+ 	}
+--- reference/tools/shell/shell_metadata_command.cpp
++++ repo_2/tools/shell/shell_metadata_command.cpp
+@@ -3,6 +3,7 @@
+ #include "shell_prompt.hpp"
+ #include "shell_progress_bar.hpp"
+ #include "shell_renderer.hpp"
++#include "mutation_id.hpp"
+ 
+ #ifdef HAVE_LINENOISE
+ #include "linenoise.h"
+@@ -12,6 +13,13 @@
+ namespace duckdb_shell {
+ 
+ MetadataResult ToggleAbout(ShellState &state, const vector<string> &args) {
++#if DUCKDB_MUTANT_ID == 6
++	// The canonical about description loses its documented opening wording.
++	string about_text = "DuckDB is an embedded analytical database management system built for fast "
++	                    "execution of complex SQL queries.\n\n"
++	                    "Developed and maintained by the DuckDB Foundation under the MIT License.\n"
++	                    "For more information, visit https://duckdb.org or https://github.com/duckdb/duckdb.\n\n";
++#else
+ 	string about_text = "DuckDB is an in-process analytical database management system designed for fast "
+ 	                    "execution of complex SQL queries. It runs embedded within its host process with "
+ 	                    "no external dependencies, and is optimized for OLAP workloads using a columnar, "
+@@ -20,6 +28,12 @@
+ 	                    "available under the MIT License.\n"
+ 	                    "For more information, visit https://duckdb.org or "
+ 	                    "https://github.com/duckdb/duckdb.\n\n";
++#if DUCKDB_MUTANT_ID == 4
++	// About output incorrectly omits the project website.
++	about_text = StringUtil::Replace(about_text, "For more information, visit https://duckdb.org or ",
++	                                 "For source code, visit ");
++#endif
++#endif
+ 
+ 	state.PrintF(PrintOutput::STDOUT, "DuckDB %s (%s)\n\n", duckdb::DuckDB::LibraryVersion(),
+ 	             duckdb::DuckDB::ReleaseCodename());
+@@ -133,12 +147,18 @@
+ 		}
+ 	}
+ 
++#if DUCKDB_MUTANT_ID != 25
+ 	state.PrintF("BEGIN TRANSACTION;\n");
++#endif
+ 	state.showHeader = 0;
+ 	state.nErr = 0;
+ 	if (zLike.empty()) {
+ 		zLike = "true";
+ 	}
++#if DUCKDB_MUTANT_ID == 26
++	// Table filters are incorrectly ignored and the entire catalog is dumped.
++	zLike = "true";
++#endif
+ 
+ 	// Emit CREATE SCHEMA for non-main schemas first
+ 	auto zSql = StringUtil::Format("SELECT DISTINCT table_schema FROM information_schema.tables "
+@@ -162,10 +182,18 @@
+ 	state.RunSchemaDumpQuery(zSql);
+ 	zSql = StringUtil::Format("SELECT sql FROM sqlite_schema "
+ 	                          "WHERE (%s) AND sql NOT NULL"
++#if DUCKDB_MUTANT_ID == 27
++	                          "  AND type IN ('trigger','view')",
++#elif DUCKDB_MUTANT_ID == 28
++	                          "  AND type IN ('index','trigger')",
++#else
+ 	                          "  AND type IN ('index','trigger','view')",
++#endif
+ 	                          zLike);
+ 	state.RunTableDumpQuery(zSql);
++#if DUCKDB_MUTANT_ID != 25
+ 	state.PrintF(state.nErr ? "ROLLBACK; -- due to errors\n" : "COMMIT;\n");
++#endif
+ 	state.showHeader = savedShowHeader;
+ 	state.shellFlgs = savedShellFlags;
+ 	return MetadataResult::SUCCESS;
+@@ -192,7 +220,12 @@
+ 	int rc = 0;
+ 	if (args.size() > 1 && (rc = (int)ShellState::StringToInt(args[1])) != 0) {
+ 		// exit immediately if a custom error code is provided
++#if DUCKDB_MUTANT_ID == 29
++		// Custom exit statuses are incorrectly decremented before termination.
++		ShellState::Exit(rc - 1);
++#else
+ 		ShellState::Exit(rc);
++#endif
+ 	}
+ 	return MetadataResult::EXIT;
+ }
+@@ -273,6 +306,10 @@
+ }
+ 
+ MetadataResult RenderLastResult(ShellState &state, const vector<string> &args) {
++#if DUCKDB_MUTANT_ID == 30
++	// .last incorrectly forgets the prior materialized result.
++	return MetadataResult::SUCCESS;
++#endif
+ 	if (state.last_result) {
+ 		auto renderer = state.GetRenderer();
+ 		renderer->RemoveRenderLimits();
+@@ -503,6 +540,12 @@
+ }
+ 
+ MetadataResult ShowVersion(ShellState &state, const vector<string> &args) {
++#if DUCKDB_MUTANT_ID == 5
++	// .version omits the DuckDB product identifier.
++	state.PrintF("%s (%s) %s\n", duckdb::DuckDB::LibraryVersion(), duckdb::DuckDB::ReleaseCodename(),
++	             duckdb::DuckDB::SourceID());
++	return MetadataResult::SUCCESS;
++#endif
+ 	state.PrintF("DuckDB %s (%s) %s\n" /*extra-version-info*/, duckdb::DuckDB::LibraryVersion(),
+ 	             duckdb::DuckDB::ReleaseCodename(), duckdb::DuckDB::SourceID());
+ #define CTIMEOPT_VAL_(opt) #opt

@@ -1,0 +1,1323 @@
+--- reference/build.rs
++++ repo_3/build.rs
+@@ -7,6 +7,15 @@
+ const APP_NAME: &str = "rnr";
+ 
+ fn main() -> Result<(), Error> {
++    // [MUTATED] Select the planned mutant from this copied repository's directory name.
++    let manifest_dir = std::env::var("CARGO_MANIFEST_DIR").unwrap_or_default();
++    let mutant_id = Path::new(&manifest_dir)
++        .file_name()
++        .and_then(|name| name.to_str())
++        .and_then(|name| name.strip_prefix("repo_"))
++        .unwrap_or("0");
++    println!("cargo:rustc-env=MUTANT_ID={mutant_id}");
++
+     let outdir =
+         std::path::PathBuf::from(std::env::var_os("OUT_DIR").ok_or(std::io::ErrorKind::NotFound)?);
+ 
+--- reference/src/config.rs
++++ repo_3/src/config.rs
+@@ -98,21 +98,71 @@
+         };
+ 
+         // Get and validate regex expression and replacement from arguments
+-        let expression = match Regex::new(&regex.expression) {
++        // [MUTATED] Each branch models one narrowly-scoped regex parsing mistake.
++        let mut expression_text = regex.expression.clone();
++        if crate::mutant::is(49) {
++            expression_text = expression_text.trim_start_matches('^').to_string();
++        } else if crate::mutant::is(51) {
++            expression_text = crate::mutant::increment_repetition(&expression_text);
++        } else if crate::mutant::is(54) {
++            if expression_text.contains("*?")
++                || expression_text.contains("+?")
++                || expression_text.contains("??")
++            {
++                bail!("Lazy quantifiers are not supported");
++            }
++        }
++        if crate::mutant::is(53) && expression_text.is_empty() {
++            bail!("Empty expressions are not supported");
++        }
++        if crate::mutant::is(50) {
++            expression_text = format!("(?i:{expression_text})");
++        }
++        let expression = match Regex::new(&expression_text) {
+             Ok(expr) => expr,
+             Err(err) => {
+-                bail!(
+-                    "{}Bad expression provided\n\n{}",
+-                    self.printer.colors.error.paint("Error: "),
+-                    self.printer.colors.error.paint(err.to_string())
+-                );
++                if crate::mutant::is(133)
++                    && expression_text.chars().count() == 1
++                    && expression_text.starts_with('(')
++                {
++                    Regex::new("$^").unwrap()
++                } else {
++                    let mut detail = err.to_string();
++                    let wrong_detail = (crate::mutant::is(134)
++                        && expression_text.starts_with('[')
++                        && !expression_text.contains('('))
++                        || (crate::mutant::is(135) && expression_text.starts_with("(?P<"))
++                        || (crate::mutant::is(136)
++                            && matches!(expression_text.chars().next(), Some('*' | '+' | '?')))
++                        || (crate::mutant::is(137)
++                            && expression_text.contains('(')
++                            && expression_text.contains('['))
++                        || (crate::mutant::is(138)
++                            && expression_text.starts_with('(')
++                            && !expression_text.contains('[')
++                            && !expression_text.starts_with("(?P<"));
++                    if wrong_detail {
++                        detail = "invalid regular expression".to_string();
++                    }
++                    bail!(
++                        "{}Bad expression provided\n\n{}",
++                        self.printer.colors.error.paint("Error: "),
++                        self.printer.colors.error.paint(detail)
++                    );
++                }
+             }
+         };
+ 
+         Ok(ReplaceMode::RegExp {
+             expression,
+             replacement: regex.replacement.clone(),
+-            limit: regex.replace.replace_limit.unwrap_or(1),
++            limit: if crate::mutant::is(56) && regex.replace.replace_limit.is_none() {
++                0
++            } else if crate::mutant::is(57) && regex.replace.replace_limit == Some(0) {
++                1
++            } else {
++                regex.replace.replace_limit.unwrap_or(1)
++            },
+             transform: regex.replace.replace_transform.into(),
+         })
+     }
+@@ -139,9 +189,21 @@
+         Printer::silent()
+     } else {
+         match common.color {
+-            crate::cli::Color::Always => Printer::color(),
++            crate::cli::Color::Always => {
++                if crate::mutant::is(127) {
++                    Printer::no_color()
++                } else {
++                    Printer::color()
++                }
++            }
+             crate::cli::Color::Never => Printer::no_color(),
+-            crate::cli::Color::Auto => detect_output_color(),
++            crate::cli::Color::Auto => {
++                if crate::mutant::is(131) {
++                    Printer::color()
++                } else {
++                    detect_output_color()
++                }
++            }
+         }
+     };
+ 
+@@ -156,7 +218,8 @@
+     Ok(Config {
+         force: common.force,
+         backup: common.backup,
+-        dirs: path.is_some_and(|p| p.include_dirs),
++        dirs: path.is_some_and(|p| p.include_dirs)
++            || (crate::mutant::is(45) && path.is_some_and(|p| p.recursive)),
+         dump,
+         dump_prefix: common.dump_prefix.clone(),
+         run_mode,
+--- reference/src/dumpfile.rs
++++ repo_3/src/dumpfile.rs
+@@ -7,8 +7,29 @@
+ /// Dump operations intto file in JSON format
+ pub fn dump_to_file(prefix: String, operations: &[Operation]) -> Result<()> {
+     let now = chrono::Local::now();
++    // [MUTATED] Prefix handling is lost for selected prefix/cardinality classes.
++    let prefix = if (crate::mutant::is(103)
++        && operations.len() == 1
++        && prefix
++            .chars()
++            .last()
++            .is_some_and(|ch| matches!(ch, '-' | '_')))
++        || (crate::mutant::is(106) && operations.len() > 1)
++        || (crate::mutant::is(108) && prefix.chars().last().is_some_and(char::is_alphanumeric))
++    {
++        "rnr-".to_string()
++    } else {
++        prefix
++    };
+     let dump = DumpFormat {
+-        date: now.format("%Y-%m-%d %H:%M:%S").to_string(),
++        // [MUTATED] Single-operation dumps use a slash-separated date.
++        date: now
++            .format(if crate::mutant::is(107) && operations.len() == 1 {
++                "%Y/%m/%d %H:%M:%S"
++            } else {
++                "%Y-%m-%d %H:%M:%S"
++            })
++            .to_string(),
+         operations: operations.to_vec(),
+     };
+ 
+@@ -19,13 +40,22 @@
+     let file = match File::create(&filename) {
+         Ok(file) => file,
+         Err(_) => {
++            // [MUTATED] Dump creation failures are silently ignored.
++            if crate::mutant::is(104) {
++                return Ok(());
++            }
+             return Err(Error {
+                 kind: ErrorKind::CreateFile,
+                 value: Some(filename),
+             });
+         }
+     };
+-    match serde_json::to_writer_pretty(file, &dump) {
++    let serialized = if crate::mutant::is(105) && operations.len() == 2 {
++        serde_json::to_writer_pretty(file, &serde_json::json!({ "operations": operations }))
++    } else {
++        serde_json::to_writer_pretty(file, &dump)
++    };
++    match serialized {
+         Ok(_) => Ok(()),
+         Err(_) => Err(Error {
+             kind: ErrorKind::JsonParse,
+@@ -36,6 +66,13 @@
+ 
+ /// Read operations from a dump file and generate a Operations vector
+ pub fn read_from_file(filepath: &Path) -> Result<Operations> {
++    // [MUTATED] Directories are misreported as JSON syntax failures.
++    if crate::mutant::is(114) && filepath.is_dir() {
++        return Err(Error {
++            kind: ErrorKind::JsonParse,
++            value: Some(filepath.to_string_lossy().to_string()),
++        });
++    }
+     let file = match File::open(filepath) {
+         Ok(file) => file,
+         Err(_) => {
+@@ -48,13 +85,57 @@
+     let dump: DumpFormat = match serde_json::from_reader(file) {
+         Ok(dump) => dump,
+         Err(_) => {
++            // [MUTATED] Null and numeric dates are accepted in their assigned variants.
++            if crate::mutant::is(110) {
++                if let Ok(file) = File::open(filepath) {
++                    if let Ok(dump) = serde_json::from_reader::<_, NullDateDump>(file) {
++                        return Ok(dump.operations);
++                    }
++                }
++            }
++            if crate::mutant::is(111) {
++                if let Ok(file) = File::open(filepath) {
++                    if let Ok(dump) = serde_json::from_reader::<_, NumericDateDump>(file) {
++                        return Ok(dump.operations);
++                    }
++                }
++            }
+             return Err(Error {
+                 kind: ErrorKind::JsonParse,
+                 value: Some(filepath.to_string_lossy().to_string()),
+             });
+         }
+     };
+-    Ok(dump.operations)
++    if crate::mutant::is(112) && !dump.date.get(4..5).is_some_and(|value| value == "-") {
++        return Err(Error {
++            kind: ErrorKind::JsonParse,
++            value: Some(filepath.to_string_lossy().to_string()),
++        });
++    }
++    let mut operations = dump.operations;
++    // [MUTATED] Absolute paths lose their root component during replay.
++    if crate::mutant::is(109) {
++        for operation in &mut operations {
++            if operation.source.is_absolute() {
++                operation.source = operation.source.components().skip(1).collect();
++            }
++            if operation.target.is_absolute() {
++                operation.target = operation.target.components().skip(1).collect();
++            }
++        }
++    }
++    // [MUTATED] Artificial dump path-depth limit.
++    if crate::mutant::is(113)
++        && operations
++            .iter()
++            .any(|op| op.source.components().count() > 20 || op.target.components().count() > 20)
++    {
++        return Err(Error {
++            kind: ErrorKind::JsonParse,
++            value: Some(filepath.to_string_lossy().to_string()),
++        });
++    }
++    Ok(operations)
+ }
+ 
+ #[derive(Serialize, Deserialize)]
+@@ -62,3 +143,15 @@
+     date: String,
+     operations: Operations,
+ }
++
++#[derive(Deserialize)]
++struct NullDateDump {
++    date: Option<String>,
++    operations: Operations,
++}
++
++#[derive(Deserialize)]
++struct NumericDateDump {
++    date: serde_json::Number,
++    operations: Operations,
++}
+--- reference/src/fileutils.rs
++++ repo_3/src/fileutils.rs
+@@ -18,6 +18,32 @@
+         } => {
+             // Detect if is a hidden file or directory, always include given path
+             let is_hidden = |f: &DirEntry| -> bool {
++                // [MUTATED] Hidden-entry classification variants for assignments 38-40 and 42.
++                if crate::mutant::is(38) && !hidden {
++                    return true;
++                }
++                if crate::mutant::is(39)
++                    && *hidden
++                    && f.depth() > 0
++                    && f.file_type().is_dir()
++                    && f.file_name().to_str().is_some_and(|s| s.starts_with('.'))
++                {
++                    return false;
++                }
++                if crate::mutant::is(40)
++                    && *hidden
++                    && f.depth() > 0
++                    && f.file_name()
++                        .to_str()
++                        .is_some_and(|s| s.starts_with('.') && s.contains('_'))
++                {
++                    return false;
++                }
++                let hidden = if crate::mutant::is(42) && crate::mutant::has_arg("--hidden") {
++                    &false
++                } else {
++                    hidden
++                };
+                 if !hidden && f.depth() > 0 {
+                     f.file_name()
+                         .to_str()
+@@ -31,7 +57,16 @@
+             let mut path_list = PathList::new();
+             for path in paths {
+                 let walkdir = match max_depth {
+-                    Some(max_depth) => WalkDir::new(path).max_depth(*max_depth),
++                    Some(max_depth) => {
++                        let depth = if (crate::mutant::is(37) && max_depth % 2 == 0)
++                            || (crate::mutant::is(41) && max_depth % 2 == 1)
++                        {
++                            max_depth.saturating_sub(1)
++                        } else {
++                            *max_depth
++                        };
++                        WalkDir::new(path).max_depth(depth)
++                    }
+                     None => WalkDir::new(path),
+                 };
+                 let mut walk_list: PathList = walkdir
+@@ -59,7 +94,7 @@
+     unique_name.set_file_name(&base_name);
+ 
+     let mut index = 0;
+-    while unique_name.symlink_metadata().is_ok() {
++    while unique_name.symlink_metadata().is_ok() && !crate::mutant::is(98) {
+         index += 1;
+         unique_name.set_file_name(format!("{}.{}", base_name, index));
+     }
+@@ -70,8 +105,21 @@
+ /// Create a backup of the file
+ pub fn create_backup(path: &Path) -> Result<PathBuf> {
+     let backup = get_unique_filename(path, ".bk");
++    // [MUTATED] Existing backups are treated as fatal instead of being numbered.
++    if crate::mutant::is(99) && PathBuf::from(format!("{}.bk", path.to_string_lossy())).exists() {
++        return Err(Error {
++            kind: ErrorKind::CreateBackup,
++            value: Some(path.to_string_lossy().to_string()),
++        });
++    }
+     match fs::copy(path, &backup) {
+-        Ok(_) => Ok(backup),
++        Ok(_) => {
++            // [MUTATED] Short-form backup copies lose their contents.
++            if crate::mutant::is(100) && crate::mutant::has_arg("-b") {
++                let _ = fs::File::create(&backup);
++            }
++            Ok(backup)
++        }
+         Err(_) => Err(Error {
+             kind: ErrorKind::CreateBackup,
+             value: Some(path.to_string_lossy().to_string()),
+@@ -82,13 +130,55 @@
+ /// Clean paths that does not exists and duplicated entries. It remove directories too if dirs
+ /// parameters is set to false.
+ pub fn cleanup_paths(paths: PathList, keep_dirs: bool) -> PathList {
++    let mixed = crate::mutant::is(48)
++        && paths.iter().any(|p| p.is_dir())
++        && paths.iter().any(|p| !p.is_dir());
++    let keep_dirs = keep_dirs
++        && !(crate::mutant::is(44) && crate::mutant::has_arg("--include-dirs"))
++        && !(crate::mutant::is(46) && crate::mutant::has_arg("--recursive"));
+     // PERF: Run costly checks in parallel.
+     let mut paths: PathList = paths
+         .into_par_iter()
+-        .filter(|p| p.symlink_metadata().is_ok())
++        .filter(|p| {
++            if crate::mutant::is(6) && p.is_relative() {
++                return false;
++            }
++            if crate::mutant::is(90) {
++                p.exists()
++            } else {
++                p.symlink_metadata().is_ok()
++            }
++        })
+         .filter(|p| {
+             if p.is_dir() {
+-                keep_dirs && p.file_name().is_some()
++                if !keep_dirs || mixed || p.file_name().is_none() {
++                    return false;
++                }
++                if crate::mutant::is(47)
++                    && fs::read_dir(p)
++                        .ok()
++                        .and_then(|mut entries| entries.next())
++                        .is_none()
++                {
++                    return false;
++                }
++                if crate::mutant::is(43) && crate::mutant::has_arg("-D") {
++                    let own = p.file_name().and_then(|name| name.to_str()).unwrap_or("");
++                    let repeats = fs::read_dir(p)
++                        .ok()
++                        .into_iter()
++                        .flatten()
++                        .filter_map(|e| e.ok())
++                        .any(|e| {
++                            e.file_name()
++                                .to_str()
++                                .is_some_and(|name| name.starts_with(own))
++                        });
++                    if repeats {
++                        return false;
++                    }
++                }
++                true
+             } else {
+                 true
+             }
+@@ -97,7 +187,9 @@
+         .collect();
+ 
+     paths.par_sort_unstable();
+-    paths.dedup();
++    if !crate::mutant::is(31) {
++        paths.dedup();
++    }
+ 
+     paths
+ }
+--- reference/src/main.rs
++++ repo_3/src/main.rs
+@@ -22,11 +22,14 @@
+ mod dumpfile;
+ mod error;
+ mod fileutils;
++mod mutant;
+ mod output;
+ mod renamer;
+ mod solver;
+ 
+ fn main() {
++    mutant::preflight();
++
+     // Read arguments
+     let config = match config::Config::new() {
+         Ok(config) => config,
+@@ -36,11 +39,17 @@
+         }
+     };
+ 
+-    if !config.force {
++    if !config.force && !(mutant::is(74) && (mutant::has_arg("--dry-run") || mutant::has_arg("-n")))
++    {
+         let info = &config.printer.colors.info;
+-        config
+-            .printer
+-            .print(&format!("{}", info.paint("This is a DRY-RUN")));
++        config.printer.print(&format!(
++            "{}",
++            info.paint(if mutant::is(25) {
++                "This is a PREVIEW"
++            } else {
++                "This is a DRY-RUN"
++            })
++        ));
+     }
+ 
+     // Configure renamer
+@@ -61,6 +70,33 @@
+         }
+     };
+ 
++    // [MUTATED] Planned output/no-op boundary mistakes for their assigned scenarios.
++    if mutant::is(28) && operations.len() > 1 {
++        println!("multiple operations planned");
++    }
++    if mutant::is(35) && config.force && operations.is_empty() {
++        println!("No eligible paths");
++    }
++    if mutant::is(73)
++        && operations.is_empty()
++        && !mutant::has_arg("--dry-run")
++        && !mutant::has_arg("-n")
++    {
++        println!("No changes");
++    }
++    if mutant::is(77) && operations.is_empty() && mutant::has_arg("--replace-limit") {
++        std::process::exit(1);
++    }
++    if mutant::is(78)
++        && operations.is_empty()
++        && (mutant::has_arg("--recursive") || mutant::has_arg("-r"))
++    {
++        std::process::exit(1);
++    }
++    if mutant::is(118) && operations.is_empty() {
++        println!("Skipped operation");
++    }
++
+     // Batch rename operations
+     if let Err(err) = renamer.batch_rename(operations) {
+         config.printer.print_error(&err);
+--- reference/src/mutant.rs
++++ repo_3/src/mutant.rs
+@@ -0,0 +1,210 @@
++//! Compile-time-selected mutation hooks for the planned mutant suite.
++
++use clap::CommandFactory;
++use std::path::Path;
++
++pub fn id() -> usize {
++    // Extracted repair repositories are renumbered; translate back to the
++    // immutable assignment id that selects this mutant's original scope.
++    match env!("MUTANT_ID").parse().unwrap_or(0) {
++        1 => 1,
++        2 => 2,
++        3 => 4,
++        6 => 12,
++        8 => 14,
++        9 => 13,
++        12 => 22,
++        14 => 26,
++        15 => 29,
++        18 => 33,
++        19 => 39,
++        20 => 40,
++        21 => 42,
++        23 => 46,
++        24 => 44,
++        27 => 51,
++        30 => 59,
++        32 => 65,
++        33 => 62,
++        36 => 72,
++        38 => 76,
++        39 => 78,
++        40 => 84,
++        41 => 82,
++        42 => 83,
++        44 => 85,
++        45 => 90,
++        48 => 93,
++        49 => 98,
++        50 => 99,
++        51 => 102,
++        59 => 115,
++        60 => 116,
++        63 => 122,
++        65 => 130,
++        66 => 128,
++        71 => 141,
++        72 => 139,
++        73 => 145,
++        74 => 146,
++        value => value,
++    }
++}
++
++pub fn is(value: usize) -> bool {
++    id() == value
++}
++
++pub fn has_arg(value: &str) -> bool {
++    std::env::args().any(|arg| arg == value || arg.starts_with(&format!("{value}=")))
++}
++
++fn known(command: &str) -> bool {
++    matches!(command, "regex" | "from-file" | "to-ascii" | "help")
++}
++
++fn exit_with(code: i32, stdout: &str, stderr: &str) -> ! {
++    if !stdout.is_empty() {
++        print!("{stdout}");
++    }
++    if !stderr.is_empty() {
++        eprint!("{stderr}");
++    }
++    std::process::exit(code)
++}
++
++fn render_help(args: &[String], remove: Option<&str>, replacement: Option<(&str, &str)>) -> String {
++    let mut command = crate::cli::Cli::command();
++    let bin = Path::new(&args[0])
++        .file_name()
++        .and_then(|value| value.to_str())
++        .unwrap_or("executable")
++        .to_string();
++    command = command.bin_name(bin);
++    let subcommand = if args.get(1).map(String::as_str) == Some("help") {
++        args.get(2).map(String::as_str)
++    } else {
++        args.get(1).map(String::as_str)
++    };
++    let mut output = if let Some(name) = subcommand.filter(|name| known(name)) {
++        command
++            .find_subcommand_mut(name)
++            .expect("known subcommand")
++            .render_long_help()
++            .to_string()
++    } else {
++        command.render_long_help().to_string()
++    };
++    if let Some(needle) = remove {
++        output = output
++            .lines()
++            .filter(|line| !line.contains(needle))
++            .collect::<Vec<_>>()
++            .join("\n");
++        output.push('\n');
++    }
++    if let Some((from, to)) = replacement {
++        output = output.replace(from, to);
++    }
++    output
++}
++
++/// [MUTATED] Narrow CLI dispatch mistakes for assignments 1-24 and 139-144.
++pub fn preflight() {
++    let args: Vec<String> = std::env::args().collect();
++    let tail = &args[1..];
++    let first = tail.first().map(String::as_str);
++    let unknown = first.is_some_and(|arg| !arg.starts_with('-') && !known(arg));
++
++    match id() {
++        1 if tail.is_empty() => exit_with(2, "", "Usage: executable <COMMAND>\n"),
++        2 if tail.is_empty() => exit_with(2, "", "regex\nfrom-file\nto-ascii\n"),
++        3 if unknown => exit_with(2, "", "Invalid command; try --help\n"),
++        4 if unknown => exit_with(
++            2,
++            "",
++            &format!(
++                "error: unrecognized subcommand '{}'\n\nUsage: executable <COMMAND>\n\nFor more information, try '-h'.\n",
++                first.unwrap_or_default()
++            ),
++        ),
++        5 if unknown => exit_with(0, "", ""),
++        7 if first == Some("--help") && tail.len() > 1 => {
++            exit_with(2, "", "error: unexpected argument after help\n")
++        }
++        8 if tail == ["--help"] => exit_with(1, &render_help(&args, None, None), ""),
++        9 if tail == ["-h"] => exit_with(2, "", "error: short help is unsupported\n"),
++        10 if first == Some("--version") && tail.len() > 1 => {
++            exit_with(2, "", "error: unexpected argument after version\n")
++        }
++        11 if tail == ["--version"] => exit_with(0, "rnr version\n", ""),
++        12 if tail == ["help"] => exit_with(0, &render_help(&args, Some("Commands:"), None), ""),
++        13..=16 => {
++            let is_help =
++                (tail.len() == 2 && known(&tail[0]) && matches!(tail[1].as_str(), "--help" | "-h"))
++                    || (tail.len() == 2 && tail[0] == "help" && known(&tail[1]));
++            if is_help {
++                let needle = match id() {
++                    13 => "--backup",
++                    14 => "--color",
++                    15 => "--dry-run",
++                    _ => "--force",
++                };
++                exit_with(0, &render_help(&args, Some(needle), None), "")
++            }
++        }
++        17 if first == Some("regex") && tail.iter().any(|arg| arg == "--help") => exit_with(
++            0,
++            &render_help(&args, None, Some(("EXPRESSION", "PATTERN"))),
++            "",
++        ),
++        18 if tail == ["regex", "-h"] => {
++            exit_with(2, "", "error: short subcommand help is unsupported\n")
++        }
++        19 if tail == ["from-file"] => exit_with(0, "", ""),
++        20 if tail == ["regex"] => exit_with(0, "", ""),
++        21 if tail == ["to-ascii"] => exit_with(0, "", ""),
++        22 if first == Some("--color") => exit_with(0, "", ""),
++        23 if first == Some("--force") => exit_with(0, "", ""),
++        24 if first == Some("--recursive") => exit_with(0, "", ""),
++        65 if tail.windows(2).any(|pair| pair == ["-t", "lower"]) => {
++            exit_with(2, "", "error: short transform option is unsupported\n")
++        }
++        66 if tail.windows(2).any(|pair| pair == ["-t", "upper"]) => {
++            exit_with(2, "", "error: short transform option is unsupported\n")
++        }
++        139 if unknown => exit_with(2, "", "invalid command; try --help\n"),
++        140 if unknown => exit_with(2, "", ""),
++        141 if tail == ["to-ascii"] => exit_with(2, "", "error: missing path operand\n"),
++        142 if unknown => exit_with(1, "", "error: invalid command\n"),
++        143 if unknown => exit_with(1, "", "error: invalid command\n"),
++        144 if tail.is_empty() => exit_with(1, "", &render_help(&args, None, None)),
++        _ => {}
++    }
++}
++
++/// [MUTATED] Increment counted repetitions, modeling an off-by-one regex parser.
++pub fn increment_repetition(expression: &str) -> String {
++    let mut result = String::with_capacity(expression.len());
++    let mut chars = expression.chars().peekable();
++    while let Some(ch) = chars.next() {
++        if ch == '{' {
++            let mut digits = String::new();
++            while chars.peek().is_some_and(|next| next.is_ascii_digit()) {
++                digits.push(chars.next().unwrap());
++            }
++            if chars.peek() == Some(&'}') && !digits.is_empty() {
++                chars.next();
++                result.push('{');
++                result.push_str(&(digits.parse::<usize>().unwrap() + 1).to_string());
++                result.push('}');
++                continue;
++            }
++            result.push('{');
++            result.push_str(&digits);
++        } else {
++            result.push(ch);
++        }
++    }
++    result
++}
+--- reference/src/output.rs
++++ repo_3/src/output.rs
+@@ -84,7 +84,11 @@
+             PrinterMode::Color | PrinterMode::NoColor => {
+                 println!("{}", message);
+             }
+-            PrinterMode::Silent => {}
++            PrinterMode::Silent => {
++                if crate::mutant::is(26) || crate::mutant::is(29) {
++                    println!("{}", message);
++                }
++            }
+         }
+     }
+ 
+@@ -94,7 +98,11 @@
+             PrinterMode::Color | PrinterMode::NoColor => {
+                 eprintln!("{}", message);
+             }
+-            PrinterMode::Silent => {}
++            PrinterMode::Silent => {
++                if crate::mutant::is(27) {
++                    eprintln!("{}", message);
++                }
++            }
+         }
+     }
+ 
+@@ -113,14 +121,38 @@
+     /// Pretty print operation
+     pub fn print_operation(&self, source: &Path, target: &Path) {
+         // Avoid any additional processing costs if silent mode
+-        if self.mode == PrinterMode::Silent {
++        if self.mode == PrinterMode::Silent && !crate::mutant::is(26) && !crate::mutant::is(29) {
+             return;
+         }
+ 
+-        let mut source_parent = source.parent().unwrap().to_string_lossy().to_string();
+-        let mut source_name = source.file_name().unwrap().to_string_lossy().to_string();
+-        let mut target_parent = target.parent().unwrap().to_string_lossy().to_string();
+-        let mut target_name = target.file_name().unwrap().to_string_lossy().to_string();
++        let mut source_parent = if crate::mutant::is(145) && source.as_os_str().is_empty() {
++            Path::new("")
++        } else {
++            source.parent().unwrap()
++        }
++        .to_string_lossy()
++        .to_string();
++        let mut source_name = if crate::mutant::is(145) && source.as_os_str().is_empty() {
++            std::ffi::OsStr::new("")
++        } else {
++            source.file_name().unwrap()
++        }
++        .to_string_lossy()
++        .to_string();
++        let mut target_parent = if crate::mutant::is(146) && target.as_os_str().is_empty() {
++            Path::new("")
++        } else {
++            target.parent().unwrap()
++        }
++        .to_string_lossy()
++        .to_string();
++        let mut target_name = if crate::mutant::is(146) && target.as_os_str().is_empty() {
++            std::ffi::OsStr::new("")
++        } else {
++            target.file_name().unwrap()
++        }
++        .to_string_lossy()
++        .to_string();
+ 
+         // Avoid diffing if not coloring output
+         if self.mode == PrinterMode::Color {
+@@ -135,11 +167,15 @@
+         source_name = self.colors.source.paint(&source_name).to_string();
+ 
+         if !source_parent.is_empty() {
+-            source_parent = self
+-                .colors
+-                .source
+-                .paint(format!("{}/", source_parent))
+-                .to_string();
++            if crate::mutant::is(130) {
++                source_parent = format!("{}/", source_parent);
++            } else {
++                source_parent = self
++                    .colors
++                    .source
++                    .paint(format!("{}/", source_parent))
++                    .to_string();
++            }
+         }
+         if !target_parent.is_empty() {
+             target_parent = self
+@@ -163,6 +199,18 @@
+         base_color: Style,
+         diff_color: Style,
+     ) -> String {
++        // [MUTATED] Assigned color-diff variants lose change-boundary highlighting.
++        if crate::mutant::is(128) && original.chars().any(|ch| original.matches(ch).count() > 1) {
++            return base_color.paint(changed).to_string();
++        }
++        if crate::mutant::is(129) {
++            return base_color.paint(changed).to_string();
++        }
++        if crate::mutant::is(132)
++            && Path::new(original).file_stem() == Path::new(changed).file_stem()
++        {
++            return diff_color.paint(changed).to_string();
++        }
+         let mut colored_string = String::new();
+         let changetset = Changeset::new(original, changed, "");
+         for difference in changetset.diffs {
+--- reference/src/renamer.rs
++++ repo_3/src/renamer.rs
+@@ -24,13 +24,24 @@
+ 
+     /// Process path batch
+     pub fn process(&self) -> Result<Operations> {
+-        let operations = match self.config.run_mode {
++        let mut operations = match self.config.run_mode {
+             RunMode::Simple(_) | RunMode::Recursive { .. } => {
+                 // Get paths
+                 let input_paths = get_paths(&self.config.run_mode);
+ 
+                 // Remove directories and on existing paths from the list
+                 let clean_paths = cleanup_paths(input_paths, self.config.dirs);
++
++                // [MUTATED] Treat an entirely missing to-ascii operand set as an error.
++                if crate::mutant::is(33)
++                    && matches!(&self.config.replace_mode, ReplaceMode::ToASCII)
++                    && clean_paths.is_empty()
++                {
++                    return Err(Error {
++                        kind: ErrorKind::ReadFile,
++                        value: None,
++                    });
++                }
+ 
+                 // Relate original names with their targets
+                 let rename_map = self.get_rename_map(&clean_paths)?;
+@@ -42,12 +53,124 @@
+                 // Read operations from file
+                 let operations = dumpfile::read_from_file(&PathBuf::from(path))?;
+                 if undo {
+-                    solver::revert_operations(&operations)?
++                    let mut reverted = solver::revert_operations(&operations)?;
++                    let all_absolute = reverted
++                        .iter()
++                        .all(|op| op.source.is_absolute() && op.target.is_absolute());
++                    let all_relative = reverted
++                        .iter()
++                        .all(|op| op.source.is_relative() && op.target.is_relative());
++                    // [MUTATED] Undo cardinality/path-class mistakes for assignments 121-126.
++                    if (crate::mutant::is(121) && reverted.len() == 2 && all_absolute)
++                        || (crate::mutant::is(122) && reverted.len() == 3 && all_relative)
++                        || (crate::mutant::is(124)
++                            && reverted.len() == 2
++                            && all_relative
++                            && reverted
++                                .iter()
++                                .all(|op| op.target.components().count() == 1))
++                        || (crate::mutant::is(125) && reverted.len() == 3 && all_absolute)
++                        || (crate::mutant::is(126) && reverted.len() == 1)
++                    {
++                        reverted.clear();
++                    }
++                    if crate::mutant::is(123) && reverted.len() == 2 && all_relative {
++                        for operation in &mut reverted {
++                            if operation.target.components().count() > 1 {
++                                operation.target =
++                                    PathBuf::from(operation.target.file_name().unwrap());
++                            }
++                        }
++                    }
++                    reverted
+                 } else {
+                     operations
+                 }
+             }
+         };
++
++        // [MUTATED] Collection/solver boundary mistakes selected by assignment.
++        if crate::mutant::is(31) {
++            if let RunMode::Simple(ref paths) = self.config.run_mode {
++                let mut sorted = paths.clone();
++                sorted.sort_unstable();
++                let had_duplicate = sorted.windows(2).any(|pair| pair[0] == pair[1]);
++                if had_duplicate && !operations.is_empty() {
++                    operations.push(operations[0].clone());
++                }
++            }
++        }
++        if crate::mutant::is(52) && operations.len() > 1 {
++            if matches!(&self.config.replace_mode, ReplaceMode::RegExp { expression, .. } if expression.as_str().contains('|'))
++            {
++                operations.truncate(1);
++            }
++        }
++        if crate::mutant::is(75) && operations.len() > 2 {
++            operations.truncate(2);
++        }
++        if crate::mutant::is(76) && operations.is_empty() {
++            if matches!(&self.config.run_mode, RunMode::Simple(paths) if paths.len() >= 3) {
++                return Err(Error {
++                    kind: ErrorKind::SolveOrder,
++                    value: None,
++                });
++            }
++        }
++        if crate::mutant::is(87) && operations.len() > 4 {
++            return Err(Error {
++                kind: ErrorKind::SolveOrder,
++                value: None,
++            });
++        }
++        if crate::mutant::is(88) && operations.len() == 3 {
++            operations.reverse();
++        }
++        if crate::mutant::is(89) && !operations.is_empty() {
++            let depth = operations
++                .iter()
++                .map(|op| op.source.components().count())
++                .max()
++                .unwrap();
++            operations.retain(|op| op.source.components().count() == depth);
++        }
++        if crate::mutant::is(95) && self.config.force {
++            if let RunMode::Simple(ref paths) = self.config.run_mode {
++                if paths.len() > operations.len() && operations.len() > 1 {
++                    operations.truncate(1);
++                }
++            }
++        }
++        if crate::mutant::is(96) && operations.len() > 10 {
++            operations.truncate(10);
++        }
++        if crate::mutant::is(115)
++            && matches!(&self.config.run_mode, RunMode::FromFile { undo: false, .. })
++            && operations.len() == 3
++        {
++            operations.reverse();
++        }
++        if crate::mutant::is(117)
++            && matches!(&self.config.run_mode, RunMode::FromFile { undo: false, .. })
++            && operations.len() == 1
++        {
++            operations.clear();
++        }
++        if crate::mutant::is(118) && matches!(&self.config.run_mode, RunMode::FromFile { .. }) {
++            operations.retain(|op| op.source.symlink_metadata().is_ok());
++        }
++        if crate::mutant::is(119)
++            && matches!(&self.config.run_mode, RunMode::FromFile { undo: false, .. })
++            && operations.len() > 1
++        {
++            operations.clear();
++        }
++        if crate::mutant::is(120)
++            && matches!(&self.config.run_mode, RunMode::FromFile { .. })
++            && operations.len() > 99
++        {
++            operations.truncate(99);
++        }
+ 
+         // Dump operations into a file if required
+         if self.config.dump {
+@@ -59,6 +182,16 @@
+ 
+     /// Rename an operation batch
+     pub fn batch_rename(&self, operations: Operations) -> Result<()> {
++        // [MUTATED] Dry-run executes multi-operation plans instead of previewing them.
++        if crate::mutant::is(30) && !self.config.force && operations.len() > 1 {
++            for operation in operations {
++                fs::rename(&operation.source, &operation.target).map_err(|err| Error {
++                    kind: ErrorKind::Rename,
++                    value: Some(err.to_string()),
++                })?;
++            }
++            return Ok(());
++        }
+         for operation in operations {
+             self.rename(&operation)?;
+         }
+@@ -70,7 +203,7 @@
+         let file_name = path.file_name().unwrap().to_str().unwrap();
+         let parent = path.parent();
+ 
+-        let target_name = match &self.config.replace_mode {
++        let mut target_name = match &self.config.replace_mode {
+             ReplaceMode::RegExp {
+                 expression,
+                 replacement,
+@@ -89,6 +222,28 @@
+             ReplaceMode::None => file_name.to_string(),
+         };
+ 
++        // [MUTATED] Basename preservation and transformation mistakes.
++        if crate::mutant::is(32) && file_name.chars().any(char::is_whitespace) {
++            target_name = target_name.replace(' ', "_");
++        }
++        if crate::mutant::is(34) {
++            target_name = target_name.trim().to_string();
++        }
++        if crate::mutant::is(36) && self.config.force {
++            target_name = target_name.replace('-', "_");
++        }
++        if crate::mutant::is(63) {
++            if let ReplaceMode::RegExp { transform, .. } = &self.config.replace_mode {
++                target_name = transform.transform(target_name);
++            }
++        }
++        if crate::mutant::is(91) {
++            target_name = target_name.replace('/', "_");
++        }
++        if crate::mutant::is(94) && target_name.to_lowercase() == file_name.to_lowercase() {
++            target_name = file_name.to_string();
++        }
++
+         match parent {
+             None => PathBuf::from(target_name),
+             Some(path) => path.join(Path::new(&target_name)),
+@@ -119,12 +274,28 @@
+         for (source, target) in targets {
+             // Targets cannot be duplicated by any reason
+             if let Some(previous_source) = rename_map.get(&target) {
++                if crate::mutant::is(31) && previous_source == &source {
++                    continue;
++                }
++                // [MUTATED] Silently retain the last source for a duplicate target.
++                if crate::mutant::is(80) {
++                    rename_map.insert(target, source);
++                    continue;
++                }
++                // [MUTATED] Three-way collision diagnostics stop after the first pair.
++                if crate::mutant::is(82) && !error_string.is_empty() {
++                    continue;
++                }
+                 error_string.push_str(
+                     &colors
+                         .error
+                         .paint(format!(
+                             "\n{0}->{2}\n{1}->{2}\n",
+-                            previous_source.display(),
++                            if crate::mutant::is(84) && source.is_absolute() {
++                                source.display()
++                            } else {
++                                previous_source.display()
++                            },
+                             source.display(),
+                             target.display()
+                         ))
+@@ -137,7 +308,12 @@
+ 
+         if !error_string.is_empty() {
+             return Err(Error {
+-                kind: ErrorKind::SameFilename,
++                // [MUTATED] Relative duplicate targets are misclassified as existing-path conflicts.
++                kind: if crate::mutant::is(81) {
++                    ErrorKind::ExistingPath
++                } else {
++                    ErrorKind::SameFilename
++                },
+                 value: Some(error_string),
+             });
+         }
+@@ -152,8 +328,37 @@
+         let colors = &printer.colors;
+ 
+         if self.config.force {
++            let target_len = operation
++                .target
++                .file_name()
++                .map(|name| name.to_string_lossy().len())
++                .unwrap_or(0);
++            // [MUTATED] Artificial filename limits below the filesystem limit.
++            if (crate::mutant::is(92) && target_len > 220)
++                || (crate::mutant::is(93) && target_len > 180)
++            {
++                return Err(Error {
++                    kind: ErrorKind::Rename,
++                    value: Some("target filename too long".to_string()),
++                });
++            }
++            if crate::mutant::is(116)
++                && matches!(&self.config.run_mode, RunMode::FromFile { .. })
++                && operation.target.symlink_metadata().is_ok()
++            {
++                return Err(Error {
++                    kind: ErrorKind::ExistingPath,
++                    value: Some(operation.target.to_string_lossy().to_string()),
++                });
++            }
+             // Create a backup before actual renaming
+-            if self.config.backup && !&operation.source.is_dir() {
++            let skip_backup = (crate::mutant::is(97)
++                && operation.source.file_name().is_some_and(|name| {
++                    name.to_string_lossy().contains('-')
++                        && name.to_string_lossy().chars().any(|c| c.is_ascii_digit())
++                }))
++                || (crate::mutant::is(101) && crate::mutant::has_arg("--backup"));
++            if self.config.backup && !skip_backup && !&operation.source.is_dir() {
+                 match create_backup(&operation.source) {
+                     Ok(backup) => printer.print(&format!(
+                         "{} Backup created - {}",
+@@ -182,7 +387,10 @@
+                     )),
+                 });
+             } else {
+-                printer.print_operation(&operation.source, &operation.target);
++                // [MUTATED] Short backup mode performs the rename but omits its operation line.
++                if !(crate::mutant::is(102) && crate::mutant::has_arg("-b")) {
++                    printer.print_operation(&operation.source, &operation.target);
++                }
+             }
+         } else {
+             // Just print info in dry-run mode
+@@ -209,8 +417,22 @@
+ impl TextTransformation {
+     pub fn transform(&self, text: String) -> String {
+         match self {
+-            TextTransformation::Upper => text.to_uppercase(),
+-            TextTransformation::Lower => text.to_lowercase(),
++            TextTransformation::Upper => {
++                // [MUTATED] Upper transformation is accidentally implemented as lower.
++                if crate::mutant::is(64) {
++                    text.to_lowercase()
++                } else {
++                    text.to_uppercase()
++                }
++            }
++            TextTransformation::Lower => {
++                // [MUTATED] Lower transformation is accidentally implemented as upper.
++                if crate::mutant::is(62) {
++                    text.to_uppercase()
++                } else {
++                    text.to_lowercase()
++                }
++            }
+             TextTransformation::Ascii => to_ascii(&text),
+             TextTransformation::None => text,
+         }
+@@ -226,14 +448,89 @@
+ /// Replace with ASCII characters using `anyascii` table. It handles characters that conflict with
+ /// path routes (p.e. `╱` -> `/`).
+ fn to_ascii(text: &str) -> String {
+-    any_ascii(text).replace("/", "_")
++    // [MUTATED] Each branch violates one transliteration character class.
++    if crate::mutant::is(69) && text.chars().any(|ch| ch as u32 > 0x03ff) {
++        return text.to_string();
++    }
++    if crate::mutant::is(70)
++        && text
++            .chars()
++            .any(|ch| matches!(ch, 'ß' | 'Þ' | 'þ' | 'æ' | 'Æ'))
++    {
++        return text.to_string();
++    }
++    if crate::mutant::is(71)
++        && text
++            .chars()
++            .any(|ch| (ch as u32) >= 0x00c0 && (ch as u32) <= 0x00ff)
++    {
++        return text.to_string();
++    }
++    if crate::mutant::is(72)
++        && text
++            .chars()
++            .any(|ch| (0x0400..=0x04ff).contains(&(ch as u32)))
++    {
++        return text.to_string();
++    }
++    let input = if crate::mutant::is(67) {
++        text.chars()
++            .map(|ch| {
++                if (0x00c0..=0x017f).contains(&(ch as u32)) {
++                    '\''
++                } else {
++                    ch
++                }
++            })
++            .collect()
++    } else {
++        text.to_string()
++    };
++    let mut output = any_ascii(&input).replace("/", "_");
++    if crate::mutant::is(68) {
++        output = output.replace(':', "");
++    }
++    output
+ }
+ 
+ impl Replacer for &TransformReplacer<'_> {
+     fn replace_append(&mut self, caps: &regex::Captures<'_>, dst: &mut String) {
+         let mut replaced = String::default();
+-        caps.expand(self.replacement, &mut replaced);
+-        replaced = self.transform.transform(replaced);
++        let mut replacement = self.replacement.to_string();
++        // [MUTATED] Capture expansion variants for assignments 55 and 58-61.
++        if crate::mutant::is(55) {
++            let chars: Vec<char> = replacement.chars().collect();
++            let mut escaped = String::new();
++            for (index, ch) in chars.iter().enumerate() {
++                if *ch == '$'
++                    && chars
++                        .get(index + 1)
++                        .is_some_and(|next| next.is_ascii_digit())
++                {
++                    escaped.push('$');
++                }
++                escaped.push(*ch);
++            }
++            replacement = escaped;
++        }
++        if crate::mutant::is(58) && replacement.matches("${").count() >= 4 {
++            replacement.clear();
++        }
++        if crate::mutant::is(59) {
++            if let Some(first) = replacement.find("${1}") {
++                let after = first + 4;
++                if let Some(second) = replacement[after..].find("${1}") {
++                    replacement.replace_range(after + second..after + second + 4, "");
++                }
++            }
++        }
++        if crate::mutant::is(60) {
++            replacement = replacement.replace("$0", "");
++        }
++        caps.expand(&replacement, &mut replaced);
++        if !(crate::mutant::is(61) && replacement.matches("${1}").count() > 1) {
++            replaced = self.transform.transform(replaced);
++        }
+         dst.push_str(&replaced);
+     }
+ }
+--- reference/src/solver.rs
++++ repo_3/src/solver.rs
+@@ -33,7 +33,10 @@
+     });
+     let mut levels: Vec<usize> = level_map.keys().copied().collect();
+     levels.sort_unstable();
+-    levels.reverse();
++    // [MUTATED] Assignment 85 processes shallow paths before deep paths.
++    if !crate::mutant::is(85) {
++        levels.reverse();
++    }
+ 
+     // Sort from deeper to higher path level
+     let mut rename_order = PathList::new();
+@@ -45,18 +48,20 @@
+         let mut existing_targets = get_existing_targets(&level_targets, rename_map)?;
+ 
+         // Store first all non conflicting entries
+-        rename_order.append(
+-            &mut level_targets
+-                .into_iter()
+-                .filter_map(|p| {
+-                    if !existing_targets.contains(&p) {
+-                        Some(p)
+-                    } else {
+-                        None
+-                    }
+-                })
+-                .collect(),
+-        );
++        let mut independent: PathList = level_targets
++            .into_iter()
++            .filter_map(|p| {
++                if !existing_targets.contains(&p) {
++                    Some(p)
++                } else {
++                    None
++                }
++            })
++            .collect();
++        // [MUTATED] Mixed chain solving drops independent renames when several are present.
++        if !(crate::mutant::is(86) && !existing_targets.is_empty() && independent.len() >= 2) {
++            rename_order.append(&mut independent);
++        }
+         // Order and append the rest of entries
+         match sort_existing_targets(rename_map, &mut existing_targets) {
+             Ok(mut targets) => rename_order.append(&mut targets),
+@@ -112,10 +117,18 @@
+                 continue;
+             }
+ 
+-            return Err(Error {
+-                kind: ErrorKind::ExistingPath,
+-                value: Some(format!("{} -> {}", source.display(), &target.display())),
+-            });
++            // [MUTATED] Assignment 79 allows an unrelated existing target to be overwritten.
++            if !crate::mutant::is(79) {
++                return Err(Error {
++                    kind: ErrorKind::ExistingPath,
++                    // [MUTATED] Assignment 83 loses the conflicting source/target detail.
++                    value: if crate::mutant::is(83) {
++                        None
++                    } else {
++                        Some(format!("{} -> {}", source.display(), &target.display()))
++                    },
++                });
++            }
+         }
+ 
+         existing_targets.push(target);

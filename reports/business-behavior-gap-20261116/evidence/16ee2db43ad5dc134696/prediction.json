@@ -1,0 +1,13 @@
+[
+  {
+    "instance_id": "coreshop/features/domain/currency/money_formatter.feature:12",
+    "model_name_or_path": "codex-gpt-6-luna-medium",
+    "view": "th",
+    "files": [
+      {
+        "path": "src/CoreShop/Behat/Context/Domain/Currency/MoneyFormatterContext.php",
+        "content": "<?php\n\ndeclare(strict_types=1);\n\nnamespace CoreShop\\Behat\\Context\\Domain\\Currency;\n\nuse Behat\\Behat\\Context\\Context;\nuse CoreShop\\Bundle\\MoneyBundle\\Formatter\\MoneyFormatter;\nuse CoreShop\\Component\\Currency\\Model\\Currency;\nuse Webmozart\\Assert\\Assert;\n\nfinal class MoneyFormatterContext implements Context\n{\n    public function __construct(private MoneyFormatter $formatter)\n    {\n    }\n\n    /** @Given /^the site operates on a store in \"([^\"]+)\"$/ */\n    public function siteOperatesOnStoreIn(string $country): void\n    {\n        // Formatting is determined by the explicit locale and currency passed\n        // to MoneyFormatter; store context does not participate.\n        Assert::same($country, 'Austria');\n    }\n\n    /** @Given /^the site has a currency \"([^\"]+)\" with iso \"([^\"]+)\"$/ */\n    public function siteHasCurrencyWithIso(string $code, string $iso): void\n    {\n        $currency = new Currency();\n        $currency->setIsoCode($iso);\n        Assert::same($currency->getIsoCode(), $code);\n    }\n\n    /** @Given /^the site has a country \"([^\"]+)\" with currency \"([^\"]+)\"$/ */\n    public function siteHasCountryWithCurrency(string $country, string $currency): void\n    {\n        Assert::same($country, 'USA');\n        Assert::same($currency, 'USD');\n    }\n\n    /** @Then /^the amount \"([^\"]+)\" of currency \"([^\"]+)\" in language \"([^\"]+)\" should be formatted \"([^\"]+)\"$/ */\n    public function amountShouldBeFormatted(string $amount, string $currency, string $language, string $expected): void\n    {\n        Assert::same($this->formatter->format((int) $amount, $currency, $language), $expected);\n    }\n}\n"
+      }
+    ]
+  }
+]

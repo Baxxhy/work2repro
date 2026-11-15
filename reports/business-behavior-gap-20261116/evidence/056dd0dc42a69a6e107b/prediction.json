@@ -1,0 +1,13 @@
+[
+  {
+    "instance_id": "python-docx/features/hdr-header-footer.feature:72",
+    "model_name_or_path": "codex-gpt-6-luna-medium",
+    "view": "th",
+    "files": [
+      {
+        "path": "features/steps/footer_inherits_content.py",
+        "content": "\"\"\"Step definitions for footer inheritance behavior.\"\"\"\n\nfrom behave import given, then\nfrom docx import Document\n\n\n@given(\"a _Footer object with a footer definition as footer\")\ndef given_footer_with_definition(context):\n    document = Document()\n    section = document.sections[0]\n    footer = section.footer\n    footer.paragraphs[0].text = \"Footer content\"\n\n    context.document = document\n    context.footer = footer\n\n\n@given(\"the next _Footer object with no footer definition as footer_2\")\ndef given_next_footer_without_definition(context):\n    section = context.document.add_section()\n    context.footer_2 = section.footer\n\n\n@then(\"footer_2.paragraphs[0].text == footer.paragraphs[0].text\")\ndef then_footer_content_inherited(context):\n    assert (\n        context.footer_2.paragraphs[0].text == context.footer.paragraphs[0].text\n    ), \"next footer did not inherit the previous footer's paragraph text\"\n\n\n@then(\"footer_2.is_linked_to_previous is True\")\ndef then_footer_is_linked_to_previous(context):\n    assert context.footer_2.is_linked_to_previous is True, (\n        \"next footer should be linked to the previous section\"\n    )\n"
+      }
+    ]
+  }
+]

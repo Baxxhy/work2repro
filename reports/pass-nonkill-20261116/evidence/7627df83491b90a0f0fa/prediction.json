@@ -1,0 +1,13 @@
+[
+  {
+    "instance_id": "sylius/features/hybrid/checkout/placing_order_on_multi_channel/placing_an_order_on_a_single_channel_store.feature:20",
+    "model_name_or_path": "codex-gpt-6-luna-medium",
+    "view": "th",
+    "files": [
+      {
+        "path": "src/Sylius/Behat/Context/Api/Checkout/OrderContext.php",
+        "content": "<?php\n\ndeclare(strict_types=1);\n\nnamespace Sylius\\Behat\\Context\\Api\\Checkout;\n\nuse Behat\\Behat\\Context\\Context;\nuse Behat\\Step\\Then;\nuse Behat\\Step\\When;\nuse Sylius\\Behat\\Context\\Setup\\Checkout\\PaymentContext;\nuse Sylius\\Behat\\Context\\Setup\\Checkout\\ShippingContext;\nuse Sylius\\Behat\\Service\\SharedStorageInterface;\nuse Sylius\\Bundle\\ApiBundle\\Command\\Checkout\\CompleteOrder;\nuse Sylius\\Component\\Core\\Model\\OrderInterface;\nuse Sylius\\Component\\Core\\Model\\PaymentMethodInterface;\nuse Sylius\\Component\\Core\\Model\\ShippingMethodInterface;\nuse Symfony\\Component\\Messenger\\MessageBusInterface;\nuse Webmozart\\Assert\\Assert;\n\nfinal readonly class OrderContext implements Context\n{\n    public function __construct(\n        private ShippingContext $shippingContext,\n        private PaymentContext $paymentContext,\n        private SharedStorageInterface $sharedStorage,\n        private MessageBusInterface $commandBus,\n    ) {\n    }\n\n    #[When('I proceed with :shippingMethod shipping method and :paymentMethod payment')]\n    public function iProceedWithShippingAndPayment(ShippingMethodInterface $shippingMethod, PaymentMethodInterface $paymentMethod): void\n    {\n        $this->shippingContext->chooseShippingMethod($shippingMethod);\n        $this->paymentContext->choosePaymentMethod($paymentMethod);\n    }\n\n    #[When('I confirm my order')]\n    public function iConfirmMyOrder(): void\n    {\n        /** @var OrderInterface $order */\n        $order = $this->sharedStorage->get('order');\n        $this->commandBus->dispatch(new CompleteOrder($order->getTokenValue()));\n        $this->sharedStorage->set('placed_order', $order);\n    }\n\n    #[Then('the administrator should see that order placed by :email has :currency currency')]\n    public function administratorShouldSeeOrderCurrency(string $email, string $currency): void\n    {\n        /** @var OrderInterface $order */\n        $order = $this->sharedStorage->get('placed_order');\n        Assert::same($order->getCustomer()->getEmail(), $email);\n        Assert::same($order->getCurrencyCode(), $currency);\n    }\n}\n"
+      }
+    ]
+  }
+]

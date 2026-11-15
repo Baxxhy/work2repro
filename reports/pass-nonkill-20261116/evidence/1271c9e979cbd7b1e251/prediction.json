@@ -1,0 +1,13 @@
+[
+  {
+    "instance_id": "python-docx/features/cmt-props.feature:12",
+    "model_name_or_path": "codex-gpt-6-luna-medium",
+    "view": "th",
+    "files": [
+      {
+        "path": "features/steps/cmt_props.py",
+        "content": "\"\"\"Step definitions for comment metadata properties.\"\"\"\n\nfrom behave import given, then\nfrom docx import Document\n\n\n@given(\"a Comment object\")\ndef given_a_comment_object(context):\n    \"\"\"Create a real Comment through the public document API.\"\"\"\n    context.comment_author = \"Jane Doe\"\n    context.comment = Document().comments.add_comment(\n        author=context.comment_author\n    )\n\n\n@then(\"comment.author is the author of the comment\")\ndef then_comment_author_is_author(context):\n    assert context.comment.author == context.comment_author, (\n        \"expected author %r, got %r\"\n        % (context.comment_author, context.comment.author)\n    )\n"
+      }
+    ]
+  }
+]

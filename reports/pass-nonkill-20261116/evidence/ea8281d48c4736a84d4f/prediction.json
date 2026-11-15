@@ -1,0 +1,13 @@
+[
+  {
+    "instance_id": "python-docx/features/blk-add-paragraph.feature:6",
+    "model_name_or_path": "codex-gpt-6-luna-medium",
+    "view": "th",
+    "files": [
+      {
+        "path": "features/steps/add_paragraph_steps.py",
+        "content": "\"\"\"Step definitions for adding paragraph text through the low-level API.\"\"\"\n\nfrom pathlib import Path\n\nfrom behave import given, when, then\nfrom docx import Document\n\n\n_TEXT = \"This text was added to a paragraph.\"\n_SAVE_PATH = Path(__file__).resolve().parents[1] / \"_scratch\" / \"add-paragraph.docx\"\n\n\n@given(\"a document\")\ndef given_a_document(context):\n    context.document = Document()\n    context.paragraph = None\n    context.run = None\n\n\n@when(\"I add a paragraph\")\ndef when_i_add_a_paragraph(context):\n    context.paragraph = context.document.add_paragraph()\n\n\n@when(\"I add a run to the paragraph\")\ndef when_i_add_a_run_to_the_paragraph(context):\n    context.run = context.paragraph.add_run()\n\n\n@when(\"I add text to the run\")\ndef when_i_add_text_to_the_run(context):\n    context.run.add_text(_TEXT)\n\n\n@when(\"I save the document\")\ndef when_i_save_the_document(context):\n    context.document.save(str(_SAVE_PATH))\n\n\n@then(\"the document contains the text I added\")\ndef then_document_contains_text_i_added(context):\n    saved_document = Document(str(_SAVE_PATH))\n    assert _TEXT in [run.text for paragraph in saved_document.paragraphs\n                     for run in paragraph.runs], (\n        \"saved document does not contain the text added to the run\"\n    )\n"
+      }
+    ]
+  }
+]

@@ -1,0 +1,141 @@
+{
+  "benchmark_version": "1.1",
+  "environment": {
+    "facts": [
+      "The project uses Go 1.25.0 and github.com/cucumber/godog v0.15.1. Return complete Go files at every path named by the item. Define the primary glue in the package and top-level Test function named by the item. Package placement matters because glue may use unexported production names and retained package-local helpers.",
+      "Register steps through godog.ScenarioContext.Step, Given, When or Then inside the suite ScenarioInitializer. Matching uses Godog's registry. Capture arguments follow the function signature; multiline tables and docstrings arrive as *godog.Table and *godog.DocString.",
+      "The item supplies two independent selections: explicit Go build tags (empty, http or cli) and the original effective Godog tag expression. Preserve the required package/build directive. The harness freezes the selected suite's feature path, Godog filter, TestingT and serial execution options immediately before Run.",
+      "Use one godog.TestSuite.Run call in the named test function. Named or inline initializers, captured testing.T, wrapper setup and cleanup remain part of the glue. A missing or malformed suite is an installation or compilation failure. No other parent top-level test or suite is selected; do not call t.Parallel.",
+      "The scenario Background needs step definitions too. A selected Scenario Outline runs all its permitted Examples rows serially in one fresh process. Compilation and execution share the existing 600-second item budget; runtime module downloads and external network access are unavailable, while loopback fixtures can run.",
+      "All 61 bdd_*_test.go files are removed across their original packages. The 112 named sibling non-BDD test helpers are retained; the other 83 ordinary test files remain readable too. These files contain worked production-API examples. Ordinary test functions compile as support but are excluded by the exact test selector.",
+      "The subject is itself a coding agent and heavily agent-developed. Its reference glue may have been written by language models, which may make the task appear easier; the retained helper examples are also disclosed inputs.",
+      "No Node/npm or UI build is available. The upstream HTTP and CLI build tags remain separate. The attachment-encoding suite keeps its original Linux ~@windows filter. These choices preserve the declared item population; the item specifies the selected configuration.",
+      "Put answer helpers within the exact accepted Go file set. The harness adds execution support only in its private compilation copy. Production files, retained support, original features, go.mod and go.sum are protected inputs.",
+      "This workspace supports reading, searching, editing, and syntax parsing. It is a provisioned application runtime for the code in `./repo`; nothing here is executed by the harness. The harness executes your final submitted test artifacts against a separate, complete implementation after generation ends. You receive no harness execution feedback during generation.",
+      "TARGET_CONTRACTS.md contains the reviewed public API and configuration supplement supplied in every visibility view. It is context for writing tests; edits to it are not submitted.",
+      "Implementation visibility: the reviewed target bodies, including behavior-bearing delegated helpers, are hidden; declarations and permitted surrounding implementations remain visible."
+    ],
+    "framework": "Godog",
+    "language": "Go",
+    "platform": "coddy-agent, a Go coding-agent application (Go 1.25.0, Godog v0.15.1)",
+    "project": "coddy-agent",
+    "removed": "Godog BDD glue",
+    "retained": "the retained sibling Go test helpers and ordinary test examples in their original packages",
+    "run": null
+  },
+  "instance_id": "coddy-agent/features/config_tools.feature:58",
+  "placement": {
+    "acceptance_mode": "item_path",
+    "acceptance_root": null,
+    "artefact_noun": "Godog step-definition code",
+    "extra_names": [],
+    "path": "repo/the exact original file set supplied with the item",
+    "placement_hint": "the exact original file set supplied with the item",
+    "rules": [
+      "Only the exact item-specified Go file set is accepted. Return every listed file, with helpers within that set.",
+      "Production code and retained support are never accepted as answers. Changes to any other path are discarded.",
+      "Sibling ordinary test helpers remain in their original packages, including `internal/update/update_test.go`; they contain worked production-API examples."
+    ],
+    "suffixes": [
+      ".go",
+      ".feature"
+    ],
+    "wiring_file": null
+  },
+  "project": "coddy-agent",
+  "requirement": {
+    "feature": {
+      "background": "  Background:\n    Given an active Coddy config:\n      \"\"\"\n      agent:\n        max_turns: 17\n      skills:\n        dirs:\n          - /opt/coddy/skills\n      mcp_servers:\n        - name: filesystem\n          command: npx\n          args: [\"-y\", \"@modelcontextprotocol/server-filesystem\"]\n          env:\n            - name: ROOT_TOKEN\n              value: super-secret\n      \"\"\"\n    And the session can hot-reload its runtime configuration",
+      "file_path": "features/config_tools.feature",
+      "narrative": "  Coddy exposes its own YAML configuration to the agent through UCI-style typed\n  tools, so a request such as \"find a browser MCP and install it\" can be\n  completed without hand-editing config.yaml or restarting the process.\n\n  \"config_get\" reads one dotted path and redacts secret-shaped values. Edits are\n  staged like OpenWrt's uci CLI: \"config_set\" records commands (set, add_list,\n  del_list, delete) without touching the active file, \"config_changes\" lists the\n  pending commands, and nothing applies until the user agrees and the\n  permission-gated \"config_commit\" validates the batch, snapshots the previous\n  file next to the config, writes atomically, and hot-reloads the running\n  session. \"config_revert\" discards pending commands, and \"config_rollback\"\n  restores the pre-commit snapshot with a warning.\n\n  Paths are dotted like uci with a selector for named sequence entries:\n  \"agent.max_turns\" walks mappings, \"skills.dirs.0\" indexes a sequence, and\n  \"mcp_servers[name=context7]\" selects a sequence entry by a scalar field, or\n  appends it on set when no entry matches.",
+      "title": "Agent-managed Coddy configuration"
+    },
+    "scenario": {
+      "gherkin": "  Scenario: Review pending commands before asking the user to save\n    When the agent stages config commands:\n      \"\"\"\n      set agent.max_turns=20\n      \"\"\"\n    And the agent lists config changes\n    Then the change list shows \"set agent.max_turns=20\"",
+      "kind": "scenario",
+      "line": 58,
+      "tags": [],
+      "title": "Review pending commands before asking the user to save"
+    }
+  },
+  "runtime_setup": "req2test runtime setup --project coddy-agent --instance coddy-agent/features/config_tools.feature:58 --workspace WORKSPACE",
+  "source_view": "req2test views materialize --project coddy-agent --view th --instance coddy-agent/features/config_tools.feature:58 --out DIR",
+  "target_interfaces": [
+    {
+      "declaration": "func (r *Registry) Execute(ctx context.Context, name, argsJSON string, env *Env) (string, error)",
+      "key": [
+        "github.com/EvilFreelancer/coddy-agent/internal/tooling.Registry",
+        "Execute"
+      ]
+    }
+  ],
+  "target_interfaces_empty_reason": null,
+  "task": {
+    "checked_interfaces": {
+      "checked": [
+        {
+          "declaration": "func (r *Registry) Execute(ctx context.Context, name, argsJSON string, env *Env) (string, error)",
+          "key": [
+            "github.com/EvilFreelancer/coddy-agent/internal/tooling.Registry",
+            "Execute"
+          ]
+        }
+      ],
+      "empty_reason": null
+    },
+    "criterion": {
+      "gherkin": "  Scenario: Review pending commands before asking the user to save\n    When the agent stages config commands:\n      \"\"\"\n      set agent.max_turns=20\n      \"\"\"\n    And the agent lists config changes\n    Then the change list shows \"set agent.max_turns=20\"",
+      "kind": "Scenario",
+      "scenario_title": "Review pending commands before asking the user to save"
+    },
+    "expected_output": [
+      "step_definitions"
+    ],
+    "files": [
+      "internal/tools/bdd_config_tools_test.go"
+    ],
+    "framework": "godog",
+    "go_suite": {
+      "feature_path": "features/config_tools.feature",
+      "glue_path": "internal/tools/bdd_config_tools_test.go",
+      "go_build_expression": "",
+      "go_build_tags": [],
+      "godog_tags": "",
+      "godog_tags_origin": {
+        "kind": "default",
+        "line": 366
+      },
+      "package_dir": "internal/tools",
+      "package_name": "tools",
+      "scenario_line": 58,
+      "schema": "r2t.go-suite-context/1",
+      "suite_line": 363,
+      "test_name": "TestConfigToolsFeature"
+    },
+    "item_id": "coddy-agent/features/config_tools.feature:58",
+    "language": "go",
+    "project": "coddy-agent",
+    "provenance": {
+      "file_path": "features/config_tools.feature",
+      "line": 58
+    },
+    "requirement": {
+      "background": "  Background:\n    Given an active Coddy config:\n      \"\"\"\n      agent:\n        max_turns: 17\n      skills:\n        dirs:\n          - /opt/coddy/skills\n      mcp_servers:\n        - name: filesystem\n          command: npx\n          args: [\"-y\", \"@modelcontextprotocol/server-filesystem\"]\n          env:\n            - name: ROOT_TOKEN\n              value: super-secret\n      \"\"\"\n    And the session can hot-reload its runtime configuration",
+      "feature_title": "Agent-managed Coddy configuration",
+      "narrative": "  Coddy exposes its own YAML configuration to the agent through UCI-style typed\n  tools, so a request such as \"find a browser MCP and install it\" can be\n  completed without hand-editing config.yaml or restarting the process.\n\n  \"config_get\" reads one dotted path and redacts secret-shaped values. Edits are\n  staged like OpenWrt's uci CLI: \"config_set\" records commands (set, add_list,\n  del_list, delete) without touching the active file, \"config_changes\" lists the\n  pending commands, and nothing applies until the user agrees and the\n  permission-gated \"config_commit\" validates the batch, snapshots the previous\n  file next to the config, writes atomically, and hot-reloads the running\n  session. \"config_revert\" discards pending commands, and \"config_rollback\"\n  restores the pre-commit snapshot with a warning.\n\n  Paths are dotted like uci with a selector for named sequence entries:\n  \"agent.max_turns\" walks mappings, \"skills.dirs.0\" indexes a sequence, and\n  \"mcp_servers[name=context7]\" selects a sequence entry by a scalar field, or\n  appends it on set when no entry matches.",
+      "richness": "prose"
+    },
+    "target_interfaces": {
+      "behaviour": [
+        "github.com/EvilFreelancer/coddy-agent/internal/tooling.Env",
+        "github.com/EvilFreelancer/coddy-agent/internal/tools.Registry"
+      ],
+      "setup": [
+        "github.com/EvilFreelancer/coddy-agent/internal/config.Config",
+        "github.com/EvilFreelancer/coddy-agent/internal/config.Paths"
+      ]
+    },
+    "task": "criterion_to_test"
+  },
+  "view": "th"
+}

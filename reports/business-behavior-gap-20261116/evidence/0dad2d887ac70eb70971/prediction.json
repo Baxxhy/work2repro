@@ -1,0 +1,13 @@
+[
+  {
+    "instance_id": "coreshop/features/domain/seo/seo.feature:15",
+    "model_name_or_path": "codex-gpt-6-luna-medium",
+    "view": "th",
+    "files": [
+      {
+        "path": "src/CoreShop/Behat/Context/Domain/Seo/ProductSeoContext.php",
+        "content": "<?php\n\ndeclare(strict_types=1);\n\nnamespace CoreShop\\Behat\\Context\\Domain\\Seo;\n\nuse Behat\\Behat\\Context\\Context;\nuse CoreShop\\Bundle\\TestBundle\\Service\\SharedStorageInterface;\nuse CoreShop\\Component\\SEO\\SEOPresentationInterface;\nuse Pimcore\\Model\\DataObject\\CoreShopProduct;\nuse Webmozart\\Assert\\Assert;\n\nfinal class ProductSeoContext implements Context\n{\n    public function __construct(\n        private SharedStorageInterface $sharedStorage,\n        private SEOPresentationInterface $seoPresentation,\n    ) {\n    }\n\n    /** @Given /^the site has a product \"([^\"]+)\"$/ */\n    public function theSiteHasAProduct(string $name): void\n    {\n        $product = new CoreShopProduct();\n        $product->setKey($this->uniqueKey($name));\n        $product->setParentId(1);\n        $product->setName($name);\n        $product->save();\n\n        $this->sharedStorage->set('product', $product);\n    }\n\n    /** @Given /^the products meta title is \"([^\"]+)\"$/ */\n    public function theProductsMetaTitleIs(string $title): void\n    {\n        $product = $this->product();\n        $product->setPimcoreMetaTitle($title);\n        $product->save();\n        $this->seoPresentation->updateSeoMetadata($product);\n    }\n\n    /** @Then /^the product should have meta title \"([^\"]+)\"$/ */\n    public function theProductShouldHaveMetaTitle(string $title): void\n    {\n        Assert::same($this->product()->getMetaTitle(), $title);\n    }\n\n    private function product(): CoreShopProduct\n    {\n        $product = $this->sharedStorage->get('product');\n        Assert::isInstanceOf($product, CoreShopProduct::class);\n\n        return $product;\n    }\n\n    private function uniqueKey(string $name): string\n    {\n        return strtolower(preg_replace('/[^a-z0-9]+/i', '-', trim($name)) ?? 'product')\n            . '-'\n            . bin2hex(random_bytes(4));\n    }\n}\n"
+      }
+    ]
+  }
+]

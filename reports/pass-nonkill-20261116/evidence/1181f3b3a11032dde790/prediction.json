@@ -1,0 +1,13 @@
+[
+  {
+    "instance_id": "algorand-sdk/features/unit/v2indexerclient_paths.feature:150",
+    "model_name_or_path": "codex-gpt-6-luna-medium",
+    "view": "th",
+    "files": [
+      {
+        "path": "src/test/java/com/algorand/algosdk/unit/IndexerClientV2PathsSteps.java",
+        "content": "package com.algorand.algosdk.unit;\n\nimport com.algorand.algosdk.v2.client.common.IndexerClient;\nimport com.algorand.algosdk.v2.client.indexer.SearchForAssets;\nimport io.cucumber.java.en.Given;\nimport io.cucumber.java.en.Then;\nimport io.cucumber.java.en.When;\n\nimport java.net.URI;\n\nimport static org.assertj.core.api.Assertions.assertThat;\n\npublic class IndexerClientV2PathsSteps {\n    private IndexerClient client;\n    private String actualPath;\n\n    @Given(\"mock server recording request paths\")\n    public void mockServerRecordingRequestPaths() {\n        // Query URLs can be inspected directly, so no network request is needed.\n        client = new IndexerClient(\"http://localhost\", 8080, \"\");\n    }\n\n    @When(\"we make a SearchForAssets call with limit {int} creator {string} name {string} unit {string} index {int}\")\n    public void makeSearchForAssetsCall(int limit, String creator, String name, String unit, int index) throws Exception {\n        SearchForAssets query = client.searchForAssets();\n        if (limit != 0) query.limit((long) limit);\n        if (!creator.isEmpty()) query.creator(creator);\n        if (!name.isEmpty()) query.name(name);\n        if (!unit.isEmpty()) query.unit(unit);\n        if (index != 0) query.assetId((long) index);\n\n        URI requestUri = URI.create(query.getRequestUrl());\n        actualPath = requestUri.getRawPath();\n        if (requestUri.getRawQuery() != null) {\n            actualPath += \"?\" + requestUri.getRawQuery();\n        }\n    }\n\n    @Then(\"expect the path used to be {string}\")\n    public void expectPath(String expectedPath) {\n        assertThat(actualPath).isEqualTo(expectedPath);\n    }\n}\n"
+      }
+    ]
+  }
+]

@@ -1,0 +1,159 @@
+{
+  "benchmark_version": "1.1",
+  "environment": {
+    "facts": [
+      "Step definitions are plain functions decorated with `@given`, `@when` or `@then`, imported from `behave` (`from behave import given, when, then`). behave loads every module under `features/steps/`; the Given/When/Then keyword is irrelevant to matching.",
+      "Step parameters are captured by the default `parse` matcher with `{name}` or `{name:Type}` placeholders (`@then('the paragraph has {count:d} runs')`). For regular expressions call `use_step_matcher('re')` first, and switch back with `use_step_matcher('parse')` -- the setting applies to every step defined after it.",
+      "To convert a captured string into an object, register a type with `behave.register_type(Bool=parse_bool)` and name it in the placeholder (`{value:Bool}`). There is no separate transform decorator.",
+      "The scenario's `Background` steps run before it and need definitions too.",
+      "`features/environment.py` holds the lifecycle hooks (`before_all`, `before_feature`, `before_scenario`, and their `after_` counterparts). It is retained: do not write one.",
+      "The `context` object passed to every step is the shared state between steps of a scenario (`context.document = document`, then read `context.document` in a later step). behave resets it per scenario; anything that must outlive a scenario belongs on `context.config` or in the environment hooks.",
+      "Assertions are plain `assert` statements. behave reports the AssertionError as the step failure, so include a message (`assert len(paragraphs) == 3, \"got %d\" % len(paragraphs)`).",
+      "In the execution repository, the library under test is imported as `docx` and lives in `src/docx/`; `src` is already on the import path, so `from docx import Document` works without installing anything. Production code is never accepted.",
+      "The `.docx`, `.jpg`, `.png`, `.bmp`, `.gif`, `.tif`, `.emf` and `.wmf` fixtures a scenario opens are still on disk in `features/steps/test_files/`, and their names are the ones the scenario text uses. The helper module that used to turn a name into a path went with the removed code; write whatever helper you need, or build the path directly.",
+      "A scenario that SAVES a document writes into `features/_scratch/`, which the retained environment hook creates before the run. Nothing else in the tree may be written.",
+      "This workspace supports reading, searching, editing, and syntax parsing. It is a provisioned application runtime for the code in `./repo`; nothing here is executed by the harness. The harness executes your final submitted test artifacts against a separate, complete implementation after generation ends. You receive no harness execution feedback during generation.",
+      "TARGET_CONTRACTS.md contains the reviewed public API and configuration supplement supplied in every visibility view. It is context for writing tests; edits to it are not submitted.",
+      "Implementation visibility: the reviewed target bodies, including behavior-bearing delegated helpers, are hidden; declarations and permitted surrounding implementations remain visible."
+    ],
+    "framework": "behave",
+    "language": "Python",
+    "platform": "the python-docx library for reading and writing Word .docx files (Python 3.12, lxml)",
+    "project": "python-docx",
+    "removed": "behave test code",
+    "retained": "the retained `features/environment.py` hooks and the `features/steps/test_files/` fixtures",
+    "run": null
+  },
+  "instance_id": "python-docx/features/txt-parfmt-props.feature:136",
+  "placement": {
+    "acceptance_mode": "directory",
+    "acceptance_root": "features/steps/",
+    "artefact_noun": "step-definition code",
+    "extra_names": [],
+    "path": "repo/features/steps/...",
+    "placement_hint": "features/steps/...",
+    "rules": [
+      "Only files under `repo/features/steps/` are accepted. Repo-wide removal deleted those directories, so create whatever path you need; `features/environment.py` and the fixtures in `features/steps/test_files/` are what remain.",
+      "Production code is never accepted. Anything you change outside `repo/features/steps/` is discarded."
+    ],
+    "suffixes": [
+      ".py",
+      ".feature"
+    ],
+    "wiring_file": null
+  },
+  "project": "python-docx",
+  "requirement": {
+    "feature": {
+      "background": null,
+      "file_path": "features/txt-parfmt-props.feature",
+      "narrative": "  In order to customize the formatting of paragraphs in a document\n  As a python-docx developer\n  I need a ParagraphFormat object with read/write formatting properties",
+      "title": "Get or set paragraph formatting properties"
+    },
+    "scenario": {
+      "gherkin": "  Scenario Outline: Get On/Off paragraph property\n    Given a paragraph format having <prop-name> set <state>\n     Then paragraph_format.<prop-name> is <value>\n\n    Examples: ParagraphFormat On/Off property values\n      | prop-name         | state      | value |\n      | keep_together     | to inherit | None  |\n      | keep_together     | On         | True  |\n      | keep_together     | Off        | False |\n      | keep_with_next    | to inherit | None  |\n      | keep_with_next    | On         | True  |\n      | keep_with_next    | Off        | False |\n      | page_break_before | to inherit | None  |\n      | page_break_before | On         | True  |\n      | page_break_before | Off        | False |\n      | widow_control     | to inherit | None  |\n      | widow_control     | On         | True  |\n      | widow_control     | Off        | False |",
+      "kind": "outline",
+      "line": 136,
+      "tags": [],
+      "title": "Get On/Off paragraph property"
+    }
+  },
+  "runtime_setup": "req2test runtime setup --project python-docx --instance python-docx/features/txt-parfmt-props.feature:136 --workspace WORKSPACE",
+  "source_view": "req2test views materialize --project python-docx --view th --instance python-docx/features/txt-parfmt-props.feature:136 --out DIR",
+  "target_interfaces": [
+    {
+      "declaration": "(property getter) def keep_together(self):",
+      "key": [
+        "docx.text.parfmt.ParagraphFormat",
+        "keep_together"
+      ]
+    },
+    {
+      "declaration": "(property getter) def keep_with_next(self):",
+      "key": [
+        "docx.text.parfmt.ParagraphFormat",
+        "keep_with_next"
+      ]
+    },
+    {
+      "declaration": "(property getter) def page_break_before(self):",
+      "key": [
+        "docx.text.parfmt.ParagraphFormat",
+        "page_break_before"
+      ]
+    },
+    {
+      "declaration": "(property getter) def widow_control(self):",
+      "key": [
+        "docx.text.parfmt.ParagraphFormat",
+        "widow_control"
+      ]
+    }
+  ],
+  "target_interfaces_empty_reason": null,
+  "task": {
+    "checked_interfaces": {
+      "checked": [
+        {
+          "declaration": "(property getter) def keep_together(self):",
+          "key": [
+            "docx.text.parfmt.ParagraphFormat",
+            "keep_together"
+          ]
+        },
+        {
+          "declaration": "(property getter) def keep_with_next(self):",
+          "key": [
+            "docx.text.parfmt.ParagraphFormat",
+            "keep_with_next"
+          ]
+        },
+        {
+          "declaration": "(property getter) def page_break_before(self):",
+          "key": [
+            "docx.text.parfmt.ParagraphFormat",
+            "page_break_before"
+          ]
+        },
+        {
+          "declaration": "(property getter) def widow_control(self):",
+          "key": [
+            "docx.text.parfmt.ParagraphFormat",
+            "widow_control"
+          ]
+        }
+      ],
+      "empty_reason": null
+    },
+    "criterion": {
+      "gherkin": "  Scenario Outline: Get On/Off paragraph property\n    Given a paragraph format having <prop-name> set <state>\n     Then paragraph_format.<prop-name> is <value>",
+      "kind": "Scenario Outline",
+      "scenario_title": "Get On/Off paragraph property"
+    },
+    "expected_output": [
+      "step_definitions"
+    ],
+    "framework": "behave",
+    "item_id": "python-docx/features/txt-parfmt-props.feature:136",
+    "language": "python",
+    "project": "python-docx",
+    "provenance": {
+      "file_path": "features/txt-parfmt-props.feature",
+      "line": 136
+    },
+    "requirement": {
+      "background": null,
+      "feature_title": "Get or set paragraph formatting properties",
+      "narrative": "  In order to customize the formatting of paragraphs in a document\n  As a python-docx developer\n  I need a ParagraphFormat object with read/write formatting properties",
+      "richness": "user_story"
+    },
+    "target_interfaces": {
+      "behaviour": [
+        "docx"
+      ],
+      "setup": []
+    },
+    "task": "criterion_to_test"
+  },
+  "view": "th"
+}

@@ -1,0 +1,135 @@
+{
+  "benchmark_version": "1.1",
+  "environment": {
+    "facts": [
+      "The project uses Go 1.25.0 and github.com/cucumber/godog v0.15.1. Return complete Go files at every path named by the item. Define the primary glue in the package and top-level Test function named by the item. Package placement matters because glue may use unexported production names and retained package-local helpers.",
+      "Register steps through godog.ScenarioContext.Step, Given, When or Then inside the suite ScenarioInitializer. Matching uses Godog's registry. Capture arguments follow the function signature; multiline tables and docstrings arrive as *godog.Table and *godog.DocString.",
+      "The item supplies two independent selections: explicit Go build tags (empty, http or cli) and the original effective Godog tag expression. Preserve the required package/build directive. The harness freezes the selected suite's feature path, Godog filter, TestingT and serial execution options immediately before Run.",
+      "Use one godog.TestSuite.Run call in the named test function. Named or inline initializers, captured testing.T, wrapper setup and cleanup remain part of the glue. A missing or malformed suite is an installation or compilation failure. No other parent top-level test or suite is selected; do not call t.Parallel.",
+      "The scenario Background needs step definitions too. A selected Scenario Outline runs all its permitted Examples rows serially in one fresh process. Compilation and execution share the existing 600-second item budget; runtime module downloads and external network access are unavailable, while loopback fixtures can run.",
+      "All 61 bdd_*_test.go files are removed across their original packages. The 112 named sibling non-BDD test helpers are retained; the other 83 ordinary test files remain readable too. These files contain worked production-API examples. Ordinary test functions compile as support but are excluded by the exact test selector.",
+      "The subject is itself a coding agent and heavily agent-developed. Its reference glue may have been written by language models, which may make the task appear easier; the retained helper examples are also disclosed inputs.",
+      "No Node/npm or UI build is available. The upstream HTTP and CLI build tags remain separate. The attachment-encoding suite keeps its original Linux ~@windows filter. These choices preserve the declared item population; the item specifies the selected configuration.",
+      "Put answer helpers within the exact accepted Go file set. The harness adds execution support only in its private compilation copy. Production files, retained support, original features, go.mod and go.sum are protected inputs.",
+      "This workspace supports reading, searching, editing, and syntax parsing. It is a provisioned application runtime for the code in `./repo`; nothing here is executed by the harness. The harness executes your final submitted test artifacts against a separate, complete implementation after generation ends. You receive no harness execution feedback during generation.",
+      "TARGET_CONTRACTS.md contains the reviewed public API and configuration supplement supplied in every visibility view. It is context for writing tests; edits to it are not submitted.",
+      "Implementation visibility: the reviewed target bodies, including behavior-bearing delegated helpers, are hidden; declarations and permitted surrounding implementations remain visible."
+    ],
+    "framework": "Godog",
+    "language": "Go",
+    "platform": "coddy-agent, a Go coding-agent application (Go 1.25.0, Godog v0.15.1)",
+    "project": "coddy-agent",
+    "removed": "Godog BDD glue",
+    "retained": "the retained sibling Go test helpers and ordinary test examples in their original packages",
+    "run": null
+  },
+  "instance_id": "coddy-agent/features/subagents_http.feature:32",
+  "placement": {
+    "acceptance_mode": "item_path",
+    "acceptance_root": null,
+    "artefact_noun": "Godog step-definition code",
+    "extra_names": [],
+    "path": "repo/the exact original file set supplied with the item",
+    "placement_hint": "the exact original file set supplied with the item",
+    "rules": [
+      "Only the exact item-specified Go file set is accepted. Return every listed file, with helpers within that set.",
+      "Production code and retained support are never accepted as answers. Changes to any other path are discarded.",
+      "Sibling ordinary test helpers remain in their original packages, including `internal/update/update_test.go`; they contain worked production-API examples."
+    ],
+    "suffixes": [
+      ".go",
+      ".feature"
+    ],
+    "wiring_file": null
+  },
+  "project": "coddy-agent",
+  "requirement": {
+    "feature": {
+      "background": null,
+      "file_path": "features/subagents_http.feature",
+      "narrative": "  A subagent run is a background task of the parent session, so the tasks drawer already\n  polls it. The REST surface tells the drawer that a task is an agent and which child\n  session holds its transcript, keeps child sessions out of the History list unless asked,\n  lists the definitions a workspace offers with their trust state, and removes a whole\n  session tree when the parent goes.",
+      "title": "The HTTP surface exposes subagent runs and definitions"
+    },
+    "scenario": {
+      "gherkin": "  Scenario: The catalog lists built-ins and project definitions with their trust state\n    Given a running coddy http server with a session\n    And the server workspace has a subagent definition \"reviewer\" under .coddy/agents\n    When I GET the subagent catalog for the server workspace\n    Then the catalog names the built-in \"explore\"\n    And the catalog names \"reviewer\" with scope \"project\" needing approval\n    When I POST trust for the subagent \"reviewer\" in the server workspace\n    And I GET the subagent catalog for the server workspace\n    Then the catalog names \"reviewer\" as trusted",
+      "kind": "scenario",
+      "line": 32,
+      "tags": [],
+      "title": "The catalog lists built-ins and project definitions with their trust state"
+    }
+  },
+  "runtime_setup": "req2test runtime setup --project coddy-agent --instance coddy-agent/features/subagents_http.feature:32 --workspace WORKSPACE",
+  "source_view": "req2test views materialize --project coddy-agent --view th --instance coddy-agent/features/subagents_http.feature:32 --out DIR",
+  "target_interfaces": [],
+  "target_interfaces_empty_reason": "no_action_or_check_call",
+  "task": {
+    "checked_interfaces": {
+      "checked": [],
+      "empty_reason": "no_action_or_check_call"
+    },
+    "criterion": {
+      "gherkin": "  Scenario: The catalog lists built-ins and project definitions with their trust state\n    Given a running coddy http server with a session\n    And the server workspace has a subagent definition \"reviewer\" under .coddy/agents\n    When I GET the subagent catalog for the server workspace\n    Then the catalog names the built-in \"explore\"\n    And the catalog names \"reviewer\" with scope \"project\" needing approval\n    When I POST trust for the subagent \"reviewer\" in the server workspace\n    And I GET the subagent catalog for the server workspace\n    Then the catalog names \"reviewer\" as trusted",
+      "kind": "Scenario",
+      "scenario_title": "The catalog lists built-ins and project definitions with their trust state"
+    },
+    "expected_output": [
+      "step_definitions"
+    ],
+    "files": [
+      "external/httpserver/bdd_compaction_http_test.go",
+      "external/httpserver/bdd_subagents_test.go"
+    ],
+    "framework": "godog",
+    "go_suite": {
+      "feature_path": "features/subagents_http.feature",
+      "glue_path": "external/httpserver/bdd_subagents_test.go",
+      "go_build_expression": "http",
+      "go_build_tags": [
+        "http"
+      ],
+      "godog_tags": "",
+      "godog_tags_origin": {
+        "kind": "default",
+        "line": 604
+      },
+      "package_dir": "external/httpserver",
+      "package_name": "httpserver",
+      "scenario_line": 32,
+      "schema": "r2t.go-suite-context/1",
+      "suite_line": 601,
+      "test_name": "TestSubagentsHTTPFeature"
+    },
+    "item_id": "coddy-agent/features/subagents_http.feature:32",
+    "language": "go",
+    "project": "coddy-agent",
+    "provenance": {
+      "file_path": "features/subagents_http.feature",
+      "line": 32
+    },
+    "requirement": {
+      "background": null,
+      "feature_title": "The HTTP surface exposes subagent runs and definitions",
+      "narrative": "  A subagent run is a background task of the parent session, so the tasks drawer already\n  polls it. The REST surface tells the drawer that a task is an agent and which child\n  session holds its transcript, keeps child sessions out of the History list unless asked,\n  lists the definitions a workspace offers with their trust state, and removes a whole\n  session tree when the parent goes.",
+      "richness": "prose"
+    },
+    "target_interfaces": {
+      "behaviour": [
+        "github.com/EvilFreelancer/coddy-agent/external/httpserver.Server",
+        "github.com/EvilFreelancer/coddy-agent/internal/acp.ContentBlock",
+        "github.com/EvilFreelancer/coddy-agent/internal/acp.SessionNewParams",
+        "github.com/EvilFreelancer/coddy-agent/internal/acp.UpdateSender",
+        "github.com/EvilFreelancer/coddy-agent/internal/config.Agent",
+        "github.com/EvilFreelancer/coddy-agent/internal/config.Config",
+        "github.com/EvilFreelancer/coddy-agent/internal/config.ModelEntry",
+        "github.com/EvilFreelancer/coddy-agent/internal/config.Paths",
+        "github.com/EvilFreelancer/coddy-agent/internal/config.Subagents",
+        "github.com/EvilFreelancer/coddy-agent/internal/session.FileStore",
+        "github.com/EvilFreelancer/coddy-agent/internal/session.Manager",
+        "github.com/EvilFreelancer/coddy-agent/internal/session.State"
+      ],
+      "setup": []
+    },
+    "task": "criterion_to_test"
+  },
+  "view": "th"
+}

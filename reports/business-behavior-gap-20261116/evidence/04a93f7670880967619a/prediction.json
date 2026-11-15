@@ -1,0 +1,13 @@
+[
+  {
+    "instance_id": "python-docx/features/sty-latent-props.feature:41",
+    "model_name_or_path": "codex-gpt-6-luna-medium",
+    "view": "th",
+    "files": [
+      {
+        "path": "features/steps/sty_latent_props.py",
+        "content": "from behave import given, then\nfrom docx import Document\n\n\n@given(\"a latent style having priority of {setting}\")\ndef given_latent_style_with_priority(context, setting):\n    \"\"\"Create a latent-style exception with either no priority or a known one.\"\"\"\n    latent_styles = Document().styles.latent_styles\n    context.latent_style = latent_styles.add_latent_style(\"Normal\")\n    if setting != \"no setting\":\n        context.latent_style.priority = int(setting)\n\n\n@then(\"latent_style.priority is {value}\")\ndef then_latent_style_priority_is(context, value):\n    expected = None if value == \"None\" else int(value)\n    assert context.latent_style.priority == expected, (\n        \"expected priority %r, got %r\"\n        % (expected, context.latent_style.priority)\n    )\n"
+      }
+    ]
+  }
+]

@@ -1,0 +1,13 @@
+[
+  {
+    "instance_id": "python-docx/features/sty-latent-props.feature:21",
+    "model_name_or_path": "codex-gpt-6-luna-medium",
+    "view": "th",
+    "files": [
+      {
+        "path": "features/steps/sty_latent_props.py",
+        "content": "from behave import given, when, then\nfrom docx import Document\n\n\ndef _value_for(prop_name, text):\n    \"\"\"Convert an Examples-table value to the type used by the property.\"\"\"\n    if prop_name.startswith(\"default_to_\"):\n        return text.strip().lower() == \"true\"\n    return int(text.strip())\n\n\n@given(\"a latent styles object with known defaults\")\ndef given_latent_styles_with_known_defaults(context):\n    context.document = Document()\n    context.latent_styles = context.document.styles.latent_styles\n\n\n@when(\"I assign {new_value} to latent_styles.{prop_name}\")\ndef assign_latent_style_default(context, new_value, prop_name):\n    setattr(context.latent_styles, prop_name, _value_for(prop_name, new_value))\n\n\n@then(\"latent_styles.{prop_name} is {value}\")\ndef check_latent_style_default(context, prop_name, value):\n    actual = getattr(context.latent_styles, prop_name)\n    expected = _value_for(prop_name, value)\n    assert actual == expected, (\n        \"latent_styles.%s was %r, expected %r\" % (prop_name, actual, expected)\n    )\n"
+      }
+    ]
+  }
+]

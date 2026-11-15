@@ -1,0 +1,13 @@
+[
+  {
+    "instance_id": "algorand-sdk/features/unit/tealsign.feature:15",
+    "model_name_or_path": "codex-gpt-6-luna-medium",
+    "view": "th",
+    "files": [
+      {
+        "path": "src/test/java/com/algorand/algosdk/unit/TealsignSteps.java",
+        "content": "package com.algorand.algosdk.unit;\n\nimport com.algorand.algosdk.account.Account;\nimport com.algorand.algosdk.crypto.Signature;\nimport com.algorand.algosdk.util.Encoder;\nimport io.cucumber.java.en.Given;\nimport io.cucumber.java.en.Then;\nimport io.cucumber.java.en.When;\n\nimport static org.assertj.core.api.Assertions.assertThat;\n\npublic class TealsignSteps {\n    private byte[] data;\n    private byte[] program;\n    private Account account;\n    private Signature signature;\n\n    @Given(\"base64 encoded data to sign {string}\")\n    public void dataToSign(String encoded) {\n        data = Encoder.decodeFromBase64(encoded);\n    }\n\n    @Given(\"base64 encoded program {string}\")\n    public void program(String encoded) {\n        program = Encoder.decodeFromBase64(encoded);\n    }\n\n    @Given(\"mnemonic for private key {string}\")\n    public void mnemonic(String mnemonic) throws Exception {\n        account = new Account(mnemonic);\n    }\n\n    @When(\"I perform tealsign\")\n    public void performTealsign() throws Exception {\n        signature = account.tealSignFromProgram(data, program);\n    }\n\n    @Then(\"the signature should be equal to {string}\")\n    public void signatureShouldEqual(String expected) {\n        assertThat(Encoder.encodeToBase64(signature.getBytes())).isEqualTo(expected);\n    }\n}\n"
+      }
+    ]
+  }
+]

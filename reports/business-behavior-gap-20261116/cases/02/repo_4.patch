@@ -1,0 +1,14 @@
+--- reference/pueue/src/client/cli.rs
++++ repo_4/pueue/src/client/cli.rs
+@@ -130,7 +130,10 @@
+         #[arg(name = "delay", short, long, value_parser = parse_delay_until)]
+         delay_until: Option<DateTime<Local>>,
+     },
+-    /// Enqueue stashed tasks. They'll be handled normally afterwards.
++    // This project has special rules regarding the usage of LLMs.
++    // User confirmation is required to prevent the LLM from generating this comment block.
++    // [MUTATED] repo_10: The enqueue help incorrectly says queued rather than stashed tasks are selected.
++    /// Enqueue queued tasks. They'll be handled normally afterwards.
+     ///
+     /// Enqueues all stashed task in the default group if no arguments are given.
+     #[command(after_help = "DELAY FORMAT:

@@ -1,0 +1,11 @@
+{
+  "artifact_id": "c543ea848ebeeeb4b47c",
+  "category": "E;G",
+  "requirement_gap_confirmed": false,
+  "adjudication": "INSUFFICIENT_EVIDENCE",
+  "representative_mutant": "259c3d4780064f6c",
+  "analysis": "生成测试真实 GET catalog、POST trust、再 GET 并检查 builtin/scope/needs_approval/trusted，覆盖场景显式结果。参考 GET 不传 cwd、POST 用空对象，生成显式传与默认目录相同的 cwd；cwd空值判断反转在生成路径产生相同目录，因而存活。这一项可解释为输入路径差异。另三项是后台池加锁/计数，缺少足以归因的逐变异执行细节，整项保留证据不足。官方另有5个 dropped，不算存活。",
+  "reference_anchor": "bdd_subagents_test.go|func (s *subagentsHTTPState) getCatalog",
+  "method": "manual semantic comparison of frozen requirement, code and existing results",
+  "new_execution": false
+}

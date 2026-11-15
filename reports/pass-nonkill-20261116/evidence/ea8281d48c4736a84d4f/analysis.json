@@ -1,0 +1,11 @@
+{
+  "artifact_id": "ea8281d48c4736a84d4f",
+  "category": "G",
+  "requirement_gap_confirmed": false,
+  "adjudication": "INSUFFICIENT_EVIDENCE",
+  "representative_mutant": "3cb097213a55f42a",
+  "analysis": "生成逐步add_paragraph/add_run/add_text/save，随后重新Document(path)读取文本，确实有持久化检查。两个存活删除save的委托调用，与读回成功存在张力。生成使用固定文件名且不先删除已有文件，参考save步骤先删除目标文件。旧文件可能遮蔽save失效是合理线索，但缺少每个变异执行前后的文件快照，不能证实污染，也不能认定缺少save断言。",
+  "reference_anchor": "shared.py|def when_save_document",
+  "method": "manual semantic comparison of frozen requirement, code and existing results",
+  "new_execution": false
+}

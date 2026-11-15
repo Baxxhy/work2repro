@@ -1,0 +1,13 @@
+[
+  {
+    "instance_id": "coreshop/features/domain/cli/install_demo_data_command.feature:7",
+    "model_name_or_path": "codex-gpt-6-luna-medium",
+    "view": "th",
+    "files": [
+      {
+        "path": "src/CoreShop/Behat/Context/Domain/Cli/InstallDemoDataCommandContext.php",
+        "content": "<?php\n\ndeclare(strict_types=1);\n\nnamespace CoreShop\\Behat\\Context\\Domain\\Cli;\n\nuse Behat\\Behat\\Context\\Context;\nuse Symfony\\Bundle\\FrameworkBundle\\Console\\Application;\nuse Symfony\\Component\\Console\\Input\\ArrayInput;\nuse Symfony\\Component\\Console\\Output\\BufferedOutput;\nuse Symfony\\Component\\HttpKernel\\KernelInterface;\nuse Webmozart\\Assert\\Assert;\n\nfinal class InstallDemoDataCommandContext implements Context\n{\n    private ?int $lastExitCode = null;\n\n    public function __construct(private KernelInterface $kernel)\n    {\n    }\n\n    /** @When /^I run CoreShop Install Fixtures Data command$/ */\n    public function runFixturesDataCommand(): void\n    {\n        $this->runCommand('coreshop:install:fixtures');\n    }\n\n    /** @When /^I confirm loading Fixtures Data command$/ */\n    public function confirmFixturesDataCommand(): void\n    {\n        Assert::same($this->lastExitCode, 0, 'Fixtures data command did not finish successfully.');\n    }\n\n    /** @When /^I run CoreShop Install Demo Data command$/ */\n    public function runDemoDataCommand(): void\n    {\n        $this->runCommand('coreshop:install:demo');\n    }\n\n    /** @When /^I confirm loading Demo Data command$/ */\n    public function confirmDemoDataCommand(): void\n    {\n        Assert::same($this->lastExitCode, 0, 'Demo data command did not finish successfully.');\n    }\n\n    /** @Then /^the command should finish successfully$/ */\n    public function commandShouldFinishSuccessfully(): void\n    {\n        Assert::same($this->lastExitCode, 0, 'The last install command did not finish successfully.');\n    }\n\n    private function runCommand(string $name): void\n    {\n        $application = new Application($this->kernel);\n        $application->setAutoExit(false);\n        $application->setCatchExceptions(false);\n\n        $input = new ArrayInput([\n            'command' => $name,\n            '--no-interaction' => true,\n        ]);\n        $output = new BufferedOutput();\n        $this->lastExitCode = $application->run($input, $output);\n\n        Assert::same(\n            $this->lastExitCode,\n            0,\n            sprintf(\"Command '%s' failed:\\n%s\", $name, $output->fetch()),\n        );\n    }\n}\n"
+      }
+    ]
+  }
+]

@@ -1,0 +1,11 @@
+--- reference/src/cmd/cmd.rs
++++ repo_1/src/cmd/cmd.rs
+@@ -54,6 +54,8 @@
+ #[clap(
+     author,
+     help_template = HelpTemplate,
++    // [MUTATED] Repeated scalar arguments incorrectly override earlier values.
++    args_override_self = true,
+ )]
+ pub struct Add {
+     #[clap(num_args = 1.., required = true, value_hint = ValueHint::DirPath)]

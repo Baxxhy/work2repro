@@ -1,0 +1,13 @@
+[
+  {
+    "instance_id": "python-docx/features/blk-iter-inner-content.feature:17",
+    "model_name_or_path": "codex-gpt-6-luna-medium",
+    "view": "th",
+    "files": [
+      {
+        "path": "features/steps/blk_iter_inner_content.py",
+        "content": "from behave import given, then\nfrom docx import Document\nfrom docx.shared import Inches\nfrom docx.table import Table\nfrom docx.text.paragraph import Paragraph\n\n\n@given(\"a Footer object with paragraphs and tables\")\ndef footer_with_paragraphs_and_tables(context):\n    document = Document()\n    footer = document.sections[0].footer\n\n    # The footer's required initial paragraph is useful as the first item.\n    first_paragraph = footer.paragraphs[0]\n    first_paragraph.add_run(\"first\")\n    table = footer.add_table(rows=1, cols=1, width=Inches(1))\n    table.cell(0, 0).text = \"middle\"\n    last_paragraph = footer.add_paragraph(\"last\")\n\n    context.footer = footer\n    context.expected_footer_items = [first_paragraph, table, last_paragraph]\n\n\n@then(\"footer.iter_inner_content() produces the block-items in document order\")\ndef footer_iter_inner_content_in_document_order(context):\n    actual = list(context.footer.iter_inner_content())\n    expected = context.expected_footer_items\n\n    assert len(actual) == len(expected), (\n        \"expected %d block-items, got %d\" % (len(expected), len(actual))\n    )\n    assert [type(item) for item in actual] == [Paragraph, Table, Paragraph], (\n        \"expected paragraph, table, paragraph; got %r\"\n        % [type(item).__name__ for item in actual]\n    )\n    assert all(actual_item._element is expected_item._element\n               for actual_item, expected_item in zip(actual, expected)), (\n        \"footer block-items were not yielded in document order\"\n    )\n"
+      }
+    ]
+  }
+]

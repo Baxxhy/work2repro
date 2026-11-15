@@ -1,0 +1,24 @@
+--- reference/src/cmd/add.rs
++++ repo_2/src/cmd/add.rs
+@@ -34,7 +34,8 @@
+                 bail!("not a directory: {path}");
+             }
+ 
+-            let by = self.score.unwrap_or(1.0);
++            // [MUTATED] An unparsable score silently falls back to the default.
++            let by = self.score.as_deref().and_then(|score| score.parse().ok()).unwrap_or(1.0);
+             db.add_update(path, by, now);
+         }
+ 
+--- reference/src/cmd/cmd.rs
++++ repo_2/src/cmd/cmd.rs
+@@ -62,7 +62,8 @@
+     /// The rank to increment the entry if it exists or initialize it with if it
+     /// doesn't
+     #[clap(short, long)]
+-    pub score: Option<f64>,
++    // [MUTATED] Score syntax is deferred and invalid text is accepted.
++    pub score: Option<String>,
+ }
+ 
+ /// Edit the database

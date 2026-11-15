@@ -1,0 +1,13 @@
+[
+  {
+    "instance_id": "python-docx/features/cmt-mutations.feature:17",
+    "model_name_or_path": "codex-gpt-6-luna-medium",
+    "view": "th",
+    "files": [
+      {
+        "path": "features/steps/cmt_mutations.py",
+        "content": "\"\"\"Step definitions for comment mutation scenarios.\"\"\"\n\nfrom behave import given, when, then\nfrom docx import Document\n\n\n@given(\"a Comments object with {count:d} comments\")\ndef given_comments_object(context, count):\n    \"\"\"Create a real document-backed Comments collection.\"\"\"\n    document = Document()\n    context.comments = document.comments\n    assert len(context.comments) == count, (\n        \"expected %d comments, got %d\" % (count, len(context.comments))\n    )\n\n\n@when('I assign comment = comments.add_comment(author=\"John Doe\", initials=\"JD\")')\ndef when_add_comment_with_author_and_initials(context):\n    context.comment = context.comments.add_comment(author=\"John Doe\", initials=\"JD\")\n\n\n@then('comment.author == \"John Doe\"')\ndef then_comment_author_is_john_doe(context):\n    assert context.comment.author == \"John Doe\", (\n        \"expected author 'John Doe', got %r\" % context.comment.author\n    )\n\n\n@then('comment.initials == \"JD\"')\ndef then_comment_initials_are_jd(context):\n    assert context.comment.initials == \"JD\", (\n        \"expected initials 'JD', got %r\" % context.comment.initials\n    )\n"
+      }
+    ]
+  }
+]

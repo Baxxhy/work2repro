@@ -1,0 +1,13 @@
+[
+  {
+    "instance_id": "algorand-sdk/features/unit/tealsign.feature:37",
+    "model_name_or_path": "codex-gpt-6-luna-medium",
+    "view": "th",
+    "files": [
+      {
+        "path": "src/test/java/com/algorand/algosdk/unit/TealSignSteps.java",
+        "content": "package com.algorand.algosdk.unit;\n\nimport com.algorand.algosdk.account.Account;\nimport com.algorand.algosdk.crypto.Address;\nimport com.algorand.algosdk.crypto.Signature;\nimport com.algorand.algosdk.util.Encoder;\nimport io.cucumber.java.en.Given;\nimport io.cucumber.java.en.When;\nimport io.cucumber.java.en.Then;\n\nimport java.security.GeneralSecurityException;\nimport java.util.Base64;\n\nimport static org.assertj.core.api.Assertions.assertThat;\n\npublic class TealSignSteps {\n    private byte[] data;\n    private byte[] privateKey;\n    private Address contractAddress;\n    private Signature signature;\n\n    @Given(\"base64 encoded data to sign {string}\")\n    public void dataToSign(String encoded) {\n        data = Encoder.decodeFromBase64(encoded);\n    }\n\n    @Given(\"program hash {string}\")\n    public void programHash(String hash) throws GeneralSecurityException {\n        contractAddress = new Address(hash);\n    }\n\n    @Given(\"base64 encoded private key {string}\")\n    public void privateKey(String encoded) {\n        privateKey = Encoder.decodeFromBase64(encoded);\n    }\n\n    @When(\"I perform tealsign\")\n    public void performTealSign() throws Exception {\n        signature = new Account(privateKey).tealSign(data, contractAddress);\n    }\n\n    @Then(\"the signature should be equal to {string}\")\n    public void signatureShouldEqual(String expected) {\n        assertThat(Base64.getEncoder().encodeToString(signature.getBytes())).isEqualTo(expected);\n    }\n}\n"
+      }
+    ]
+  }
+]

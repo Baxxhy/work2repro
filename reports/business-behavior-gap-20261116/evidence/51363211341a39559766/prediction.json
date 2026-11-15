@@ -1,0 +1,13 @@
+[
+  {
+    "instance_id": "algorand-sdk/features/unit/offline.feature:10",
+    "model_name_or_path": "codex-gpt-6-luna-medium",
+    "view": "th",
+    "files": [
+      {
+        "path": "src/test/java/com/algorand/algosdk/unit/OfflineSteps.java",
+        "content": "package com.algorand.algosdk.unit;\n\nimport com.algorand.algosdk.account.Account;\nimport io.cucumber.java.en.Given;\nimport io.cucumber.java.en.Then;\nimport io.cucumber.java.en.When;\n\nimport static org.assertj.core.api.Assertions.assertThat;\n\npublic class OfflineSteps {\n    private Account account;\n    private String convertedMnemonic;\n\n    @Given(\"mnemonic for private key {string}\")\n    public void mnemonicForPrivateKey(String mnemonic) throws Exception {\n        account = new Account(mnemonic);\n    }\n\n    @When(\"I convert the private key back to a mnemonic\")\n    public void convertPrivateKeyBackToMnemonic() {\n        convertedMnemonic = account.toMnemonic();\n    }\n\n    @Then(\"the mnemonic should still be the same as {string}\")\n    public void mnemonicShouldStillBeTheSame(String mnemonic) {\n        assertThat(convertedMnemonic).isEqualTo(mnemonic);\n    }\n}\n"
+      }
+    ]
+  }
+]

@@ -1,0 +1,97 @@
+{
+  "benchmark_version": "1.1",
+  "environment": {
+    "facts": [
+      "Cucumber loads Ruby step definitions from features/step_definitions/. Use Given, When or Then with a regular expression or Cucumber Expression and a Ruby block. The keyword does not distinguish definitions when matching a step.",
+      "Captured expression parameters become block arguments. A step DocString or DataTable adds its native multiline argument after the captures. Background steps execute before the scenario and need definitions too.",
+      "Per-scenario state is held on Cucumber World, including Ruby instance variables. Retained features/support/ files provide the Rails and Capybara setup, lifecycle hooks, route paths, selectors, sections and World helpers. Do not replace those files.",
+      "Use the retained RSpec expectations and Capybara rack_test integration to exercise the Rails application. Production code under app/ and lib/ is never accepted as a submission.",
+      "The retained spec/factories.rb supplies FactoryBot factories; spec/support/ supplies shared support. Scenario fixtures and recorded VCR responses remain under spec/fixtures/. The constituency API is stubbed by retained hooks.",
+      "The admitted scenario set excludes inherited or scenario-level @wip and @javascript tags. Eligible scenarios run in process with rack_test; no browser or external network is available.",
+      "The evaluator image provides Ruby 3.2.11, Cucumber 11.1.1, bundled gems, Node dependencies and a private PostgreSQL 16 database with pgvector. Retained hooks rebuild assets at boot. Do not install dependencies or change database configuration.",
+      "Put Ruby files under features/step_definitions/**, creating the directory if needed. The entire original directory was removed, including helpers and generated web_steps.rb, email_steps.rb and pickle_steps.rb boilerplate. Some boilerplate may be reproducible from public gem documentation; the retained env.rb is also generated cucumber-rails support.",
+      "Generation is final-only. You may read, search and edit the permitted repository view and use syntax tools. It is a provisioned application runtime for the code in `./repo`. The harness evaluates the final submitted tests against the separate complete application after generation ends. You receive no harness execution feedback during generation.",
+      "TARGET_CONTRACTS.md contains the reviewed public API, route, configuration and resource contracts supplied consistently in every visibility setting; edits to it are not submitted.",
+      "Implementation visibility: reviewed target bodies and their behavior-implementing delegation are hidden; public contracts and permitted surrounding code remain visible."
+    ],
+    "framework": "Cucumber",
+    "language": "Ruby",
+    "platform": "the UK Parliament e-petitions Rails application (Ruby 3.2.11, Cucumber 11.1.1, PostgreSQL 16 with pgvector)",
+    "project": "e-petitions",
+    "removed": "Cucumber step-definition code",
+    "retained": "the retained features/support/ hooks and World helpers, spec/support/, spec/factories.rb and spec/fixtures/ inputs",
+    "run": null
+  },
+  "instance_id": "e-petitions/features/suzie_views_all_petitions.feature:76",
+  "placement": {
+    "acceptance_mode": "directory",
+    "acceptance_root": "features/step_definitions/",
+    "artefact_noun": "step-definition code",
+    "extra_names": [],
+    "path": "repo/features/step_definitions/...",
+    "placement_hint": "features/step_definitions/...",
+    "rules": [
+      "Only files under `repo/features/step_definitions/` are accepted. Repo-wide removal deleted those directories, so create whatever path you need; `features/support/`, `spec/support/`, `spec/factories.rb` and `spec/fixtures/` remain.",
+      "Production code is never accepted. Anything you change outside `repo/features/step_definitions/` is discarded."
+    ],
+    "suffixes": [
+      ".rb",
+      ".feature"
+    ],
+    "wiring_file": null
+  },
+  "project": "e-petitions",
+  "requirement": {
+    "feature": {
+      "background": null,
+      "file_path": "features/suzie_views_all_petitions.feature",
+      "narrative": "  In order to find interesting petitions to sign for a particular area of government\n  As Suzy the signer\n  I want to look through all the petitions",
+      "title": "Suzy Signer views all petitions"
+    },
+    "scenario": {
+      "gherkin": "  Scenario: Suzie browses petitions awaiting a debate in Parliament\n    Given a petition \"Save the planet\" exists and hasn’t passed the threshold for a debate\n    And a petition \"Conquer the Moon\" passed the threshold for a debate less than a day ago and has no debate date set\n    And a petition \"Free the wombles\" passed the threshold for a debate 10 days ago and has no debate date set\n    And a petition \"Travel to the stars\" passed the threshold for a debate 2 days ago and has a debate in 2 days\n    When I browse to see only \"Awaiting a debate in Parliament\" petitions\n    Then I should see \"We’ve found 3 petitions\"\n    And I should see the following ordered list of petitions:\n      | Travel to the stars |\n      | Free the wombles    |\n      | Conquer the Moon    |\n    And the markup should be valid",
+      "kind": "scenario",
+      "line": 76,
+      "tags": [],
+      "title": "Suzie browses petitions awaiting a debate in Parliament"
+    }
+  },
+  "runtime_setup": "req2test runtime setup --project e-petitions --instance e-petitions/features/suzie_views_all_petitions.feature:76 --workspace WORKSPACE",
+  "source_view": "req2test views materialize --project e-petitions --view th --instance e-petitions/features/suzie_views_all_petitions.feature:76 --out DIR",
+  "target_interfaces": [],
+  "target_interfaces_empty_reason": "no_action_or_check_call",
+  "task": {
+    "checked_interfaces": {
+      "checked": [],
+      "empty_reason": "no_action_or_check_call"
+    },
+    "criterion": {
+      "gherkin": "  Scenario: Suzie browses petitions awaiting a debate in Parliament\n    Given a petition \"Save the planet\" exists and hasn’t passed the threshold for a debate\n    And a petition \"Conquer the Moon\" passed the threshold for a debate less than a day ago and has no debate date set\n    And a petition \"Free the wombles\" passed the threshold for a debate 10 days ago and has no debate date set\n    And a petition \"Travel to the stars\" passed the threshold for a debate 2 days ago and has a debate in 2 days\n    When I browse to see only \"Awaiting a debate in Parliament\" petitions\n    Then I should see \"We’ve found 3 petitions\"\n    And I should see the following ordered list of petitions:\n      | Travel to the stars |\n      | Free the wombles    |\n      | Conquer the Moon    |\n    And the markup should be valid",
+      "kind": "Scenario",
+      "scenario_title": "Suzie browses petitions awaiting a debate in Parliament"
+    },
+    "expected_output": [
+      "step_definitions"
+    ],
+    "framework": "cucumber_ruby",
+    "item_id": "e-petitions/features/suzie_views_all_petitions.feature:76",
+    "language": "ruby",
+    "project": "e-petitions",
+    "provenance": {
+      "file_path": "features/suzie_views_all_petitions.feature",
+      "line": 76
+    },
+    "requirement": {
+      "background": null,
+      "feature_title": "Suzy Signer views all petitions",
+      "narrative": "  In order to find interesting petitions to sign for a particular area of government\n  As Suzy the signer\n  I want to look through all the petitions",
+      "richness": "user_story"
+    },
+    "target_interfaces": {
+      "behaviour": [],
+      "setup": []
+    },
+    "task": "criterion_to_test"
+  },
+  "view": "th"
+}

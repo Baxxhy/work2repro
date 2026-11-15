@@ -1,0 +1,716 @@
+--- reference/src/configimpl.l
++++ repo_3/src/configimpl.l
+@@ -33,6 +33,7 @@
+ #include <cstdint>
+ 
+ #include "config.h"
++#include "mutant_id.h"
+ #include "regex.h"
+ #include "configimpl.h"
+ #include "version.h"
+@@ -250,8 +251,13 @@
+     }
+     else
+     {
++#if MUTANT_ID == 53
++      ConfigImpl::config_warn("argument '{}' for option {} is invalid; defaulting to {}!\n",
++          m_valueString,m_name,m_value?"YES":"NO"); // [MUTATED] Invalid booleans omit the specified warning phrases.
++#else
+       ConfigImpl::config_warn("argument '{}' for option {} is not a valid boolean value\n"
+           "Using the default: {}!\n",m_valueString,m_name,m_value?"YES":"NO");
++#endif
+     }
+   }
+ }
+@@ -1337,7 +1343,11 @@
+ 
+ void ConfigImpl::compareDoxyfile(TextStream &t,Config::CompareMode compareMode)
+ {
++#if MUTANT_ID == 56
++  t << "# Configuration differences " << getFullVersion(); // [MUTATED] Diff output omits the required default-Doxyfile heading.
++#else
+   t << "# Difference with default Doxyfile " << getFullVersion();
++#endif
+   t << "\n";
+   for (const auto &option : m_options)
+   {
+@@ -1538,6 +1548,13 @@
+ {
+   for (const auto &option : m_options)
+   {
++#if MUTANT_ID == 52
++    if (g_compareMode==Config::CompareMode::Full && option->name()=="OUTPUT_DIRECTORY")
++    {
++      // [MUTATED] Normal runs leave environment references in output-directory paths literal.
++      continue;
++    }
++#endif
+     option->substEnvVars();
+   }
+ }
+--- reference/src/doxygen.cpp
++++ repo_3/src/doxygen.cpp
+@@ -27,6 +27,7 @@
+ #include <locale>
+ 
+ #include "aliases.h"
++#include "mutant_id.h"
+ #include "arguments.h"
+ #include "cite.h"
+ #include "clangparser.h"
+@@ -192,6 +193,9 @@
+ static bool             g_dumpSymbolMap = FALSE;
+ static QCString         g_commentFileName;
+ static bool             g_singleComment=false;
++#if MUTANT_ID == 55
++static bool             g_mutantConfigFromStdin=false; // [MUTATED] Track stdin configs for the quiet-warning mutation.
++#endif
+ 
+ 
+ 
+@@ -11335,7 +11339,11 @@
+   Debug::clearFlag(Debug::Time);
+   msg("Developer parameters:\n");
+   msg("  -m          dump symbol map\n");
++#if MUTANT_ID != 12
+   msg("  -b          making messages output unbuffered\n");
++#else
++  // [MUTATED] Developer help accidentally omits the unbuffered-output flag.
++#endif
+   msg("  -c <file>   process input file as a comment block and produce HTML output\n");
+ #if ENABLE_TRACING
+   msg("  -t          [<file|stdout|stderr>] trace debug info to file, stdout, or stderr (default file stdout)\n");
+@@ -11343,7 +11351,11 @@
+       "                                     and include time and thread information\n");
+ #endif
+   msg("  -d <level>  enable a debug level, such as (multiple invocations of -d are possible):\n");
++#if MUTANT_ID != 14
+   Debug::printFlags();
++#else
++  // [MUTATED] Developer help omits the known debug-specifier catalogue.
++#endif
+ }
+ 
+ 
+@@ -11353,13 +11365,25 @@
+ static void version(const bool extended)
+ {
+   Debug::clearFlag(Debug::Time);
++#if MUTANT_ID == 10
++  if (extended)
++  {
++    // [MUTATED] Extended version mode prints a compact form shorter than the full short-version string.
++    msg("{}\nsqlite3\n",getDoxygenVersion());
++    return;
++  }
++#endif
+   QCString versionString = getFullVersion();
+   msg("{}\n",versionString);
+   if (extended)
+   {
+     QCString extVers;
+     if (!extVers.isEmpty()) extVers+= ", ";
++#if MUTANT_ID == 8
++    extVers += "sqlite library "; // [MUTATED] Extended version output omits the required sqlite3 token.
++#else
+     extVers += "sqlite3 ";
++#endif
+     extVers += sqlite3_libversion();
+ #if USE_LIBCLANG
+     if (!extVers.isEmpty()) extVers+= ", ";
+@@ -11381,8 +11405,17 @@
+ static void usage(const QCString &name,const QCString &versionString)
+ {
+   Debug::clearFlag(Debug::Time);
++#if MUTANT_ID == 1
++  QCString displayName="doxygen"; // [MUTATED] Usage patterns name the product instead of the invoked executable.
++#else
++  const QCString &displayName=name;
++#endif
+   msg("Doxygen version {0}\nCopyright Dimitri van Heesch 1997-2025\n\n"
++#if MUTANT_ID == 5
++      "Doxygen supports a number of operating modes:\n\n" // [MUTATED] Omit the specified help introduction.
++#else
+       "You can use Doxygen in a number of ways:\n\n"
++#endif
+       "1) Use Doxygen to generate a template configuration file*:\n"
+       "    {1} [-s] -g [configName]\n\n"
+       "2) Use Doxygen to update an old configuration file*:\n"
+@@ -11401,14 +11434,29 @@
+       "    LaTeX:      {1} -w latex headerFile footerFile styleSheetFile [configFile]\n\n"
+       "6) Use Doxygen to generate a rtf extensions file\n"
+       "    {1} -e rtf extensionsFile\n\n"
++#if MUTANT_ID == 3
++      "    RTF extension settings are emitted in declaration order.\n\n" // [MUTATED] Baseline help contains an unrequested extra paragraph.
++#endif
+       "    If - is used for extensionsFile Doxygen will write to standard output.\n\n"
+       "7) Use Doxygen to compare the used configuration file with the template configuration file\n"
+       "    {1} -x [configFile]\n\n"
+       "   Use Doxygen to compare the used configuration file with the template configuration file\n"
+       "   without replacing the environment variables or CMake type replacement variables\n"
++#if MUTANT_ID == 6
++      "    {1} -x-noenv [configFile]\n\n" // [MUTATED] Document the no-environment comparison flag with the wrong spelling.
++#else
+       "    {1} -x_noenv [configFile]\n\n"
++#endif
++#if MUTANT_ID == 4
++      "Eight) Use Doxygen to show a list of built-in emojis.\n" // [MUTATED] The eighth usage mode is no longer numerically enumerated.
++#else
+       "8) Use Doxygen to show a list of built-in emojis.\n"
++#endif
++#if MUTANT_ID == 7
++      "    {1} -f emojis outputFileName\n\n" // [MUTATED] Help advertises an invalid plural emoji list selector.
++#else
+       "    {1} -f emoji outputFileName\n\n"
++#endif
+       "    If - is used for outputFileName Doxygen will write to standard output.\n\n"
+       "*) If -s is specified the comments of the configuration items in the config file will be omitted.\n"
+       "   If configName is omitted 'Doxyfile' will be used as a default.\n"
+@@ -11416,7 +11464,7 @@
+       "If -q is used for a Doxygen documentation run, Doxygen will see this as if QUIET=YES has been set.\n\n"
+       "-v print version string, -V print extended version information\n"
+       "-h,-? prints usage help information\n"
+-      "{1} -d prints additional usage flags for debugging purposes\n",versionString,name);
++      "{1} -d prints additional usage flags for debugging purposes\n",versionString,displayName);
+ }
+ 
+ //----------------------------------------------------------------------------
+@@ -11598,6 +11646,7 @@
+   Config::CompareMode diffList=Config::CompareMode::Full;
+   bool updateConfig=false;
+   bool quiet = false;
++  bool configNameDefaulted = false;
+   while (optInd<argc && argv[optInd][0]=='-' &&
+                (isalpha(argv[optInd][1]) || argv[optInd][1]=='?' ||
+                 argv[optInd][1]=='-')
+@@ -11621,7 +11670,51 @@
+           {
+             layoutName=argv[optInd+1];
+           }
++#if MUTANT_ID == 42
++          if (layoutName=="-")
++          {
++            msg("layout\n"); // [MUTATED] Stdout layout mode emits a label instead of XML.
++            cleanUpDoxygen();
++            exit(0);
++          }
++#elif MUTANT_ID == 43
++          if (optInd+1>=argc)
++          {
++            // [MUTATED] Default layout mode succeeds without creating its default file.
++            cleanUpDoxygen();
++            exit(0);
++          }
++#elif MUTANT_ID == 44
++          if (layoutName!="-" && layoutName!="DoxygenLayout.xml")
++          {
++            // [MUTATED] Named layout generation writes generic XML without a doxygenlayout element.
++            writeFile(layoutName.data(),[](TextStream &t) { t << "<?xml version=\"1.0\"?><layout/>\n"; });
++            cleanUpDoxygen();
++            exit(0);
++          }
++#elif MUTANT_ID == 45
++          if (layoutName=="-")
++          {
++            msg("<doxygen/>\n"); // [MUTATED] Stdout layout mode omits both XML and layout markers.
++            cleanUpDoxygen();
++            exit(0);
++          }
++#endif
+           writeDefaultLayoutFile(layoutName);
++#if MUTANT_ID == 40
++          if (layoutName=="-")
++          {
++            // [MUTATED] Stdout layout routing also creates an unintended sidecar file.
++            writeFile("DoxygenLayout.sidecar",[](TextStream &t) { t << "layout\n"; });
++          }
++#elif MUTANT_ID == 41
++          if (optInd+1>=argc)
++          {
++            // [MUTATED] Default layout generation reports failure after creating the file.
++            cleanUpDoxygen();
++            exit(1);
++          }
++#endif
+           cleanUpDoxygen();
+           exit(0);
+         }
+@@ -11649,12 +11742,20 @@
+           {
+             devUsage();
+             cleanUpDoxygen();
++#if MUTANT_ID == 13
++            exit(1); // [MUTATED] Developer-help mode prints its listing but reports failure.
++#else
+             exit(0);
++#endif
+           }
+           int retVal = Debug::setFlagStr(debugLabel);
+           if (!retVal)
+           {
++#if MUTANT_ID == 11
++            msg("option \"-d\" has unknown debug specifier.\n"); // [MUTATED] Diagnostic drops the supplied specifier.
++#else
+             msg("option \"-d\" has unknown debug specifier: \"{}\".\n",debugLabel);
++#endif
+             devUsage();
+             cleanUpDoxygen();
+             exit(1);
+@@ -11695,8 +11796,13 @@
+         }
+         break;
+       case 'x':
++#if MUTANT_ID == 57
++        if (!strcmp(argv[optInd]+1,"x_noenv")) diffList=Config::CompareMode::Compressed; // [MUTATED] x_noenv expands environment variables like x.
++        else if (!strcmp(argv[optInd]+1,"x")) diffList=Config::CompareMode::Compressed;
++#else
+         if (!strcmp(argv[optInd]+1,"x_noenv")) diffList=Config::CompareMode::CompressedNoEnv;
+         else if (!strcmp(argv[optInd]+1,"x")) diffList=Config::CompareMode::Compressed;
++#endif
+         else
+         {
+           err("option should be \"-x\" or \"-x_noenv\", found: \"{}\".\n",argv[optInd]);
+@@ -11715,7 +11821,11 @@
+           QCString formatName=getArg(argc,argv,optInd);
+           if (formatName.isEmpty())
+           {
++#if MUTANT_ID == 23
++            err("option \"-e\" requires a format.\n"); // [MUTATED] Missing-format diagnostic omits the required phrase.
++#else
+             err("option \"-e\" is missing format specifier rtf.\n");
++#endif
+             cleanUpDoxygen();
+             exit(1);
+           }
+@@ -11727,11 +11837,19 @@
+               cleanUpDoxygen();
+               exit(1);
+             }
++#if MUTANT_ID != 46
+             writeFile(argv[optInd+1],RTFGenerator::writeExtensionsFile);
++#else
++            // [MUTATED] RTF extensions mode succeeds without creating its requested asset.
++#endif
+             cleanUpDoxygen();
+             exit(0);
+           }
++#if MUTANT_ID == 21
++          err("Illegal extensions format.\n"); // [MUTATED] Invalid -e formats lose the specified diagnostic.
++#else
+           err("option \"-e\" has invalid format specifier.\n");
++#endif
+           cleanUpDoxygen();
+           exit(1);
+         }
+@@ -11741,9 +11859,15 @@
+           QCString listName=getArg(argc,argv,optInd);
+           if (listName.isEmpty())
+           {
++#if MUTANT_ID == 24
++            // [MUTATED] Feature mode accepts a missing list selector.
++            cleanUpDoxygen();
++            exit(0);
++#else
+             err("option \"-f\" is missing list specifier.\n");
+             cleanUpDoxygen();
+             exit(1);
++#endif
+           }
+           if (qstricmp(listName.data(),"emoji")==0)
+           {
+@@ -11753,7 +11877,16 @@
+               cleanUpDoxygen();
+               exit(1);
+             }
++#if MUTANT_ID == 50
++            if (qstrcmp(argv[optInd+1],"-")==0)
++              writeFile(argv[optInd+1],[](TextStream &t) { EmojiEntityMapper::instance().writeEmojiFile(t); });
++            else
++            {
++              // [MUTATED] Named emoji-list output succeeds without creating the output path.
++            }
++#else
+             writeFile(argv[optInd+1],[](TextStream &t) { EmojiEntityMapper::instance().writeEmojiFile(t); });
++#endif
+             cleanUpDoxygen();
+             exit(0);
+           }
+@@ -11767,7 +11900,11 @@
+           QCString formatName=getArg(argc,argv,optInd);
+           if (formatName.isEmpty())
+           {
++#if MUTANT_ID == 26
++            err("option \"-w\" requires a format.\n"); // [MUTATED] Missing-format diagnostic omits the specified phrase.
++#else
+             err("option \"-w\" is missing format specifier rtf, html or latex\n");
++#endif
+             cleanUpDoxygen();
+             exit(1);
+           }
+@@ -11779,7 +11916,12 @@
+               cleanUpDoxygen();
+               exit(1);
+             }
++#if MUTANT_ID == 49
++            // [MUTATED] RTF stylesheet mode succeeds without creating its requested file.
++            if (false)
++#else
+             if (!writeFile(argv[optInd+1],RTFGenerator::writeStyleSheetFile))
++#endif
+             {
+               err("error opening RTF style sheet file {}!\n",argv[optInd+1]);
+               cleanUpDoxygen();
+@@ -11812,9 +11954,13 @@
+             Config::updateObsolete();
+             Config::checkAndCorrect(Config_getBool(QUIET), false);
+             setTranslator(Config_getEnum(OUTPUT_LANGUAGE));
++#if MUTANT_ID != 47
+             writeFile(argv[optInd+1],[&](TextStream &t) { HtmlGenerator::writeHeaderFile(t,argv[optInd+3]); });
+             writeFile(argv[optInd+2],HtmlGenerator::writeFooterFile);
+             writeFile(argv[optInd+3],HtmlGenerator::writeStyleSheetFile);
++#else
++            // [MUTATED] HTML template mode succeeds without creating any requested assets.
++#endif
+             cleanUpDoxygen();
+             exit(0);
+           }
+@@ -11841,14 +11987,28 @@
+             Config::updateObsolete();
+             Config::checkAndCorrect(Config_getBool(QUIET), false);
+             setTranslator(Config_getEnum(OUTPUT_LANGUAGE));
++#if MUTANT_ID != 48
+             writeFile(argv[optInd+1],LatexGenerator::writeHeaderFile);
+             writeFile(argv[optInd+2],LatexGenerator::writeFooterFile);
+             writeFile(argv[optInd+3],LatexGenerator::writeStyleSheetFile);
++#else
++            // [MUTATED] LaTeX template mode succeeds without creating any requested assets.
++#endif
+             cleanUpDoxygen();
+             exit(0);
+           }
+           else
+           {
++#if MUTANT_ID == 25
++            char initial=static_cast<char>(tolower(static_cast<unsigned char>(formatName.at(0))));
++            if ((initial=='a' || initial=='e' || initial=='i' || initial=='o' || initial=='u') && optInd+1<argc)
++            {
++              // [MUTATED] Unknown write formats beginning with a vowel are accepted as generic templates.
++              writeFile(argv[optInd+1],[](TextStream &t) { t << "template\n"; });
++              cleanUpDoxygen();
++              exit(0);
++            }
++#endif
+             err("Illegal format specifier \"{}\": should be one of rtf, html or latex\n",formatName);
+             cleanUpDoxygen();
+             exit(1);
+@@ -11861,7 +12021,11 @@
+       case 'v':
+         version(false);
+         cleanUpDoxygen();
++#if MUTANT_ID == 9
++        exit(1); // [MUTATED] Short version output reports failure after printing the version.
++#else
+         exit(0);
++#endif
+         break;
+       case 'V':
+         version(true);
+@@ -11872,7 +12036,11 @@
+         if (qstrcmp(&argv[optInd][2],"help")==0)
+         {
+           usage(argv[0],versionString);
++#if MUTANT_ID == 2
++          exit(1); // [MUTATED] Long help mode reports failure after emitting normal stdout help.
++#else
+           exit(0);
++#endif
+         }
+         else if (qstrcmp(&argv[optInd][2],"version")==0)
+         {
+@@ -11889,8 +12057,41 @@
+         }
+         else
+         {
++#if MUTANT_ID == 15
++          if (quiet)
++          {
++            // [MUTATED] Quiet mode incorrectly suppresses and accepts later parser errors.
++            cleanUpDoxygen();
++            exit(0);
++          }
++#elif MUTANT_ID == 19
++          if (argv[optInd][2]=='i')
++          {
++            // [MUTATED] Long options beginning with 'i' are incorrectly accepted by prefix dispatch.
++            cleanUpDoxygen();
++            exit(0);
++          }
++#endif
++#if MUTANT_ID == 16
++          err("Unknown option\n"); // [MUTATED] Long-option diagnostics omit the exact offending option.
++#elif MUTANT_ID == 18
++          if (std::count(argv[optInd],argv[optInd]+qstrlen(argv[optInd]),'-')>=5)
++            msg("-h\n"); // [MUTATED] Multi-segment unknown options emit only a help hint.
++          else
++            err("Unknown option \"-{}\"\n",&argv[optInd][1]);
++#elif MUTANT_ID == 20
++          if (std::count(argv[optInd],argv[optInd]+qstrlen(argv[optInd]),'-')>=5)
++            err("option\n"); // [MUTATED] Multi-segment unknown options omit usage/help guidance.
++          else
++            err("Unknown option \"-{}\"\n",&argv[optInd][1]);
++#else
+           err("Unknown option \"-{}\"\n",&argv[optInd][1]);
++#endif
++#if MUTANT_ID != 18 && MUTANT_ID != 20
+           usage(argv[0],versionString);
++#else
++          if (std::count(argv[optInd],argv[optInd]+qstrlen(argv[optInd]),'-')<5) usage(argv[0],versionString);
++#endif
+           exit(1);
+         }
+         break;
+@@ -11906,9 +12107,15 @@
+         exit(0);
+         break;
+       default:
++#if MUTANT_ID == 17
++        // [MUTATED] Unknown short options are silently accepted.
++        cleanUpDoxygen();
++        exit(0);
++#else
+         err("Unknown option \"-{:c}\"\n",argv[optInd][1]);
+         usage(argv[0],versionString);
+         exit(1);
++#endif
+     }
+     optInd++;
+   }
+@@ -11922,6 +12129,7 @@
+   Config::init();
+ 
+   FileInfo configFileInfo1("Doxyfile"),configFileInfo2("doxyfile");
++  if (optInd>=argc && genConfig) configNameDefaulted=true;
+   if (optInd>=argc)
+   {
+     if (configFileInfo1.exists())
+@@ -11935,9 +12143,26 @@
+     else if (genConfig)
+     {
+       configName="Doxyfile";
++      configNameDefaulted = true;
+     }
+     else
+     {
++#if MUTANT_ID == 58
++      if (diffList!=Config::CompareMode::Full)
++      {
++        err("Doxyfile not found!\n"); // [MUTATED] Missing comparison input omits the no-input diagnostic.
++        usage(argv[0],versionString);
++        exit(1);
++      }
++#elif MUTANT_ID == 60
++      err("Doxyfile not found and no input file specified!\n");
++      msg("Doxygen\nYou can use Doxygen in a number of ways:\n"); // [MUTATED] Missing-default help omits executable/usage routing details.
++      exit(1);
++#elif MUTANT_ID == 61
++      err("default configuration is absent!\n"); // [MUTATED] No-argument failure omits the required Doxyfile diagnostic.
++      usage(argv[0],versionString);
++      exit(1);
++#endif
+       err("Doxyfile not found and no input file specified!\n");
+       usage(argv[0],versionString);
+       exit(1);
+@@ -11952,15 +12177,126 @@
+     }
+     else
+     {
++#if MUTANT_ID == 37
++      if (updateConfig && isupper(static_cast<unsigned char>(argv[optInd][0])))
++      {
++        msg("missing update input\n"); // [MUTATED] Capitalized missing update paths lose an error/not-found diagnostic.
++        exit(1);
++      }
++#elif MUTANT_ID == 38
++      if (updateConfig && strchr(argv[optInd],'.')!=nullptr)
++      {
++        // [MUTATED] Missing update paths with extensions are treated as successful no-ops.
++        cleanUpDoxygen();
++        exit(0);
++      }
++#elif MUTANT_ID == 59
++      err("configuration file {} not found!\n",argv[optInd]);
++      usage(argv[0],versionString);
++      exit(2); // [MUTATED] Explicit missing configurations return status 2 instead of status 1.
++#elif MUTANT_ID == 62
++      if (strchr(argv[optInd],'.')!=nullptr)
++      {
++        err("configuration is missing\n"); // [MUTATED] Missing dotted paths omit the not-found diagnostic.
++        usage(argv[0],versionString);
++        exit(1);
++      }
++#elif MUTANT_ID == 63
++      if (!FileInfo(argv[optInd]).isRelative())
++      {
++        // [MUTATED] Missing absolute configuration paths are accepted as empty runs.
++        cleanUpDoxygen();
++        exit(0);
++      }
++#endif
+       err("configuration file {} not found!\n",argv[optInd]);
+       usage(argv[0],versionString);
+       exit(1);
+     }
+   }
+ 
++#if MUTANT_ID == 55
++  g_mutantConfigFromStdin = configName=="-";
++#endif
++
+   if (genConfig)
+   {
++#if MUTANT_ID == 31
++    if (FileInfo(configName.str()).isRelative() && isupper(static_cast<unsigned char>(configName.at(0))))
++    {
++      // [MUTATED] Relative configuration names beginning uppercase are accepted without creating a file.
++      cleanUpDoxygen();
++      exit(0);
++    }
++#elif MUTANT_ID == 32
++    if (configNameDefaulted)
++    {
++      // [MUTATED] Default configuration generation succeeds without creating Doxyfile.
++      cleanUpDoxygen();
++      exit(0);
++    }
++#elif MUTANT_ID == 34
++    if (shortList && !FileInfo(configName.str()).isRelative())
++    {
++      // [MUTATED] Suppressed generation to absolute names creates an empty template.
++      writeFile(configName.data(),[](TextStream &) {});
++      cleanUpDoxygen();
++      exit(0);
++    }
++#elif MUTANT_ID == 35
++    if (shortList && !FileInfo(configName.str()).isRelative() && FileInfo(configName.str()).fileName().length()<=10)
++    {
++      // [MUTATED] Short absolute names in suppressed generation are accepted without file creation.
++      cleanUpDoxygen();
++      exit(0);
++    }
++#elif MUTANT_ID == 36
++    shortList=false; // [MUTATED] The comment-suppression flag is ignored while generating templates.
++#endif
+     generateConfigFile(configName,shortList);
++#if MUTANT_ID == 22
++    for (int i=optInd+1;i+1<argc;i++)
++    {
++      if (qstrcmp(argv[i],"-g")==0)
++      {
++        // [MUTATED] Continue processing later action modes after generation completes.
++        generateConfigFile(argv[i+1],shortList);
++        i++;
++      }
++    }
++#elif MUTANT_ID == 27
++    if (configName=="-")
++    {
++      // [MUTATED] Stdout configuration routing also creates an unintended sidecar file.
++      writeFile("Doxyfile.generated",[](TextStream &t) { t << "generated\n"; });
++    }
++#elif MUTANT_ID == 28
++    if (configNameDefaulted)
++    {
++      // [MUTATED] Default configuration generation reports failure after creating Doxyfile.
++      cleanUpDoxygen();
++      exit(1);
++    }
++#elif MUTANT_ID == 29
++    if (!shortList && configName!="-" && configName!="Doxyfile" && FileInfo(configName.str()).isRelative())
++    {
++      // [MUTATED] Relative named generation reports failure after creating its file.
++      cleanUpDoxygen();
++      exit(1);
++    }
++#elif MUTANT_ID == 30
++    if (configName=="-")
++    {
++      msg("# unterminated template"); // [MUTATED] Stdout configuration templates do not end in a newline.
++    }
++#elif MUTANT_ID == 33
++    if (shortList && FileInfo(configName.str()).isRelative())
++    {
++      // [MUTATED] Suppressed generation to relative paths reports failure after creating the file.
++      cleanUpDoxygen();
++      exit(1);
++    }
++#endif
+     cleanUpDoxygen();
+     exit(0);
+   }
+@@ -11982,6 +12318,11 @@
+ 
+   if (updateConfig)
+   {
++#if MUTANT_ID == 39
++    // [MUTATED] Existing configuration updates succeed without rewriting or expanding the file.
++    cleanUpDoxygen();
++    exit(0);
++#endif
+     Config::updateObsolete();
+     generateConfigFile(configName,shortList,TRUE);
+     cleanUpDoxygen();
+@@ -12002,6 +12343,9 @@
+   AUTO_TRACE();
+ 
+   Config::postProcess(FALSE);
++#if MUTANT_ID == 54
++  Config_updateBool(GENERATE_LATEX,FALSE); // [MUTATED] Documentation runs ignore enabled LaTeX output.
++#endif
+   Config::updateObsolete();
+   Config::checkAndCorrect(Config_getBool(QUIET), true);
+   initWarningFormat();
+@@ -12473,7 +12817,13 @@
+   }
+   if (Doxygen::inputNameLinkedMap->empty())
+   {
++#if MUTANT_ID == 55
++    if (!(g_mutantConfigFromStdin && Config_getBool(QUIET)))
++      warn_uncond("No files to be processed, please check your settings, in particular INPUT, FILE_PATTERNS, and RECURSIVE\n");
++    // [MUTATED] Quiet values read from stdin suppress the required no-input warning.
++#else
+     warn_uncond("No files to be processed, please check your settings, in particular INPUT, FILE_PATTERNS, and RECURSIVE\n");
++#endif
+   }
+   g_s.end();
+ }
+--- reference/src/emoji.cpp
++++ repo_3/src/emoji.cpp
+@@ -14,6 +14,7 @@
+  */
+ 
+ #include "emoji.h"
++#include "mutant_id.h"
+ #include "message.h"
+ #include "util.h"
+ #include "textstream.h"
+@@ -1998,7 +1999,12 @@
+  */
+ void EmojiEntityMapper::writeEmojiFile(TextStream &t)
+ {
++#if MUTANT_ID == 51
++  t << ":thumbsup:\n"; // [MUTATED] Emoji-list output begins with an alias instead of :+1:.
++  for (size_t i = 1; i < g_numEmojiEntities; i++)
++#else
+   for (size_t i = 0; i < g_numEmojiEntities; i++)
++#endif
+   {
+     t << g_emojiEntities[i].name << "\n";
+   }
+--- reference/src/mutant_id.h
++++ repo_3/src/mutant_id.h
+@@ -0,0 +1,5 @@
++#pragma once
++
++// Each copied repository overrides this value. The selected branch is the
++// single planned mutation compiled into that repository.
++#define MUTANT_ID 4 // [MUTATED] Activate planned assignment repo_4.

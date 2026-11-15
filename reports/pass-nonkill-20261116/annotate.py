@@ -1,0 +1,88 @@
+"""Fixed human semantic adjudications. Does not invoke models or evaluation."""
+import json
+from pathlib import Path
+ROOT = Path(__file__).resolve().parent
+# category, requirement_gap, judgement, representative mutant, analysis, reference anchor
+NOTES = {
+'55b387e918ca47203cdc': ('E',False,'CONFIRMED_SCOPE_DIFFERENCE','0f4db1a21b4da121',
+'生成测试真实调用 lookupAssetTransactions，检查 round、数组长度和指定 sender，与场景列出的结果一致。参考 IndexerResponses.verifyLookupAssetTransactionsResponse 将整个响应交给 verifyResponse，扩大了响应比较范围。存活项包括 contentType、toString、rekeyTo、authAddr、TxType 和 Base64 解码。可以确认检查范围不同，六个变异体的逐一动态传播尚无日志证明，不能认定遗漏了场景明确要求的字段。',
+'IndexerResponses.java|verifyLookupAssetTransactionsResponse'),
+'af2db3aaa3d3aed0e730': ('A;B;G',True,'CONFIRMED_REQUIREMENT_GAP','a1947a0f71599b25',
+'场景要求 streaming stub model 驱动真实 agent 写文件、向模型提供完整工具集并从 transcript 报告模式。生成代码的自定义 runner 直接 os.WriteFile，tools() 自建 full-agent-tool-set 字符串，send() 将输入 mode 直接赋给 transcript。三项检查均绕过相应生产行为。参考用 agent.NewAgent(...).Run 和真实 OpenAI transport，读取 stub 收到的 tools 并查询 transcript。toolsets return defs→nil 的存活与该绕过直接吻合。250 个存活项包括大量配置与会话路径，不能全部赋予同一已证实原因。',
+'bdd_ask_mode_e2e_test.go|offeredTools'),
+'aa4358990ba808413e01': ('E',False,'CONFIRMED_SCOPE_DIFFERENCE','2ee23a035cf23bc7',
+'生成测试真实 GET reasoning-levels，严格比较 low/medium/high 和 detected=true。参考从 YAML 执行 config.Load，生成测试直接构造 Config，导致配置加载路径覆盖不同。参考还检查响应 ok，生成只检查 HTTP200、levels、detected。ok=true→false 存活能由未检查该字段解释，但 Gherkin 未明确要求 ok 字段。其余104个存活主要位于配置模块，逐个传播原因未全部确定。',
+'bdd_reasoning_levels_test.go|startGateway'),
+'8922f1586640131b7b45': ('E',False,'CONFIRMED_SCOPE_DIFFERENCE','86f7f3383643ec3a',
+'两套测试都真实 Load/BuildCatalog 并检查 project copy 覆盖 user copy。参考 loader 额外配置 .claude/agents，生成只配置需求列出的 home/agents 和 .coddy/agents。唯一变异将 os.Stat 后的 err!=nil || !info.IsDir() 改为 &&；不存在的额外目录触发错误处理差异。已建目录的正常路径不区分该变异。当前需求没有要求不存在的第三个目录，属于参考准备路径更宽。该解释由代码条件与官方 kill/pass 记录支持，未补跑 panic 复验。',
+'bdd_catalog_test.go|loader := NewLoader'),
+'c543ea848ebeeeb4b47c': ('E;G',False,'INSUFFICIENT_EVIDENCE','259c3d4780064f6c',
+'生成测试真实 GET catalog、POST trust、再 GET 并检查 builtin/scope/needs_approval/trusted，覆盖场景显式结果。参考 GET 不传 cwd、POST 用空对象，生成显式传与默认目录相同的 cwd；cwd空值判断反转在生成路径产生相同目录，因而存活。这一项可解释为输入路径差异。另三项是后台池加锁/计数，缺少足以归因的逐变异执行细节，整项保留证据不足。官方另有5个 dropped，不算存活。',
+'bdd_subagents_test.go|func (s *subagentsHTTPState) getCatalog'),
+'f54d3444bfce11f4c30f': ('A;G',True,'CONFIRMED_REQUIREMENT_GAP','',
+'生成代码将商品名保存在本地数组，用匿名类封装同一数组形成 order。voucher、地址和多个背景步骤为空实现。Then 只检查这个自建对象的条目数。参考 OrderContext.transformCartToOrder 调用状态机完成真实购物车转订单。API_F1和CovJ均为0，200个官方 gold-killed 变异均存活，与业务链未进入一致。这里有直接业务验证缺失证据；未逐一证明全部200项都属于该场景的必要行为。',
+'OrderContext.php|function transformCartToOrder'),
+'b8a41623500427f1c983': ('B',True,'GAP_CONFIRMED_SURVIVAL_CAUSE_UNRESOLVED','12499801056c95cd',
+'真实走网页创建/搜索流程，但对相似请愿表逐行仅做全页 action 与 signatures 各自存在性检查，没有验证标题与签名数属于同一条结果。参考 search_steps.rb 在带索引的 petition-item-existing 内检查每行，保留对应关系。该关系缺失是确定的断言问题。11项存活多涉及 rejection、embedding、签名辅助逻辑；现有记录不能证明任一存活正是由标题/签名错配未检查造成。分开记录观察到的缺口和未确认的存活原因。',
+'search_steps.rb|Then(/^I should see the following similar petitions'),
+'1e5494bb049979c3d5ea': ('E',False,'CONFIRMED_SCOPE_DIFFERENCE','f214d7ed8fb0a867',
+'生成真实建立四个请愿、过滤并检查数量和顺序。唯一存活删除 has_one :debate_outcome 关联。参考准备步骤显式调用 petition.debate_outcome=nil，生成不调用该关联，直接设置 debate 时间字段。参考会在准备阶段依赖该方法，需求正文没有要求访问关联API。能确认额外准备路径依赖，无法把关联删除的所有业务影响推论成该场景缺陷。生成 markup 校验较窄，尚无对应存活证据。',
+'petition_steps.rb|passed the threshold for a debate less'),
+'93eac4b8da28527c6348': ('B;C',True,'CONFIRMED_REQUIREMENT_GAP','f9696266b289835c',
+'需求指定 KapuaEntityNotFoundException 及消息片段。生成在随机scope与随机ID上delete，捕获任何KapuaException后只将ExceptionCaught=true。参考使用SYS_SCOPE_ID并调用primeException/verifyException核验异常。消息格式返回null仍存活，生成没有核验错误种类和消息，错误异常也能满足最后布尔检查。已有执行记录三个步骤passed。21项存活中部分数据库/初始化路径不能逐一归因；原始record_count_anomaly=true需保留，逐变异结果已按ID唯一核对。',
+'AccountServiceSteps.java|public void deleteRandomAccount'),
+'91908943e91df807937c': ('E',False,'CONFIRMED_SCOPE_DIFFERENCE','c4f4ea85e92a2ef1',
+'生成真实create并从StepData保存的同一Tag执行setDescription/update，异常向外抛出；满足场景要求的更新无异常。参考按名字构造查询、从结果取Tag后更新。五个存活均位于查询谓词/排序/结果集合相关路径，生成直接保留对象而不查询。需求未明确要求查询API或重新加载对象，不能把未走参考检索路径直接归为行为断言不足。',
+'TagServiceSteps.java|public void descriptionOfTagIsChangedInto'),
+'57aa0d6af8ecf8f65748': ('E',False,'CONFIRMED_SCOPE_DIFFERENCE','6422717afbde519c',
+'生成真实BulkDeleteProductCommand，确认两条商品不存在并保留第三条standard。准备商品时直接Product.add并自设link_rewrite；参考AddProductCommand以名字创建商品。唯一存活在StringModifier.replaceAccentedChars的transliterator初始化条件，处于名称/URL处理路径。已确认准备调用不同且删除行为有断言，slug调用链到该变异的精确传播仍属推断。需求没有规定自动转写URL。',
+'AddProductFeatureContext.php|private function addProduct'),
+'ea8281d48c4736a84d4f': ('G',False,'INSUFFICIENT_EVIDENCE','3cb097213a55f42a',
+'生成逐步add_paragraph/add_run/add_text/save，随后重新Document(path)读取文本，确实有持久化检查。两个存活删除save的委托调用，与读回成功存在张力。生成使用固定文件名且不先删除已有文件，参考save步骤先删除目标文件。旧文件可能遮蔽save失效是合理线索，但缺少每个变异执行前后的文件快照，不能证实污染，也不能认定缺少save断言。',
+'shared.py|def when_save_document'),
+'868a6aa808840dbc8911': ('E',False,'CONFIRMED_SCOPE_DIFFERENCE','c1bb3af0cdf5e157',
+'生成构造真实footer，包含paragraph/table/paragraph，检查类型顺序与元素身份，直接验证需求。参考从blk-paras-and-tables文件加载footer。唯一存活让加载关系的add_relationship返回None。生成的程序化构造与参考加载路径不同，未发现顺序断言缺失。返回值具体传播以代码及官方结果为证，缺少逐变异堆栈。',
+'block.py|def given_a_footer_with_paragraphs_and_tables'),
+'1271c9e979cbd7b1e251': ('E',False,'CONFIRMED_SCOPE_DIFFERENCE','2ccb0149fd369294',
+'生成通过Document().comments.add_comment(author=Jane Doe)建立Comment并严格核对author。参考加载带图像和关系的comments-rich-para文档，comments.get(0)取对象，再核对Steve Canny。get返回None、图像/关系加载等11项存活对应参考准备路径。场景只指定一个Comment及其author，未限定从富文档检索，当前证据不支持将这些差异认定为author要求漏测。',
+'comments.py|def given_a_comment_object'),
+'676d56c1c72dc4237805': ('C',True,'CONFIRMED_REQUIREMENT_GAP','5d6e664690271921',
+'需求Given已有headers和footers。生成只getattr六种代理对象，未访问内容或建立实际定义。section.py的header getter仅创建代理，实际定义由_get_or_add_definition延迟创建。参考加载doc-add-section已有定义文档。删除sentinel_sectPr.remove(hdrftr_ref)仍通过，符合起始文档没有这些引用的条件。六条linked=True断言存在，缺口在准备状态。',
+'document.py|def given_a_single_section_Document_object_with_headers_and_footers'),
+'1853a37b8ab3b3398cb0': ('E',False,'CONFIRMED_SCOPE_DIFFERENCE','827f7cde9223d27c',
+'生成对0/1/2个w:lastRenderedPageBreak逐例构造真实run并严格比较contains_page_break。参考打开par-rendered-page-breaks后从document.paragraphs和paragraph.runs取对象。七项存活涉及集合访问、XML列表、包关系。显式0/1/2条件均有对应构造和断言，额外集合/文件加载覆盖解释了差异，不能推出page-break需求漏测。',
+'text.py|def given_a_run_having_rendered_page_breaks'),
+'d0c14b3269768f0f2219': ('E',False,'CONFIRMED_SCOPE_DIFFERENCE','bb8d2e57e1c4b75e',
+'生成迭代取首个latent style、记名与长度、delete，再验证少一条和按名查找抛KeyError。参考先加载已知styles并统计普通styles数量，再按Normal查找后delete。存活包含成功按名查找的return _LatentStyle及普通styles长度/XPath路径；生成删除前用迭代而非按名成功查找，删除后走KeyError分支。需求两个删除后条件均有检查。',
+'styles.py|def when_I_delete_a_latent_style'),
+'a152def3525939e865e0': ('E;C?',False,'CONFIRMED_SCOPE_DIFFERENCE','90cba801ac9a1512',
+'生成用add_table返回值取cell并设置/核对1inch，参考从tbl-props文档的tables列表取cell。两个存活都使tables访问返回None，因生成不走tables检索而存活。另有准备风险，no explicit setting分支只跳过赋值，没有证明新建cell确实无宽度；该条件未经当前证据确认，标为C待验证，未计入明确需求缺口。',
+'table.py|def given_a_table_cell_having_a_width_of_width'),
+'926d70f9bc8dfb7b1e42': ('E',False,'CONFIRMED_SCOPE_DIFFERENCE','90cba801ac9a1512',
+'生成新建表格并配置None/AUTO/AT_LEAST，严格核对row.height_rule。参考从tbl-props加载并经document.tables索引已有行。两个存活是document.tables和BlockItemContainer.tables返回None，直接创建并保留table不触发这两个getter。可证差异在对象获得路径，当前场景没有规定必须加载已有文档。',
+'table.py|def given_a_table_row_having_height_rule_state'),
+'6133143477fd496741d4': ('E',False,'CONFIRMED_SCOPE_DIFFERENCE','244a6a41b576e15e',
+'生成建立run.font并赋Avenir Black或保留None后精确比较。参考通过document.styles[Normal/Having Typeface].font获得Font。18个存活集中于style查找、样式部件和枚举转换，包含Style.font返回None。需求没有限定Font必须来自style，不能将run来源自动视为不满足需求；其余辅助路径传播未逐个证实。',
+'font.py|def given_a_font_having_typeface_name'),
+'73aac7a456cee70beb76': ('E',False,'CONFIRMED_SCOPE_DIFFERENCE','244a6a41b576e15e',
+'生成对run.font进行None→Avenir Black、Avenir Black→Calibri、Avenir Black→None设置并核对。参考选取命名style.font执行相同结果检查。17项存活的样式解析/部件路径来自该接收者差异。明确赋值结果有断言，尚无证据证明需求限定style来源。',
+'font.py|def given_a_font_having_typeface_name'),
+'53d3a58715c0a98ddba3': ('E',False,'CONFIRMED_SCOPE_DIFFERENCE','827f7cde9223d27c',
+'生成从add_run直接拿font，对font.color做ColorFormat类型检查，符合唯一Then。参考从txt-font-props文件的paragraphs[0].runs[0]获得font。四项存活均是段落/run/XML列表访问返回None。不能因这里没有RGB值断言就归B，当前需求只要求类型。',
+'font.py|def given_a_font'),
+'4464acd5efa59af497a5': ('E',False,'CONFIRMED_SCOPE_DIFFERENCE','28e96805bf0c0d27',
+'生成针对四个段落属性分别设置None/True/False并用is比较，覆盖12个示例。参考在Normal/Base/Citation命名style的paragraph_format上读取。16项存活涉及样式部件/检索及Style.paragraph_format getter。需求没有限定其接收者必须是style，当前应保留准备路径更宽解释。',
+'parfmt.py|def given_a_paragraph_format_having_prop_set'),
+'7627df83491b90a0f0fa': ('A;B;D',True,'CONFIRMED_REQUIREMENT_GAP','',
+'生成选择shipping/payment并直接dispatch CompleteOrder，最后从sharedStorage中的同一order对象读取email/currency。需求规定administrator应该看见已下单的货币；参考登录管理员并通过adminClient.show读取订单的currencyCode。生成未检验管理员视角、API返回或持久化后重新读取。142个存活包含管理员订单query extension与API序列化路径，代表性漏检与绕过观测边界相符，不能归因全部142项。',
+'OrderContext.php|public function theAdministratorShouldSeeThatThisOrderHasBeenPlacedIn'),
+}
+assert len(NOTES)==24
+for key, (category,gap,status,mutant,analysis,anchor) in NOTES.items():
+ d=ROOT/'evidence'/key
+ rec=dict(artifact_id=key,category=category,requirement_gap_confirmed=gap,adjudication=status,representative_mutant=mutant,analysis=analysis,reference_anchor=anchor,method='manual semantic comparison of frozen requirement, code and existing results',new_execution=False)
+ p=d/'analysis.json'
+ if p.exists():
+  assert json.loads(p.read_text())==rec, f'cache differs: {key}'
+ else:p.write_text(json.dumps(rec,ensure_ascii=False,indent=2)+'\n')
+print('Cached',len(NOTES),'case adjudications')

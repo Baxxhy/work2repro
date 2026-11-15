@@ -1,0 +1,13 @@
+[
+  {
+    "instance_id": "e-petitions/features/joe_searches_for_an_archived_petition.feature:38",
+    "model_name_or_path": "codex-gpt-6-luna-medium",
+    "view": "th",
+    "files": [
+      {
+        "path": "features/step_definitions/archived_petition_search_steps.rb",
+        "content": "Given('the following archived petitions exist:') do |table|\n  table.hashes.each do |attributes|\n    attributes.transform_values! { |value| value == '' ? nil : value }\n    attributes['signature_count'] = attributes['signature_count'].to_i if attributes['signature_count']\n\n    traits = attributes['state'] == 'rejected' ? [:rejected] : []\n    FactoryBot.create(:archived_petition, *traits, **attributes.symbolize_keys)\n  end\nend\n\nWhen('I go to the archived petitions page') do\n  visit archived_petitions_path\nend\n\nWhen('I fill in \"search\" with the id of the archived petition {string}') do |action|\n  petition = Archived::Petition.find_by!(action: action)\n  fill_in 'search', with: petition.id\nend\n\nWhen('I press {string}') do |button|\n  click_button(button)\nend\n\nThen('I should be on the archived petition page for {string}') do |action|\n  petition = Archived::Petition.find_by!(action: action)\n  expect(page).to have_current_path(archived_petition_path(petition))\nend\n"
+      }
+    ]
+  }
+]

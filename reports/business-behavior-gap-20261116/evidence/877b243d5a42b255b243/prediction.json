@@ -1,0 +1,13 @@
+[
+  {
+    "instance_id": "algorand-sdk/features/unit/offline.feature:4",
+    "model_name_or_path": "codex-gpt-6-luna-medium",
+    "view": "th",
+    "files": [
+      {
+        "path": "src/test/java/com/algorand/algosdk/unit/OfflineSteps.java",
+        "content": "package com.algorand.algosdk.unit;\n\nimport com.algorand.algosdk.account.Account;\nimport com.algorand.algosdk.crypto.Address;\nimport io.cucumber.java.en.When;\nimport io.cucumber.java.en.Then;\n\nimport static org.assertj.core.api.Assertions.assertThat;\n\npublic class OfflineSteps {\n    private Account account;\n    private String originalAddress;\n    private Address decodedAddress;\n    private String encodedAddress;\n\n    @When(\"I generate a key\")\n    public void generateKey() throws Exception {\n        account = new Account();\n        originalAddress = account.getAddress().toString();\n    }\n\n    @When(\"I decode the address\")\n    public void decodeAddress() throws Exception {\n        decodedAddress = new Address(originalAddress);\n    }\n\n    @When(\"I encode the address\")\n    public void encodeAddress() {\n        encodedAddress = decodedAddress.toString();\n    }\n\n    @Then(\"the address should still be the same\")\n    public void addressShouldStillBeTheSame() {\n        assertThat(encodedAddress).isEqualTo(originalAddress);\n    }\n}\n"
+      }
+    ]
+  }
+]

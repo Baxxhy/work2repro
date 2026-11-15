@@ -1,0 +1,13 @@
+[
+  {
+    "instance_id": "algorand-sdk/features/unit/program_sanity_check.feature:3",
+    "model_name_or_path": "codex-gpt-6-luna-medium",
+    "view": "th",
+    "files": [
+      {
+        "path": "src/test/java/com/algorand/algosdk/unit/ProgramSanityCheckSteps.java",
+        "content": "package com.algorand.algosdk.unit;\n\nimport com.algorand.algosdk.crypto.LogicsigSignature;\nimport io.cucumber.java.en.Given;\nimport io.cucumber.java.en.Then;\nimport io.cucumber.java.en.When;\n\nimport java.util.Base64;\n\nimport static org.assertj.core.api.Assertions.assertThat;\n\npublic class ProgramSanityCheckSteps {\n    private byte[] programBytes;\n    private Throwable sanityCheckError;\n\n    @Given(\"a base64 encoded program bytes for heuristic sanity check {string}\")\n    public void givenBase64ProgramBytes(String encoded) {\n        programBytes = Base64.getDecoder().decode(encoded);\n    }\n\n    @When(\"I start heuristic sanity check over the bytes\")\n    public void startHeuristicSanityCheck() {\n        try {\n            new LogicsigSignature(programBytes);\n        } catch (Throwable error) {\n            sanityCheckError = error;\n        }\n    }\n\n    @Then(\"if the heuristic sanity check throws an error, the error contains {string}\")\n    public void checkHeuristicSanityCheckError(String expectedMessage) {\n        if (expectedMessage.isEmpty()) {\n            assertThat(sanityCheckError).isNull();\n        } else {\n            assertThat(sanityCheckError).isNotNull();\n            assertThat(sanityCheckError.getMessage()).contains(expectedMessage);\n        }\n    }\n}\n"
+      }
+    ]
+  }
+]

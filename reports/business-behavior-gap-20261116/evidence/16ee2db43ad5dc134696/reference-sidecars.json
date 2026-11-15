@@ -1,0 +1,98 @@
+[
+  {
+    "source": "/root/lby-docker/req2test/user/benchmark/kits/coreshop/1.2/exec/release/gold/d7b4745ff6d49de5.json",
+    "record": {
+      "context_classes": [
+        "CoreShop\\Behat\\Context\\Domain\\CurrencyContext",
+        "CoreShop\\Behat\\Context\\Setup\\CountryContext",
+        "CoreShop\\Behat\\Context\\Setup\\CurrencyContext",
+        "CoreShop\\Behat\\Context\\Setup\\StoreContext",
+        "CoreShop\\Behat\\Context\\Transform\\CurrencyContext"
+      ],
+      "di_fragment": {
+        "coreshop.behat.context.domain.currency": {
+          "arguments": [
+            "@coreshop.repository.currency",
+            "@CoreShop\\Component\\Currency\\Context\\CurrencyContextInterface",
+            "@CoreShop\\Component\\Currency\\Formatter\\MoneyFormatterInterface"
+          ],
+          "class": "CoreShop\\Behat\\Context\\Domain\\CurrencyContext",
+          "tags": [
+            {
+              "name": "fob.context_service"
+            }
+          ]
+        },
+        "coreshop.behat.context.setup.country": {
+          "arguments": [
+            "@coreshop.behat.shared_storage",
+            "@doctrine.orm.entity_manager",
+            "@coreshop.factory.country",
+            "@coreshop.repository.country",
+            "@CoreShop\\Component\\Address\\Context\\FixedCountryContext",
+            "%kernel.project_dir%"
+          ],
+          "class": "CoreShop\\Behat\\Context\\Setup\\CountryContext",
+          "tags": [
+            {
+              "name": "fob.context_service"
+            }
+          ]
+        },
+        "coreshop.behat.context.setup.currency": {
+          "arguments": [
+            "@coreshop.behat.shared_storage",
+            "@doctrine.orm.entity_manager",
+            "@coreshop.factory.currency",
+            "@coreshop.repository.currency",
+            "@CoreShop\\Component\\Currency\\Context\\FixedCurrencyContext"
+          ],
+          "class": "CoreShop\\Behat\\Context\\Setup\\CurrencyContext",
+          "tags": [
+            {
+              "name": "fob.context_service"
+            }
+          ]
+        },
+        "coreshop.behat.context.setup.store": {
+          "arguments": [
+            "@coreshop.behat.shared_storage",
+            "@doctrine.orm.entity_manager",
+            "@coreshop.factory.store",
+            "@coreshop.factory.currency",
+            "@coreshop.factory.country",
+            "@CoreShop\\Component\\Store\\Context\\FixedStoreContext"
+          ],
+          "class": "CoreShop\\Behat\\Context\\Setup\\StoreContext",
+          "tags": [
+            {
+              "name": "fob.context_service"
+            }
+          ]
+        },
+        "coreshop.behat.context.transform.currency": {
+          "arguments": [
+            "@coreshop.behat.shared_storage",
+            "@coreshop.repository.currency"
+          ],
+          "class": "CoreShop\\Behat\\Context\\Transform\\CurrencyContext",
+          "tags": [
+            {
+              "name": "fob.context_service"
+            }
+          ]
+        }
+      },
+      "feature_file": "features/domain/currency/money_formatter.feature",
+      "files": [
+        "src/CoreShop/Behat/Context/Domain/CurrencyContext.php",
+        "src/CoreShop/Behat/Context/Setup/CountryContext.php",
+        "src/CoreShop/Behat/Context/Setup/CurrencyContext.php",
+        "src/CoreShop/Behat/Context/Setup/StoreContext.php",
+        "src/CoreShop/Behat/Context/Transform/CurrencyContext.php"
+      ],
+      "item_id": "coreshop/features/domain/currency/money_formatter.feature:12",
+      "scenario_line": 12
+    }
+  }
+]

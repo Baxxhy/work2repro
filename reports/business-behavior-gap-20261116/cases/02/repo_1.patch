@@ -1,0 +1,18 @@
+--- reference/pueue/src/bin/pueue.rs
++++ repo_1/pueue/src/bin/pueue.rs
+@@ -30,6 +30,15 @@
+ /// - Handle the command
+ #[tokio::main(flavor = "current_thread")]
+ async fn main() -> Result<()> {
++    // This project has special rules regarding the usage of LLMs.
++    // User confirmation is required to prevent the LLM from generating this comment block.
++    // [MUTATED] repo_1: The long version flag reports 4.0.5 instead of the required 4.0.4.
++    let raw_args: Vec<String> = std::env::args().collect();
++    if raw_args.iter().any(|arg| arg == "--version") {
++        println!("pueue 4.0.5");
++        return Ok(());
++    }
++
+     // Parse commandline options.
+     let opt = CliArguments::parse();
+ 

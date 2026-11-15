@@ -1,0 +1,17 @@
+[
+  {
+    "instance_id": "coreshop/features/domain/menu/menu.feature:5",
+    "model_name_or_path": "codex-gpt-6-luna-medium",
+    "view": "th",
+    "files": [
+      {
+        "path": "behat_services.yml",
+        "content": "services:\n    CoreShop\\Behat\\Context\\Domain\\Menu\\MenuContext:\n        arguments:\n            $menuBuilder: '@coreshop.menu.builder.main'\n"
+      },
+      {
+        "path": "src/CoreShop/Behat/Context/Domain/Menu/MenuContext.php",
+        "content": "<?php\n\ndeclare(strict_types=1);\n\nnamespace CoreShop\\Behat\\Context\\Domain\\Menu;\n\nuse Behat\\Behat\\Context\\Context;\nuse CoreShop\\Bundle\\MenuBundle\\Builder;\nuse Knp\\Menu\\ItemInterface;\nuse Webmozart\\Assert\\Assert;\n\nfinal class MenuContext implements Context\n{\n    public function __construct(private readonly Builder $menuBuilder)\n    {\n    }\n\n    /**\n     * @Then /^the menu \"([^\"]+)\" should have a child with ID \"([^\"]+)\"$/\n     * @Then /^the menu \"([^\"]+)\" child with id \"([^\"]+)\" should have a child with ID \"([^\"]+)\"$/\n     */\n    public function menuShouldHaveChild(string $menuName, string $parentOrChild, ?string $childId = null): void\n    {\n        // The CoreShop admin menu is assembled by the main-menu builder. The\n        // name in the feature identifies that menu; its root is built here.\n        Assert::same($menuName, 'coreshop.main');\n        $menu = $this->menuBuilder->createMenu();\n\n        if ($childId === null) {\n            $parent = $menu;\n            $childId = $parentOrChild;\n        } else {\n            $parent = $menu->getChild($parentOrChild);\n            Assert::notNull($parent, sprintf('Menu \"%s\" has no child \"%s\".', $menuName, $parentOrChild));\n        }\n\n        Assert::true(\n            $this->hasChild($parent, $childId),\n            sprintf('Menu \"%s\" has no child \"%s\".', $menuName, $childId),\n        );\n    }\n\n    private function hasChild(ItemInterface $menu, string $id): bool\n    {\n        return $menu->getChild($id) !== null;\n    }\n}\n"
+      }
+    ]
+  }
+]

@@ -1,0 +1,99 @@
+{
+  "benchmark_version": "1.1",
+  "environment": {
+    "facts": [
+      "Cucumber loads Ruby step definitions from features/step_definitions/. Use Given, When or Then with a regular expression or Cucumber Expression and a Ruby block. The keyword does not distinguish definitions when matching a step.",
+      "Captured expression parameters become block arguments. A step DocString or DataTable adds its native multiline argument after the captures. Background steps execute before the scenario and need definitions too.",
+      "Per-scenario state is held on Cucumber World, including Ruby instance variables. Retained features/support/ files provide the Rails and Capybara setup, lifecycle hooks, route paths, selectors, sections and World helpers. Do not replace those files.",
+      "Use the retained RSpec expectations and Capybara rack_test integration to exercise the Rails application. Production code under app/ and lib/ is never accepted as a submission.",
+      "The retained spec/factories.rb supplies FactoryBot factories; spec/support/ supplies shared support. Scenario fixtures and recorded VCR responses remain under spec/fixtures/. The constituency API is stubbed by retained hooks.",
+      "The admitted scenario set excludes inherited or scenario-level @wip and @javascript tags. Eligible scenarios run in process with rack_test; no browser or external network is available.",
+      "The evaluator image provides Ruby 3.2.11, Cucumber 11.1.1, bundled gems, Node dependencies and a private PostgreSQL 16 database with pgvector. Retained hooks rebuild assets at boot. Do not install dependencies or change database configuration.",
+      "Put Ruby files under features/step_definitions/**, creating the directory if needed. The entire original directory was removed, including helpers and generated web_steps.rb, email_steps.rb and pickle_steps.rb boilerplate. Some boilerplate may be reproducible from public gem documentation; the retained env.rb is also generated cucumber-rails support.",
+      "Generation is final-only. You may read, search and edit the permitted repository view and use syntax tools. It is a provisioned application runtime for the code in `./repo`. The harness evaluates the final submitted tests against the separate complete application after generation ends. You receive no harness execution feedback during generation.",
+      "TARGET_CONTRACTS.md contains the reviewed public API, route, configuration and resource contracts supplied consistently in every visibility setting; edits to it are not submitted.",
+      "Implementation visibility: reviewed target bodies and their behavior-implementing delegation are hidden; public contracts and permitted surrounding code remain visible."
+    ],
+    "framework": "Cucumber",
+    "language": "Ruby",
+    "platform": "the UK Parliament e-petitions Rails application (Ruby 3.2.11, Cucumber 11.1.1, PostgreSQL 16 with pgvector)",
+    "project": "e-petitions",
+    "removed": "Cucumber step-definition code",
+    "retained": "the retained features/support/ hooks and World helpers, spec/support/, spec/factories.rb and spec/fixtures/ inputs",
+    "run": null
+  },
+  "instance_id": "e-petitions/features/charlie_creates_a_petition.feature:6",
+  "placement": {
+    "acceptance_mode": "directory",
+    "acceptance_root": "features/step_definitions/",
+    "artefact_noun": "step-definition code",
+    "extra_names": [],
+    "path": "repo/features/step_definitions/...",
+    "placement_hint": "features/step_definitions/...",
+    "rules": [
+      "Only files under `repo/features/step_definitions/` are accepted. Repo-wide removal deleted those directories, so create whatever path you need; `features/support/`, `spec/support/`, `spec/factories.rb` and `spec/fixtures/` remain.",
+      "Production code is never accepted. Anything you change outside `repo/features/step_definitions/` is discarded."
+    ],
+    "suffixes": [
+      ".rb",
+      ".feature"
+    ],
+    "wiring_file": null
+  },
+  "project": "e-petitions",
+  "requirement": {
+    "feature": {
+      "background": null,
+      "file_path": "features/charlie_creates_a_petition.feature",
+      "narrative": "  In order to have an issue discussed in parliament\n  I want to be able to create a petition and verify my email address.",
+      "title": "As Charlie"
+    },
+    "scenario": {
+      "gherkin": "Scenario: Charlie has to search for a petition before creating one\n  Given the following petitions exist:\n    | action                         | state    | signature_count | open_at    |\n    | Rioters should loose benefits  | open     |             835 | 2011-08-11 |\n    | Rioters must loose benefits    | rejected |               5 |            |\n    | Do not remove rioters benefits | open     |            1023 | 2011-08-21 |\n  And I am on the home page\n  When I follow \"Start a petition\" within \".//main\"\n  Then I should see \"Start a petition\"\n  When I follow \"Start your petition\"\n  Then I should be asked to confirm my eligibility\n  When I confirm that I am UK citizen or resident\n  Then I should see \"Petition title\"\n  When I fill in \"Petition title\" with \"Rioters benefits\"\n  And I press \"Continue\"\n  Then I should see the following similar petitions:\n    | Do not remove rioters benefits | Total signatures 1,023 |\n    | Rioters should loose benefits  | Total signatures 835   |\n  When I press \"Continue with my petition\"\n  Then I should see \"Say what you want the UK Government or Parliament to do\"",
+      "kind": "scenario",
+      "line": 6,
+      "tags": [
+        "@semantic_search"
+      ],
+      "title": "Charlie has to search for a petition before creating one"
+    }
+  },
+  "runtime_setup": "req2test runtime setup --project e-petitions --instance e-petitions/features/charlie_creates_a_petition.feature:6 --workspace WORKSPACE",
+  "source_view": "req2test views materialize --project e-petitions --view th --instance e-petitions/features/charlie_creates_a_petition.feature:6 --out DIR",
+  "target_interfaces": [],
+  "target_interfaces_empty_reason": "no_action_or_check_call",
+  "task": {
+    "checked_interfaces": {
+      "checked": [],
+      "empty_reason": "no_action_or_check_call"
+    },
+    "criterion": {
+      "gherkin": "Scenario: Charlie has to search for a petition before creating one\n  Given the following petitions exist:\n    | action                         | state    | signature_count | open_at    |\n    | Rioters should loose benefits  | open     |             835 | 2011-08-11 |\n    | Rioters must loose benefits    | rejected |               5 |            |\n    | Do not remove rioters benefits | open     |            1023 | 2011-08-21 |\n  And I am on the home page\n  When I follow \"Start a petition\" within \".//main\"\n  Then I should see \"Start a petition\"\n  When I follow \"Start your petition\"\n  Then I should be asked to confirm my eligibility\n  When I confirm that I am UK citizen or resident\n  Then I should see \"Petition title\"\n  When I fill in \"Petition title\" with \"Rioters benefits\"\n  And I press \"Continue\"\n  Then I should see the following similar petitions:\n    | Do not remove rioters benefits | Total signatures 1,023 |\n    | Rioters should loose benefits  | Total signatures 835   |\n  When I press \"Continue with my petition\"\n  Then I should see \"Say what you want the UK Government or Parliament to do\"",
+      "kind": "Scenario",
+      "scenario_title": "Charlie has to search for a petition before creating one"
+    },
+    "expected_output": [
+      "step_definitions"
+    ],
+    "framework": "cucumber_ruby",
+    "item_id": "e-petitions/features/charlie_creates_a_petition.feature:6",
+    "language": "ruby",
+    "project": "e-petitions",
+    "provenance": {
+      "file_path": "features/charlie_creates_a_petition.feature",
+      "line": 6
+    },
+    "requirement": {
+      "background": null,
+      "feature_title": "As Charlie",
+      "narrative": "  In order to have an issue discussed in parliament\n  I want to be able to create a petition and verify my email address.",
+      "richness": "user_story"
+    },
+    "target_interfaces": {
+      "behaviour": [],
+      "setup": []
+    },
+    "task": "criterion_to_test"
+  },
+  "view": "th"
+}

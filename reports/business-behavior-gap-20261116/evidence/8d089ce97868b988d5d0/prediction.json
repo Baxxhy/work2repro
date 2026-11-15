@@ -1,0 +1,13 @@
+[
+  {
+    "instance_id": "algorand-sdk/features/unit/v2algodclient_responses.feature:75",
+    "model_name_or_path": "codex-gpt-6-luna-medium",
+    "view": "th",
+    "files": [
+      {
+        "path": "src/test/java/com/algorand/algosdk/unit/AlgodResponseSteps.java",
+        "content": "package com.algorand.algosdk.unit;\n\nimport com.algorand.algosdk.crypto.Address;\nimport com.algorand.algosdk.unit.utils.ClientMocker;\nimport com.algorand.algosdk.v2.client.algod.AccountInformation;\nimport com.algorand.algosdk.v2.client.common.AlgodClient;\nimport com.algorand.algosdk.v2.client.common.Response;\nimport com.algorand.algosdk.v2.client.model.Account;\nimport io.cucumber.java.en.Given;\nimport io.cucumber.java.en.Then;\nimport io.cucumber.java.en.When;\n\nimport java.io.File;\n\nimport static org.assertj.core.api.Assertions.assertThat;\n\npublic class AlgodResponseSteps {\n    private AccountInformation query;\n    private Response<Account> response;\n    private String error = \"\";\n\n    @Given(\"mock http responses in {string} loaded from {string}\")\n    public void mockHttpResponse(String jsonFile, String directory) throws Exception {\n        File body = new File(\"src/test/resources/\" + directory + \"/\" + jsonFile);\n        ClientMocker.oneResponse(200, \"application/json\", body);\n\n        AlgodClient client = new AlgodClient(\"http://localhost\", 4001, \"token\");\n        ClientMocker.infect(client);\n        Address address = new Address();\n        query = client.AccountInformation(address);\n    }\n\n    @When(\"we make any Account Information call\")\n    public void makeAccountInformationCall() {\n        try {\n            response = query.execute();\n        } catch (Exception e) {\n            error = e.getMessage() == null ? e.toString() : e.getMessage();\n        }\n    }\n\n    @Then(\"expect error string to contain {string}\")\n    public void expectErrorString(String expected) {\n        assertThat(error).contains(expected);\n    }\n\n    @Then(\"the parsed Account Information response should have address {string}\")\n    public void parsedAccountInformationAddress(String expected) throws Exception {\n        assertThat(response).isNotNull();\n        assertThat(response.body().address.toString()).isEqualTo(expected);\n    }\n}\n"
+      }
+    ]
+  }
+]

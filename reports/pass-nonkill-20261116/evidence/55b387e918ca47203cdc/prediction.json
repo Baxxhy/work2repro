@@ -1,0 +1,13 @@
+[
+  {
+    "instance_id": "algorand-sdk/features/unit/v2indexerclient_responses.feature:15",
+    "model_name_or_path": "codex-gpt-6-luna-medium",
+    "view": "th",
+    "files": [
+      {
+        "path": "src/test/java/com/algorand/algosdk/unit/LookupAssetTransactionsSteps.java",
+        "content": "package com.algorand.algosdk.unit;\n\nimport com.algorand.algosdk.unit.utils.ClientMocker;\nimport com.algorand.algosdk.v2.client.common.IndexerClient;\nimport com.algorand.algosdk.v2.client.common.Response;\nimport com.algorand.algosdk.v2.client.indexer.LookupAssetTransactions;\nimport com.algorand.algosdk.v2.client.model.TransactionsResponse;\nimport io.cucumber.java.en.And;\nimport io.cucumber.java.en.Given;\nimport io.cucumber.java.en.Then;\nimport io.cucumber.java.en.When;\n\nimport java.io.File;\n\nimport static org.assertj.core.api.Assertions.assertThat;\n\npublic class LookupAssetTransactionsSteps {\n    private IndexerClient client;\n    private Response<TransactionsResponse> response;\n\n    @Given(\"mock http responses in {string} loaded from {string}\")\n    public void mockHttpResponse(String jsonFile, String directory) throws Exception {\n        client = new IndexerClient(\"http://localhost\", 8980, \"\");\n        ClientMocker.infect(client);\n        ClientMocker.oneResponse(200, \"application/json\",\n                new File(\"src/test/resources/\" + directory, jsonFile));\n    }\n\n    @When(\"we make any LookupAssetTransactions call\")\n    public void lookupAssetTransactions() throws Exception {\n        response = client.lookupAssetTransactions(163650L).execute();\n    }\n\n    @Then(\"expect error string to contain {string}\")\n    public void expectErrorString(String error) {\n        assertThat(response).isNotNull();\n        if (error.isEmpty()) {\n            assertThat(response.isSuccessful()).isTrue();\n        } else {\n            assertThat(response.message()).contains(error);\n        }\n    }\n\n    @And(\"the parsed LookupAssetTransactions response should be valid on round {long}, and contain an array of len {int} and element number {int} should have sender {string}\")\n    public void verifyTransactions(long round, int length, int index, String sender) {\n        TransactionsResponse body = response.body();\n        assertThat(body.currentRound).isEqualTo(round);\n        assertThat(body.transactions).hasSize(length);\n        assertThat(body.transactions.get(index).sender).isEqualTo(sender);\n    }\n}\n"
+      }
+    ]
+  }
+]

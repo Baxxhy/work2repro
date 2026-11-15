@@ -1,0 +1,11 @@
+{
+  "artifact_id": "7627df83491b90a0f0fa",
+  "category": "A;B;D",
+  "requirement_gap_confirmed": true,
+  "adjudication": "CONFIRMED_REQUIREMENT_GAP",
+  "representative_mutant": "",
+  "analysis": "生成选择shipping/payment并直接dispatch CompleteOrder，最后从sharedStorage中的同一order对象读取email/currency。需求规定administrator应该看见已下单的货币；参考登录管理员并通过adminClient.show读取订单的currencyCode。生成未检验管理员视角、API返回或持久化后重新读取。142个存活包含管理员订单query extension与API序列化路径，代表性漏检与绕过观测边界相符，不能归因全部142项。",
+  "reference_anchor": "OrderContext.php|public function theAdministratorShouldSeeThatThisOrderHasBeenPlacedIn",
+  "method": "manual semantic comparison of frozen requirement, code and existing results",
+  "new_execution": false
+}

@@ -1,0 +1,13 @@
+[
+  {
+    "instance_id": "python-docx/features/txt-font-props.feature:74",
+    "model_name_or_path": "codex-gpt-6-luna-medium",
+    "view": "th",
+    "files": [
+      {
+        "path": "features/steps/txt_font_props.py",
+        "content": "from behave import given, then\n\nfrom docx import Document\nfrom docx.dml.color import ColorFormat\n\n\n@given(\"a font\")\ndef given_a_font(context):\n    paragraph = Document().add_paragraph()\n    context.font = paragraph.add_run().font\n\n\n@then(\"font.color is a ColorFormat object\")\ndef then_font_color_is_color_format(context):\n    color = context.font.color\n    assert isinstance(color, ColorFormat), (\n        \"font.color should be a ColorFormat object, got %r\" % type(color)\n    )\n"
+      }
+    ]
+  }
+]

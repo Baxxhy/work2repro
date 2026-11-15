@@ -1,0 +1,13 @@
+[
+  {
+    "instance_id": "e-petitions/features/admin/admin_hub.feature:52",
+    "model_name_or_path": "codex-gpt-6-luna-medium",
+    "view": "th",
+    "files": [
+      {
+        "path": "features/step_definitions/admin_hub_steps.rb",
+        "content": "Given(\"I am logged in as a moderator\") do\n  OmniAuth.config.test_mode = true\n  OmniAuth.config.mock_auth[:example] = FactoryBot.build(:moderator_sso_user)\n  visit admin_login_url\n  fill_in \"Email\", with: \"moderator@example.com\"\n  click_button \"Sign in\"\nend\n\nGiven(\"{int} petitions exist with state: {string}\") do |count, state|\n  FactoryBot.create_list(:\"#{state}_petition\", count.to_i)\nend\n\nWhen(\"I go to the Admin home page\") do\n  visit url_to(\"the Admin home page\")\nend\n\nWhen(\"I follow {string}\") do |link_text|\n  click_link link_text\nend\n\nThen(\"I should be on the Admin all petitions page\") do\n  expect(page).to have_current_path(admin_petitions_path, ignore_query: true)\nend\n"
+      }
+    ]
+  }
+]

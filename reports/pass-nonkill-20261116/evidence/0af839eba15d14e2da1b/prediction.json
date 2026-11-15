@@ -1,0 +1,13 @@
+[
+  {
+    "instance_id": "python-docx/features/blk-iter-inner-content.feature:7",
+    "model_name_or_path": "codex-gpt-6-luna-medium",
+    "view": "th",
+    "files": [
+      {
+        "path": "features/steps/blk_iter_inner_content.py",
+        "content": "from pathlib import Path\n\nfrom behave import given, then\nfrom docx import Document\nfrom docx.table import Table\nfrom docx.text.paragraph import Paragraph\n\n\n@given(\"a Document object with paragraphs and tables\")\ndef given_document_with_paragraphs_and_tables(context):\n    fixture = (\n        Path(__file__).parent\n        / \"test_files\"\n        / \"blk-paras-and-tables.docx\"\n    )\n    context.document = Document(str(fixture))\n\n\n@then(\"document.iter_inner_content() produces the block-items in document order\")\ndef then_document_inner_content_in_document_order(context):\n    items = list(context.document.iter_inner_content())\n\n    expected_types = [\n        Table,\n        Paragraph,\n        Table,\n        Paragraph,\n        Table,\n        Paragraph,\n    ]\n    actual_types = [type(item) for item in items]\n    assert actual_types == expected_types, (\n        \"got block-item types %r\" % [item.__class__.__name__ for item in items]\n    )\n\n    # The fixture has paragraphs and tables interleaved, so checking their\n    # distinguishing contents also verifies that iteration preserves order.\n    paragraph_texts = [item.text for item in items if isinstance(item, Paragraph)]\n    assert paragraph_texts == [\n        \"Lorem ipsum dolor sit amet, consectetur adipiscing elit.\",\n        \"Donec semper facilisis metus finibus malesuada.\",\n        \"\",\n    ], \"paragraphs were not yielded in document order: %r\" % paragraph_texts\n"
+      }
+    ]
+  }
+]

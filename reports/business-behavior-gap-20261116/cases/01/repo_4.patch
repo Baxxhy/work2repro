@@ -1,0 +1,32 @@
+--- reference/src/main.rs
++++ repo_4/src/main.rs
+@@ -11,7 +11,7 @@
+ use std::io::{self, Write};
+ use std::process::ExitCode;
+ 
+-use clap::Parser;
++use clap::{CommandFactory, Parser};
+ 
+ use crate::cmd::{Cmd, Run};
+ use crate::error::SilentExit;
+@@ -20,6 +20,20 @@
+     // Forcibly disable backtraces.
+     unsafe { env::remove_var("RUST_LIB_BACKTRACE") };
+     unsafe { env::remove_var("RUST_BACKTRACE") };
++
++    let args: Vec<_> = env::args_os().collect();
++    if args.len() == 3 && args[1] == "add" && args[2] == "--help" {
++        // [MUTATED] Only long-form add help hides --score; parsing and short help
++        // retain the documented option metadata.
++        let mut add = Cmd::command()
++            .find_subcommand("add")
++            .expect("add subcommand")
++            .clone()
++            .mut_arg("score", |arg| arg.hide(true));
++        _ = add.print_long_help();
++        _ = writeln!(io::stdout());
++        return ExitCode::SUCCESS;
++    }
+ 
+     match Cmd::parse().run() {
+         Ok(()) => ExitCode::SUCCESS,

@@ -1,0 +1,212 @@
+{
+  "benchmark_version": "1.1",
+  "environment": {
+    "facts": [
+      "Step definitions are public methods on plain Java classes, annotated with `io.cucumber.java.en.Given`, `@When`, `@Then`, `@And` or `@But`. For each item the prompt's answer path is an empty `r2t.generated` package inside that feature's runner module, and the harness adds that exact package to the selected runner's native glue. The runner module supplies the suite's complete test compile classpath. The Given/When/Then keyword is irrelevant to matching.",
+      "Patterns may be Cucumber Expressions such as `{string}`, `{int}`, `{long}` and `{word}`, or regular expressions. Existing parameter and data-table types under the retained `org.eclipse.kapua.qa.common.cucumber` package remain available.",
+      "When the selected feature has an `@setup` scenario, the harness copies that prerequisite scenario verbatim, including its tags, ahead of the selected scenario. `MiscAuthorization.feature` has no setup scenario or Background and runs its selected scenario alone. `Given Init Security Context` and the `@env_none` hooks remain in retained `BasicSteps`; do not redeclare them.",
+      "Cucumber-Guice creates glue objects and injects shared `StepData` with `javax.inject.Inject`; glue classes may be `com.google.inject.Singleton`. The selected unit modules also retain a `*LocatorConfiguration` hook that installs the real service under test and its mocked collaborators into `KapuaLocator` during `@setup`.",
+      "All shared classes under `qa/common`, every selected `Run*.java` runner and every `*LocatorConfiguration.java` are retained. Native runner glue outside the generated package is unchanged. Do not redeclare retained hooks, steps, parameter types or runner classes.",
+      "The admissible `@env_none` suite uses embedded H2 in the test JVM, migrated by Liquibase, with Shiro and Guice in-process. It needs no database server, broker, Elasticsearch process, Docker socket or other external service.",
+      "Assertions may use JUnit 4 (`org.junit.Assert`) and should let assertion failures propagate so Cucumber records the failing step. Reuse the retained domain-table objects under `org.eclipse.kapua.qa.common.cucumber` when the feature supplies a data table.",
+      "Production code spans the Maven reactor's service, commons, locator, message, transport and related modules. Production files, feature files and `pom.xml` are never accepted as an answer.",
+      "In the separate execution repository, the build is a 250-pom Maven reactor using JDK 17 and Cucumber-JVM 6.11.0 with JUnit 4 and surefire 3.0.0-M7. The execution worker supplies the JDK 17 toolchain and warm dependencies; changes to `pom.xml` are discarded.",
+      "This workspace supports reading, searching, editing, and syntax parsing. It is a provisioned application runtime for the code in `./repo`; nothing here is executed by the harness. The harness executes your final submitted test artifacts against a separate, complete implementation after generation ends. You receive no harness execution feedback during generation.",
+      "TARGET_CONTRACTS.md contains the reviewed public API and configuration supplement supplied identically in every visibility view. It is context for writing tests; edits to it are not submitted.",
+      "Existing QA helpers, JUnit category markers and test fixtures remain readable as test context in every view. Their source examples are retained infrastructure; edits to them are not submitted.",
+      "Implementation visibility: the reviewed target implementation bodies and explicitly mapped executable resources are hidden; declarations, the common contract supplement and retained test infrastructure remain visible."
+    ],
+    "framework": "Cucumber",
+    "language": "Java",
+    "platform": "Eclipse Kapua, a modular Java IoT platform (Maven, JDK 17)",
+    "project": "Eclipse Kapua",
+    "removed": "Cucumber test code",
+    "retained": "retained common hooks and state, per-suite runners and locator configurations, plus the feature files",
+    "run": null
+  },
+  "instance_id": "kapua/service/tag/test/src/test/resources/features/TagService.feature:297",
+  "placement": {
+    "acceptance_mode": "directory",
+    "acceptance_root": "service/tag/test/src/test/java/org/eclipse/kapua/service/tag/test/r2t/generated/",
+    "artefact_noun": "step-definition code",
+    "extra_names": [],
+    "path": "repo/service/tag/test/src/test/java/org/eclipse/kapua/service/tag/test/r2t/generated/...",
+    "placement_hint": "service/tag/test/src/test/java/org/eclipse/kapua/service/tag/test/r2t/generated/...",
+    "rules": [
+      "Only files under `repo/service/tag/test/src/test/java/org/eclipse/kapua/service/tag/test/r2t/generated/` are accepted. Repo-wide removal deleted those directories, so create whatever path you need; The shared qa/common substrate remains available..",
+      "Production code is never accepted. Anything you change outside `repo/service/tag/test/src/test/java/org/eclipse/kapua/service/tag/test/r2t/generated/` is discarded."
+    ],
+    "suffixes": [
+      ".java",
+      ".feature"
+    ],
+    "wiring_file": null
+  },
+  "project": "kapua",
+  "requirement": {
+    "feature": {
+      "background": null,
+      "file_path": "service/tag/test/src/test/resources/features/TagService.feature",
+      "narrative": "  Tag Service is responsible for CRUD operations on Tags. This service is currently\n  used to attach tags to Devices, but could be used to tag any kapua entity, like\n  User for example.",
+      "title": "Tag Service"
+    },
+    "scenario": {
+      "gherkin": "  Scenario: Changing Description On Tag With Short Name\n  Try to edit description on a tag with too short name. Kapua should not throw any errors.\n\n    Given I create tag with name \"abc\" without description\n    When Description of tag \"abc\" is changed into \"Description 123\"\n    Then No exception was thrown",
+      "kind": "scenario",
+      "line": 297,
+      "tags": [
+        "@tag",
+        "@env_none"
+      ],
+      "title": "Changing Description On Tag With Short Name"
+    }
+  },
+  "runtime_setup": "req2test runtime setup --project kapua --instance kapua/service/tag/test/src/test/resources/features/TagService.feature:297 --workspace WORKSPACE",
+  "source_view": "req2test views materialize --project kapua --view th --instance kapua/service/tag/test/src/test/resources/features/TagService.feature:297 --out DIR",
+  "target_interfaces": [
+    {
+      "declaration": "void setDescription(java.lang.String)",
+      "key": [
+        "org.eclipse.kapua.commons.model.AbstractKapuaNamedEntity",
+        "setDescription:(Ljava/lang/String;)V"
+      ]
+    },
+    {
+      "declaration": "org.eclipse.kapua.model.query.predicate.AttributePredicate attributePredicate(java.lang.String, java.lang.Object, org.eclipse.kapua.model.query.predicate.AttributePredicate.Operator)",
+      "key": [
+        "org.eclipse.kapua.commons.model.query.AbstractKapuaQuery",
+        "attributePredicate:(Ljava/lang/String;Ljava/lang/Object;Lorg/eclipse/kapua/model/query/predicate/AttributePredicate$Operator;)Lorg/eclipse/kapua/model/query/predicate/AttributePredicate;"
+      ]
+    },
+    {
+      "declaration": "void setPredicate(org.eclipse.kapua.model.query.predicate.QueryPredicate)",
+      "key": [
+        "org.eclipse.kapua.commons.model.query.AbstractKapuaQuery",
+        "setPredicate:(Lorg/eclipse/kapua/model/query/predicate/QueryPredicate;)V"
+      ]
+    },
+    {
+      "declaration": "org.eclipse.kapua.model.KapuaEntity getFirstItem()",
+      "key": [
+        "org.eclipse.kapua.commons.model.query.KapuaListResultImpl",
+        "getFirstItem:()Lorg/eclipse/kapua/model/KapuaEntity;"
+      ]
+    },
+    {
+      "declaration": "org.eclipse.kapua.service.tag.TagQuery newQuery(org.eclipse.kapua.model.id.KapuaId)",
+      "key": [
+        "org.eclipse.kapua.service.tag.internal.TagFactoryImpl",
+        "newQuery:(Lorg/eclipse/kapua/model/id/KapuaId;)Lorg/eclipse/kapua/service/tag/TagQuery;"
+      ]
+    },
+    {
+      "declaration": "org.eclipse.kapua.service.tag.TagListResult query(org.eclipse.kapua.model.query.KapuaQuery)",
+      "key": [
+        "org.eclipse.kapua.service.tag.internal.TagServiceImpl",
+        "query:(Lorg/eclipse/kapua/model/query/KapuaQuery;)Lorg/eclipse/kapua/service/tag/TagListResult;"
+      ]
+    },
+    {
+      "declaration": "org.eclipse.kapua.service.tag.Tag update(org.eclipse.kapua.service.tag.Tag)",
+      "key": [
+        "org.eclipse.kapua.service.tag.internal.TagServiceImpl",
+        "update:(Lorg/eclipse/kapua/service/tag/Tag;)Lorg/eclipse/kapua/service/tag/Tag;"
+      ]
+    }
+  ],
+  "target_interfaces_empty_reason": null,
+  "task": {
+    "checked_interfaces": {
+      "checked": [
+        {
+          "declaration": "void setDescription(java.lang.String)",
+          "key": [
+            "org.eclipse.kapua.commons.model.AbstractKapuaNamedEntity",
+            "setDescription:(Ljava/lang/String;)V"
+          ]
+        },
+        {
+          "declaration": "org.eclipse.kapua.model.query.predicate.AttributePredicate attributePredicate(java.lang.String, java.lang.Object, org.eclipse.kapua.model.query.predicate.AttributePredicate.Operator)",
+          "key": [
+            "org.eclipse.kapua.commons.model.query.AbstractKapuaQuery",
+            "attributePredicate:(Ljava/lang/String;Ljava/lang/Object;Lorg/eclipse/kapua/model/query/predicate/AttributePredicate$Operator;)Lorg/eclipse/kapua/model/query/predicate/AttributePredicate;"
+          ]
+        },
+        {
+          "declaration": "void setPredicate(org.eclipse.kapua.model.query.predicate.QueryPredicate)",
+          "key": [
+            "org.eclipse.kapua.commons.model.query.AbstractKapuaQuery",
+            "setPredicate:(Lorg/eclipse/kapua/model/query/predicate/QueryPredicate;)V"
+          ]
+        },
+        {
+          "declaration": "org.eclipse.kapua.model.KapuaEntity getFirstItem()",
+          "key": [
+            "org.eclipse.kapua.commons.model.query.KapuaListResultImpl",
+            "getFirstItem:()Lorg/eclipse/kapua/model/KapuaEntity;"
+          ]
+        },
+        {
+          "declaration": "org.eclipse.kapua.service.tag.TagQuery newQuery(org.eclipse.kapua.model.id.KapuaId)",
+          "key": [
+            "org.eclipse.kapua.service.tag.internal.TagFactoryImpl",
+            "newQuery:(Lorg/eclipse/kapua/model/id/KapuaId;)Lorg/eclipse/kapua/service/tag/TagQuery;"
+          ]
+        },
+        {
+          "declaration": "org.eclipse.kapua.service.tag.TagListResult query(org.eclipse.kapua.model.query.KapuaQuery)",
+          "key": [
+            "org.eclipse.kapua.service.tag.internal.TagServiceImpl",
+            "query:(Lorg/eclipse/kapua/model/query/KapuaQuery;)Lorg/eclipse/kapua/service/tag/TagListResult;"
+          ]
+        },
+        {
+          "declaration": "org.eclipse.kapua.service.tag.Tag update(org.eclipse.kapua.service.tag.Tag)",
+          "key": [
+            "org.eclipse.kapua.service.tag.internal.TagServiceImpl",
+            "update:(Lorg/eclipse/kapua/service/tag/Tag;)Lorg/eclipse/kapua/service/tag/Tag;"
+          ]
+        }
+      ],
+      "empty_reason": null
+    },
+    "criterion": {
+      "gherkin": "  Scenario: Changing Description On Tag With Short Name\n  Try to edit description on a tag with too short name. Kapua should not throw any errors.\n\n    Given I create tag with name \"abc\" without description\n    When Description of tag \"abc\" is changed into \"Description 123\"\n    Then No exception was thrown",
+      "kind": "Scenario",
+      "scenario_title": "Changing Description On Tag With Short Name"
+    },
+    "expected_output": [
+      "step_definitions"
+    ],
+    "framework": "cucumber",
+    "item_id": "kapua/service/tag/test/src/test/resources/features/TagService.feature:297",
+    "language": "java",
+    "project": "kapua",
+    "provenance": {
+      "file_path": "service/tag/test/src/test/resources/features/TagService.feature",
+      "line": 297
+    },
+    "requirement": {
+      "background": null,
+      "feature_title": "Tag Service",
+      "narrative": "  Tag Service is responsible for CRUD operations on Tags. This service is currently\n  used to attach tags to Devices, but could be used to tag any kapua entity, like\n  User for example.",
+      "richness": "prose"
+    },
+    "target_interfaces": {
+      "behaviour": [
+        "org.eclipse.kapua.model.KapuaNamedEntityAttributes",
+        "org.eclipse.kapua.model.query.predicate.AttributePredicate",
+        "org.eclipse.kapua.service.tag.Tag",
+        "org.eclipse.kapua.service.tag.TagAttributes",
+        "org.eclipse.kapua.service.tag.TagCreator",
+        "org.eclipse.kapua.service.tag.TagFactory",
+        "org.eclipse.kapua.service.tag.TagListResult",
+        "org.eclipse.kapua.service.tag.TagQuery",
+        "org.eclipse.kapua.service.tag.TagService"
+      ],
+      "setup": []
+    },
+    "task": "criterion_to_test"
+  },
+  "view": "th"
+}

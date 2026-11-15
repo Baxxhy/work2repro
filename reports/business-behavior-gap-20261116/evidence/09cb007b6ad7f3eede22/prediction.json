@@ -1,0 +1,13 @@
+[
+  {
+    "instance_id": "python-docx/features/tab-access-tabs.feature:7",
+    "model_name_or_path": "codex-gpt-6-luna-medium",
+    "view": "th",
+    "files": [
+      {
+        "path": "features/steps/tabstops_steps.py",
+        "content": "from behave import given, then\nfrom docx import Document\nfrom docx.shared import Inches\n\n\n@given(\"a tab_stops having {count:d} tab stops\")\ndef given_tab_stops_having_count(context, count):\n    paragraph = Document().add_paragraph()\n    context.tab_stops = paragraph.paragraph_format.tab_stops\n    for index in range(count):\n        context.tab_stops.add_tab_stop(Inches(index + 1))\n\n\n@then(\"len(tab_stops) is {count:d}\")\ndef then_len_tab_stops_is_count(context, count):\n    actual = len(context.tab_stops)\n    assert actual == count, \"expected %d tab stops, got %d\" % (count, actual)\n"
+      }
+    ]
+  }
+]

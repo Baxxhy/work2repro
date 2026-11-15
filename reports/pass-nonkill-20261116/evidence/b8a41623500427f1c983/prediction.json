@@ -1,0 +1,13 @@
+[
+  {
+    "instance_id": "e-petitions/features/charlie_creates_a_petition.feature:6",
+    "model_name_or_path": "codex-gpt-6-luna-medium",
+    "view": "th",
+    "files": [
+      {
+        "path": "features/step_definitions/charlie_creates_a_petition_steps.rb",
+        "content": "Given(\"the following petitions exist:\") do |table|\n  table.hashes.each do |attributes|\n    attributes[\"signature_count\"] = attributes[\"signature_count\"].to_i\n    attributes[\"open_at\"] = nil if attributes[\"open_at\"].to_s.empty?\n    FactoryBot.create(:petition, **attributes.symbolize_keys, increment: false)\n  end\nend\n\nGiven(/^I am on the (.+)$/) do |page_name|\n  visit url_to(\"the #{page_name}\")\nend\n\nWhen(/^I follow \"([^\"]*)\"(?: within \"([^\"]*)\")?$/) do |link, scope|\n  if scope\n    within(:xpath, scope) { click_link(link) }\n  else\n    click_link(link)\n  end\nend\n\nThen(/^I should see \"([^\"]*)\"$/) do |text|\n  expect(page).to have_content(text)\nend\n\nWhen(/^I fill in \"([^\"]*)\" with \"([^\"]*)\"$/) do |field, value|\n  fill_in(field, with: value)\nend\n\nWhen(/^I press \"([^\"]*)\"$/) do |button|\n  click_button(button)\nend\n\nThen(\"I should be asked to confirm my eligibility\") do\n  expect(page).to have_content(\"Are you a British citizen or UK resident?\")\nend\n\nWhen(\"I confirm that I am UK citizen or resident\") do\n  choose(\"Yes\")\n  click_button(\"Continue\")\nend\n\nThen(\"I should see the following similar petitions:\") do |table|\n  table.raw.each do |action, signatures|\n    expect(page).to have_content(action)\n    expect(page).to have_content(signatures)\n  end\nend\n"
+      }
+    ]
+  }
+]

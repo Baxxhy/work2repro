@@ -1,0 +1,13 @@
+[
+  {
+    "instance_id": "python-docx/features/hdr-header-footer.feature:49",
+    "model_name_or_path": "codex-gpt-6-luna-medium",
+    "view": "th",
+    "files": [
+      {
+        "path": "features/steps/hdr_footer.py",
+        "content": "from behave import given, then, register_type\nfrom docx import Document\n\n\ndef parse_bool(value):\n    return value == \"True\"\n\n\nregister_type(Bool=parse_bool)\n\n\n@given(\"a _Footer object {with_or_no} footer definition as {name}\")\ndef given_footer(context, with_or_no, name):\n    footer = Document().sections[0].footer\n    if with_or_no == \"with a\":\n        footer.is_linked_to_previous = False\n    elif with_or_no != \"with no\":\n        raise AssertionError(\"unexpected footer definition qualifier: %s\" % with_or_no)\n    setattr(context, name, footer)\n\n\n@then(\"{name}.is_linked_to_previous is {value:Bool}\")\ndef then_footer_linked_to_previous(context, name, value):\n    footer = getattr(context, name)\n    actual = footer.is_linked_to_previous\n    assert actual is value, \"expected %s, got %s\" % (value, actual)\n"
+      }
+    ]
+  }
+]

@@ -1,0 +1,13 @@
+[
+  {
+    "instance_id": "python-docx/features/txt-font-props.feature:40",
+    "model_name_or_path": "codex-gpt-6-luna-medium",
+    "view": "th",
+    "files": [
+      {
+        "path": "features/steps/txt_font_props.py",
+        "content": "\"\"\"Step definitions for font property scenarios.\"\"\"\n\nfrom behave import given, when, then\nfrom docx import Document\n\n\ndef _font_value(text):\n    \"\"\"Convert the feature's textual representation to a font name.\"\"\"\n    return None if text == \"None\" else text\n\n\n@given(\"a font having typeface name {name}\")\ndef given_font_having_typeface_name(context, name):\n    document = Document()\n    run = document.add_paragraph().add_run(\"text\")\n    run.font.name = None if name == \"not specified\" else name\n    context.font = run.font\n\n\n@when(\"I assign {value} to font.name\")\ndef assign_font_name(context, value):\n    context.font.name = _font_value(value)\n\n\n@then(\"font.name is {value}\")\ndef font_name_is(context, value):\n    expected = _font_value(value)\n    actual = context.font.name\n    assert actual == expected, \"expected font.name %r, got %r\" % (expected, actual)\n"
+      }
+    ]
+  }
+]

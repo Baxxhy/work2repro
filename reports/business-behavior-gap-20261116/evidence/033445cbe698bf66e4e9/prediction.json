@@ -1,0 +1,13 @@
+[
+  {
+    "instance_id": "algorand-sdk/features/unit/v2algodclient_paths.feature:120",
+    "model_name_or_path": "codex-gpt-6-luna-medium",
+    "view": "th",
+    "files": [
+      {
+        "path": "src/test/java/com/algorand/algosdk/unit/AlgodRestApiV2PathsSteps.java",
+        "content": "package com.algorand.algosdk.unit;\n\nimport com.algorand.algosdk.crypto.Address;\nimport com.algorand.algosdk.v2.client.algod.AccountApplicationInformation;\nimport com.algorand.algosdk.v2.client.common.AlgodClient;\nimport io.cucumber.java.en.Given;\nimport io.cucumber.java.en.Then;\nimport io.cucumber.java.en.When;\n\nimport java.net.URI;\n\nimport static org.assertj.core.api.Assertions.assertThat;\n\npublic class AlgodRestApiV2PathsSteps {\n    private AccountApplicationInformation query;\n    private String recordedPath;\n\n    @Given(\"mock server recording request paths\")\n    public void mockServerRecordingRequestPaths() {\n        // The path-generation check does not need a live server; retain the URL\n        // produced by the query as the recorded request path.\n        recordedPath = null;\n    }\n\n    @When(\"we make an Account Application Information call against account {string} applicationID {int}\")\n    public void makeAccountApplicationInformationCall(String account, int applicationId) throws Exception {\n        AlgodClient client = new AlgodClient(\"http://localhost\", 4001, \"\");\n        query = client.AccountApplicationInformation(new Address(account), (long) applicationId);\n        URI uri = URI.create(query.getRequestUrl());\n        recordedPath = uri.getRawPath();\n        if (uri.getRawQuery() != null) {\n            recordedPath += \"?\" + uri.getRawQuery();\n        }\n    }\n\n    @Then(\"expect the path used to be {string}\")\n    public void expectPathUsedToBe(String expectedPath) {\n        assertThat(recordedPath).isEqualTo(expectedPath);\n    }\n}\n"
+      }
+    ]
+  }
+]

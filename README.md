@@ -23,6 +23,28 @@ Req2Test 每个项目随机选取 20 条，共 8 个项目，种子为 20261112�
 - [实际运行代码与环境补丁](code/test-generation-20261114/)
 - [版本、预算、任务选择和环境记录](environment/test-generation-20261114/)
 
+## 实证问题分析
+
+2026-11-16 的阶段性研究包含已有结果审计、24 条 Pass-but-Non-Kill 分析，以及业务行为执行与观察缺口复核。
+
+- [第二轮业务行为缺口分析](reports/business-behavior-gap-20261116/BUSINESS_BEHAVIOR_GAP_ANALYSIS.md)
+- [833 对变异记录的逐对证据表](reports/business-behavior-gap-20261116/MUTANT_LEVEL_EVIDENCE.csv)
+- [新增 20 条案例与 15 条 KillComplete 对照](reports/business-behavior-gap-20261116/CROSS_PROJECT_VALIDATION.md)
+- [6 个 TestSuiteBench 任务的交叉核验](reports/business-behavior-gap-20261116/TSB_CROSS_VALIDATION.md)
+- [研究动机候选及证据限制](reports/business-behavior-gap-20261116/RESEARCH_MOTIVATION_CANDIDATES.md)
+- [上一轮 24 条专项分析](reports/pass-nonkill-20261116/README.md)
+- [早期问题发现及增量统计](reports/problem-discovery-20261116/PROBLEM_DISCOVERY_REPORT.md)
+
+第二轮新增样本来自 780/2051 条已完成任务的固定快照。20 条新增非 KillComplete 案例中确认 5 条缺口，另外 2 条证据不足。833 对记录对应 783 个唯一变异体，其中 830 对的逐对需求归属仍证据不足。定向样本中的比例仅描述本次选中集合。
+
+目录保留需求、生成代码、候选执行记录、参考基线调用、变异修改、分类缓存和统计脚本。源码与执行文件沿用原始内容，Markdown 中的本地证据链接转换为仓库相对链接。服务器原始路径和历史核验记录保留用于溯源，发布副本使用独立的 [SHA-256 清单](reports/research-publication-manifest.json) 核验。
+
+```bash
+python3 scripts/verify_research_publication.py
+```
+
+提取脚本使用原实验服务器路径。历史报告中的服务器命令需要对应环境，发布副本的离线校验使用上面的命令。本轮发布未新增模型生成或评测调用。
+
 ## 文件内容与验证
 
 本仓库发布 165 份 TestSuiteBench 规格、160 条 Req2Test 官方输入、生成测试文件、原格式预测、可见轨迹节选及完整性记录。生成文件附 SHA-256；长轨迹字符串的截断已明确标记。完整原始日志、详细执行矩阵、参考实现、变异体、Docker 镜像和大型缓存保留在实验服务器。

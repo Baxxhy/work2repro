@@ -1,0 +1,13 @@
+[
+  {
+    "instance_id": "python-docx/features/txt-parfmt-props.feature:136",
+    "model_name_or_path": "codex-gpt-6-luna-medium",
+    "view": "th",
+    "files": [
+      {
+        "path": "features/steps/txt_parfmt_props.py",
+        "content": "\"\"\"Steps for paragraph-format properties.\"\"\"\n\nfrom behave import given, then\nfrom docx import Document\n\n\n@given(\"a paragraph format having {prop_name} set {state}\")\ndef given_paragraph_format_with_on_off_property(context, prop_name, state):\n    paragraph = Document().add_paragraph()\n    context.paragraph_format = paragraph.paragraph_format\n\n    # Assigning None removes the direct formatting, so the getter reports the\n    # inherited value; True and False encode the explicit On and Off states.\n    value = {\"to inherit\": None, \"On\": True, \"Off\": False}[state]\n    setattr(context.paragraph_format, prop_name, value)\n\n\n@then(\"paragraph_format.{prop_name} is {value}\")\ndef then_paragraph_format_on_off_property_is(context, prop_name, value):\n    expected = {\"None\": None, \"True\": True, \"False\": False}[value]\n    actual = getattr(context.paragraph_format, prop_name)\n    assert actual is expected, (\n        \"paragraph_format.%s was %r, expected %r\" % (prop_name, actual, expected)\n    )\n"
+      }
+    ]
+  }
+]

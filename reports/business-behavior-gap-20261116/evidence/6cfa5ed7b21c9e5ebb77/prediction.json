@@ -1,0 +1,13 @@
+[
+  {
+    "instance_id": "e-petitions/features/joe_searches_for_an_archived_petition.feature:15",
+    "model_name_or_path": "codex-gpt-6-luna-medium",
+    "view": "th",
+    "files": [
+      {
+        "path": "features/step_definitions/archived_petition_search_steps.rb",
+        "content": "Given(/^the following archived petitions exist:$/) do |table|\n  table.hashes.each do |attributes|\n    attributes = attributes.transform_values { |value| value == \"\" ? nil : value }\n    attributes[\"signature_count\"] = attributes[\"signature_count\"].to_i if attributes[\"signature_count\"]\n\n    %w[opened_at closed_at created_at rejected_at].each do |date_attribute|\n      attributes[date_attribute] = Date.parse(attributes[date_attribute]) if attributes[date_attribute]\n    end\n\n    traits = attributes[\"state\"] == \"rejected\" ? [:rejected] : []\n    FactoryBot.create(:archived_petition, *traits, **attributes.symbolize_keys)\n  end\nend\n\nWhen(/^I go to (.+)$/) do |page_name|\n  visit url_to(page_name)\nend\n\nWhen(/^I fill in \"([^\"]*)\" with \"([^\"]*)\"$/) do |field, value|\n  fill_in field, with: value\nend\n\nWhen(/^I press \"([^\"]*)\"$/) do |button|\n  click_button button\nend\n\nThen(/^I should be on (.+)$/) do |page_name|\n  expect(page).to have_current_path(url_to(page_name), ignore_query: true)\nend\n\nThen(/^I should see the following search results:$/) do |table|\n  table.raw.each do |title, detail|\n    expect(page).to have_text(title)\n    expect(page).to have_text(detail)\n  end\nend\n\nThen(/^the markup should be valid$/) do\n  document = Nokogiri::HTML5(page.html)\n  expect(document.at_css(\"html\")).not_to be_nil\n  expect(document.at_css(\"body\")).not_to be_nil\nend\n"
+      }
+    ]
+  }
+]

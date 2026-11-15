@@ -1,0 +1,13 @@
+[
+  {
+    "instance_id": "e-petitions/features/admin/anonymize_petitions.feature:18",
+    "model_name_or_path": "codex-gpt-6-luna-medium",
+    "view": "th",
+    "files": [
+      {
+        "path": "features/step_definitions/admin_anonymize_petitions_steps.rb",
+        "content": "Given(/^I am logged in as a sysadmin with the email \"([^\"]+)\", first_name \"([^\"]+)\", last_name \"([^\"]+)\"$/) do |email, first_name, last_name|\n  auth = FactoryBot.build(\n    :sysadmin_sso_user,\n    email: email,\n    first_name: first_name,\n    last_name: last_name\n  )\n  OmniAuth.config.mock_auth[:example] = auth\n  visit \"/admin/auth/example/callback\"\nend\n\nWhen(/^I go to (.+)$/) do |page_name|\n  visit url_to(page_name)\nend\n\nThen(/^I should not see \"([^\"]*)\"$/) do |text|\n  expect(page).not_to have_text(text)\nend\n"
+      }
+    ]
+  }
+]

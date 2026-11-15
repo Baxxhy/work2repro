@@ -1,0 +1,13 @@
+[
+  {
+    "instance_id": "e-petitions/features/arnold_searches_from_home_page.feature:39",
+    "model_name_or_path": "codex-gpt-6-luna-medium",
+    "view": "th",
+    "files": [
+      {
+        "path": "features/step_definitions/arnold_searches_from_home_page_steps.rb",
+        "content": "require \"time\"\n\nmodule ArnoldSearchSteps\n  def petition_step_attributes(text)\n    text.scan(/(\\w+):\\s*(\"(?:[^\"\\\\]|\\\\.)*\"|[^,]+)/).each_with_object({}) do |(key, raw), attrs|\n      value = raw.strip\n      attrs[key.to_sym] =\n        if value.start_with?('\"')\n          value[1...-1].gsub('\\\\\"', '\"')\n        elsif value.match?(/\\A-?\\d+\\z/)\n          value.to_i\n        else\n          value\n        end\n    end\n  end\n\n  def petition_step_time(value)\n    return nil if value.nil? || value.empty?\n    return Time.zone.parse(value) if value.match?(/\\A\\d{4}-\\d\\d-\\d\\d\\z/)\n\n    if (match = value.match(/\\A(\\d+) (second|minute|hour|day|week|month|year)s? (from now|ago)\\z/))\n      match[1].to_i.public_send(match[2]).public_send(match[3] == \"ago\" ? :ago : :from_now)\n    else\n      value\n    end\n  end\nend\n\nWorld(ArnoldSearchSteps)\n\nGiven(/^(a|an) (pending|validated|open|closed|rejected|hidden) petition exists with (.+)$/) do |_article, state, attributes|\n  attrs = petition_step_attributes(attributes)\n  action = attrs.delete(:action)\n  factory = state == \"open\" ? :open_petition : :\"#{state}_petition\"\n  FactoryBot.create(factory, **attrs, action: action)\nend\n\nGiven(/^the following archived petitions exist:$/) do |table|\n  table.hashes.each do |row|\n    attrs = row.each_with_object({}) { |(key, value), result| result[key.to_sym] = value unless value.nil? || value.empty? }\n    %i[opened_at closed_at created_at].each do |key|\n      attrs[key] = petition_step_time(attrs[key]) if attrs.key?(key)\n    end\n    attrs[:signature_count] = attrs[:signature_count].to_i if attrs[:signature_count]\n    FactoryBot.create(:archived_petition, **attrs)\n  end\nend\n\nGiven(/^I am on the home page$/) do\n  visit home_path\nend\n\nWhen(/^I search all petitions using the id of the petition \"([^\"]*)\"$/) do |action|\n  petition = Petition.find_by!(action: action)\n  fill_in \"search\", with: petition.id\n  click_button \"Search petitions\"\nend\n\nThen(/^I should be on the petition page for \"([^\"]*)\"$/) do |action|\n  petition = Petition.find_by!(action: action)\n  expect(page).to have_current_path(petition_path(petition), ignore_query: true)\nend\n"
+      }
+    ]
+  }
+]

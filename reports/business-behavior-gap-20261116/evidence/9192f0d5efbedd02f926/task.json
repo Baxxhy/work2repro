@@ -1,0 +1,187 @@
+{
+  "benchmark_version": "1.1",
+  "environment": {
+    "facts": [
+      "Step definitions are plain functions decorated with `@given`, `@when` or `@then`, imported from `behave` (`from behave import given, when, then`). behave loads every module under `features/steps/`; the Given/When/Then keyword is irrelevant to matching.",
+      "Step parameters are captured by the default `parse` matcher with `{name}` or `{name:Type}` placeholders (`@then('the paragraph has {count:d} runs')`). For regular expressions call `use_step_matcher('re')` first, and switch back with `use_step_matcher('parse')` -- the setting applies to every step defined after it.",
+      "To convert a captured string into an object, register a type with `behave.register_type(Bool=parse_bool)` and name it in the placeholder (`{value:Bool}`). There is no separate transform decorator.",
+      "The scenario's `Background` steps run before it and need definitions too.",
+      "`features/environment.py` holds the lifecycle hooks (`before_all`, `before_feature`, `before_scenario`, and their `after_` counterparts). It is retained: do not write one.",
+      "The `context` object passed to every step is the shared state between steps of a scenario (`context.document = document`, then read `context.document` in a later step). behave resets it per scenario; anything that must outlive a scenario belongs on `context.config` or in the environment hooks.",
+      "Assertions are plain `assert` statements. behave reports the AssertionError as the step failure, so include a message (`assert len(paragraphs) == 3, \"got %d\" % len(paragraphs)`).",
+      "In the execution repository, the library under test is imported as `docx` and lives in `src/docx/`; `src` is already on the import path, so `from docx import Document` works without installing anything. Production code is never accepted.",
+      "The `.docx`, `.jpg`, `.png`, `.bmp`, `.gif`, `.tif`, `.emf` and `.wmf` fixtures a scenario opens are still on disk in `features/steps/test_files/`, and their names are the ones the scenario text uses. The helper module that used to turn a name into a path went with the removed code; write whatever helper you need, or build the path directly.",
+      "A scenario that SAVES a document writes into `features/_scratch/`, which the retained environment hook creates before the run. Nothing else in the tree may be written.",
+      "This workspace supports reading, searching, editing, and syntax parsing. It is a provisioned application runtime for the code in `./repo`; nothing here is executed by the harness. The harness executes your final submitted test artifacts against a separate, complete implementation after generation ends. You receive no harness execution feedback during generation.",
+      "TARGET_CONTRACTS.md contains the reviewed public API and configuration supplement supplied in every visibility view. It is context for writing tests; edits to it are not submitted.",
+      "Implementation visibility: the reviewed target bodies, including behavior-bearing delegated helpers, are hidden; declarations and permitted surrounding implementations remain visible."
+    ],
+    "framework": "behave",
+    "language": "Python",
+    "platform": "the python-docx library for reading and writing Word .docx files (Python 3.12, lxml)",
+    "project": "python-docx",
+    "removed": "behave test code",
+    "retained": "the retained `features/environment.py` hooks and the `features/steps/test_files/` fixtures",
+    "run": null
+  },
+  "instance_id": "python-docx/features/sty-latent-props.feature:7",
+  "placement": {
+    "acceptance_mode": "directory",
+    "acceptance_root": "features/steps/",
+    "artefact_noun": "step-definition code",
+    "extra_names": [],
+    "path": "repo/features/steps/...",
+    "placement_hint": "features/steps/...",
+    "rules": [
+      "Only files under `repo/features/steps/` are accepted. Repo-wide removal deleted those directories, so create whatever path you need; `features/environment.py` and the fixtures in `features/steps/test_files/` are what remain.",
+      "Production code is never accepted. Anything you change outside `repo/features/steps/` is discarded."
+    ],
+    "suffixes": [
+      ".py",
+      ".feature"
+    ],
+    "wiring_file": null
+  },
+  "project": "python-docx",
+  "requirement": {
+    "feature": {
+      "background": null,
+      "file_path": "features/sty-latent-props.feature",
+      "narrative": "  In order to adjust latent style properties to suit my needs\n  As a developer using python-docx\n  I need a set of read/write latent style properties",
+      "title": "Get and set latent style properties"
+    },
+    "scenario": {
+      "gherkin": "  Scenario Outline: Get default latent style properties\n    Given a latent styles object with known defaults\n     Then latent_styles.<prop-name> is <value>\n\n    Examples: known latent_styles property values\n      | prop-name                   | value |\n      | default_priority            | 99    |\n      | load_count                  | 276   |\n      | default_to_hidden           | True  |\n      | default_to_locked           | False |\n      | default_to_quick_style      | False |\n      | default_to_unhide_when_used | True  |",
+      "kind": "outline",
+      "line": 7,
+      "tags": [],
+      "title": "Get default latent style properties"
+    }
+  },
+  "runtime_setup": "req2test runtime setup --project python-docx --instance python-docx/features/sty-latent-props.feature:7 --workspace WORKSPACE",
+  "source_view": "req2test views materialize --project python-docx --view th --instance python-docx/features/sty-latent-props.feature:7 --out DIR",
+  "target_interfaces": [
+    {
+      "declaration": "(property getter) def default_priority(self):",
+      "key": [
+        "docx.styles.latent.LatentStyles",
+        "default_priority"
+      ]
+    },
+    {
+      "declaration": "(property getter) def default_to_hidden(self):",
+      "key": [
+        "docx.styles.latent.LatentStyles",
+        "default_to_hidden"
+      ]
+    },
+    {
+      "declaration": "(property getter) def default_to_locked(self):",
+      "key": [
+        "docx.styles.latent.LatentStyles",
+        "default_to_locked"
+      ]
+    },
+    {
+      "declaration": "(property getter) def default_to_quick_style(self):",
+      "key": [
+        "docx.styles.latent.LatentStyles",
+        "default_to_quick_style"
+      ]
+    },
+    {
+      "declaration": "(property getter) def default_to_unhide_when_used(self):",
+      "key": [
+        "docx.styles.latent.LatentStyles",
+        "default_to_unhide_when_used"
+      ]
+    },
+    {
+      "declaration": "(property getter) def load_count(self):",
+      "key": [
+        "docx.styles.latent.LatentStyles",
+        "load_count"
+      ]
+    }
+  ],
+  "target_interfaces_empty_reason": null,
+  "task": {
+    "checked_interfaces": {
+      "checked": [
+        {
+          "declaration": "(property getter) def default_priority(self):",
+          "key": [
+            "docx.styles.latent.LatentStyles",
+            "default_priority"
+          ]
+        },
+        {
+          "declaration": "(property getter) def default_to_hidden(self):",
+          "key": [
+            "docx.styles.latent.LatentStyles",
+            "default_to_hidden"
+          ]
+        },
+        {
+          "declaration": "(property getter) def default_to_locked(self):",
+          "key": [
+            "docx.styles.latent.LatentStyles",
+            "default_to_locked"
+          ]
+        },
+        {
+          "declaration": "(property getter) def default_to_quick_style(self):",
+          "key": [
+            "docx.styles.latent.LatentStyles",
+            "default_to_quick_style"
+          ]
+        },
+        {
+          "declaration": "(property getter) def default_to_unhide_when_used(self):",
+          "key": [
+            "docx.styles.latent.LatentStyles",
+            "default_to_unhide_when_used"
+          ]
+        },
+        {
+          "declaration": "(property getter) def load_count(self):",
+          "key": [
+            "docx.styles.latent.LatentStyles",
+            "load_count"
+          ]
+        }
+      ],
+      "empty_reason": null
+    },
+    "criterion": {
+      "gherkin": "  Scenario Outline: Get default latent style properties\n    Given a latent styles object with known defaults\n     Then latent_styles.<prop-name> is <value>",
+      "kind": "Scenario Outline",
+      "scenario_title": "Get default latent style properties"
+    },
+    "expected_output": [
+      "step_definitions"
+    ],
+    "framework": "behave",
+    "item_id": "python-docx/features/sty-latent-props.feature:7",
+    "language": "python",
+    "project": "python-docx",
+    "provenance": {
+      "file_path": "features/sty-latent-props.feature",
+      "line": 7
+    },
+    "requirement": {
+      "background": null,
+      "feature_title": "Get and set latent style properties",
+      "narrative": "  In order to adjust latent style properties to suit my needs\n  As a developer using python-docx\n  I need a set of read/write latent style properties",
+      "richness": "user_story"
+    },
+    "target_interfaces": {
+      "behaviour": [
+        "docx"
+      ],
+      "setup": []
+    },
+    "task": "criterion_to_test"
+  },
+  "view": "th"
+}

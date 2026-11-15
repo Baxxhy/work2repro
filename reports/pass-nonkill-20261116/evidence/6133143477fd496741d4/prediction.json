@@ -1,0 +1,13 @@
+[
+  {
+    "instance_id": "python-docx/features/txt-font-props.feature:30",
+    "model_name_or_path": "codex-gpt-6-luna-medium",
+    "view": "th",
+    "files": [
+      {
+        "path": "features/steps/txt_font_props.py",
+        "content": "\"\"\"Steps for the font-property scenarios.\"\"\"\n\nfrom behave import given, then\nfrom docx import Document\n\n\n@given(\"a font having typeface name {name}\")\ndef given_font_having_typeface_name(context, name):\n    \"\"\"Create a run font, optionally assigning an explicit typeface.\"\"\"\n    paragraph = Document().add_paragraph()\n    context.font = paragraph.add_run().font\n    if name != \"not specified\":\n        context.font.name = name\n\n\n@then(\"font.name is {value}\")\ndef then_font_name_is(context, value):\n    expected = None if value == \"None\" else value\n    assert context.font.name == expected, (\n        \"expected font.name %r, got %r\" % (expected, context.font.name)\n    )\n"
+      }
+    ]
+  }
+]

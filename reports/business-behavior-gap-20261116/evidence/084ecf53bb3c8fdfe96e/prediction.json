@@ -1,0 +1,13 @@
+[
+  {
+    "instance_id": "python-docx/features/cmt-props.feature:33",
+    "model_name_or_path": "codex-gpt-6-luna-medium",
+    "view": "th",
+    "files": [
+      {
+        "path": "features/steps/cmt_props.py",
+        "content": "\"\"\"Steps for comment-property scenarios.\"\"\"\n\nfrom pathlib import Path\n\nfrom behave import given, then\nfrom docx import Document\nfrom docx.drawing import Drawing\n\n\n_TEST_FILES = Path(__file__).parent / \"test_files\"\n\n\n@given(\"a Comment object containing an embedded image\")\ndef given_comment_with_embedded_image(context):\n    document = Document()\n    comment = document.comments.add_comment(author=\"Test author\")\n    comment.paragraphs[0].add_run().add_picture(str(_TEST_FILES / \"test.png\"))\n    context.comment = comment\n\n\n@then(\"I can extract the image from the comment\")\ndef then_extract_image_from_comment(context):\n    drawings = [\n        item\n        for paragraph in context.comment.paragraphs\n        for run in paragraph.runs\n        for item in run.iter_inner_content()\n        if isinstance(item, Drawing)\n    ]\n    assert len(drawings) == 1, f\"expected one drawing, got {len(drawings)}\"\n    drawing = drawings[0]\n    assert drawing.has_picture, \"comment drawing is not a picture\"\n\n    image = drawing.image\n    assert image.content_type == \"image/png\", image.content_type\n    assert image.filename, \"extracted image has no filename\"\n    assert len(image.sha1) == 40, f\"unexpected SHA-1: {image.sha1!r}\"\n"
+      }
+    ]
+  }
+]

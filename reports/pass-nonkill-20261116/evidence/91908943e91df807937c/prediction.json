@@ -1,0 +1,13 @@
+[
+  {
+    "instance_id": "kapua/service/tag/test/src/test/resources/features/TagService.feature:297",
+    "model_name_or_path": "codex-gpt-6-luna-medium",
+    "view": "th",
+    "files": [
+      {
+        "path": "service/tag/test/src/test/java/org/eclipse/kapua/service/tag/test/r2t/generated/TagDescriptionSteps.java",
+        "content": "package org.eclipse.kapua.service.tag.test.r2t.generated;\n\nimport javax.inject.Inject;\n\nimport com.google.inject.Singleton;\nimport io.cucumber.java.en.Given;\nimport io.cucumber.java.en.When;\nimport org.eclipse.kapua.KapuaException;\nimport org.eclipse.kapua.locator.KapuaLocator;\nimport org.eclipse.kapua.model.id.KapuaId;\nimport org.eclipse.kapua.qa.common.StepData;\nimport org.eclipse.kapua.service.tag.Tag;\nimport org.eclipse.kapua.service.tag.TagFactory;\nimport org.eclipse.kapua.service.tag.TagService;\n\n@Singleton\npublic class TagDescriptionSteps {\n    private static final String TAG_KEY = \"r2t.generated.tag\";\n\n    private final StepData stepData;\n    private final TagService tagService;\n    private final TagFactory tagFactory;\n\n    @Inject\n    public TagDescriptionSteps(StepData stepData) {\n        this.stepData = stepData;\n        KapuaLocator locator = KapuaLocator.getInstance();\n        this.tagService = locator.getService(TagService.class);\n        this.tagFactory = locator.getFactory(TagFactory.class);\n    }\n\n    @Given(\"I create tag with name {string} without description\")\n    public void createTag(String name) throws KapuaException {\n        KapuaId scopeId = KapuaId.ONE;\n        Tag tag = tagService.create(tagFactory.newCreator(scopeId, name));\n        stepData.put(TAG_KEY, tag);\n    }\n\n    @When(\"Description of tag {string} is changed into {string}\")\n    public void changeDescription(String name, String description) throws KapuaException {\n        Tag tag = (Tag) stepData.get(TAG_KEY);\n        if (tag == null || !name.equals(tag.getName())) {\n            throw new IllegalStateException(\"No previously created tag named \" + name);\n        }\n        tag.setDescription(description);\n        stepData.put(TAG_KEY, tagService.update(tag));\n    }\n}\n"
+      }
+    ]
+  }
+]

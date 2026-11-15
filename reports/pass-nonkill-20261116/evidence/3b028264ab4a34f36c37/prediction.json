@@ -1,0 +1,13 @@
+[
+  {
+    "instance_id": "algorand-sdk/features/unit/atomic_transaction_composer.feature:175",
+    "model_name_or_path": "codex-gpt-6-luna-medium",
+    "view": "th",
+    "files": [
+      {
+        "path": "src/test/java/com/algorand/algosdk/unit/AtomicTransactionComposerSteps.java",
+        "content": "package com.algorand.algosdk.unit;\n\nimport com.algorand.algosdk.account.Account;\nimport com.algorand.algosdk.transaction.AtomicTransactionComposer;\nimport io.cucumber.java.en.Given;\nimport io.cucumber.java.en.Then;\nimport io.cucumber.java.en.When;\n\nimport static org.assertj.core.api.Assertions.assertThat;\n\npublic class AtomicTransactionComposerSteps {\n    private Account signingAccount;\n    private AtomicTransactionComposer composer;\n\n    @Given(\"a signing account with address {string} and mnemonic {string}\")\n    public void signingAccount(String address, String mnemonic) throws Exception {\n        signingAccount = new Account(mnemonic);\n        assertThat(signingAccount.getAddress().toString()).isEqualTo(address);\n    }\n\n    @Given(\"a new AtomicTransactionComposer\")\n    public void newComposer() {\n        composer = new AtomicTransactionComposer();\n    }\n\n    @When(\"I build the transaction group with the composer. If there is an error it is {string}.\")\n    public void buildGroupExpectingError(String expectedError) {\n        try {\n            composer.buildGroup();\n            throw new AssertionError(\"Expected buildGroup to fail for an empty transaction group (\" + expectedError + \")\");\n        } catch (AssertionError e) {\n            throw e;\n        } catch (Exception e) {\n            assertThat(e).isNotNull();\n        }\n    }\n\n    @Then(\"The composer should have a status of {string}.\")\n    public void composerStatus(String status) {\n        assertThat(composer.getStatus().name()).isEqualTo(status);\n    }\n}\n"
+      }
+    ]
+  }
+]

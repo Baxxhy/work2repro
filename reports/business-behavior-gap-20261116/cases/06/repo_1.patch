@@ -1,0 +1,37 @@
+--- reference/src/bin/eureka.rs
++++ repo_1/src/bin/eureka.rs
+@@ -24,10 +24,22 @@
+         .author(crate_authors!())
+         .version(crate_version!())
+         .about("Input and store your ideas without leaving the terminal")
++        .override_help(concat!(
++            "Input and store your ideas without leaving the terminal\n\n",
++            "Usage: executable [OPTIONS]\n\n",
++            "Options:\n",
++            "      --clear-config  Clear your stored configuration\n",
++            "  -v, --view          View ideas with your $PAGER env variable. If unset use less\n",
++            "  -h, --help          Print help\n",
++            "  -V, --version       Print version\n",
++        ))
+         .arg(
+             clap::Arg::new(ARG_CLEAR_CONFIG)
+                 .long(ARG_CLEAR_CONFIG)
+-                .action(ArgAction::SetTrue)
++                .action(ArgAction::Set)
++                .num_args(0..=1)
++                .default_missing_value("true")
++                .value_parser(clap::value_parser!(bool)) // [MUTATED] wrongly accepts a boolean value
+                 .help("Clear your stored configuration"),
+         )
+         .arg(
+@@ -52,7 +64,9 @@
+     );
+ 
+     let opts = EurekaOptions {
+-        clear_config: cli_flags.get_flag(ARG_CLEAR_CONFIG),
++        clear_config: *cli_flags
++            .get_one::<bool>(ARG_CLEAR_CONFIG)
++            .unwrap_or(&false),
+         view: cli_flags.get_flag(ARG_VIEW),
+     };
+ 

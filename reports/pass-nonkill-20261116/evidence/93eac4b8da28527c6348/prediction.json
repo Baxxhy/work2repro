@@ -1,0 +1,13 @@
+[
+  {
+    "instance_id": "kapua/service/account/test/src/test/resources/features/AccountService.feature:120",
+    "model_name_or_path": "codex-gpt-6-luna-medium",
+    "view": "th",
+    "files": [
+      {
+        "path": "service/account/test/src/test/java/org/eclipse/kapua/service/account/test/r2t/generated/DeleteNonexistingAccountSteps.java",
+        "content": "package org.eclipse.kapua.service.account.test.r2t.generated;\n\nimport javax.inject.Inject;\n\nimport org.eclipse.kapua.KapuaException;\nimport org.eclipse.kapua.commons.model.id.IdGenerator;\nimport org.eclipse.kapua.commons.model.id.KapuaEid;\nimport org.eclipse.kapua.locator.KapuaLocator;\nimport org.eclipse.kapua.qa.common.StepData;\nimport org.eclipse.kapua.service.account.AccountService;\n\nimport io.cucumber.java.en.When;\n\npublic class DeleteNonexistingAccountSteps {\n    private static final String EXCEPTION_CAUGHT = \"ExceptionCaught\";\n\n    private final StepData stepData;\n\n    @Inject\n    public DeleteNonexistingAccountSteps(StepData stepData) {\n        this.stepData = stepData;\n    }\n\n    @When(\"I delete a random account\")\n    public void deleteRandomAccount() {\n        try {\n            KapuaLocator.getInstance().getService(AccountService.class)\n                    .delete(new KapuaEid(IdGenerator.generate()), new KapuaEid(IdGenerator.generate()));\n        } catch (KapuaException e) {\n            stepData.put(EXCEPTION_CAUGHT, true);\n            return;\n        }\n        stepData.put(EXCEPTION_CAUGHT, false);\n    }\n}\n"
+      }
+    ]
+  }
+]

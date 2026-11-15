@@ -1,0 +1,13 @@
+[
+  {
+    "instance_id": "algorand-sdk/features/unit/v2algodclient_paths.feature:83",
+    "model_name_or_path": "codex-gpt-6-luna-medium",
+    "view": "th",
+    "files": [
+      {
+        "path": "src/test/java/com/algorand/algosdk/unit/AlgodRestApiV2PathsSteps.java",
+        "content": "package com.algorand.algosdk.unit;\n\nimport com.algorand.algosdk.v2.client.algod.GetApplicationBoxByName;\nimport com.algorand.algosdk.v2.client.common.AlgodClient;\nimport com.sun.net.httpserver.HttpServer;\nimport io.cucumber.java.en.Given;\nimport io.cucumber.java.en.When;\nimport io.cucumber.java.en.Then;\n\nimport java.io.IOException;\nimport java.net.InetSocketAddress;\nimport java.nio.charset.StandardCharsets;\n\nimport static org.assertj.core.api.Assertions.assertThat;\n\npublic class AlgodRestApiV2PathsSteps {\n    private HttpServer server;\n    private String recordedPath;\n    private AlgodClient client;\n\n    @Given(\"mock server recording request paths\")\n    public void mockServerRecordingRequestPaths() throws IOException {\n        server = HttpServer.create(new InetSocketAddress(\"127.0.0.1\", 0), 0);\n        server.createContext(\"/\", exchange -> {\n            recordedPath = exchange.getRequestURI().toASCIIString();\n            byte[] body = \"{}\".getBytes(StandardCharsets.UTF_8);\n            exchange.sendResponseHeaders(404, body.length);\n            exchange.getResponseBody().write(body);\n            exchange.close();\n        });\n        server.start();\n        client = new AlgodClient(\"http://127.0.0.1\", server.getAddress().getPort(), \"\");\n    }\n\n    @When(\"we make a GetApplicationBoxByName call for applicationID {long} with encoded box name {string}\")\n    public void makeGetApplicationBoxByNameCall(long applicationId, String encodedBoxName) throws Exception {\n        GetApplicationBoxByName query = client.GetApplicationBoxByName(applicationId).name(encodedBoxName);\n        try {\n            query.execute();\n        } catch (Exception ignored) {\n            // The test server intentionally returns 404; the request itself is what is under test.\n        }\n    }\n\n    @Then(\"expect the path used to be {string}\")\n    public void expectPathUsedToBe(String expectedPath) {\n        assertThat(recordedPath).isEqualTo(expectedPath);\n        server.stop(0);\n    }\n}\n"
+      }
+    ]
+  }
+]

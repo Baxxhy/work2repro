@@ -1,0 +1,11 @@
+{
+  "artifact_id": "af2db3aaa3d3aed0e730",
+  "category": "A;B;G",
+  "requirement_gap_confirmed": true,
+  "adjudication": "CONFIRMED_REQUIREMENT_GAP",
+  "representative_mutant": "a1947a0f71599b25",
+  "analysis": "场景要求 streaming stub model 驱动真实 agent 写文件、向模型提供完整工具集并从 transcript 报告模式。生成代码的自定义 runner 直接 os.WriteFile，tools() 自建 full-agent-tool-set 字符串，send() 将输入 mode 直接赋给 transcript。三项检查均绕过相应生产行为。参考用 agent.NewAgent(...).Run 和真实 OpenAI transport，读取 stub 收到的 tools 并查询 transcript。toolsets return defs→nil 的存活与该绕过直接吻合。250 个存活项包括大量配置与会话路径，不能全部赋予同一已证实原因。",
+  "reference_anchor": "bdd_ask_mode_e2e_test.go|offeredTools",
+  "method": "manual semantic comparison of frozen requirement, code and existing results",
+  "new_execution": false
+}

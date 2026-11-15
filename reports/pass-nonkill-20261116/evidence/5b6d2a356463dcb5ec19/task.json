@@ -1,0 +1,169 @@
+{
+  "benchmark_version": "1.1",
+  "environment": {
+    "facts": [
+      "Scoring also excludes Disable debug mode and Enable debug mode in `Misc/debug_mode.feature` (criteria at lines 8 and 12), because their transitions rewrite protected `config/defines.inc.php`. This two-criterion boundary was approved after the native diagnostic on 2026-09-13, before release or model collection; it was not an H0 exclusion. Existing valid H15 validation observations remain raw evidence under the unchanged execution method.",
+      "Step definitions live in classes that implement `Behat\\Behat\\Context\\Context` and declare their patterns in DOCBLOCK annotations: `/** @Given /^regex$/ */`, `@When`, `@Then`. Plain-text patterns (`@Given I am logged in as :email`) also work. The Given/When/Then keyword is irrelevant to matching.",
+      "The scenario's `Background` steps run before it and need definitions too. Each benchmark item executes one scenario with its Background; earlier scenarios are not setup.",
+      "Context classes use the `Tests\\Integration\\Behaviour\\Features\\Context` namespace and its subnamespaces. Composer maps `Tests\\` to `tests/`. Behat registers context class names directly in each suite. CommonFeatureContext is the shared fixed context. Each item requires the retained context list of its original upstream suite, in the original order, alongside submitted context classes. That list is selected from the original Behat configuration, independently of the reference closure. The other suites' retained transforms and hooks are not globally registered. No Symfony service definition file is part of the submission.",
+      "Extend retained `AbstractPrestaShopFeatureContext` for `getSharedStorage()` and reference helpers, or `Domain\\AbstractDomainFeatureContext` for `getCommandBus()`, `getQueryBus()` and exception helpers. Shared storage uses `set($key, $value)`, `get($key)` and `exists($key)`. Production code lives under `src/`, `classes/` and `controllers/`, including Symfony services, CQRS handlers and legacy classes.",
+      "ALL 57 are in-process and headless. There is no browser suite to exclude, and no @javascript tag exists anywhere in the corpus.",
+      "tests/UI (Playwright) and tests/Unit + tests/Integration PHPUnit are NOT part of behat.yml and are out of scope by construction.",
+      "Scoring excludes every scenario selected by the upstream employee suite and every scenario carrying an actual @todo or @example Gherkin tag, including inherited tags. At the pinned commit the employee suite contains seven scenarios and neither excluded tag occurs in a Gherkin tag block. Comments and email addresses are not tags. Population exclusions are preserved by item identity and reason in the release exclusions histogram.",
+      "PHP >= 8.1 (CI matrix runs several 8.x) with ext mbstring, intl, gd, xml, dom, json, fileinfo, curl, zip, iconv. MySQL 8.0 REQUIRED (MariaDB variant also in CI) — the shop is really installed into it.",
+      "CommonFeatureContext retains its four step definitions and all 24 hook annotations. Configuration contexts retain another 14 step annotations because their directory is outside the approved removable set. Top-level OrderMessageContext retains one because its name is outside the approved *FeatureContext.php pattern. The retained files contain 19 step annotations in total. Only the original suite's retained contexts are registered for an item, and its matched retained steps are measured; a scenario passing without removable glue is excluded by validation.",
+      "tests/Integration/Behaviour/bootstrap.php; CommonFeatureContext.php (it holds only 4 step defs but ALL the @BeforeSuite kernel boot, @BeforeFeature/@AfterScenario DatabaseDump restore hooks, cache clearing and ContextMocker); AbstractPrestaShopFeatureContext.php and AbstractDomainFeatureContext.php (0 step defs each — pure helpers: referenceToId, getCommandBus, getQueryBus); SharedStorage.php + SharedStorageTrait.php + LastExceptionTrait.php + CartAwareTrait.php; Features/Context/Util/**; Features/Transform/** (the @Transform table converters); and the retained test resources under tests/Resources/** (DatabaseDump, ResourceResetter, MailDevClient, test modules/themes).",
+      "Cross-scenario state inside a feature file — SharedStorage persists across scenarios, so customer_group_management.feature's 'Update the created customer group' presupposes the preceding 'Create' scenario ran. Per-scenario isolation will fail unless you run whole feature files as the unit, or synthesise the prior scenarios as setup. This is the single biggest harness decision.",
+      "The benchmark keeps the scenario execution unit. Per-scenario fail-then-pass validation excludes order-dependent scenarios by refusal, and the release reports that exclusions histogram. It neither runs whole feature files as one item nor synthesises earlier scenarios as setup.",
+      "`--strict --no-snippets` is the upstream invocation; keep --strict so undefined/pending steps fail rather than silently pass — this is also your vacuous-pass guard.",
+      "The readable source views omit `tests/Resources/modules/ps_apiresources` under the approved native-module alias exclusion. The real module remains available in the separate evaluator runtime; it is not part of the agent workspace.",
+      "This workspace supports reading, searching, editing, and syntax parsing. It is a provisioned application runtime for the code in `./repo`; nothing here is executed by the harness. The harness executes your final submitted test artifacts against a separate, complete implementation after generation ends. You receive no harness execution feedback during generation.",
+      "TARGET_CONTRACTS.md contains the reviewed public API and configuration supplement supplied in every visibility view. It is context for writing tests; edits to it are not submitted.",
+      "Implementation visibility: the reviewed target bodies, including behavior-bearing delegated helpers, are hidden; declarations and permitted surrounding implementations remain visible."
+    ],
+    "framework": "Behat",
+    "language": "PHP",
+    "platform": "the PrestaShop e-commerce platform (PHP, Symfony, CQRS and legacy classes, MySQL 8.0)",
+    "project": "PrestaShop",
+    "removed": "Behat test code",
+    "retained": "the retained PrestaShop Behat hooks, configuration contexts, abstract helpers, transforms and test resources",
+    "run": "`behat-scenario <feature file>:<line>` runs one Scenario in this workspace."
+  },
+  "instance_id": "prestashop/tests/Integration/Behaviour/Features/Scenario/Meta/meta_management.feature:10",
+  "placement": {
+    "acceptance_mode": "directory",
+    "acceptance_root": "tests/Integration/Behaviour/Features/Context/",
+    "artefact_noun": "step-definition code",
+    "extra_names": [],
+    "path": "repo/tests/Integration/Behaviour/Features/Context/...",
+    "placement_hint": "tests/Integration/Behaviour/Features/Context/...",
+    "rules": [
+      "Only files under `repo/tests/Integration/Behaviour/Features/Context/` are accepted. Repo-wide removal deleted those directories, so create whatever path you need; `CommonFeatureContext.php`, `ContextFeatureContext.php`, `OrderMessageContext.php`, `AbstractPrestaShopFeatureContext.php`, `Domain/AbstractDomainFeatureContext.php`, the abstract product and combination helpers, `SharedStorage.php`, `SharedStorageTrait.php`, `LastExceptionTrait.php`, `CartAwareTrait.php`, `Configuration/`, `Util/`, `tests/Integration/Behaviour/Features/Transform/`, `tests/Integration/Behaviour/bootstrap.php`, `tests/Integration/Utility/` and `tests/Resources/` (with the approved readable-view module exclusion) remain.",
+      "Production code is never accepted. Anything you change outside `repo/tests/Integration/Behaviour/Features/Context/` is discarded."
+    ],
+    "suffixes": [
+      ".php",
+      ".feature"
+    ],
+    "wiring_file": null
+  },
+  "project": "prestashop",
+  "requirement": {
+    "feature": {
+      "background": "  Background:\n    Given language with iso code \"en\" is the default one",
+      "file_path": "tests/Integration/Behaviour/Features/Scenario/Meta/meta_management.feature",
+      "narrative": "  PrestaShop allows BO users to manage page metadata - title, description, keywords, url_rewrite etc...\n  As a BO user I must be able to create, edit, delete and update meta data.",
+      "title": "Meta management (Traffic & Seo)"
+    },
+    "scenario": {
+      "gherkin": "  Scenario: Create new metadata\n    When I add meta \"meta1\" with specified properties\n      | pageName                       | pdf-order-return                      |\n      | localisedPageTitle             | page title in default language        |\n      | localisedMetaDescription      | meta description in default language  |\n      | localisedRewriteUrls           | rewrite-url-default                   |\n    Then meta \"meta1\" page should be \"pdf-order-return\"\n    And meta \"meta1\" field \"title\" for default language should be \"page title in default language\"\n    And meta \"meta1\" field \"description\" for default language should be \"meta description in default language\"\n    And meta \"meta1\" field \"url_rewrite\" for default language should be \"rewrite-url-default\"",
+      "kind": "scenario",
+      "line": 10,
+      "tags": [
+        "@restore-all-tables-before-feature"
+      ],
+      "title": "Create new metadata"
+    }
+  },
+  "runtime_setup": "req2test runtime setup --project prestashop --instance prestashop/tests/Integration/Behaviour/Features/Scenario/Meta/meta_management.feature:10 --workspace WORKSPACE",
+  "source_view": "req2test views materialize --project prestashop --view th --instance prestashop/tests/Integration/Behaviour/Features/Scenario/Meta/meta_management.feature:10 --out DIR",
+  "target_interfaces": [
+    {
+      "declaration": "public function __construct($id = null, $id_lang = null, $id_shop = null, $translator = null)",
+      "key": [
+        "ObjectModelCore",
+        "__construct"
+      ]
+    },
+    {
+      "declaration": "public function handle($command)",
+      "key": [
+        "PrestaShopBundle\\CommandBus\\MessengerCommandBus",
+        "handle"
+      ]
+    },
+    {
+      "declaration": "public function __construct($pageName)",
+      "key": [
+        "PrestaShop\\PrestaShop\\Core\\Domain\\Meta\\Command\\AddMetaCommand",
+        "__construct"
+      ]
+    },
+    {
+      "declaration": "public function getValue()",
+      "key": [
+        "PrestaShop\\PrestaShop\\Core\\Domain\\Meta\\ValueObject\\MetaId",
+        "getValue"
+      ]
+    }
+  ],
+  "target_interfaces_empty_reason": null,
+  "task": {
+    "checked_interfaces": {
+      "checked": [
+        {
+          "declaration": "public function __construct($id = null, $id_lang = null, $id_shop = null, $translator = null)",
+          "key": [
+            "ObjectModelCore",
+            "__construct"
+          ]
+        },
+        {
+          "declaration": "public function handle($command)",
+          "key": [
+            "PrestaShopBundle\\CommandBus\\MessengerCommandBus",
+            "handle"
+          ]
+        },
+        {
+          "declaration": "public function __construct($pageName)",
+          "key": [
+            "PrestaShop\\PrestaShop\\Core\\Domain\\Meta\\Command\\AddMetaCommand",
+            "__construct"
+          ]
+        },
+        {
+          "declaration": "public function getValue()",
+          "key": [
+            "PrestaShop\\PrestaShop\\Core\\Domain\\Meta\\ValueObject\\MetaId",
+            "getValue"
+          ]
+        }
+      ],
+      "empty_reason": null
+    },
+    "criterion": {
+      "gherkin": "  Scenario: Create new metadata\n    When I add meta \"meta1\" with specified properties\n      | pageName                       | pdf-order-return                      |\n      | localisedPageTitle             | page title in default language        |\n      | localisedMetaDescription      | meta description in default language  |\n      | localisedRewriteUrls           | rewrite-url-default                   |\n    Then meta \"meta1\" page should be \"pdf-order-return\"\n    And meta \"meta1\" field \"title\" for default language should be \"page title in default language\"\n    And meta \"meta1\" field \"description\" for default language should be \"meta description in default language\"\n    And meta \"meta1\" field \"url_rewrite\" for default language should be \"rewrite-url-default\"",
+      "kind": "Scenario",
+      "scenario_title": "Create new metadata"
+    },
+    "expected_output": [
+      "step_definitions"
+    ],
+    "framework": "behat",
+    "item_id": "prestashop/tests/Integration/Behaviour/Features/Scenario/Meta/meta_management.feature:10",
+    "language": "php",
+    "project": "prestashop",
+    "provenance": {
+      "file_path": "tests/Integration/Behaviour/Features/Scenario/Meta/meta_management.feature",
+      "line": 10
+    },
+    "requirement": {
+      "background": "  Background:\n    Given language with iso code \"en\" is the default one",
+      "feature_title": "Meta management (Traffic & Seo)",
+      "narrative": "  PrestaShop allows BO users to manage page metadata - title, description, keywords, url_rewrite etc...\n  As a BO user I must be able to create, edit, delete and update meta data.",
+      "richness": "user_story"
+    },
+    "target_interfaces": {
+      "behaviour": [
+        "PrestaShop\\PrestaShop\\Core\\Domain\\Meta\\Command\\AddMetaCommand",
+        "PrestaShop\\PrestaShop\\Core\\Domain\\Meta\\ValueObject\\MetaId"
+      ],
+      "setup": [
+        "PrestaShop\\PrestaShop\\Core\\Context\\LanguageContextBuilder"
+      ]
+    },
+    "task": "criterion_to_test"
+  },
+  "view": "th"
+}

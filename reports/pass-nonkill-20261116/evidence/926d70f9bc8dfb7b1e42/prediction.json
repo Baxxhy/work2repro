@@ -1,0 +1,13 @@
+[
+  {
+    "instance_id": "python-docx/features/tbl-row-props.feature:29",
+    "model_name_or_path": "codex-gpt-6-luna-medium",
+    "view": "th",
+    "files": [
+      {
+        "path": "features/steps/tbl_row_props.py",
+        "content": "from behave import given, then\nfrom docx import Document\nfrom docx.enum.table import WD_ROW_HEIGHT_RULE\n\n\n@given(\"a table row having height rule {state}\")\ndef given_row_with_height_rule(context, state):\n    document = Document()\n    table = document.add_table(rows=1, cols=1)\n    context.row = table.rows[0]\n\n    if state == \"automatic\":\n        context.row.height_rule = WD_ROW_HEIGHT_RULE.AUTO\n    elif state == \"at least\":\n        context.row.height_rule = WD_ROW_HEIGHT_RULE.AT_LEAST\n    elif state != \"no explicit setting\":\n        raise AssertionError(\"unknown height-rule state: %s\" % state)\n\n\n@then(\"row.height_rule is {value}\")\ndef then_row_height_rule_is(context, value):\n    expected = None if value == \"None\" else WD_ROW_HEIGHT_RULE[value]\n    actual = context.row.height_rule\n    assert actual == expected, \"expected %r, got %r\" % (expected, actual)\n"
+      }
+    ]
+  }
+]

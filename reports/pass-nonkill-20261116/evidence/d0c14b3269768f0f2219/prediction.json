@@ -1,0 +1,13 @@
+[
+  {
+    "instance_id": "python-docx/features/sty-latent-add-del.feature:14",
+    "model_name_or_path": "codex-gpt-6-luna-medium",
+    "view": "th",
+    "files": [
+      {
+        "path": "features/steps/sty_latent_add_del.py",
+        "content": "from behave import given, when, then\nfrom docx import Document\n\n\n@given(\"a document having known styles\")\ndef given_document_having_known_styles(context):\n    context.document = Document()\n    context.styles = context.document.styles\n    context.latent_styles = context.styles.latent_styles\n\n\n@when(\"I delete a latent style\")\ndef when_delete_a_latent_style(context):\n    # The default document template supplies a non-empty, known collection of\n    # latent style exceptions. Retain the name so the deletion can be checked\n    # through the collection's name-based lookup.\n    context.latent_style = next(iter(context.latent_styles))\n    context.deleted_latent_style_name = context.latent_style.name\n    context.latent_styles_before_delete = len(context.latent_styles)\n    context.latent_style.delete()\n\n\n@then(\"the document has one fewer latent styles\")\ndef then_document_has_one_fewer_latent_styles(context):\n    actual = len(context.document.styles.latent_styles)\n    expected = context.latent_styles_before_delete - 1\n    assert actual == expected, \"expected %d latent styles, got %d\" % (expected, actual)\n\n\n@then(\"the deleted latent style is not in the latent styles collection\")\ndef then_deleted_latent_style_is_not_in_collection(context):\n    try:\n        context.document.styles.latent_styles[context.deleted_latent_style_name]\n    except KeyError:\n        return\n    assert False, \"deleted latent style %r is still in the collection\" % (\n        context.deleted_latent_style_name,\n    )\n"
+      }
+    ]
+  }
+]

@@ -1,0 +1,668 @@
+[
+  {
+    "source": "/root/lby-docker/req2test/user/benchmark/kits/coreshop/1.2/exec/release/gold/8833864ee9cbcc03.json",
+    "record": {
+      "context_classes": [
+        "CoreShop\\Behat\\Context\\Domain\\OrderContext",
+        "CoreShop\\Behat\\Context\\Setup\\CartContext",
+        "CoreShop\\Behat\\Context\\Setup\\CartPriceRuleContext",
+        "CoreShop\\Behat\\Context\\Setup\\CountryContext",
+        "CoreShop\\Behat\\Context\\Setup\\CustomerContext",
+        "CoreShop\\Behat\\Context\\Setup\\LocaleContext",
+        "CoreShop\\Behat\\Context\\Setup\\OrderContext",
+        "CoreShop\\Behat\\Context\\Setup\\ProductContext",
+        "CoreShop\\Behat\\Context\\Setup\\StoreContext",
+        "CoreShop\\Behat\\Context\\Setup\\TaxRateContext",
+        "CoreShop\\Behat\\Context\\Setup\\TaxRuleGroupContext",
+        "CoreShop\\Behat\\Context\\Transform\\CartContext",
+        "CoreShop\\Behat\\Context\\Transform\\CartPriceRuleContext",
+        "CoreShop\\Behat\\Context\\Transform\\CountryContext",
+        "CoreShop\\Behat\\Context\\Transform\\CurrencyContext",
+        "CoreShop\\Behat\\Context\\Transform\\CustomerContext",
+        "CoreShop\\Behat\\Context\\Transform\\OrderContext",
+        "CoreShop\\Behat\\Context\\Transform\\ProductContext",
+        "CoreShop\\Behat\\Context\\Transform\\TaxRateContext",
+        "CoreShop\\Behat\\Context\\Transform\\TaxRuleGroupContext"
+      ],
+      "di_fragment": {
+        "coreshop.behat.context.domain.order": {
+          "arguments": [
+            "@CoreShop\\Bundle\\WorkflowBundle\\Manager\\StateMachineManagerInterface"
+          ],
+          "class": "CoreShop\\Behat\\Context\\Domain\\OrderContext",
+          "tags": [
+            {
+              "name": "fob.context_service"
+            }
+          ]
+        },
+        "coreshop.behat.context.setup.cart": {
+          "arguments": [
+            "@coreshop.behat.shared_storage",
+            "@CoreShop\\Component\\Order\\Context\\CartContextInterface",
+            "@CoreShop\\Component\\Order\\Cart\\CartModifierInterface",
+            "@CoreShop\\Component\\Core\\Order\\Modifier\\CartItemQuantityModifier",
+            "@CoreShop\\Component\\Order\\Manager\\CartManagerInterface",
+            "@CoreShop\\Bundle\\OrderBundle\\Factory\\AddToCartFactoryInterface",
+            "@coreshop.factory.order_item",
+            "@form.factory"
+          ],
+          "class": "CoreShop\\Behat\\Context\\Setup\\CartContext",
+          "tags": [
+            {
+              "name": "fob.context_service"
+            }
+          ]
+        },
+        "coreshop.behat.context.setup.cart_price_rule": {
+          "arguments": [
+            "@coreshop.behat.shared_storage",
+            "@doctrine.orm.entity_manager",
+            "@form.factory",
+            "@coreshop.form_registry.cart_price_rule.conditions",
+            "@coreshop.form_registry.cart_price_rule.actions",
+            "@coreshop.factory.cart_price_rule",
+            "@coreshop.repository.cart_price_rule_voucher_code",
+            "@CoreShop\\Component\\Order\\Cart\\Rule\\CartPriceRuleProcessorInterface",
+            "@CoreShop\\Component\\Order\\Manager\\CartManagerInterface",
+            "@coreshop.factory.cart_price_rule_voucher_code"
+          ],
+          "class": "CoreShop\\Behat\\Context\\Setup\\CartPriceRuleContext",
+          "tags": [
+            {
+              "name": "fob.context_service"
+            }
+          ]
+        },
+        "coreshop.behat.context.setup.country": {
+          "arguments": [
+            "@coreshop.behat.shared_storage",
+            "@doctrine.orm.entity_manager",
+            "@coreshop.factory.country",
+            "@coreshop.repository.country",
+            "@CoreShop\\Component\\Address\\Context\\FixedCountryContext",
+            "%kernel.project_dir%"
+          ],
+          "class": "CoreShop\\Behat\\Context\\Setup\\CountryContext",
+          "tags": [
+            {
+              "name": "fob.context_service"
+            }
+          ]
+        },
+        "coreshop.behat.context.setup.customer": {
+          "arguments": [
+            "@coreshop.behat.shared_storage",
+            "@coreshop.factory.customer",
+            "@coreshop.factory.user",
+            "@CoreShop\\Component\\Customer\\Context\\FixedCustomerContext",
+            "@coreshop.factory.address"
+          ],
+          "class": "CoreShop\\Behat\\Context\\Setup\\CustomerContext",
+          "tags": [
+            {
+              "name": "fob.context_service"
+            }
+          ]
+        },
+        "coreshop.behat.context.setup.locale": {
+          "arguments": [
+            "@CoreShop\\Component\\Locale\\Context\\FixedLocaleContext"
+          ],
+          "class": "CoreShop\\Behat\\Context\\Setup\\LocaleContext",
+          "tags": [
+            {
+              "name": "fob.context_service"
+            }
+          ]
+        },
+        "coreshop.behat.context.setup.order": {
+          "arguments": [
+            "@coreshop.behat.shared_storage",
+            "@CoreShop\\Component\\Store\\Context\\StoreContextInterface",
+            "@CoreShop\\Bundle\\WorkflowBundle\\Applier\\StateMachineApplierInterface"
+          ],
+          "class": "CoreShop\\Behat\\Context\\Setup\\OrderContext",
+          "tags": [
+            {
+              "name": "fob.context_service"
+            }
+          ]
+        },
+        "coreshop.behat.context.setup.product": {
+          "arguments": [
+            "@coreshop.behat.shared_storage",
+            "@coreshop.factory.product",
+            "@coreshop.factory.product_unit_definitions",
+            "@coreshop.factory.product_unit_definition",
+            "@coreshop.factory.product_unit_definition_price",
+            "@CoreShop\\Component\\Core\\Product\\Cloner\\ProductUnitDefinitionsCloner",
+            "@CoreShop\\Component\\Core\\Product\\Cloner\\ProductQuantityPriceRulesCloner"
+          ],
+          "class": "CoreShop\\Behat\\Context\\Setup\\ProductContext",
+          "tags": [
+            {
+              "name": "fob.context_service"
+            }
+          ]
+        },
+        "coreshop.behat.context.setup.store": {
+          "arguments": [
+            "@coreshop.behat.shared_storage",
+            "@doctrine.orm.entity_manager",
+            "@coreshop.factory.store",
+            "@coreshop.factory.currency",
+            "@coreshop.factory.country",
+            "@CoreShop\\Component\\Store\\Context\\FixedStoreContext"
+          ],
+          "class": "CoreShop\\Behat\\Context\\Setup\\StoreContext",
+          "tags": [
+            {
+              "name": "fob.context_service"
+            }
+          ]
+        },
+        "coreshop.behat.context.setup.tax_rate": {
+          "arguments": [
+            "@coreshop.behat.shared_storage",
+            "@doctrine.orm.entity_manager",
+            "@coreshop.factory.tax_rate"
+          ],
+          "class": "CoreShop\\Behat\\Context\\Setup\\TaxRateContext",
+          "tags": [
+            {
+              "name": "fob.context_service"
+            }
+          ]
+        },
+        "coreshop.behat.context.setup.tax_rule_group": {
+          "arguments": [
+            "@coreshop.behat.shared_storage",
+            "@doctrine.orm.entity_manager",
+            "@coreshop.factory.tax_rule_group",
+            "@coreshop.factory.tax_rule"
+          ],
+          "class": "CoreShop\\Behat\\Context\\Setup\\TaxRuleGroupContext",
+          "tags": [
+            {
+              "name": "fob.context_service"
+            }
+          ]
+        },
+        "coreshop.behat.context.transform.cart": {
+          "arguments": [
+            "@coreshop.behat.shared_storage",
+            "@coreshop.repository.order",
+            "@CoreShop\\Component\\Order\\Context\\CartContextInterface"
+          ],
+          "class": "CoreShop\\Behat\\Context\\Transform\\CartContext",
+          "tags": [
+            {
+              "name": "fob.context_service"
+            }
+          ]
+        },
+        "coreshop.behat.context.transform.cart_price_rule": {
+          "arguments": [
+            "@coreshop.behat.shared_storage",
+            "@coreshop.repository.cart_price_rule"
+          ],
+          "class": "CoreShop\\Behat\\Context\\Transform\\CartPriceRuleContext",
+          "tags": [
+            {
+              "name": "fob.context_service"
+            }
+          ]
+        },
+        "coreshop.behat.context.transform.country": {
+          "arguments": [
+            "@coreshop.behat.shared_storage",
+            "@coreshop.repository.country"
+          ],
+          "class": "CoreShop\\Behat\\Context\\Transform\\CountryContext",
+          "tags": [
+            {
+              "name": "fob.context_service"
+            }
+          ]
+        },
+        "coreshop.behat.context.transform.currency": {
+          "arguments": [
+            "@coreshop.behat.shared_storage",
+            "@coreshop.repository.currency"
+          ],
+          "class": "CoreShop\\Behat\\Context\\Transform\\CurrencyContext",
+          "tags": [
+            {
+              "name": "fob.context_service"
+            }
+          ]
+        },
+        "coreshop.behat.context.transform.customer": {
+          "arguments": [
+            "@coreshop.behat.shared_storage",
+            "@coreshop.repository.customer"
+          ],
+          "class": "CoreShop\\Behat\\Context\\Transform\\CustomerContext",
+          "tags": [
+            {
+              "name": "fob.context_service"
+            }
+          ]
+        },
+        "coreshop.behat.context.transform.order": {
+          "arguments": [
+            "@coreshop.behat.shared_storage"
+          ],
+          "class": "CoreShop\\Behat\\Context\\Transform\\OrderContext",
+          "tags": [
+            {
+              "name": "fob.context_service"
+            }
+          ]
+        },
+        "coreshop.behat.context.transform.product": {
+          "arguments": [
+            "@coreshop.behat.shared_storage",
+            "@coreshop.repository.product"
+          ],
+          "class": "CoreShop\\Behat\\Context\\Transform\\ProductContext",
+          "tags": [
+            {
+              "name": "fob.context_service"
+            }
+          ]
+        },
+        "coreshop.behat.context.transform.tax_rate": {
+          "arguments": [
+            "@coreshop.repository.tax_rate"
+          ],
+          "class": "CoreShop\\Behat\\Context\\Transform\\TaxRateContext",
+          "tags": [
+            {
+              "name": "fob.context_service"
+            }
+          ]
+        },
+        "coreshop.behat.context.transform.tax_rule_group": {
+          "arguments": [
+            "@coreshop.behat.shared_storage",
+            "@coreshop.repository.tax_rule_group"
+          ],
+          "class": "CoreShop\\Behat\\Context\\Transform\\TaxRuleGroupContext",
+          "tags": [
+            {
+              "name": "fob.context_service"
+            }
+          ]
+        }
+      },
+      "feature_file": "features/domain/order/create_order_with_discount.feature",
+      "files": [
+        "src/CoreShop/Behat/Context/Domain/OrderContext.php",
+        "src/CoreShop/Behat/Context/Setup/ActionFormTrait.php",
+        "src/CoreShop/Behat/Context/Setup/CartContext.php",
+        "src/CoreShop/Behat/Context/Setup/CartPriceRuleContext.php",
+        "src/CoreShop/Behat/Context/Setup/ConditionFormTrait.php",
+        "src/CoreShop/Behat/Context/Setup/CountryContext.php",
+        "src/CoreShop/Behat/Context/Setup/CustomerContext.php",
+        "src/CoreShop/Behat/Context/Setup/LocaleContext.php",
+        "src/CoreShop/Behat/Context/Setup/OrderContext.php",
+        "src/CoreShop/Behat/Context/Setup/ProductContext.php",
+        "src/CoreShop/Behat/Context/Setup/StoreContext.php",
+        "src/CoreShop/Behat/Context/Setup/TaxRateContext.php",
+        "src/CoreShop/Behat/Context/Setup/TaxRuleGroupContext.php",
+        "src/CoreShop/Behat/Context/Transform/CartContext.php",
+        "src/CoreShop/Behat/Context/Transform/CartPriceRuleContext.php",
+        "src/CoreShop/Behat/Context/Transform/CountryContext.php",
+        "src/CoreShop/Behat/Context/Transform/CurrencyContext.php",
+        "src/CoreShop/Behat/Context/Transform/CustomerContext.php",
+        "src/CoreShop/Behat/Context/Transform/OrderContext.php",
+        "src/CoreShop/Behat/Context/Transform/ProductContext.php",
+        "src/CoreShop/Behat/Context/Transform/TaxRateContext.php",
+        "src/CoreShop/Behat/Context/Transform/TaxRuleGroupContext.php"
+      ],
+      "item_id": "coreshop/features/domain/order/create_order_with_discount.feature:23",
+      "scenario_line": 23
+    }
+  },
+  {
+    "source": "/root/lby-docker/req2test/user/benchmark/kits/coreshop/1.2/exec/release/gold/manifest.json",
+    "record": {
+      "coreshop/features/domain/cart/cart_base_item_taxes.feature:22": "65d717e066dbb3a4.json",
+      "coreshop/features/domain/cart/cart_base_item_taxes.feature:38": "b555489b817e2def.json",
+      "coreshop/features/domain/cart/cart_base_item_taxes.feature:56": "707d479ff0180966.json",
+      "coreshop/features/domain/cart/cart_base_shipping.feature:25": "fb042d42a8404ca5.json",
+      "coreshop/features/domain/cart/cart_item_taxes.feature:23": "ed6df6e4f008b06d.json",
+      "coreshop/features/domain/cart/cart_item_taxes.feature:34": "e210349f54c77d6a.json",
+      "coreshop/features/domain/cart/cart_item_taxes.feature:48": "2d3511ddfc5c8d69.json",
+      "coreshop/features/domain/cart/cart_item_taxes_gross.feature:23": "ac86f5d3a8d51aba.json",
+      "coreshop/features/domain/cart/cart_item_taxes_gross.feature:34": "e3b542dbf6b2b03c.json",
+      "coreshop/features/domain/cart/cart_item_taxes_gross.feature:48": "7602947c8f9c3830.json",
+      "coreshop/features/domain/cart/cart_shipping_tax_by_cart_items_gross.feature:30": "13a6fca3348c274c.json",
+      "coreshop/features/domain/cart/cart_shipping_tax_by_cart_items_net.feature:30": "49e6e2ba0e22cfc0.json",
+      "coreshop/features/domain/cart/cart_shipping_tax_rate_gross.feature:22": "f1f88c81482991fe.json",
+      "coreshop/features/domain/cart/cart_shipping_tax_rate_net.feature:22": "ddf9315deef8ede2.json",
+      "coreshop/features/domain/cart/cart_taxation_gross.feature:27": "48e3c8db050f4593.json",
+      "coreshop/features/domain/cart/cart_taxation_gross.feature:40": "90b6c2ff8851935b.json",
+      "coreshop/features/domain/cart/cart_taxation_net.feature:27": "cb8e5ad7be4927cd.json",
+      "coreshop/features/domain/cart/cart_units.feature:23": "97dea3df79f8ed4f.json",
+      "coreshop/features/domain/cart/cart_units.feature:28": "85b9f00b95490a54.json",
+      "coreshop/features/domain/cart/cart_units_precision.feature:25": "dd6fcebc3b8a6cad.json",
+      "coreshop/features/domain/cart/cart_units_precision_and_vouchers.feature:25": "de989c665b0dd0e3.json",
+      "coreshop/features/domain/cart/cart_units_precision_and_vouchers_gross.feature:25": "a9d8dffc5829678a.json",
+      "coreshop/features/domain/cart/cart_units_taxation_gross.feature:42": "8e966f40f0e468c8.json",
+      "coreshop/features/domain/cart/cart_units_taxation_gross.feature:47": "cc3151df1c053a4a.json",
+      "coreshop/features/domain/cart/cart_units_taxation_gross.feature:55": "8e241a7774891d6e.json",
+      "coreshop/features/domain/cart/cart_units_taxation_net.feature:42": "a586f57b2902c9ff.json",
+      "coreshop/features/domain/cart/cart_units_taxation_net.feature:47": "1f2673c17abdf96d.json",
+      "coreshop/features/domain/cart/cart_units_taxation_net.feature:55": "d168cf192935736e.json",
+      "coreshop/features/domain/cart/cart_weight.feature:16": "45f55cf8647234a0.json",
+      "coreshop/features/domain/cart/create_cart.feature:21": "ff99298888da2c44.json",
+      "coreshop/features/domain/cart/create_cart.feature:27": "f5db39967db26847.json",
+      "coreshop/features/domain/cart/create_cart.feature:33": "cd3d49e6a9d1aa50.json",
+      "coreshop/features/domain/cart/delete_cart_item_on_unpublish.feature:20": "b6628c29df94cee0.json",
+      "coreshop/features/domain/cart/delete_cart_item_on_unpublish.feature:28": "ebbec162e554b907.json",
+      "coreshop/features/domain/cart/discount_percent_action_no_tax_100.feature:18": "0893f2c2ef9132e0.json",
+      "coreshop/features/domain/cart/discount_percent_action_no_tax_100_and_free_shipping.feature:18": "8925321f69675d26.json",
+      "coreshop/features/domain/cart/discount_percent_action_no_tax_100_and_free_shipping_and_gross_values.feature:18": "81b6ad551658855f.json",
+      "coreshop/features/domain/cart/discount_percent_action_no_tax_100_and_gross_values.feature:18": "7cf66a1ad36d36b4.json",
+      "coreshop/features/domain/cart/discount_percent_action_tax_100.feature:23": "c4a8d1bf292b2a5c.json",
+      "coreshop/features/domain/cart/discount_percent_action_tax_100_and_free_shipping.feature:23": "ffc67db9b96e4dda.json",
+      "coreshop/features/domain/cart/discount_percent_action_tax_100_and_free_shipping_and_gross_values.feature:23": "7ac6f3e15b750254.json",
+      "coreshop/features/domain/cart/discount_percent_action_tax_100_and_gross_values.feature:23": "346bfc580d1a582c.json",
+      "coreshop/features/domain/cart/not_discountable_action.feature:18": "2cb4b4b8aa976313.json",
+      "coreshop/features/domain/cart/product/product-specific-price-rule-with-unit.feature:17": "d68ccddc4e9ffaa8.json",
+      "coreshop/features/domain/cart/product/product-specific-price-rule-with-unit.feature:26": "eabecb7071fbb559.json",
+      "coreshop/features/domain/cart/rules/amount_condition.feature:24": "233680caa9d22f0c.json",
+      "coreshop/features/domain/cart/rules/amount_condition.feature:31": "8ef65a49f413fbcc.json",
+      "coreshop/features/domain/cart/rules/cart_item/amount_condition.feature:24": "25a3dc99f53fa323.json",
+      "coreshop/features/domain/cart/rules/cart_item/amount_condition.feature:34": "e012514c357adea7.json",
+      "coreshop/features/domain/cart/rules/cart_item/discount_amount_action.feature:13": "7ab3824d31d46955.json",
+      "coreshop/features/domain/cart/rules/cart_item/discount_over_100_percent.feature:17": "b2e6954ca9483525.json",
+      "coreshop/features/domain/cart/rules/cart_item/discount_percent_condition.feature:19": "b7ed8ab2baae191c.json",
+      "coreshop/features/domain/cart/rules/cart_item/discount_percent_gross_action.feature:17": "8ac47f47d1612204.json",
+      "coreshop/features/domain/cart/rules/cart_item/discount_percent_net_action.feature:17": "32221aa7c4696033.json",
+      "coreshop/features/domain/cart/rules/category_condition.feature:23": "56758edd04159502.json",
+      "coreshop/features/domain/cart/rules/category_condition.feature:31": "9c88e64815085074.json",
+      "coreshop/features/domain/cart/rules/category_condition.feature:47": "aa7c365bc0686403.json",
+      "coreshop/features/domain/cart/rules/country_condition.feature:18": "c069d7b4dfe8cbbc.json",
+      "coreshop/features/domain/cart/rules/country_condition.feature:34": "9b167f44907aaf58.json",
+      "coreshop/features/domain/cart/rules/currency_condition.feature:15": "5b581eb31b4000de.json",
+      "coreshop/features/domain/cart/rules/currency_condition.feature:22": "964cf2a48e5f00ff.json",
+      "coreshop/features/domain/cart/rules/customer_condition.feature:14": "d82221ef3eca3b32.json",
+      "coreshop/features/domain/cart/rules/customer_condition.feature:21": "a8c671ec2e34c01b.json",
+      "coreshop/features/domain/cart/rules/customer_group_condition.feature:15": "7ad2bc0383faa582.json",
+      "coreshop/features/domain/cart/rules/customer_group_condition.feature:22": "74e82f9622ab5527.json",
+      "coreshop/features/domain/cart/rules/discount_amount_action.feature:13": "f6de5aae44f427fe.json",
+      "coreshop/features/domain/cart/rules/discount_amount_action_tax.feature:17": "288bdf22fb2180ba.json",
+      "coreshop/features/domain/cart/rules/discount_amount_action_tax_rounding.feature:29": "769002c2a5dd17ea.json",
+      "coreshop/features/domain/cart/rules/discount_over_100_percent.feature:17": "fb2d3e91ee8e437a.json",
+      "coreshop/features/domain/cart/rules/discount_percent_action.feature:19": "7ec443afb3244c72.json",
+      "coreshop/features/domain/cart/rules/discount_percent_action_tax.feature:17": "e28b76fc3d9b9b8d.json",
+      "coreshop/features/domain/cart/rules/free_shipping_action.feature:23": "68bf08d3f4cae4fd.json",
+      "coreshop/features/domain/cart/rules/free_shipping_action.feature:38": "47bfc4cbb7ef399f.json",
+      "coreshop/features/domain/cart/rules/gift_product_action.feature:18": "f4ad51b2420d3b33.json",
+      "coreshop/features/domain/cart/rules/gift_product_action.feature:29": "746bbed63b66b1f5.json",
+      "coreshop/features/domain/cart/rules/gift_product_action.feature:40": "bf448c67161ea7b4.json",
+      "coreshop/features/domain/cart/rules/gift_product_with_unit_action.feature:19": "175820a2a4f3e520.json",
+      "coreshop/features/domain/cart/rules/gift_product_with_unit_action.feature:31": "79c62265ab57a4af.json",
+      "coreshop/features/domain/cart/rules/not_combinable_condition.feature:26": "b2aad47c42dc83a7.json",
+      "coreshop/features/domain/cart/rules/not_discountable_discount_amount_action.feature:16": "6a82c698112b8196.json",
+      "coreshop/features/domain/cart/rules/not_discountable_discount_percent_action.feature:18": "23aa6625356cc128.json",
+      "coreshop/features/domain/cart/rules/not_discountable_multiple_items_discount_percent_action.feature:21": "02aafbd78ad2db9c.json",
+      "coreshop/features/domain/cart/rules/product_condition.feature:16": "96e08839fdddd9bd.json",
+      "coreshop/features/domain/cart/rules/product_condition.feature:24": "21d43af7b6f5ca40.json",
+      "coreshop/features/domain/cart/rules/product_variant_condition.feature:19": "91fc54043de6dbb6.json",
+      "coreshop/features/domain/cart/rules/product_variant_condition.feature:27": "fcef57f4ba6916f1.json",
+      "coreshop/features/domain/cart/rules/store_condition.feature:14": "4f5eefa7a18bb529.json",
+      "coreshop/features/domain/cart/rules/store_condition.feature:21": "200a9a42163f6d0f.json",
+      "coreshop/features/domain/cart/rules/store_condition.feature:28": "719d4c19f3b20c5c.json",
+      "coreshop/features/domain/cart/rules/surcharge_amount_action.feature:17": "deed253417857c18.json",
+      "coreshop/features/domain/cart/rules/surcharge_percent_action.feature:17": "407525c0d7b13d36.json",
+      "coreshop/features/domain/cart/rules/timespan_condition.feature:11": "c270580ee4afb04a.json",
+      "coreshop/features/domain/cart/rules/timespan_condition.feature:18": "fc611098e0117602.json",
+      "coreshop/features/domain/cart/rules/voucher_code_generation.feature:15": "a6509929835e174e.json",
+      "coreshop/features/domain/cart/rules/voucher_code_generation.feature:9": "a80d90b6affd2db9.json",
+      "coreshop/features/domain/cart/rules/voucher_credit_action.feature:17": "e49f0cff4c6afc5b.json",
+      "coreshop/features/domain/cart/rules/zone_condition.feature:24": "ae579c5a90e3b3ba.json",
+      "coreshop/features/domain/cart/rules/zone_condition.feature:40": "cc4ea20817f2a068.json",
+      "coreshop/features/domain/category/create_category.feature:13": "f56d0d2770781657.json",
+      "coreshop/features/domain/category/create_category.feature:19": "3b69fceea1ae8602.json",
+      "coreshop/features/domain/cli/install_demo_data_command.feature:7": "4a5bb4b729f708ca.json",
+      "coreshop/features/domain/country/create_country.feature:12": "6497b133ab830f00.json",
+      "coreshop/features/domain/currency/adding_currency.feature:9": "4dafb8d00af2ddc3.json",
+      "coreshop/features/domain/currency/exchange_rate.feature:9": "faf66e3075bb78a7.json",
+      "coreshop/features/domain/currency/money_formatter.feature:12": "d7b4745ff6d49de5.json",
+      "coreshop/features/domain/filter/conditions/category_condition.feature:15": "a4bc942f7422c9ee.json",
+      "coreshop/features/domain/filter/conditions/category_condition.feature:36": "efa6453553588753.json",
+      "coreshop/features/domain/filter/conditions/multiselect_condition.feature:19": "11ddd961f85812eb.json",
+      "coreshop/features/domain/filter/conditions/multiselect_condition.feature:38": "feab14269c31d211.json",
+      "coreshop/features/domain/filter/conditions/range_condition.feature:17": "d4f81f6afb4f0f5b.json",
+      "coreshop/features/domain/filter/conditions/relational_multiselect_condition.feature:19": "3e4b0ecdf996b38d.json",
+      "coreshop/features/domain/filter/conditions/relational_multiselect_condition.feature:38": "48d7f32492bfa675.json",
+      "coreshop/features/domain/filter/conditions/relational_select_condition.feature:19": "3a44a32ceee260d0.json",
+      "coreshop/features/domain/filter/create_filter.feature:10": "0c14f7d3267c9fe1.json",
+      "coreshop/features/domain/filter/create_filter_with_conditions.feature:10": "0447a9f0bb15a18f.json",
+      "coreshop/features/domain/filter/load_index_with_raw_results.feature:15": "e6fd89d01358e22b.json",
+      "coreshop/features/domain/filter/order/simple_order.feature:16": "7b99f2147dfe7186.json",
+      "coreshop/features/domain/index/boolean_column.feature:13": "39db5775888b19b1.json",
+      "coreshop/features/domain/index/create_index.feature:14": "ad758629f4dcc9a4.json",
+      "coreshop/features/domain/index/create_index_with_indexes.feature:16": "de9a925f77070226.json",
+      "coreshop/features/domain/index/create_index_with_indexes.feature:29": "b3dbe5f6f9729d75.json",
+      "coreshop/features/domain/index/create_index_with_products.feature:15": "0dbcd3a5724db0f6.json",
+      "coreshop/features/domain/index/field/boolean.feature:10": "06faf06c62662373.json",
+      "coreshop/features/domain/index/getter/brick_getter.feature:25": "235fc4b5ae84a9cb.json",
+      "coreshop/features/domain/index/getter/localized_field_getter.feature:13": "cd7b2ae34ee5a86b.json",
+      "coreshop/features/domain/index/getter/localized_field_getter.feature:20": "2e485a927101dbc7.json",
+      "coreshop/features/domain/index/index_relational_extension.feature:17": "12c1fe61647d13a2.json",
+      "coreshop/features/domain/index/index_unpublished.feature:24": "c1c5346023b38e62.json",
+      "coreshop/features/domain/index/index_unpublished.feature:31": "355dfb68299891ac.json",
+      "coreshop/features/domain/index/index_unpublished_product.feature:25": "1916eb5a50e0085b.json",
+      "coreshop/features/domain/index/index_version.feature:38": "4eb93f78f2bd31d7.json",
+      "coreshop/features/domain/index/interpreter/object_id_interpreter.feature:18": "d87e9e92714a64f4.json",
+      "coreshop/features/domain/index/interpreter/object_interpreter.feature:18": "ad6244f0a0bdcd57.json",
+      "coreshop/features/domain/index_condition/mysql/concat_condition.feature:11": "544d3af2080ecb1f.json",
+      "coreshop/features/domain/menu/menu.feature:5": "fd81137ea05a947b.json",
+      "coreshop/features/domain/optimistic_entity_lock/lock.feature:14": "c26fcbf15304df72.json",
+      "coreshop/features/domain/optimistic_entity_lock/lock.feature:22": "57ef0f501045a95f.json",
+      "coreshop/features/domain/order/create_order.feature:19": "a535d18cb2eec496.json",
+      "coreshop/features/domain/order/create_order.feature:27": "953829678b229d41.json",
+      "coreshop/features/domain/order/create_order.feature:36": "c803365a60faeff5.json",
+      "coreshop/features/domain/order/create_order.feature:45": "db68ccd4be2fe8fe.json",
+      "coreshop/features/domain/order/create_order_edit.feature:18": "df3a6f00da39efc4.json",
+      "coreshop/features/domain/order/create_order_immutable.feature:19": "42ed87fd615020ff.json",
+      "coreshop/features/domain/order/create_order_with_discount.feature:23": "8833864ee9cbcc03.json",
+      "coreshop/features/domain/order/customer_deletion.feature:17": "264f844d17e390ac.json",
+      "coreshop/features/domain/order/customer_deletion.feature:24": "e4e49e34a4127fa5.json",
+      "coreshop/features/domain/order/order_invoice.feature:19": "a2b99c276a18e134.json",
+      "coreshop/features/domain/order/order_payment.feature:21": "17c52086c8c6e162.json",
+      "coreshop/features/domain/order/order_shipment.feature:20": "e4197cfdb17e1c99.json",
+      "coreshop/features/domain/order/order_shipping.feature:25": "fffe000d6037ca65.json",
+      "coreshop/features/domain/order/order_states.feature:20": "7be0e985f164a853.json",
+      "coreshop/features/domain/order/order_states.feature:27": "6546b32a9b38f874.json",
+      "coreshop/features/domain/order/order_states.feature:36": "fc10385b255aaa65.json",
+      "coreshop/features/domain/order/order_states.feature:44": "311cdd26bf45feea.json",
+      "coreshop/features/domain/order/order_workflow.feature:20": "ca788a0e0bc4510b.json",
+      "coreshop/features/domain/order/order_workflow.feature:30": "88bd24b79fea898a.json",
+      "coreshop/features/domain/order/order_workflow_when_invoice_cancelled.feature:23": "1188f2d85818fb69.json",
+      "coreshop/features/domain/order/order_workflow_when_shipment_cancelled.feature:23": "8d1a15d018c155b0.json",
+      "coreshop/features/domain/payment_provider/payment_provider_rules/amount_condition.feature:15": "b2a0716711dac848.json",
+      "coreshop/features/domain/payment_provider/payment_provider_rules/amount_condition.feature:21": "609523557f1bf12e.json",
+      "coreshop/features/domain/payment_provider/payment_provider_rules/amount_condition.feature:27": "0c5a721550ec3e36.json",
+      "coreshop/features/domain/payment_provider/payment_provider_rules/amount_total_condition.feature:19": "73eec330a879a3e6.json",
+      "coreshop/features/domain/payment_provider/payment_provider_rules/carrier_condition.feature:18": "fc13938236219899.json",
+      "coreshop/features/domain/payment_provider/payment_provider_rules/carrier_condition.feature:24": "41ffbf707c0b5659.json",
+      "coreshop/features/domain/payment_provider/payment_provider_rules/carrier_condition.feature:30": "e15ae6248d153899.json",
+      "coreshop/features/domain/payment_provider/payment_provider_rules/category_condition.feature:22": "63610c0dd28b2e62.json",
+      "coreshop/features/domain/payment_provider/payment_provider_rules/category_condition.feature:29": "19ca0c4db8af244b.json",
+      "coreshop/features/domain/payment_provider/payment_provider_rules/category_condition.feature:36": "2a8116764ca470db.json",
+      "coreshop/features/domain/payment_provider/payment_provider_rules/category_condition.feature:43": "1739cfaab9b22871.json",
+      "coreshop/features/domain/payment_provider/payment_provider_rules/category_condition.feature:66": "31943ce39830713d.json",
+      "coreshop/features/domain/payment_provider/payment_provider_rules/country_condition.feature:21": "26f5b7992c40ee81.json",
+      "coreshop/features/domain/payment_provider/payment_provider_rules/country_condition.feature:27": "655b8c7bcf362d62.json",
+      "coreshop/features/domain/payment_provider/payment_provider_rules/country_condition.feature:33": "b0f18cba9b0d61c6.json",
+      "coreshop/features/domain/payment_provider/payment_provider_rules/country_condition.feature:42": "4d396b2ed946c2e6.json",
+      "coreshop/features/domain/payment_provider/payment_provider_rules/currency_condition.feature:15": "7c349bef153d3d74.json",
+      "coreshop/features/domain/payment_provider/payment_provider_rules/currency_condition.feature:21": "45116fda91ef891a.json",
+      "coreshop/features/domain/payment_provider/payment_provider_rules/currency_condition.feature:27": "4f51c03dc640cbe4.json",
+      "coreshop/features/domain/payment_provider/payment_provider_rules/customer_condition.feature:17": "fcf4ede0c063ee92.json",
+      "coreshop/features/domain/payment_provider/payment_provider_rules/customer_condition.feature:23": "eefdb2db6899fcea.json",
+      "coreshop/features/domain/payment_provider/payment_provider_rules/customer_condition.feature:29": "53af7138cdcd09f0.json",
+      "coreshop/features/domain/payment_provider/payment_provider_rules/customer_group_condition.feature:20": "01c1be54ea002760.json",
+      "coreshop/features/domain/payment_provider/payment_provider_rules/customer_group_condition.feature:26": "d02a6e3f819b632c.json",
+      "coreshop/features/domain/payment_provider/payment_provider_rules/customer_group_condition.feature:32": "802c569bf5bd9c3c.json",
+      "coreshop/features/domain/payment_provider/payment_provider_rules/guest_condition.feature:19": "4c6ef578ef34f579.json",
+      "coreshop/features/domain/payment_provider/payment_provider_rules/guest_condition.feature:28": "e7d7ff0c79906672.json",
+      "coreshop/features/domain/payment_provider/payment_provider_rules/product_condition.feature:15": "836184e8ee3f250a.json",
+      "coreshop/features/domain/payment_provider/payment_provider_rules/product_condition.feature:22": "c9383cceedfcad9a.json",
+      "coreshop/features/domain/payment_provider/payment_provider_rules/product_condition.feature:29": "c14eaab9a40543f7.json",
+      "coreshop/features/domain/payment_provider/payment_provider_rules/product_condition.feature:36": "ec95dc2691433b59.json",
+      "coreshop/features/domain/payment_provider/payment_provider_rules/product_variant_condition.feature:17": "62dde153d98d4247.json",
+      "coreshop/features/domain/payment_provider/payment_provider_rules/product_variant_condition.feature:24": "6140e135a82ba08c.json",
+      "coreshop/features/domain/payment_provider/payment_provider_rules/product_variant_condition.feature:31": "9697587aadb65bbb.json",
+      "coreshop/features/domain/payment_provider/payment_provider_rules/product_variant_condition.feature:38": "aab9406278416ec3.json",
+      "coreshop/features/domain/payment_provider/payment_provider_rules/store_condition.feature:14": "0e41fe9075b3719c.json",
+      "coreshop/features/domain/payment_provider/payment_provider_rules/store_condition.feature:20": "0884b6019e4c4772.json",
+      "coreshop/features/domain/payment_provider/payment_provider_rules/store_condition.feature:26": "849868209bd6801f.json",
+      "coreshop/features/domain/payment_provider/payment_provider_rules/zone_condition.feature:20": "0f23d854ecaab5ce.json",
+      "coreshop/features/domain/payment_provider/payment_provider_rules/zone_condition.feature:26": "45ac1ebec3f4fe7f.json",
+      "coreshop/features/domain/payment_provider/payment_provider_rules/zone_condition.feature:32": "ed040d2b558b90f2.json",
+      "coreshop/features/domain/payment_provider/payment_provider_with_no_payment_rules_valid.feature:16": "facf5a0c629d2c55.json",
+      "coreshop/features/domain/product/adding_product_category.feature:6": "e97070874d87baac.json",
+      "coreshop/features/domain/product/price_rules/actions.feature:20": "b9e8de32ce0507bb.json",
+      "coreshop/features/domain/product/price_rules/actions.feature:31": "576f15d1f581e2c7.json",
+      "coreshop/features/domain/product/price_rules/actions.feature:42": "a00121893e48908a.json",
+      "coreshop/features/domain/product/price_rules/actions.feature:55": "af3e068288e7d6f3.json",
+      "coreshop/features/domain/product/price_rules/actions.feature:66": "4b81c2c22f8be73b.json",
+      "coreshop/features/domain/product/price_rules/category_condition.feature:23": "e0d0b658715a78fb.json",
+      "coreshop/features/domain/product/price_rules/category_condition.feature:29": "9f863ed7abfe21ce.json",
+      "coreshop/features/domain/product/price_rules/category_condition.feature:41": "06933f5fd0271542.json",
+      "coreshop/features/domain/product/price_rules/country_condition.feature:19": "172f7ab212de1ff0.json",
+      "coreshop/features/domain/product/price_rules/country_condition.feature:26": "5251bfb67eb7538c.json",
+      "coreshop/features/domain/product/price_rules/currency_condition.feature:18": "b6506e917edc5e68.json",
+      "coreshop/features/domain/product/price_rules/currency_condition.feature:24": "b9122ca1b59dfa08.json",
+      "coreshop/features/domain/product/price_rules/customer_condition.feature:17": "35e21d0199fa6726.json",
+      "coreshop/features/domain/product/price_rules/customer_condition.feature:23": "e094f9ec39d8469a.json",
+      "coreshop/features/domain/product/price_rules/customer_group_condition.feature:18": "d8c0f11b22d31127.json",
+      "coreshop/features/domain/product/price_rules/customer_group_condition.feature:24": "f4362b50c14641bd.json",
+      "coreshop/features/domain/product/price_rules/nested_not_condition.feature:11": "169d8cb2efa236c5.json",
+      "coreshop/features/domain/product/price_rules/product_condition.feature:22": "36e68e3852c6868a.json",
+      "coreshop/features/domain/product/price_rules/product_variant_condition.feature:25": "0704397a62f6f113.json",
+      "coreshop/features/domain/product/price_rules/quantity_condition.feature:14": "d521faf64c4e5683.json",
+      "coreshop/features/domain/product/price_rules/quantity_condition.feature:20": "14dd96329f31f40f.json",
+      "coreshop/features/domain/product/price_rules/stop_propagation.feature:25": "c9522556fff7fd15.json",
+      "coreshop/features/domain/product/price_rules/stop_propagation.feature:30": "31b67c9138cb9efe.json",
+      "coreshop/features/domain/product/price_rules/store_condition.feature:15": "7ee7e20f0ca9f63e.json",
+      "coreshop/features/domain/product/price_rules/store_condition.feature:21": "07ae843eaeb05b05.json",
+      "coreshop/features/domain/product/price_rules/timespan_condition.feature:12": "7be235748ffe5431.json",
+      "coreshop/features/domain/product/price_rules/timespan_condition.feature:18": "b410595bf23f00a3.json",
+      "coreshop/features/domain/product/price_rules/zone_condition.feature:15": "aac3a20c21fa3a43.json",
+      "coreshop/features/domain/product/price_rules/zone_condition.feature:21": "cea13c4cec5ed7d5.json",
+      "coreshop/features/domain/product/product_quantity_restriction.feature:12": "dd7a5a7ad10a9d25.json",
+      "coreshop/features/domain/product/product_store_values_inheritance.feature:17": "05f591deff78ec29.json",
+      "coreshop/features/domain/product/product_store_values_inheritance.feature:27": "37c978029b60e75c.json",
+      "coreshop/features/domain/product/product_taxation.feature:18": "bb56c7266900456e.json",
+      "coreshop/features/domain/product/product_unit.feature:12": "a73a035f26e0cd8a.json",
+      "coreshop/features/domain/product/product_unit.feature:18": "0e9a829d4d9ec982.json",
+      "coreshop/features/domain/product/product_unit.feature:6": "8afb274ab1514be7.json",
+      "coreshop/features/domain/product/specific_price_rules/actions.feature:13": "c20dc7119b399aa0.json",
+      "coreshop/features/domain/product/specific_price_rules/actions.feature:22": "c4877a48283faa0c.json",
+      "coreshop/features/domain/product/specific_price_rules/actions.feature:31": "9d632acad46316b0.json",
+      "coreshop/features/domain/product/specific_price_rules/actions.feature:38": "0b9871cf325f3b7c.json",
+      "coreshop/features/domain/product/specific_price_rules/country_condition.feature:16": "a206cad9f9729760.json",
+      "coreshop/features/domain/product/specific_price_rules/country_condition.feature:22": "444649467d04a6df.json",
+      "coreshop/features/domain/product/specific_price_rules/currency_condition.feature:18": "310951eabd91ef44.json",
+      "coreshop/features/domain/product/specific_price_rules/currency_condition.feature:24": "5b4e5fe24e9e603f.json",
+      "coreshop/features/domain/product/specific_price_rules/customer_condition.feature:17": "1b41f33e7ca4a6cb.json",
+      "coreshop/features/domain/product/specific_price_rules/customer_condition.feature:23": "46ab4dc8132f7690.json",
+      "coreshop/features/domain/product/specific_price_rules/customer_group_condition.feature:18": "89477b318faae822.json",
+      "coreshop/features/domain/product/specific_price_rules/customer_group_condition.feature:24": "2beb4219c78edcc1.json",
+      "coreshop/features/domain/product/specific_price_rules/nested_condition.feature:18": "733ff97755788119.json",
+      "coreshop/features/domain/product/specific_price_rules/nested_condition.feature:24": "0d4259d079c9b2e7.json",
+      "coreshop/features/domain/product/specific_price_rules/nested_condition.feature:30": "d99e5302feb31f18.json",
+      "coreshop/features/domain/product/specific_price_rules/nested_condition.feature:36": "3b94cd0f4d574428.json",
+      "coreshop/features/domain/product/specific_price_rules/store_condition.feature:15": "e6c648d00b9b48d7.json",
+      "coreshop/features/domain/product/specific_price_rules/store_condition.feature:21": "42bfd15d8887bd95.json",
+      "coreshop/features/domain/product/specific_price_rules/timespan_condition.feature:12": "832466523149a424.json",
+      "coreshop/features/domain/product/specific_price_rules/timespan_condition.feature:18": "7ef6d00762d22f34.json",
+      "coreshop/features/domain/product/specific_price_rules/zone_condition.feature:15": "b71d659730052d3c.json",
+      "coreshop/features/domain/product/specific_price_rules/zone_condition.feature:21": "71d0c499fdeaba2a.json",
+      "coreshop/features/domain/product/variant/adding_attributes.feature:14": "8ca116e710c76466.json",
+      "coreshop/features/domain/product/variant/adding_attributes.feature:23": "66e71192587a3768.json",
+      "coreshop/features/domain/product/variant/adding_attributes.feature:7": "aa9de75cc7c7d991.json",
+      "coreshop/features/domain/product/variant/adding_product_with_variants.feature:11": "3b62927441fc95df.json",
+      "coreshop/features/domain/product_quantity_price_rules/simple_quantity_price_rule.feature:11": "068a4cdd5d57bbc8.json",
+      "coreshop/features/domain/recycle_bin/store_values.feature:13": "33ea420a4e1ee019.json",
+      "coreshop/features/domain/seo/seo.feature:10": "020c600cf26484a7.json",
+      "coreshop/features/domain/seo/seo.feature:15": "76d70d4b33d33771.json",
+      "coreshop/features/domain/seo/seo.feature:20": "fc6c58a11439411d.json",
+      "coreshop/features/domain/shipping/carrier_with_no_shipping_rules_valid.feature:20": "3e7ac72550d19c58.json",
+      "coreshop/features/domain/shipping/default_carrier.feature:21": "4d7ba183a7b01fc8.json",
+      "coreshop/features/domain/shipping/default_carrier.feature:26": "42abc45da78e5add.json",
+      "coreshop/features/domain/shipping/default_carrier_customer.feature:30": "6a100749db5cad86.json",
+      "coreshop/features/domain/shipping/default_carrier_customer.feature:41": "245fa6377d04ab37.json",
+      "coreshop/features/domain/shipping/default_carrier_customer.feature:50": "f959c72dcb5bb8a2.json",
+      "coreshop/features/domain/shipping/shipping_rules/amount_condition.feature:19": "deffc00391eef303.json",
+      "coreshop/features/domain/shipping/shipping_rules/amount_condition.feature:25": "c747bf2da195afec.json",
+      "coreshop/features/domain/shipping/shipping_rules/amount_condition.feature:31": "5707ab40d2ad2832.json",
+      "coreshop/features/domain/shipping/shipping_rules/amount_condition_net.feature:19": "fd40d0731e1286dc.json",
+      "coreshop/features/domain/shipping/shipping_rules/amount_condition_net.feature:25": "7a590082357b7c6a.json",
+      "coreshop/features/domain/shipping/shipping_rules/amount_condition_net.feature:31": "6b669d2b0158b9ef.json",
+      "coreshop/features/domain/shipping/shipping_rules/amount_total_condition.feature:23": "bbc201d76b2dce7d.json",
+      "coreshop/features/domain/shipping/shipping_rules/category_condition.feature:28": "534e519d795a5f05.json",
+      "coreshop/features/domain/shipping/shipping_rules/category_condition.feature:35": "ed575457370db12e.json",
+      "coreshop/features/domain/shipping/shipping_rules/category_condition.feature:42": "a0478594fdd367fd.json",
+      "coreshop/features/domain/shipping/shipping_rules/category_condition.feature:49": "32f99b41a6e44ce7.json",
+      "coreshop/features/domain/shipping/shipping_rules/category_condition.feature:72": "036b9175c63aa830.json",
+      "coreshop/features/domain/shipping/shipping_rules/country_condition.feature:24": "5e8cae704f1200e3.json",
+      "coreshop/features/domain/shipping/shipping_rules/country_condition.feature:30": "234506b1c5b55828.json",
+      "coreshop/features/domain/shipping/shipping_rules/country_condition.feature:36": "987938d8b2a3423c.json",
+      "coreshop/features/domain/shipping/shipping_rules/country_condition.feature:45": "55ddbcc73331c488.json",
+      "coreshop/features/domain/shipping/shipping_rules/currency_condition.feature:19": "af5ca57360620ee6.json",
+      "coreshop/features/domain/shipping/shipping_rules/currency_condition.feature:25": "53941338c0d81c01.json",
+      "coreshop/features/domain/shipping/shipping_rules/currency_condition.feature:31": "f8cf9eb361ed0957.json",
+      "coreshop/features/domain/shipping/shipping_rules/customer_condition.feature:21": "005c829ab869743f.json",
+      "coreshop/features/domain/shipping/shipping_rules/customer_condition.feature:27": "ff344007431a2913.json",
+      "coreshop/features/domain/shipping/shipping_rules/customer_condition.feature:33": "6f9b7fbea3830dcb.json",
+      "coreshop/features/domain/shipping/shipping_rules/customer_group_condition.feature:24": "64c397f341020ae7.json",
+      "coreshop/features/domain/shipping/shipping_rules/customer_group_condition.feature:30": "ae92393792afcce0.json",
+      "coreshop/features/domain/shipping/shipping_rules/customer_group_condition.feature:36": "ab79f5eec60c22ae.json",
+      "coreshop/features/domain/shipping/shipping_rules/dimension_condition.feature:20": "cb2b970263606bb5.json",
+      "coreshop/features/domain/shipping/shipping_rules/dimension_condition.feature:26": "7d322a1b3ff0a260.json",
+      "coreshop/features/domain/shipping/shipping_rules/dimension_condition.feature:32": "4b0cb01847754503.json",
+      "coreshop/features/domain/shipping/shipping_rules/guest_condition.feature:23": "61320b0124e9a004.json",
+      "coreshop/features/domain/shipping/shipping_rules/guest_condition.feature:32": "986fb9a900b21536.json",
+      "coreshop/features/domain/shipping/shipping_rules/postcode_condition.feature:24": "130668bcdf6a37ec.json",
+      "coreshop/features/domain/shipping/shipping_rules/postcode_condition.feature:30": "02e9ad920bdd0e19.json",
+      "coreshop/features/domain/shipping/shipping_rules/postcode_condition.feature:36": "b3e3f9bb2f9aa527.json",
+      "coreshop/features/domain/shipping/shipping_rules/postcode_condition.feature:44": "708c943aa56f4afc.json",
+      "coreshop/features/domain/shipping/shipping_rules/postcode_condition.feature:50": "48aaf98800ad1574.json",
+      "coreshop/features/domain/shipping/shipping_rules/product_condition.feature:20": "6a830843c3e84c05.json",
+      "coreshop/features/domain/shipping/shipping_rules/product_condition.feature:27": "de42f1cb5956c404.json",
+      "coreshop/features/domain/shipping/shipping_rules/product_condition.feature:34": "3dec5997811f3d95.json",
+      "coreshop/features/domain/shipping/shipping_rules/product_condition.feature:41": "0623978236b48e70.json",
+      "coreshop/features/domain/shipping/shipping_rules/product_variant_condition.feature:22": "a33f1a7409f9c1ad.json",
+      "coreshop/features/domain/shipping/shipping_rules/product_variant_condition.feature:29": "9968a89d5b8fd3c6.json",
+      "coreshop/features/domain/shipping/shipping_rules/product_variant_condition.feature:36": "220998a079e6a330.json",
+      "coreshop/features/domain/shipping/shipping_rules/product_variant_condition.feature:43": "74f49bdc87432917.json",
+      "coreshop/features/domain/shipping/shipping_rules/store_condition.feature:18": "c4fc21ca327e2a8b.json",
+      "coreshop/features/domain/shipping/shipping_rules/store_condition.feature:24": "ab4b51b04e4dcdba.json",
+      "coreshop/features/domain/shipping/shipping_rules/store_condition.feature:30": "137623e6e5050244.json",
+      "coreshop/features/domain/shipping/shipping_rules/weight_condition.feature:21": "35995a340645fbc1.json",
+      "coreshop/features/domain/shipping/shipping_rules/weight_condition.feature:27": "edcbd14268298821.json",
+      "coreshop/features/domain/shipping/shipping_rules/weight_condition.feature:33": "aa124a149c58665f.json",
+      "coreshop/features/domain/shipping/shipping_rules/zone_condition.feature:23": "2e29bba7d9f3dd6b.json",
+      "coreshop/features/domain/shipping/shipping_rules/zone_condition.feature:29": "07e67a49936c94bd.json",
+      "coreshop/features/domain/shipping/shipping_rules/zone_condition.feature:35": "8875d7f67bb58c17.json",
+      "coreshop/features/domain/taxation/adding_tax.feature:10": "574b87fdcd3aec6b.json",
+      "coreshop/features/domain/taxation/adding_tax_rule.feature:16": "3c006ca23c7977dd.json",
+      "coreshop/features/domain/taxation/adding_tax_rule.feature:23": "37e9601b510690c8.json",
+      "coreshop/features/domain/theme/theme.feature:11": "8dfaa8fc523e5edd.json",
+      "coreshop/features/domain/theme/theme.feature:19": "1339822594aec98c.json",
+      "coreshop/features/domain/tracking/analytics_enhanced.feature:46": "1ec48f82e99827c5.json",
+      "coreshop/features/domain/version/store_values.feature:13": "19a4a71107987040.json",
+      "coreshop/features/domain/version/tax_rate.feature:15": "6f6cbad8a78c365f.json"
+    }
+  }
+]

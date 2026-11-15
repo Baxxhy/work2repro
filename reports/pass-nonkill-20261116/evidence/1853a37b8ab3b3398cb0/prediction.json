@@ -1,0 +1,13 @@
+[
+  {
+    "instance_id": "python-docx/features/run-access-inner-content.feature:7",
+    "model_name_or_path": "codex-gpt-6-luna-medium",
+    "view": "th",
+    "files": [
+      {
+        "path": "features/steps/run_access_inner_content.py",
+        "content": "from behave import given, then, register_type\nfrom docx import Document\nfrom docx.oxml import OxmlElement\n\n\ndef parse_bool(value):\n    return value.strip().lower() == \"true\"\n\n\ndef parse_break_count(value):\n    return {\"no\": 0, \"one\": 1, \"two\": 2}[value.strip().lower()]\n\n\nregister_type(Bool=parse_bool, BreakCount=parse_break_count)\n\n\n@given(\"a run having {count:BreakCount} rendered page breaks\")\ndef given_run_having_rendered_page_breaks(context, count):\n    document = Document()\n    run = document.add_paragraph().add_run()\n    for _ in range(count):\n        run._r.append(OxmlElement(\"w:lastRenderedPageBreak\"))\n    context.run = run\n\n\n@then(\"run.contains_page_break is {value:Bool}\")\ndef then_run_contains_page_break_is(context, value):\n    actual = context.run.contains_page_break\n    assert actual is value, \"expected %r, got %r\" % (value, actual)\n"
+      }
+    ]
+  }
+]

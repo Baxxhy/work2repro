@@ -1,0 +1,13 @@
+[
+  {
+    "instance_id": "python-docx/features/sty-latent-props.feature:7",
+    "model_name_or_path": "codex-gpt-6-luna-medium",
+    "view": "th",
+    "files": [
+      {
+        "path": "features/steps/latent_style_props.py",
+        "content": "\"\"\"Steps for the default properties of a document's latent styles.\"\"\"\n\nfrom behave import given, then\nfrom docx import Document\n\n\n@given(\"a latent styles object with known defaults\")\ndef latent_styles_with_known_defaults(context):\n    # Document() is based on python-docx's default template, whose styles.xml\n    # contains the Word latent-style defaults exercised by this feature.\n    context.document = Document()\n    context.latent_styles = context.document.styles.latent_styles\n\n\n@then(\"latent_styles.{prop_name} is {value}\")\ndef latent_style_property_is(context, prop_name, value):\n    expected = {\"True\": True, \"False\": False}.get(value, None)\n    if expected is None:\n        expected = int(value)\n    actual = getattr(context.latent_styles, prop_name)\n    assert actual == expected, (\n        \"latent_styles.%s was %r, expected %r\" % (prop_name, actual, expected)\n    )\n"
+      }
+    ]
+  }
+]

@@ -1,0 +1,13 @@
+[
+  {
+    "instance_id": "python-docx/features/doc-add-section.feature:16",
+    "model_name_or_path": "codex-gpt-6-luna-medium",
+    "view": "th",
+    "files": [
+      {
+        "path": "features/steps/doc_add_section.py",
+        "content": "\"\"\"Step definitions for adding document sections.\"\"\"\n\nfrom behave import given, when, then\nfrom docx import Document\n\n\n@given(\"a single-section Document object with headers and footers as document\")\ndef given_document_with_headers_and_footers(context):\n    document = Document()\n    assert len(document.sections) == 1, \"a new document should have one section\"\n\n    # Materialize the six header/footer variants on the existing section.  This\n    # gives the added section actual prior header/footer definitions to inherit.\n    original_section = document.sections[0]\n    for name in (\n        \"header\",\n        \"even_page_header\",\n        \"first_page_header\",\n        \"footer\",\n        \"even_page_footer\",\n        \"first_page_footer\",\n    ):\n        getattr(original_section, name)\n\n    context.document = document\n\n\n@when(\"I execute section = document.add_section()\")\ndef when_add_section(context):\n    context.section = context.document.add_section()\n\n\n@then(\"section.header.is_linked_to_previous is True\")\ndef then_header_linked_to_previous(context):\n    assert context.section.header.is_linked_to_previous is True\n\n\n@then(\"section.even_page_header.is_linked_to_previous is True\")\ndef then_even_page_header_linked_to_previous(context):\n    assert context.section.even_page_header.is_linked_to_previous is True\n\n\n@then(\"section.first_page_header.is_linked_to_previous is True\")\ndef then_first_page_header_linked_to_previous(context):\n    assert context.section.first_page_header.is_linked_to_previous is True\n\n\n@then(\"section.footer.is_linked_to_previous is True\")\ndef then_footer_linked_to_previous(context):\n    assert context.section.footer.is_linked_to_previous is True\n\n\n@then(\"section.even_page_footer.is_linked_to_previous is True\")\ndef then_even_page_footer_linked_to_previous(context):\n    assert context.section.even_page_footer.is_linked_to_previous is True\n\n\n@then(\"section.first_page_footer.is_linked_to_previous is True\")\ndef then_first_page_footer_linked_to_previous(context):\n    assert context.section.first_page_footer.is_linked_to_previous is True\n"
+      }
+    ]
+  }
+]
