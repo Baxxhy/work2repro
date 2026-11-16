@@ -1,0 +1,99 @@
+instance_id,project,group,classification,mechanism,analysis,n_scored,n_killed,requirement,generated_files,execution_evidence,review_date,pain
+algorand-sdk/features/unit/atomic_transaction_composer.feature:175,algorand-sdk,KillComplete,明确检查缺口,异常约束未检查,需求指定zero group size error。生成捕获任意Exception只检查非空，expectedError仅用于没有抛异常时的报错文字。参考将IllegalArgumentException映射为指定错误，IOException检查其消息。生成可接受其他错误。,76,76,"  Background:
+    Given a signing account with address ""BH55E5RMBD4GYWXGX5W5PJ5JAHPGM5OXKDQH5DC4O2MGI7NW4H6VOE4CP4"" and mnemonic ""awful drop leaf tennis indoor begin mandate discover uncle seven only coil atom any hospital uncover make any climb actor armed measure need above hundred""
+  Scenario: Build with 0 transactions fails
+    Given a new AtomicTransactionComposer
+    When I build the transaction group with the composer. If there is an error it is ""zero group size error"".
+    Then The composer should have a status of ""BUILDING"".",results/test-generation-20261114/req2test/tasks/3b028264ab4a34f36c37/generated/src/test/java/com/algorand/algosdk/unit/AtomicTransactionComposerSteps.java,results/test-generation-20261114/reports/req2test-per-task.jsonl,2026-11-16,断言约束
+coddy-agent/features/ask_mode_http.feature:22,coddy-agent,Pass-but-Non-Kill,明确检查缺口,A;B;C,自定义 runner 直接 os.WriteFile，tools() 构造 full-agent-tool-set，send() 将输入mode赋给transcript。HTTP入口的部分代码被调用，但需求指定的生产 Agent.Run、真实工具提供和会话模式观察被替代。参考动态记录包含 NewAgent、Agent.Run 和真实transport调用。生成的写文件、工具和模式断言均检查自建结果。toolsets return defs→nil 的存活与未调用该生产路径一致。,388,138,"
+  Scenario: The same model in agent mode still writes the file
+    Given a coddy gateway backed by a streaming stub model that writes a file, then answers
+    When a client sends a streaming ""agent"" prompt over POST /v1/responses
+    Then the workspace file was written
+    And the model was offered the full agent tool set
+    And the transcript reports the session in ""agent"" mode",results/test-generation-20261114/req2test/tasks/af2db3aaa3d3aed0e730/generated/external/httpserver/bdd_ask_mode_e2e_test.go;results/test-generation-20261114/req2test/tasks/af2db3aaa3d3aed0e730/generated/external/httpserver/bdd_compaction_http_test.go,results/test-generation-20261114/reports/req2test-per-task.jsonl,2026-11-16,行为触发
+coreshop/features/domain/order/create_order_with_discount.feature:23,coreshop,Pass-but-Non-Kill,明确检查缺口,A,商品存入本地数组，匿名 order 返回同一数组；voucher、地址及多个背景步骤为空。Then 只数自建对象条目。参考 OrderContext.transformCartToOrder 执行生产状态机。候选 direct_calls 仅1条，参考3157条，结合生成源码确认实际购物车转订单未执行。200个存活的需求相关性仍须逐个判断。,200,0,"  Background:
+    Given the site operates on a store in ""Austria""
+    And the site has a country ""Germany"" with currency ""EUR""
+    And the country ""Germany"" is active
+    And the site operates on locale ""en""
+    And the site has a tax rate ""AT"" with ""20%"" rate
+    And the site has a tax rule group ""AT""
+    And the tax rule group has a tax rule for country ""Austria"" with tax rate ""AT""
+    And the site has a product ""T-Shirt"" priced at 2000
+    And the product has the tax rule group ""AT""
+    And the site has a customer ""some-customer@something.com""
+    And the customer ""some-customer@something.com"" has an address with country ""Austria"", ""4600"", ""Wels"", ""Freiung"", ""9-11/N3""
+    And the customer ""some-customer@something.com"" has an address with country ""Germany"", ""04600"", ""Wels"", ""Freiung"", ""9-11/N3""
+    And the cart belongs to customer ""some-customer@something.com""
+    And adding a cart price rule named ""discount""
+    And the cart rule is active
+    And the cart rule is a voucher rule with code ""asdf""
+    And the cart rule has a action discount with 20 in currency ""EUR"" off
+  Scenario: Create a new order and add a product
+    Given I add the product ""T-Shirt"" to my cart
+    And I apply the voucher code ""asdf"" to my cart
+    And the cart ships to customer ""some-customer@something.com"" address with postcode ""4600""
+    And the cart invoices to customer ""some-customer@something.com"" address with postcode ""4600""
+    And I create an order from my cart
+    Then there should be one product in my order",results/test-generation-20261114/req2test/tasks/f54d3444bfce11f4c30f/generated/src/CoreShop/Behat/Context/Domain/Order/CreateOrderContext.php,results/test-generation-20261114/reports/req2test-per-task.jsonl,2026-11-16,行为触发
+e-petitions/features/charlie_creates_a_petition.feature:6,e-petitions,Pass-but-Non-Kill,明确检查缺口,C,真实网页创建和相似请愿搜索被执行。候选在全页分别检查标题与签名数；参考在带索引petition-item-existing内绑定同一行。需求表的对象—值对应关系未验证。11个存活没有足够证据归因于这一缺口，保留因果未定。,183,172,"
+Scenario: Charlie has to search for a petition before creating one
+  Given the following petitions exist:
+    | action                         | state    | signature_count | open_at    |
+    | Rioters should loose benefits  | open     |             835 | 2011-08-11 |
+    | Rioters must loose benefits    | rejected |               5 |            |
+    | Do not remove rioters benefits | open     |            1023 | 2011-08-21 |
+  And I am on the home page
+  When I follow ""Start a petition"" within "".//main""
+  Then I should see ""Start a petition""
+  When I follow ""Start your petition""
+  Then I should be asked to confirm my eligibility
+  When I confirm that I am UK citizen or resident
+  Then I should see ""Petition title""
+  When I fill in ""Petition title"" with ""Rioters benefits""
+  And I press ""Continue""
+  Then I should see the following similar petitions:
+    | Do not remove rioters benefits | Total signatures 1,023 |
+    | Rioters should loose benefits  | Total signatures 835   |
+  When I press ""Continue with my petition""
+  Then I should see ""Say what you want the UK Government or Parliament to do""",results/test-generation-20261114/req2test/tasks/b8a41623500427f1c983/generated/features/step_definitions/charlie_creates_a_petition_steps.rb,results/test-generation-20261114/reports/req2test-per-task.jsonl,2026-11-16,断言约束
+kapua/service/account/test/src/test/resources/features/AccountService.feature:120,kapua,Pass-but-Non-Kill,明确检查缺口,C,动态记录确认真实AccountServiceImpl.delete执行。候选以随机scope和随机ID删除，捕获任意KapuaException并只断言ExceptionCaught。需求明确规定KapuaEntityNotFoundException和消息片段，参考primeException/verifyException检查具体异常。消息格式返回null的变异存活。record_count_anomaly=true保留，按唯一变异ID核对，不清洗掉异常。,43,22,"
+  Scenario: Delete nonexisting account
+  Try to delete an account with a a random Id. The operation should fail and an exception
+  should be thrown.
+
+    Given I expect the exception ""KapuaEntityNotFoundException"" with the text ""The entity of type account with id/name""
+    When I delete a random account
+    Then An exception was thrown",results/test-generation-20261114/req2test/tasks/93eac4b8da28527c6348/generated/service/account/test/src/test/java/org/eclipse/kapua/service/account/test/r2t/generated/DeleteNonexistingAccountSteps.java,results/test-generation-20261114/reports/req2test-per-task.jsonl,2026-11-16,断言约束
+python-docx/features/blk-iter-inner-content.feature:7,python-docx,KillComplete,明确检查缺口,对象顺序检查不完整,要求所有段落和表格按文档顺序返回。测试比较六个类型和三个段落文本，没有比较三张表格的内容或身份。同为Table的对象调换仍满足这些断言。,93,93,"
+  Scenario: Document.iter_inner_content()
+    Given a Document object with paragraphs and tables
+     Then document.iter_inner_content() produces the block-items in document order",results/test-generation-20261114/req2test/tasks/0af839eba15d14e2da1b/generated/features/steps/blk_iter_inner_content.py,results/test-generation-20261114/reports/req2test-per-task.jsonl,2026-11-16,断言约束
+python-docx/features/doc-add-section.feature:16,python-docx,Pass-but-Non-Kill,明确检查缺口,A_setup,候选真实调用Document.add_section；六个linked=True断言也存在。Given只getattr六种header/footer代理，没有建立实际定义。参考载入带定义的文档。删除sentinel_sectPr.remove(hdrftr_ref)后候选通过、参考杀死，参考基线覆盖69行，候选基线未覆盖该行。缺口位于必要前置状态；修正上一轮C标签。,113,112,"
+  Scenario: Document.add_section() adds a section that inherits headers and footers
+    Given a single-section Document object with headers and footers as document
+     When I execute section = document.add_section()
+     Then section.header.is_linked_to_previous is True
+      And section.even_page_header.is_linked_to_previous is True
+      And section.first_page_header.is_linked_to_previous is True
+      And section.footer.is_linked_to_previous is True
+      And section.even_page_footer.is_linked_to_previous is True
+      And section.first_page_footer.is_linked_to_previous is True",results/test-generation-20261114/req2test/tasks/676d56c1c72dc4237805/generated/features/steps/doc_add_section.py,results/test-generation-20261114/reports/req2test-per-task.jsonl,2026-11-16,行为触发
+sylius/features/hybrid/checkout/placing_order_on_multi_channel/placing_an_order_on_a_single_channel_store.feature:20,sylius,Pass-but-Non-Kill,明确检查缺口,B,候选和参考动态调用都记录 CompleteOrderHandler 到 CompositeStateMachine.apply，确认下单操作执行。候选读取 sharedStorage 内原 order 的email/currency；参考管理员登录后通过adminClient.show观察currencyCode。明确缺口位于需求指定的管理员读取边界。上一轮包含A的标签应撤回。142个存活中管理查询/序列化路径提供支持，其他变异仍保留未定。,402,260,"    Background:
+        Given the store operates on a channel named ""United States"" in ""USD"" currency
+        And the store ships to ""United States""
+        And the store has a zone ""United States"" with code ""US""
+        And this zone has the ""United States"" country member
+        And the store has a product ""PHP T-Shirt"" priced at ""$19.99""
+        And the store ships everywhere for Free
+        And the store allows paying Offline
+        And there is an administrator ""sylius@example.com"" identified by ""sylius""
+        And there is a customer account ""customer@example.com"" identified by ""sylius""
+        And I am logged in as ""customer@example.com""
+    Scenario: Placing an order in a channels base currency
+        Given I added product ""PHP T-Shirt"" to the cart
+        And I addressed the cart
+        When I proceed with ""Free"" shipping method and ""Offline"" payment
+        And I confirm my order
+        Then the administrator should see that order placed by ""customer@example.com"" has ""USD"" currency",results/test-generation-20261114/req2test/tasks/7627df83491b90a0f0fa/generated/src/Sylius/Behat/Context/Api/Checkout/OrderContext.php,results/test-generation-20261114/reports/req2test-per-task.jsonl,2026-11-16,结果观察
