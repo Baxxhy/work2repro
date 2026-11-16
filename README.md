@@ -73,3 +73,7 @@ GitHub Actions 执行相同的文件、指标和离线回归检查，不重新�
 | Req2Test-Bench | [arXiv:2610.36584](https://arxiv.org/abs/2610.36584) | [code-philia/Req2Test-Bench](https://github.com/code-philia/Req2Test-Bench) |
 
 第三方数据、规格和源码补丁的归属及许可遵循对应上游。账号凭据未包含在发布文件中。当前目录仅展示本轮测试生成复现，历史提交保留此前归档。
+
+### 2026-11-16 逐案例数量与比例复核
+
+[44条通过任务的逐项分析、项目分布与研究动机](reports/20261116-091532-全案例比例复核/案例数量与研究动机复核-11-16.md)

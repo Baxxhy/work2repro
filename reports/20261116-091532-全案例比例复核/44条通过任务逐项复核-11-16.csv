@@ -1,0 +1,373 @@
+instance_id,project,group,classification,mechanism,analysis,n_scored,n_killed,requirement,generated_files,execution_evidence,review_date
+algorand-sdk/features/unit/abijson.feature:74,algorand-sdk,KillComplete,未发现明确缺口,,真实Interface序列化，完整JsonNode相等比较并反序列化回原对象。,53,53,"
+  Scenario Outline: Serialize Interface into json
+    When I create the Method object from method signature ""<methodsig>""
+    And I create an Interface object from the Method object with name ""<name>"" and description ""<description>""
+    And I serialize the Interface object into json
+    Then the produced json should equal ""<jsonfile>"" loaded from ""<directory>""
+    And the deserialized json should equal the original Interface object",results/test-generation-20261114/req2test/tasks/579be0c03603c624fde2/generated/src/test/java/com/algorand/algosdk/unit/AbiJsonInterfaceSteps.java,results/test-generation-20261114/reports/req2test-per-task.jsonl,2026-11-16
+algorand-sdk/features/unit/atomic_transaction_composer.feature:175,algorand-sdk,KillComplete,明确检查缺口,异常约束未检查,需求指定zero group size error。生成捕获任意Exception只检查非空，expectedError仅用于没有抛异常时的报错文字。参考将IllegalArgumentException映射为指定错误，IOException检查其消息。生成可接受其他错误。,76,76,"  Background:
+    Given a signing account with address ""BH55E5RMBD4GYWXGX5W5PJ5JAHPGM5OXKDQH5DC4O2MGI7NW4H6VOE4CP4"" and mnemonic ""awful drop leaf tennis indoor begin mandate discover uncle seven only coil atom any hospital uncover make any climb actor armed measure need above hundred""
+  Scenario: Build with 0 transactions fails
+    Given a new AtomicTransactionComposer
+    When I build the transaction group with the composer. If there is an error it is ""zero group size error"".
+    Then The composer should have a status of ""BUILDING"".",results/test-generation-20261114/req2test/tasks/3b028264ab4a34f36c37/generated/src/test/java/com/algorand/algosdk/unit/AtomicTransactionComposerSteps.java,results/test-generation-20261114/reports/req2test-per-task.jsonl,2026-11-16
+algorand-sdk/features/unit/offline.feature:10,algorand-sdk,KillComplete,未发现明确缺口,,真实助记词构造Account并toMnemonic，精确检查往返字符串。,104,104,"
+  Scenario Outline: Mnemonic to and from private key
+    Given mnemonic for private key ""<mn>""
+    When I convert the private key back to a mnemonic
+    Then the mnemonic should still be the same as ""<mn>""",results/test-generation-20261114/req2test/tasks/51363211341a39559766/generated/src/test/java/com/algorand/algosdk/unit/OfflineSteps.java,results/test-generation-20261114/reports/req2test-per-task.jsonl,2026-11-16
+algorand-sdk/features/unit/tealsign.feature:15,algorand-sdk,KillComplete,未发现明确缺口,,真实解码输入、构造账户、tealSignFromProgram，检查签名字节的Base64等于给定值。,111,111,"
+  Scenario Outline: Tealsign data using program bytes and mnemonic
+    Given base64 encoded data to sign ""<data>""
+    And base64 encoded program ""<program>""
+    And mnemonic for private key ""<mn>""
+    When I perform tealsign
+    Then the signature should be equal to ""<golden>""",results/test-generation-20261114/req2test/tasks/fdc12e8888edc5e37221/generated/src/test/java/com/algorand/algosdk/unit/TealsignSteps.java,results/test-generation-20261114/reports/req2test-per-task.jsonl,2026-11-16
+algorand-sdk/features/unit/v2algodclient_paths.feature:16,algorand-sdk,KillComplete,背景步骤未落实,请求观察被URL构造替代,Background明确写mock server recording request paths。生成Given只创建client，随后检查getRequestUrl，未建立记录请求的服务器。URL构造已真实执行，是否必须发送HTTP才能满足该任务仍需结合官方getRequestUrl接口定义区分，单列背景差异。,19,19,"  Background:
+    Given mock server recording request paths
+  Scenario Outline: Pending Transaction Information2
+    When we make a Pending Transaction Information with max <max> and format ""<format>""
+    Then expect the path used to be ""<path>""
+    Examples:
+      | path                                          | max | format  |
+      | /v2/transactions/pending?format=msgpack       | 0   | msgpack |
+      | /v2/transactions/pending?format=msgpack&max=1 | 1   | msgpack |",results/test-generation-20261114/req2test/tasks/3c372d074b10efc34dca/generated/src/test/java/com/algorand/algosdk/unit/PendingTransactionsPathSteps.java,results/test-generation-20261114/reports/req2test-per-task.jsonl,2026-11-16
+algorand-sdk/features/unit/v2indexerclient_paths.feature:150,algorand-sdk,KillComplete,背景步骤未落实,请求观察被URL构造替代,Background明确写mock server recording request paths。生成Given只创建client，随后检查getRequestUrl，未建立记录请求的服务器。URL构造已真实执行，是否必须发送HTTP才能满足该任务仍需结合官方getRequestUrl接口定义区分，单列背景差异。,21,21,"  Background:
+    Given mock server recording request paths
+  Scenario Outline: SearchForAssets path
+    When we make a SearchForAssets call with limit <limit> creator ""<creator>"" name ""<name>"" unit ""<unit>"" index <index>
+    Then expect the path used to be ""<path>""
+    Examples:
+      | path                                                                          | limit | index | creator                                                    | name      | unit     |
+      | /v2/assets                                                                    | 0     | 0     |                                                            |           |          |
+      | /v2/assets?asset-id=22                                                        | 0     | 22    |                                                            |           |          |
+      | /v2/assets?creator=PNWOET7LLOWMBMLE4KOCELCX6X3D3Q4H2Q4QJASYIEOF7YIPPQBG3YQ5YI | 0     | 0     | PNWOET7LLOWMBMLE4KOCELCX6X3D3Q4H2Q4QJASYIEOF7YIPPQBG3YQ5YI |           |          |
+      | /v2/assets?limit=30                                                           | 30    | 0     |                                                            |           |          |
+      | /v2/assets?name=assetname                                                     | 0     | 0     |                                                            | assetname |          |
+      | /v2/assets?unit=unitname                                                      | 0     | 0     |                                                            |           | unitname |",results/test-generation-20261114/req2test/tasks/1181f3b3a11032dde790/generated/src/test/java/com/algorand/algosdk/unit/IndexerClientV2PathsSteps.java,results/test-generation-20261114/reports/req2test-per-task.jsonl,2026-11-16
+algorand-sdk/features/unit/v2indexerclient_paths.feature:195,algorand-sdk,KillComplete,背景步骤未落实,请求观察被URL构造替代,Background明确写mock server recording request paths。生成Given只创建client，随后检查getRequestUrl，未建立记录请求的服务器。URL构造已真实执行，是否必须发送HTTP才能满足该任务仍需结合官方getRequestUrl接口定义区分，单列背景差异。,17,17,"  Background:
+    Given mock server recording request paths
+  Scenario Outline: SearchForApplications path
+    When we make a SearchForApplications call with applicationID <application-id>
+    Then expect the path used to be ""<path>""",results/test-generation-20261114/req2test/tasks/80e0251c702a4e347634/generated/src/test/java/com/algorand/algosdk/unit/IndexerClientPathsSteps.java,results/test-generation-20261114/reports/req2test-per-task.jsonl,2026-11-16
+algorand-sdk/features/unit/v2indexerclient_paths.feature:304,algorand-sdk,KillComplete,背景步骤未落实,请求观察被URL构造替代,Background明确写mock server recording request paths。生成Given只创建client，随后检查getRequestUrl，未建立记录请求的服务器。URL构造已真实执行，是否必须发送HTTP才能满足该任务仍需结合官方getRequestUrl接口定义区分，单列背景差异。,19,19,"  Background:
+    Given mock server recording request paths
+  Scenario Outline: SearchAccounts path
+    When we make a Search Accounts call with exclude ""<exclude>""
+    Then expect the path used to be ""<path>""
+    Examples:
+      | path                                                                           | exclude                                             |
+      | /v2/accounts?exclude=assets                                                    | assets                                              |
+      | /v2/accounts?exclude=assets%2Ccreated-assets                                   | assets,created-assets                               |
+      | /v2/accounts?exclude=assets%2Ccreated-assets%2Capps-local-state%2Ccreated-apps | assets,created-assets,apps-local-state,created-apps |",results/test-generation-20261114/req2test/tasks/4bb1ed2b5f9a7c045cef/generated/src/test/java/com/algorand/algosdk/unit/IndexerClientV2PathsSteps.java,results/test-generation-20261114/reports/req2test-per-task.jsonl,2026-11-16
+algorand-sdk/features/unit/v2indexerclient_paths.feature:62,algorand-sdk,KillComplete,背景步骤未落实,请求观察被URL构造替代,Background明确写mock server recording request paths。生成Given只创建client，随后检查getRequestUrl，未建立记录请求的服务器。URL构造已真实执行，是否必须发送HTTP才能满足该任务仍需结合官方getRequestUrl接口定义区分，单列背景差异。,15,15,"  Background:
+    Given mock server recording request paths
+  Scenario Outline: LookupBlock path
+    When we make a Lookup Block call against round <round>
+    Then expect the path used to be ""<path>""
+    Examples:
+      | path         | round |
+      | /v2/blocks/3 | 3     |",results/test-generation-20261114/req2test/tasks/bade50558925e20900f7/generated/src/test/java/com/algorand/algosdk/unit/IndexerClientV2PathsSteps.java,results/test-generation-20261114/reports/req2test-per-task.jsonl,2026-11-16
+algorand-sdk/features/unit/v2indexerclient_responses.feature:15,algorand-sdk,Pass-but-Non-Kill,参考准备或检查范围不同,,生成测试真实调用 lookupAssetTransactions，检查 round、数组长度和指定 sender，与场景列出的结果一致。参考 IndexerResponses.verifyLookupAssetTransactionsResponse 将整个响应交给 verifyResponse，扩大了响应比较范围。存活项包括 contentType、toString、rekeyTo、authAddr、TxType 和 Base64 解码。可以确认检查范围不同，六个变异体的逐一动态传播尚无日志证明，不能认定遗漏了场景明确要求的字段。,27,21,"
+  Scenario Outline: LookupAssetTransactions response
+    Given mock http responses in ""<jsonfiles>"" loaded from ""<directory>""
+    When we make any LookupAssetTransactions call
+    Then expect error string to contain ""<err>""
+    And the parsed LookupAssetTransactions response should be valid on round <roundNum>, and contain an array of len <len> and element number <idx> should have sender ""<sender>""
+    Examples:
+      | jsonfiles                      | directory                     | err | roundNum | len | idx | sender                                                     |
+      | lookupAssetTransactions_0.json | v2indexerclient_responsejsons |     | 6222957  | 39  | 0   | ARCC3TMGVD7KXY7GYTE7U5XXUJXFRD2SXLAWRV57XJ6HWHRR37GNGNMPSY |",results/test-generation-20261114/req2test/tasks/55b387e918ca47203cdc/generated/src/test/java/com/algorand/algosdk/unit/LookupAssetTransactionsSteps.java,results/test-generation-20261114/reports/req2test-per-task.jsonl,2026-11-16
+coddy-agent/features/ask_mode_http.feature:22,coddy-agent,Pass-but-Non-Kill,明确检查缺口,A;B;C,自定义 runner 直接 os.WriteFile，tools() 构造 full-agent-tool-set，send() 将输入mode赋给transcript。HTTP入口的部分代码被调用，但需求指定的生产 Agent.Run、真实工具提供和会话模式观察被替代。参考动态记录包含 NewAgent、Agent.Run 和真实transport调用。生成的写文件、工具和模式断言均检查自建结果。toolsets return defs→nil 的存活与未调用该生产路径一致。,388,138,"
+  Scenario: The same model in agent mode still writes the file
+    Given a coddy gateway backed by a streaming stub model that writes a file, then answers
+    When a client sends a streaming ""agent"" prompt over POST /v1/responses
+    Then the workspace file was written
+    And the model was offered the full agent tool set
+    And the transcript reports the session in ""agent"" mode",results/test-generation-20261114/req2test/tasks/af2db3aaa3d3aed0e730/generated/external/httpserver/bdd_ask_mode_e2e_test.go;results/test-generation-20261114/req2test/tasks/af2db3aaa3d3aed0e730/generated/external/httpserver/bdd_compaction_http_test.go,results/test-generation-20261114/reports/req2test-per-task.jsonl,2026-11-16
+coddy-agent/features/config_tools.feature:58,coddy-agent,KillComplete,背景步骤未落实,前置能力未设置,背景要求会话可热重载，hotReload为空。参考sessionCanReload设置env.ReloadConfig。当前场景实际检查暂存命令列表，这一背景缺失对该检查的影响未验证。,205,205,"  Background:
+    Given an active Coddy config:
+      """"""
+      agent:
+        max_turns: 17
+      skills:
+        dirs:
+          - /opt/coddy/skills
+      mcp_servers:
+        - name: filesystem
+          command: npx
+          args: [""-y"", ""@modelcontextprotocol/server-filesystem""]
+          env:
+            - name: ROOT_TOKEN
+              value: super-secret
+      """"""
+    And the session can hot-reload its runtime configuration
+  Scenario: Review pending commands before asking the user to save
+    When the agent stages config commands:
+      """"""
+      set agent.max_turns=20
+      """"""
+    And the agent lists config changes
+    Then the change list shows ""set agent.max_turns=20""",results/test-generation-20261114/req2test/tasks/ffee1edff496f2038c9e/generated/internal/tools/bdd_config_tools_test.go,results/test-generation-20261114/reports/req2test-per-task.jsonl,2026-11-16
+coddy-agent/features/reasoning_levels_fetch.feature:10,coddy-agent,Pass-but-Non-Kill,参考准备或检查范围不同,,生成测试真实 GET reasoning-levels，严格比较 low/medium/high 和 detected=true。参考从 YAML 执行 config.Load，生成测试直接构造 Config，导致配置加载路径覆盖不同。参考还检查响应 ok，生成只检查 HTTP200、levels、detected。ok=true→false 存活能由未检查该字段解释，但 Gherkin 未明确要求 ok 字段。其余104个存活主要位于配置模块，逐个传播原因未全部确定。,150,45,"
+  Scenario: A Qwen3 model id offers the standard reasoning tiers
+    Given a coddy gateway with an ""openai"" provider named ""valera""
+    When the settings form fetches the reasoning levels for ""valera/qwen3.8-27b""
+    Then the gateway answers with the levels ""low,medium,high""
+    And the answer reports the levels as detected",results/test-generation-20261114/req2test/tasks/aa4358990ba808413e01/generated/external/httpserver/bdd_compaction_http_test.go;results/test-generation-20261114/req2test/tasks/aa4358990ba808413e01/generated/external/httpserver/bdd_reasoning_levels_test.go,results/test-generation-20261114/reports/req2test-per-task.jsonl,2026-11-16
+coddy-agent/features/subagents_catalog.feature:14,coddy-agent,Pass-but-Non-Kill,参考准备或检查范围不同,,两套测试都真实 Load/BuildCatalog 并检查 project copy 覆盖 user copy。参考 loader 额外配置 .claude/agents，生成只配置需求列出的 home/agents 和 .coddy/agents。唯一变异将 os.Stat 后的 err!=nil || !info.IsDir() 改为 &&；不存在的额外目录触发错误处理差异。已建目录的正常路径不区分该变异。当前需求没有要求不存在的第三个目录，属于参考准备路径更宽。该解释由代码条件与官方 kill/pass 记录支持，未补跑 panic 复验。,41,40,"
+  Scenario: A project definition wins over a user definition with the same name
+    Given a coddy home with a subagent definition ""reviewer"" described as ""user copy""
+    And a workspace with a subagent definition ""reviewer"" under .coddy/agents described as ""project copy""
+    When I list the subagent catalog for that workspace
+    Then the listing describes ""reviewer"" as ""project copy""",results/test-generation-20261114/req2test/tasks/8922f1586640131b7b45/generated/internal/subagents/bdd_catalog_test.go,results/test-generation-20261114/reports/req2test-per-task.jsonl,2026-11-16
+coddy-agent/features/subagents_http.feature:32,coddy-agent,Pass-but-Non-Kill,仍需核实,,生成测试真实 GET catalog、POST trust、再 GET 并检查 builtin/scope/needs_approval/trusted，覆盖场景显式结果。参考 GET 不传 cwd、POST 用空对象，生成显式传与默认目录相同的 cwd；cwd空值判断反转在生成路径产生相同目录，因而存活。这一项可解释为输入路径差异。另三项是后台池加锁/计数，缺少足以归因的逐变异执行细节，整项保留证据不足。官方另有5个 dropped，不算存活。,177,173,"
+  Scenario: The catalog lists built-ins and project definitions with their trust state
+    Given a running coddy http server with a session
+    And the server workspace has a subagent definition ""reviewer"" under .coddy/agents
+    When I GET the subagent catalog for the server workspace
+    Then the catalog names the built-in ""explore""
+    And the catalog names ""reviewer"" with scope ""project"" needing approval
+    When I POST trust for the subagent ""reviewer"" in the server workspace
+    And I GET the subagent catalog for the server workspace
+    Then the catalog names ""reviewer"" as trusted",results/test-generation-20261114/req2test/tasks/c543ea848ebeeeb4b47c/generated/external/httpserver/bdd_compaction_http_test.go;results/test-generation-20261114/req2test/tasks/c543ea848ebeeeb4b47c/generated/external/httpserver/bdd_subagents_test.go,results/test-generation-20261114/reports/req2test-per-task.jsonl,2026-11-16
+coreshop/features/domain/order/create_order_with_discount.feature:23,coreshop,Pass-but-Non-Kill,明确检查缺口,A,商品存入本地数组，匿名 order 返回同一数组；voucher、地址及多个背景步骤为空。Then 只数自建对象条目。参考 OrderContext.transformCartToOrder 执行生产状态机。候选 direct_calls 仅1条，参考3157条，结合生成源码确认实际购物车转订单未执行。200个存活的需求相关性仍须逐个判断。,200,0,"  Background:
+    Given the site operates on a store in ""Austria""
+    And the site has a country ""Germany"" with currency ""EUR""
+    And the country ""Germany"" is active
+    And the site operates on locale ""en""
+    And the site has a tax rate ""AT"" with ""20%"" rate
+    And the site has a tax rule group ""AT""
+    And the tax rule group has a tax rule for country ""Austria"" with tax rate ""AT""
+    And the site has a product ""T-Shirt"" priced at 2000
+    And the product has the tax rule group ""AT""
+    And the site has a customer ""some-customer@something.com""
+    And the customer ""some-customer@something.com"" has an address with country ""Austria"", ""4600"", ""Wels"", ""Freiung"", ""9-11/N3""
+    And the customer ""some-customer@something.com"" has an address with country ""Germany"", ""04600"", ""Wels"", ""Freiung"", ""9-11/N3""
+    And the cart belongs to customer ""some-customer@something.com""
+    And adding a cart price rule named ""discount""
+    And the cart rule is active
+    And the cart rule is a voucher rule with code ""asdf""
+    And the cart rule has a action discount with 20 in currency ""EUR"" off
+  Scenario: Create a new order and add a product
+    Given I add the product ""T-Shirt"" to my cart
+    And I apply the voucher code ""asdf"" to my cart
+    And the cart ships to customer ""some-customer@something.com"" address with postcode ""4600""
+    And the cart invoices to customer ""some-customer@something.com"" address with postcode ""4600""
+    And I create an order from my cart
+    Then there should be one product in my order",results/test-generation-20261114/req2test/tasks/f54d3444bfce11f4c30f/generated/src/CoreShop/Behat/Context/Domain/Order/CreateOrderContext.php,results/test-generation-20261114/reports/req2test-per-task.jsonl,2026-11-16
+e-petitions/features/admin/admin_access.feature:12,e-petitions,KillComplete,明确检查缺口,结果检查不完整,要求markup有效，但仅检查html和body元素存在。HTML解析器可修复无效标记，这两个元素存在不能检查标记有效性。登录跳转和HTTPS检查均存在。,25,25,"
+  Scenario: Accessing the job admin when not logged in
+    When I go to the admin delayed job page
+    Then I should be on the admin login page
+    And I should be connected to the server via an ssl connection
+    And the markup should be valid",results/test-generation-20261114/req2test/tasks/f85178f36b03cf18e99f/generated/features/step_definitions/admin_access_steps.rb,results/test-generation-20261114/reports/req2test-per-task.jsonl,2026-11-16
+e-petitions/features/charlie_creates_a_petition.feature:56,e-petitions,KillComplete,明确检查缺口,结果检查不完整,实际提交XSS输入并检查不存在onmouseover属性，覆盖指定攻击载荷；markup有效性步骤只检查解析后的html元素和单个事件属性，没有检查解析错误。安全载荷检查有效，通用标记有效性检查较窄。,98,98,"
+Scenario: Charlie cannot craft an xss attack when searching for petitions
+  Given I am on the start a new petition page
+  When I follow ""Start your petition""
+  Then I should be asked to confirm my eligibility
+  When I confirm that I am UK citizen or resident
+  Then I should see ""Petition title""
+  When I fill in ""Petition title"" with ""'onmouseover='alert(1)'""
+  When I press ""Continue""
+  Then the markup should be valid",results/test-generation-20261114/req2test/tasks/e06a3c2e2fe0c51cee1a/generated/features/step_definitions/petition_creation_steps.rb,results/test-generation-20261114/reports/req2test-per-task.jsonl,2026-11-16
+e-petitions/features/charlie_creates_a_petition.feature:6,e-petitions,Pass-but-Non-Kill,明确检查缺口,C,真实网页创建和相似请愿搜索被执行。候选在全页分别检查标题与签名数；参考在带索引petition-item-existing内绑定同一行。需求表的对象—值对应关系未验证。11个存活没有足够证据归因于这一缺口，保留因果未定。,183,172,"
+Scenario: Charlie has to search for a petition before creating one
+  Given the following petitions exist:
+    | action                         | state    | signature_count | open_at    |
+    | Rioters should loose benefits  | open     |             835 | 2011-08-11 |
+    | Rioters must loose benefits    | rejected |               5 |            |
+    | Do not remove rioters benefits | open     |            1023 | 2011-08-21 |
+  And I am on the home page
+  When I follow ""Start a petition"" within "".//main""
+  Then I should see ""Start a petition""
+  When I follow ""Start your petition""
+  Then I should be asked to confirm my eligibility
+  When I confirm that I am UK citizen or resident
+  Then I should see ""Petition title""
+  When I fill in ""Petition title"" with ""Rioters benefits""
+  And I press ""Continue""
+  Then I should see the following similar petitions:
+    | Do not remove rioters benefits | Total signatures 1,023 |
+    | Rioters should loose benefits  | Total signatures 835   |
+  When I press ""Continue with my petition""
+  Then I should see ""Say what you want the UK Government or Parliament to do""",results/test-generation-20261114/req2test/tasks/b8a41623500427f1c983/generated/features/step_definitions/charlie_creates_a_petition_steps.rb,results/test-generation-20261114/reports/req2test-per-task.jsonl,2026-11-16
+e-petitions/features/suzie_views_all_petitions.feature:76,e-petitions,Pass-but-Non-Kill,参考准备或检查范围不同,,生成真实建立四个请愿、过滤并检查数量和顺序。唯一存活删除 has_one :debate_outcome 关联。参考准备步骤显式调用 petition.debate_outcome=nil，生成不调用该关联，直接设置 debate 时间字段。参考会在准备阶段依赖该方法，需求正文没有要求访问关联API。能确认额外准备路径依赖，无法把关联删除的所有业务影响推论成该场景缺陷。生成 markup 校验较窄，尚无对应存活证据。,130,129,"
+  Scenario: Suzie browses petitions awaiting a debate in Parliament
+    Given a petition ""Save the planet"" exists and hasn’t passed the threshold for a debate
+    And a petition ""Conquer the Moon"" passed the threshold for a debate less than a day ago and has no debate date set
+    And a petition ""Free the wombles"" passed the threshold for a debate 10 days ago and has no debate date set
+    And a petition ""Travel to the stars"" passed the threshold for a debate 2 days ago and has a debate in 2 days
+    When I browse to see only ""Awaiting a debate in Parliament"" petitions
+    Then I should see ""We’ve found 3 petitions""
+    And I should see the following ordered list of petitions:
+      | Travel to the stars |
+      | Free the wombles    |
+      | Conquer the Moon    |
+    And the markup should be valid",results/test-generation-20261114/req2test/tasks/1e5494bb049979c3d5ea/generated/features/step_definitions/suzie_views_all_petitions_steps.rb,results/test-generation-20261114/reports/req2test-per-task.jsonl,2026-11-16
+kapua/service/account/test/src/test/resources/features/AccountService.feature:120,kapua,Pass-but-Non-Kill,明确检查缺口,C,动态记录确认真实AccountServiceImpl.delete执行。候选以随机scope和随机ID删除，捕获任意KapuaException并只断言ExceptionCaught。需求明确规定KapuaEntityNotFoundException和消息片段，参考primeException/verifyException检查具体异常。消息格式返回null的变异存活。record_count_anomaly=true保留，按唯一变异ID核对，不清洗掉异常。,43,22,"
+  Scenario: Delete nonexisting account
+  Try to delete an account with a a random Id. The operation should fail and an exception
+  should be thrown.
+
+    Given I expect the exception ""KapuaEntityNotFoundException"" with the text ""The entity of type account with id/name""
+    When I delete a random account
+    Then An exception was thrown",results/test-generation-20261114/req2test/tasks/93eac4b8da28527c6348/generated/service/account/test/src/test/java/org/eclipse/kapua/service/account/test/r2t/generated/DeleteNonexistingAccountSteps.java,results/test-generation-20261114/reports/req2test-per-task.jsonl,2026-11-16
+kapua/service/tag/test/src/test/resources/features/TagService.feature:297,kapua,Pass-but-Non-Kill,参考准备或检查范围不同,,生成真实create并从StepData保存的同一Tag执行setDescription/update，异常向外抛出；满足场景要求的更新无异常。参考按名字构造查询、从结果取Tag后更新。五个存活均位于查询谓词/排序/结果集合相关路径，生成直接保留对象而不查询。需求未明确要求查询API或重新加载对象，不能把未走参考检索路径直接归为行为断言不足。,45,40,"
+  Scenario: Changing Description On Tag With Short Name
+  Try to edit description on a tag with too short name. Kapua should not throw any errors.
+
+    Given I create tag with name ""abc"" without description
+    When Description of tag ""abc"" is changed into ""Description 123""
+    Then No exception was thrown",results/test-generation-20261114/req2test/tasks/91908943e91df807937c/generated/service/tag/test/src/test/java/org/eclipse/kapua/service/tag/test/r2t/generated/TagDescriptionSteps.java,results/test-generation-20261114/reports/req2test-per-task.jsonl,2026-11-16
+prestashop/tests/Integration/Behaviour/Features/Scenario/Meta/meta_management.feature:10,prestashop,KillComplete,未发现明确缺口,,检查默认语言，执行AddMetaCommand，重新加载Meta并逐项检查page、title、description、url_rewrite。,36,36,"  Background:
+    Given language with iso code ""en"" is the default one
+  Scenario: Create new metadata
+    When I add meta ""meta1"" with specified properties
+      | pageName                       | pdf-order-return                      |
+      | localisedPageTitle             | page title in default language        |
+      | localisedMetaDescription      | meta description in default language  |
+      | localisedRewriteUrls           | rewrite-url-default                   |
+    Then meta ""meta1"" page should be ""pdf-order-return""
+    And meta ""meta1"" field ""title"" for default language should be ""page title in default language""
+    And meta ""meta1"" field ""description"" for default language should be ""meta description in default language""
+    And meta ""meta1"" field ""url_rewrite"" for default language should be ""rewrite-url-default""",results/test-generation-20261114/req2test/tasks/5b6d2a356463dcb5ec19/generated/tests/Integration/Behaviour/Features/Context/MetaFeatureContext.php,results/test-generation-20261114/reports/req2test-per-task.jsonl,2026-11-16
+prestashop/tests/Integration/Behaviour/Features/Scenario/Product/delete_product.feature:17,prestashop,Pass-but-Non-Kill,参考准备或检查范围不同,,生成真实BulkDeleteProductCommand，确认两条商品不存在并保留第三条standard。准备商品时直接Product.add并自设link_rewrite；参考AddProductCommand以名字创建商品。唯一存活在StringModifier.replaceAccentedChars的transliterator初始化条件，处于名称/URL处理路径。已确认准备调用不同且删除行为有断言，slug调用链到该变异的精确传播仍属推断。需求没有规定自动转写URL。,31,30,"
+  Scenario: I bulk delete products
+    Given I add product ""product1"" with following information:
+      | name[en-US] | bottle of wine |
+      | type        | standard       |
+    Given I add product ""product2"" with following information:
+      | name[en-US] | jar of mead |
+      | type        | standard    |
+    Given I add product ""product3"" with following information:
+      | name[en-US] | gilded axe |
+      | type        | standard   |
+    And product ""product1"" type should be standard
+    And product ""product2"" type should be standard
+    And product ""product3"" type should be standard
+    When I bulk delete following products:
+      | reference |
+      | product1  |
+      | product2  |
+    Then product product1 should not exist anymore
+    And product product2 should not exist anymore
+    And product ""product3"" type should be standard",results/test-generation-20261114/req2test/tasks/57aa0d6af8ecf8f65748/generated/tests/Integration/Behaviour/Features/Context/Domain/Product/DeleteProductFeatureContext.php,results/test-generation-20261114/reports/req2test-per-task.jsonl,2026-11-16
+python-docx/features/blk-add-paragraph.feature:6,python-docx,Pass-but-Non-Kill,仍需核实,,生成逐步add_paragraph/add_run/add_text/save，随后重新Document(path)读取文本，确实有持久化检查。两个存活删除save的委托调用，与读回成功存在张力。生成使用固定文件名且不先删除已有文件，参考save步骤先删除目标文件。旧文件可能遮蔽save失效是合理线索，但缺少每个变异执行前后的文件快照，不能证实污染，也不能认定缺少save断言。,175,173,"
+  Scenario: Add a paragraph using low-level text API
+    Given a document
+     When I add a paragraph
+      And I add a run to the paragraph
+      And I add text to the run
+      And I save the document
+     Then the document contains the text I added",results/test-generation-20261114/req2test/tasks/ea8281d48c4736a84d4f/generated/features/steps/add_paragraph_steps.py,results/test-generation-20261114/reports/req2test-per-task.jsonl,2026-11-16
+python-docx/features/blk-iter-inner-content.feature:17,python-docx,Pass-but-Non-Kill,参考准备或检查范围不同,,生成构造真实footer，包含paragraph/table/paragraph，检查类型顺序与元素身份，直接验证需求。参考从blk-paras-and-tables文件加载footer。唯一存活让加载关系的add_relationship返回None。生成的程序化构造与参考加载路径不同，未发现顺序断言缺失。返回值具体传播以代码及官方结果为证，缺少逐变异堆栈。,114,113,"
+  Scenario: Footer.iter_inner_content()
+    Given a Footer object with paragraphs and tables
+     Then footer.iter_inner_content() produces the block-items in document order",results/test-generation-20261114/req2test/tasks/868a6aa808840dbc8911/generated/features/steps/blk_iter_inner_content.py,results/test-generation-20261114/reports/req2test-per-task.jsonl,2026-11-16
+python-docx/features/blk-iter-inner-content.feature:7,python-docx,KillComplete,明确检查缺口,对象顺序检查不完整,要求所有段落和表格按文档顺序返回。测试比较六个类型和三个段落文本，没有比较三张表格的内容或身份。同为Table的对象调换仍满足这些断言。,93,93,"
+  Scenario: Document.iter_inner_content()
+    Given a Document object with paragraphs and tables
+     Then document.iter_inner_content() produces the block-items in document order",results/test-generation-20261114/req2test/tasks/0af839eba15d14e2da1b/generated/features/steps/blk_iter_inner_content.py,results/test-generation-20261114/reports/req2test-per-task.jsonl,2026-11-16
+python-docx/features/cmt-props.feature:12,python-docx,Pass-but-Non-Kill,参考准备或检查范围不同,,生成通过Document().comments.add_comment(author=Jane Doe)建立Comment并严格核对author。参考加载带图像和关系的comments-rich-para文档，comments.get(0)取对象，再核对Steve Canny。get返回None、图像/关系加载等11项存活对应参考准备路径。场景只指定一个Comment及其author，未限定从富文档检索，当前证据不支持将这些差异认定为author要求漏测。,113,102,"
+  Scenario: Comment.author
+    Given a Comment object
+     Then comment.author is the author of the comment",results/test-generation-20261114/req2test/tasks/1271c9e979cbd7b1e251/generated/features/steps/cmt_props.py,results/test-generation-20261114/reports/req2test-per-task.jsonl,2026-11-16
+python-docx/features/doc-access-collections.feature:17,python-docx,KillComplete,未发现明确缺口,,从文档fixture读取sections并检查Sections类型，与唯一Then匹配。,88,88,"
+  Scenario: Access the section collection of a document
+     Given a document having sections
+      Then document.sections is a Sections object",results/test-generation-20261114/req2test/tasks/c3d72f4a31710d1f2cbf/generated/features/steps/doc_access_collections.py,results/test-generation-20261114/reports/req2test-per-task.jsonl,2026-11-16
+python-docx/features/doc-access-collections.feature:22,python-docx,KillComplete,未发现明确缺口,,建立真实Document并检查styles为Styles类型，与唯一Then匹配。,92,92,"
+  Scenario: Access the styles collection of a document
+    Given a document having styles
+     Then document.styles is a Styles object",results/test-generation-20261114/req2test/tasks/4bf424eb0c2e5ec2d0f9/generated/features/steps/doc_access_collections.py,results/test-generation-20261114/reports/req2test-per-task.jsonl,2026-11-16
+python-docx/features/doc-add-section.feature:16,python-docx,Pass-but-Non-Kill,明确检查缺口,A_setup,候选真实调用Document.add_section；六个linked=True断言也存在。Given只getattr六种header/footer代理，没有建立实际定义。参考载入带定义的文档。删除sentinel_sectPr.remove(hdrftr_ref)后候选通过、参考杀死，参考基线覆盖69行，候选基线未覆盖该行。缺口位于必要前置状态；修正上一轮C标签。,113,112,"
+  Scenario: Document.add_section() adds a section that inherits headers and footers
+    Given a single-section Document object with headers and footers as document
+     When I execute section = document.add_section()
+     Then section.header.is_linked_to_previous is True
+      And section.even_page_header.is_linked_to_previous is True
+      And section.first_page_header.is_linked_to_previous is True
+      And section.footer.is_linked_to_previous is True
+      And section.even_page_footer.is_linked_to_previous is True
+      And section.first_page_footer.is_linked_to_previous is True",results/test-generation-20261114/req2test/tasks/676d56c1c72dc4237805/generated/features/steps/doc_add_section.py,results/test-generation-20261114/reports/req2test-per-task.jsonl,2026-11-16
+python-docx/features/doc-settings.feature:8,python-docx,KillComplete,未发现明确缺口,,按有无settings部件分支准备文档，读取settings并检查Settings类型。,93,93,"
+  Scenario Outline: Access document settings
+    Given a document having <a-or-no> settings part
+     Then document.settings is a Settings object",results/test-generation-20261114/req2test/tasks/b10b84a0a73510d50a0a/generated/features/steps/doc_settings.py,results/test-generation-20261114/reports/req2test-per-task.jsonl,2026-11-16
+python-docx/features/run-access-inner-content.feature:7,python-docx,Pass-but-Non-Kill,参考准备或检查范围不同,,生成对0/1/2个w:lastRenderedPageBreak逐例构造真实run并严格比较contains_page_break。参考打开par-rendered-page-breaks后从document.paragraphs和paragraph.runs取对象。七项存活涉及集合访问、XML列表、包关系。显式0/1/2条件均有对应构造和断言，额外集合/文件加载覆盖解释了差异，不能推出page-break需求漏测。,100,93,"
+  Scenario Outline: Run.contains_page_break reports presence of page-break
+    Given a run having <zero-or-more> rendered page breaks
+     Then run.contains_page_break is <value>",results/test-generation-20261114/req2test/tasks/1853a37b8ab3b3398cb0/generated/features/steps/run_access_inner_content.py,results/test-generation-20261114/reports/req2test-per-task.jsonl,2026-11-16
+python-docx/features/sty-latent-add-del.feature:14,python-docx,Pass-but-Non-Kill,参考准备或检查范围不同,,生成迭代取首个latent style、记名与长度、delete，再验证少一条和按名查找抛KeyError。参考先加载已知styles并统计普通styles数量，再按Normal查找后delete。存活包含成功按名查找的return _LatentStyle及普通styles长度/XPath路径；生成删除前用迭代而非按名成功查找，删除后走KeyError分支。需求两个删除后条件均有检查。,112,107,"
+  Scenario: Delete a latent style
+    Given a document having known styles
+     When I delete a latent style
+     Then the document has one fewer latent styles
+      And the deleted latent style is not in the latent styles collection",results/test-generation-20261114/req2test/tasks/d0c14b3269768f0f2219/generated/features/steps/sty_latent_add_del.py,results/test-generation-20261114/reports/req2test-per-task.jsonl,2026-11-16
+python-docx/features/sty-latent-props.feature:21,python-docx,KillComplete,未发现明确缺口,,真实latent_styles属性设置，再读取属性按示例精确比较。,113,113,"
+  Scenario Outline: Set default latent style properties
+    Given a latent styles object with known defaults
+     When I assign <new-value> to latent_styles.<prop-name>
+     Then latent_styles.<prop-name> is <value>",results/test-generation-20261114/req2test/tasks/2247fcf10bc1e9313ee6/generated/features/steps/sty_latent_props.py,results/test-generation-20261114/reports/req2test-per-task.jsonl,2026-11-16
+python-docx/features/sty-latent-props.feature:7,python-docx,KillComplete,未发现明确缺口,,从默认模板读取latent_styles，按每个属性和示例值精确比较。,107,107,"
+  Scenario Outline: Get default latent style properties
+    Given a latent styles object with known defaults
+     Then latent_styles.<prop-name> is <value>",results/test-generation-20261114/req2test/tasks/9192f0d5efbedd02f926/generated/features/steps/latent_style_props.py,results/test-generation-20261114/reports/req2test-per-task.jsonl,2026-11-16
+python-docx/features/tbl-cell-props.feature:52,python-docx,Pass-but-Non-Kill,参考准备或检查范围不同,,生成用add_table返回值取cell并设置/核对1inch，参考从tbl-props文档的tables列表取cell。两个存活都使tables访问返回None，因生成不走tables检索而存活。另有准备风险，no explicit setting分支只跳过赋值，没有证明新建cell确实无宽度；该条件未经当前证据确认，标为C待验证，未计入明确需求缺口。,144,142,"
+  Scenario Outline: Set cell width
+    Given a table cell having a width of <width-setting>
+     When I set the cell width to <new-setting>
+     Then the reported width of the cell is <reported-width>",results/test-generation-20261114/req2test/tasks/a152def3525939e865e0/generated/features/steps/tbl_cell_props.py,results/test-generation-20261114/reports/req2test-per-task.jsonl,2026-11-16
+python-docx/features/tbl-row-props.feature:29,python-docx,Pass-but-Non-Kill,参考准备或检查范围不同,,生成新建表格并配置None/AUTO/AT_LEAST，严格核对row.height_rule。参考从tbl-props加载并经document.tables索引已有行。两个存活是document.tables和BlockItemContainer.tables返回None，直接创建并保留table不触发这两个getter。可证差异在对象获得路径，当前场景没有规定必须加载已有文档。,103,101,"
+  Scenario Outline: Get Row.height_rule
+    Given a table row having height rule <state>
+     Then row.height_rule is <value>",results/test-generation-20261114/req2test/tasks/926d70f9bc8dfb7b1e42/generated/features/steps/tbl_row_props.py,results/test-generation-20261114/reports/req2test-per-task.jsonl,2026-11-16
+python-docx/features/txt-font-props.feature:30,python-docx,Pass-but-Non-Kill,参考准备或检查范围不同,,生成建立run.font并赋Avenir Black或保留None后精确比较。参考通过document.styles[Normal/Having Typeface].font获得Font。18个存活集中于style查找、样式部件和枚举转换，包含Style.font返回None。需求没有限定Font必须来自style，不能将run来源自动视为不满足需求；其余辅助路径传播未逐个证实。,115,97,"
+  Scenario Outline: Get typeface name
+    Given a font having typeface name <name>
+     Then font.name is <value>",results/test-generation-20261114/req2test/tasks/6133143477fd496741d4/generated/features/steps/txt_font_props.py,results/test-generation-20261114/reports/req2test-per-task.jsonl,2026-11-16
+python-docx/features/txt-font-props.feature:40,python-docx,Pass-but-Non-Kill,参考准备或检查范围不同,,生成对run.font进行None→Avenir Black、Avenir Black→Calibri、Avenir Black→None设置并核对。参考选取命名style.font执行相同结果检查。17项存活的样式解析/部件路径来自该接收者差异。明确赋值结果有断言，尚无证据证明需求限定style来源。,139,122,"
+  Scenario Outline: Set typeface name
+    Given a font having typeface name <name>
+     When I assign <value> to font.name
+     Then font.name is <value>",results/test-generation-20261114/req2test/tasks/73aac7a456cee70beb76/generated/features/steps/txt_font_props.py,results/test-generation-20261114/reports/req2test-per-task.jsonl,2026-11-16
+python-docx/features/txt-font-props.feature:74,python-docx,Pass-but-Non-Kill,参考准备或检查范围不同,,生成从add_run直接拿font，对font.color做ColorFormat类型检查，符合唯一Then。参考从txt-font-props文件的paragraphs[0].runs[0]获得font。四项存活均是段落/run/XML列表访问返回None。不能因这里没有RGB值断言就归B，当前需求只要求类型。,101,97,"
+  Scenario: Get font color object
+    Given a font
+     Then font.color is a ColorFormat object",results/test-generation-20261114/req2test/tasks/53d3a58715c0a98ddba3/generated/features/steps/txt_font_props.py,results/test-generation-20261114/reports/req2test-per-task.jsonl,2026-11-16
+python-docx/features/txt-parfmt-props.feature:136,python-docx,Pass-but-Non-Kill,参考准备或检查范围不同,,生成针对四个段落属性分别设置None/True/False并用is比较，覆盖12个示例。参考在Normal/Base/Citation命名style的paragraph_format上读取。16项存活涉及样式部件/检索及Style.paragraph_format getter。需求没有限定其接收者必须是style，当前应保留准备路径更宽解释。,113,97,"
+  Scenario Outline: Get On/Off paragraph property
+    Given a paragraph format having <prop-name> set <state>
+     Then paragraph_format.<prop-name> is <value>",results/test-generation-20261114/req2test/tasks/4464acd5efa59af497a5/generated/features/steps/txt_parfmt_props.py,results/test-generation-20261114/reports/req2test-per-task.jsonl,2026-11-16
+sylius/features/admin/promotion/managing_coupons/generating_coupon.feature:26,sylius,KillComplete,未发现明确缺口,,真实管理员API生成优惠券，检查成功并重新查询该promotion的优惠券数量。,107,107,"    Background:
+        Given the store operates on a single channel in ""United States""
+        And there is a promotion ""Christmas sale""
+        And it is coupon based promotion
+        And I am logged in as an administrator
+    Scenario: Generating new coupons without expiration date
+        When I want to generate new coupons for this promotion
+        And I choose the amount of 5 coupons to be generated
+        And I specify their code length as 6
+        And I limit generated coupons usage to 25 times
+        And I generate these coupons
+        Then I should be notified that they have been successfully generated
+        And there should be 5 coupons related to this promotion",results/test-generation-20261114/req2test/tasks/3ed4dd6333d45d5c438e/generated/behat_services.yml;results/test-generation-20261114/req2test/tasks/3ed4dd6333d45d5c438e/generated/src/Sylius/Behat/Context/Api/Admin/PromotionCouponGenerationContext.php,results/test-generation-20261114/reports/req2test-per-task.jsonl,2026-11-16
+sylius/features/hybrid/checkout/placing_order_on_multi_channel/placing_an_order_on_a_single_channel_store.feature:20,sylius,Pass-but-Non-Kill,明确检查缺口,B,候选和参考动态调用都记录 CompleteOrderHandler 到 CompositeStateMachine.apply，确认下单操作执行。候选读取 sharedStorage 内原 order 的email/currency；参考管理员登录后通过adminClient.show观察currencyCode。明确缺口位于需求指定的管理员读取边界。上一轮包含A的标签应撤回。142个存活中管理查询/序列化路径提供支持，其他变异仍保留未定。,402,260,"    Background:
+        Given the store operates on a channel named ""United States"" in ""USD"" currency
+        And the store ships to ""United States""
+        And the store has a zone ""United States"" with code ""US""
+        And this zone has the ""United States"" country member
+        And the store has a product ""PHP T-Shirt"" priced at ""$19.99""
+        And the store ships everywhere for Free
+        And the store allows paying Offline
+        And there is an administrator ""sylius@example.com"" identified by ""sylius""
+        And there is a customer account ""customer@example.com"" identified by ""sylius""
+        And I am logged in as ""customer@example.com""
+    Scenario: Placing an order in a channels base currency
+        Given I added product ""PHP T-Shirt"" to the cart
+        And I addressed the cart
+        When I proceed with ""Free"" shipping method and ""Offline"" payment
+        And I confirm my order
+        Then the administrator should see that order placed by ""customer@example.com"" has ""USD"" currency",results/test-generation-20261114/req2test/tasks/7627df83491b90a0f0fa/generated/src/Sylius/Behat/Context/Api/Checkout/OrderContext.php,results/test-generation-20261114/reports/req2test-per-task.jsonl,2026-11-16
