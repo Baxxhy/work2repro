@@ -1,0 +1,52 @@
+=== RUN   TestSubagentsHTTPFeature
+=== RUN   TestSubagentsHTTPFeature/The_catalog_lists_built-ins_and_project_definitions_with_their_trust_state
+2026/11/16 16:25:52 INFO session created id=sess_33f034d1c45663cf307f61b5 cwd=/r2t-go/tmp/TestSubagentsHTTPFeature1738975014/001 mode=agent
+2026/11/16 16:25:52 INFO subagent approved for workspace name=reviewer workspace=/r2t-go/tmp/TestSubagentsHTTPFeature1738975014/001 digest=8e6c61416d348f8ccccb2c9701e3d3c6039312450c402e58650a779b4ed7926e
+R2T_GODOG_EXIT TestSubagentsHTTPFeature 0
+fatal error: sync: unlock of unlocked mutex
+
+goroutine 25 [running]:
+internal/sync.fatal({0x13cf3f0?, 0x11aaea0?})
+	/usr/local/go/src/runtime/panic.go:1056 +0x18
+internal/sync.(*Mutex).unlockSlow(0xc0002b5160, 0xffffffff)
+	/usr/local/go/src/internal/sync/mutex.go:204 +0x35
+internal/sync.(*Mutex).Unlock(...)
+	/usr/local/go/src/internal/sync/mutex.go:198
+sync.(*Mutex).Unlock(...)
+	/usr/local/go/src/sync/mutex.go:65
+github.com/EvilFreelancer/coddy-agent/internal/session.(*Manager).AddUsageObserver.func2.1()
+	/r2t-go/run/work/internal/session/provider_usage.go:177 +0x50
+sync.(*Once).doSlow(0x516?, 0x50e?)
+	/usr/local/go/src/sync/once.go:78 +0xac
+sync.(*Once).Do(...)
+	/usr/local/go/src/sync/once.go:69
+github.com/EvilFreelancer/coddy-agent/internal/session.(*Manager).AddUsageObserver.func2()
+	/r2t-go/run/work/internal/session/provider_usage.go:174 +0x45
+github.com/EvilFreelancer/coddy-agent/external/httpserver.(*Server).Drain(0xc000442500)
+	/r2t-go/run/work/external/httpserver/server.go:89 +0x24
+testing.(*common).Cleanup.func1()
+	/usr/local/go/src/testing/testing.go:1308 +0x109
+testing.(*common).runCleanup(0xc000203c00, 0x4bc993?)
+	/usr/local/go/src/testing/testing.go:1572 +0xea
+testing.tRunner.func2()
+	/usr/local/go/src/testing/testing.go:1928 +0x25
+testing.tRunner(0xc000203c00, 0x15d4480)
+	/usr/local/go/src/testing/testing.go:1940 +0x114
+created by testing.(*T).Run in goroutine 1
+	/usr/local/go/src/testing/testing.go:1997 +0x465
+
+goroutine 1 [chan receive]:
+testing.(*T).Run(0xc000203a40, {0x13c560f?, 0xc00049fb30?}, 0x15d4480)
+	/usr/local/go/src/testing/testing.go:2005 +0x485
+testing.runTests.func1(0xc000203a40)
+	/usr/local/go/src/testing/testing.go:2477 +0x37
+testing.tRunner(0xc000203a40, 0xc00049fc70)
+	/usr/local/go/src/testing/testing.go:1934 +0xea
+testing.runTests(0xc000236618, {0x21b38e0, 0x99, 0x99}, {0x7?, 0xc00041ea00?, 0x21bc520?})
+	/usr/local/go/src/testing/testing.go:2475 +0x4b4
+testing.(*M).Run(0xc00037db80)
+	/usr/local/go/src/testing/testing.go:2337 +0x63a
+main.main()
+	_testmain.go:349 +0x9b
+FAIL	github.com/EvilFreelancer/coddy-agent/external/httpserver	0.108s
+FAIL
