@@ -25,7 +25,7 @@ Req2Test 每个项目随机选取 20 条，共 8 个项目，种子为 20261112�
 
 ## 最新研究动机报告
 
-[从真实商城案例读起](research/problem-discovery-final/RESEARCH_MOTIVATION_REPORT.md) · [文献、证据册与验证计划](research/problem-discovery-final/README.md)
+[从真实商城案例读起](research/problem-discovery-final/科研动机报告-11-16.md) · [文献、证据册与验证计划](research/problem-discovery-final/本轮调研说明-11-16.md)
 
 ## 实证问题分析
 
