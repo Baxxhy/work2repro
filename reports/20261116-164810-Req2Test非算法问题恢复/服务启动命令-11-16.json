@@ -1,0 +1,20 @@
+[
+  "systemd-run",
+  "--unit=req2test-subset160-infra-recovery-20261116-v1",
+  "--service-type=exec",
+  "--property=WorkingDirectory=/root/lby-docker/req2test/user/runs/req2test-subset160-infra-recovery-20261116-v1",
+  "--property=StandardOutput=append:/root/lby-docker/req2test/user/runs/req2test-subset160-infra-recovery-20261116-v1/official-evaluate.log",
+  "--property=StandardError=append:/root/lby-docker/req2test/user/runs/req2test-subset160-infra-recovery-20261116-v1/official-evaluate.log",
+  "nsenter",
+  "-t",
+  "241799",
+  "-m",
+  "--",
+  "runuser",
+  "-u",
+  "r2tbench",
+  "--",
+  "bash",
+  "-c",
+  "source /root/lby-docker/req2test/user/env.sh; exec req2test evaluate --predictions /root/lby-docker/req2test/user/runs/req2test-subset160-infra-recovery-20261116-v1/predictions.jsonl --instances /root/lby-docker/req2test/user/runs/req2test-subset160-infra-recovery-20261116-v1/instances.txt --split eval --workers 1 --run-id req2test-subset160-infra-recovery-20261116-v1"
+]
