@@ -5,7 +5,7 @@ OUT.mkdir(parents=True,exist_ok=True)
 def readcsv(p): return list(csv.DictReader((R/p).open()))
 def savecsv(name,rows):
  with (OUT/name).open('w') as f:
-  w=csv.DictWriter(f,fieldnames=list(rows[0]));w.writeheader();w.writerows(rows)
+  w=csv.DictWriter(f,fieldnames=list(rows[0]),lineterminator="\n");w.writeheader();w.writerows(rows)
 a=json.loads((R/'results/test-generation-20261114/task-artifacts.json').read_text())
 tsb=readcsv('results/test-generation-20261114/reports/tsb-per-task.csv')
 req=[json.loads(s) for s in (R/'results/test-generation-20261114/reports/req2test-per-task.jsonl').read_text().splitlines()]
