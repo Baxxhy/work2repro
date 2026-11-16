@@ -1,0 +1,152 @@
+{
+  "benchmark_version": "1.1",
+  "environment": {
+    "facts": [
+      "Step definitions are public methods on plain Java classes, annotated with `io.cucumber.java.en.Given`, `@When`, `@Then`, `@And` or `@But`. For each item the prompt's answer path is an empty `r2t.generated` package inside that feature's runner module, and the harness adds that exact package to the selected runner's native glue. The runner module supplies the suite's complete test compile classpath. The Given/When/Then keyword is irrelevant to matching.",
+      "Patterns may be Cucumber Expressions such as `{string}`, `{int}`, `{long}` and `{word}`, or regular expressions. Existing parameter and data-table types under the retained `org.eclipse.kapua.qa.common.cucumber` package remain available.",
+      "When the selected feature has an `@setup` scenario, the harness copies that prerequisite scenario verbatim, including its tags, ahead of the selected scenario. `MiscAuthorization.feature` has no setup scenario or Background and runs its selected scenario alone. `Given Init Security Context` and the `@env_none` hooks remain in retained `BasicSteps`; do not redeclare them.",
+      "Cucumber-Guice creates glue objects and injects shared `StepData` with `javax.inject.Inject`; glue classes may be `com.google.inject.Singleton`. The selected unit modules also retain a `*LocatorConfiguration` hook that installs the real service under test and its mocked collaborators into `KapuaLocator` during `@setup`.",
+      "All shared classes under `qa/common`, every selected `Run*.java` runner and every `*LocatorConfiguration.java` are retained. Native runner glue outside the generated package is unchanged. Do not redeclare retained hooks, steps, parameter types or runner classes.",
+      "The admissible `@env_none` suite uses embedded H2 in the test JVM, migrated by Liquibase, with Shiro and Guice in-process. It needs no database server, broker, Elasticsearch process, Docker socket or other external service.",
+      "Assertions may use JUnit 4 (`org.junit.Assert`) and should let assertion failures propagate so Cucumber records the failing step. Reuse the retained domain-table objects under `org.eclipse.kapua.qa.common.cucumber` when the feature supplies a data table.",
+      "Production code spans the Maven reactor's service, commons, locator, message, transport and related modules. Production files, feature files and `pom.xml` are never accepted as an answer.",
+      "In the separate execution repository, the build is a 250-pom Maven reactor using JDK 17 and Cucumber-JVM 6.11.0 with JUnit 4 and surefire 3.0.0-M7. The execution worker supplies the JDK 17 toolchain and warm dependencies; changes to `pom.xml` are discarded.",
+      "This workspace supports reading, searching, editing, and syntax parsing. It is a provisioned application runtime for the code in `./repo`; nothing here is executed by the harness. The harness executes your final submitted test artifacts against a separate, complete implementation after generation ends. You receive no harness execution feedback during generation.",
+      "TARGET_CONTRACTS.md contains the reviewed public API and configuration supplement supplied identically in every visibility view. It is context for writing tests; edits to it are not submitted.",
+      "Existing QA helpers, JUnit category markers and test fixtures remain readable as test context in every view. Their source examples are retained infrastructure; edits to them are not submitted.",
+      "Implementation visibility: the reviewed target implementation bodies and explicitly mapped executable resources are hidden; declarations, the common contract supplement and retained test infrastructure remain visible."
+    ],
+    "framework": "Cucumber",
+    "language": "Java",
+    "platform": "Eclipse Kapua, a modular Java IoT platform (Maven, JDK 17)",
+    "project": "Eclipse Kapua",
+    "removed": "Cucumber test code",
+    "retained": "retained common hooks and state, per-suite runners and locator configurations, plus the feature files",
+    "run": null
+  },
+  "instance_id": "kapua/service/account/test/src/test/resources/features/AccountService.feature:120",
+  "placement": {
+    "acceptance_mode": "directory",
+    "acceptance_root": "service/account/test/src/test/java/org/eclipse/kapua/service/account/test/r2t/generated/",
+    "artefact_noun": "step-definition code",
+    "extra_names": [],
+    "path": "repo/service/account/test/src/test/java/org/eclipse/kapua/service/account/test/r2t/generated/...",
+    "placement_hint": "service/account/test/src/test/java/org/eclipse/kapua/service/account/test/r2t/generated/...",
+    "rules": [
+      "Only files under `repo/service/account/test/src/test/java/org/eclipse/kapua/service/account/test/r2t/generated/` are accepted. Repo-wide removal deleted those directories, so create whatever path you need; The shared qa/common substrate remains available..",
+      "Production code is never accepted. Anything you change outside `repo/service/account/test/src/test/java/org/eclipse/kapua/service/account/test/r2t/generated/` is discarded."
+    ],
+    "suffixes": [
+      ".java",
+      ".feature"
+    ],
+    "wiring_file": null
+  },
+  "project": "kapua",
+  "requirement": {
+    "feature": {
+      "background": null,
+      "file_path": "service/account/test/src/test/resources/features/AccountService.feature",
+      "narrative": "  The User Account Service is responsible for CRUD operations for user accounts in the Kapua\n  database.",
+      "title": "User Account Service"
+    },
+    "scenario": {
+      "gherkin": "  Scenario: Delete nonexisting account\n  Try to delete an account with a a random Id. The operation should fail and an exception\n  should be thrown.\n\n    Given I expect the exception \"KapuaEntityNotFoundException\" with the text \"The entity of type account with id/name\"\n    When I delete a random account\n    Then An exception was thrown",
+      "kind": "scenario",
+      "line": 120,
+      "tags": [
+        "@account",
+        "@env_none"
+      ],
+      "title": "Delete nonexisting account"
+    }
+  },
+  "runtime_setup": "req2test runtime setup --project kapua --instance kapua/service/account/test/src/test/resources/features/AccountService.feature:120 --workspace WORKSPACE",
+  "source_view": "req2test views materialize --project kapua --view th --instance kapua/service/account/test/src/test/resources/features/AccountService.feature:120 --out DIR",
+  "target_interfaces": [
+    {
+      "declaration": "java.math.BigInteger generate()",
+      "key": [
+        "org.eclipse.kapua.commons.model.id.IdGenerator",
+        "generate:()Ljava/math/BigInteger;"
+      ]
+    },
+    {
+      "declaration": "void <init>(java.math.BigInteger)",
+      "key": [
+        "org.eclipse.kapua.commons.model.id.KapuaEid",
+        "<init>:(Ljava/math/BigInteger;)V"
+      ]
+    },
+    {
+      "declaration": "void delete(org.eclipse.kapua.model.id.KapuaId, org.eclipse.kapua.model.id.KapuaId)",
+      "key": [
+        "org.eclipse.kapua.service.account.internal.AccountServiceImpl",
+        "delete:(Lorg/eclipse/kapua/model/id/KapuaId;Lorg/eclipse/kapua/model/id/KapuaId;)V"
+      ]
+    }
+  ],
+  "target_interfaces_empty_reason": null,
+  "task": {
+    "checked_interfaces": {
+      "checked": [
+        {
+          "declaration": "java.math.BigInteger generate()",
+          "key": [
+            "org.eclipse.kapua.commons.model.id.IdGenerator",
+            "generate:()Ljava/math/BigInteger;"
+          ]
+        },
+        {
+          "declaration": "void <init>(java.math.BigInteger)",
+          "key": [
+            "org.eclipse.kapua.commons.model.id.KapuaEid",
+            "<init>:(Ljava/math/BigInteger;)V"
+          ]
+        },
+        {
+          "declaration": "void delete(org.eclipse.kapua.model.id.KapuaId, org.eclipse.kapua.model.id.KapuaId)",
+          "key": [
+            "org.eclipse.kapua.service.account.internal.AccountServiceImpl",
+            "delete:(Lorg/eclipse/kapua/model/id/KapuaId;Lorg/eclipse/kapua/model/id/KapuaId;)V"
+          ]
+        }
+      ],
+      "empty_reason": null
+    },
+    "criterion": {
+      "gherkin": "  Scenario: Delete nonexisting account\n  Try to delete an account with a a random Id. The operation should fail and an exception\n  should be thrown.\n\n    Given I expect the exception \"KapuaEntityNotFoundException\" with the text \"The entity of type account with id/name\"\n    When I delete a random account\n    Then An exception was thrown",
+      "kind": "Scenario",
+      "scenario_title": "Delete nonexisting account"
+    },
+    "expected_output": [
+      "step_definitions"
+    ],
+    "framework": "cucumber",
+    "item_id": "kapua/service/account/test/src/test/resources/features/AccountService.feature:120",
+    "language": "java",
+    "project": "kapua",
+    "provenance": {
+      "file_path": "service/account/test/src/test/resources/features/AccountService.feature",
+      "line": 120
+    },
+    "requirement": {
+      "background": null,
+      "feature_title": "User Account Service",
+      "narrative": "  The User Account Service is responsible for CRUD operations for user accounts in the Kapua\n  database.",
+      "richness": "prose"
+    },
+    "target_interfaces": {
+      "behaviour": [
+        "org.eclipse.kapua.KapuaException",
+        "org.eclipse.kapua.commons.model.id.IdGenerator",
+        "org.eclipse.kapua.commons.model.id.KapuaEid",
+        "org.eclipse.kapua.model.id.KapuaId",
+        "org.eclipse.kapua.service.account.AccountService"
+      ],
+      "setup": []
+    },
+    "task": "criterion_to_test"
+  },
+  "view": "th"
+}

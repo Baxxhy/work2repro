@@ -1,0 +1,757 @@
+{
+  "metadata": {
+    "artifact": {
+      "compression": "gzip",
+      "path": ".artifacts/sha256/24af9eae86b3126aaa627f63901513f60c52c6b711b7677216f01feb65ab7e2f.gz",
+      "sha256": "24af9eae86b3126aaa627f63901513f60c52c6b711b7677216f01feb65ab7e2f",
+      "size": 4768136
+    },
+    "assignment_id": "repo_1",
+    "candidate_index": 1,
+    "id": "repo_1",
+    "kind": "wrapper",
+    "mutation": "[MUTATED] Violates Spec 1 by changing executable dispatch and path resolution in the compile-time-selected source branch for repo_1. The branch intentionally makes this assigned behavior false: Invoking the executable without a command fails and lists the regex, from-file, and to-ascii commands.",
+    "payload": "repo_1/executable",
+    "target_spec": "Spec 1",
+    "target_test": "6f9c47ca1eae/eval.tests.test_subcommand_dispatch.TestDefaultBehavior.test_no_subcommand_lists_subcommands",
+    "target_test_description": "Invoking the executable without a command fails and lists the regex, from-file, and to-ascii commands."
+  },
+  "correct_implementation_tests": [
+    {
+      "name": "test_cli.test_global_help_and_version",
+      "branch": "generated",
+      "status": "failure",
+      "extra": {
+        "time": 0.006,
+        "message": "AssertionError: assert False\n +  where False = <built-in method startswith of str object at 0x5a5dededa8e0>('RnR is a command-line tool to rename multiple files and directories that\\nsupports regular expressions\\n\\nUsage: executable <COMMAND>\\n')\n +    where <built-in method startswith of str object at 0x5a5dededa8e0> = 'RnR is a command-line tool to rename multiple files and directories that\\nsupports regular expressions\\n\\n\\nUsage: ex...sage or the help of the given subcommand(s)\\n\\nOptions:\\n  -h, --help     Print help\\n  -V, --version  Print version\\n'.startswith\n +      where 'RnR is a command-line tool to rename multiple files and directories that\\nsupports regular expressions\\n\\n\\nUsage: ex...sage or the help of the given subcommand(s)\\n\\nOptions:\\n  -h, --help     Print help\\n  -V, --version  Print version\\n' = CompletedProcess(args=['/workspace/executable', '--help'], returncode=0, stdout='RnR is a command-line tool to rename ...help of the given subcommand(s)\\n\\nOptions:\\n  -h, --help     Print help\\n  -V, --version  Print version\\n', stderr='').stdout",
+        "text": "work = PosixPath('/workspace/eval/.pytest-tmp/test_global_help_and_version0')\n\n    def test_global_help_and_version(work):\n        p = run(['--help'], work)\n        assert p.returncode == 0 and p.stderr == ''\n>       assert p.stdout.startswith('RnR is a command-line tool to rename multiple files and directories that\\nsupports regular expressions\\n\\nUsage: executable <COMMAND>\\n')\nE       AssertionError: assert False\nE        +  where False = <built-in method startswith of str object at 0x5a5dededa8e0>('RnR is a command-line tool to rename multiple files and directories that\\nsupports regular expressions\\n\\nUsage: executable <COMMAND>\\n')\nE        +    where <built-in method startswith of str object at 0x5a5dededa8e0> = 'RnR is a command-line tool to rename multiple files and directories that\\nsupports regular expressions\\n\\n\\nUsage: ex...sage or the help of the given subcommand(s)\\n\\nOptions:\\n  -h, --help     Print help\\n  -V, --version  Print version\\n'.startswith\nE        +      where 'RnR is a command-line tool to rename multiple files and directories that\\nsupports regular expressions\\n\\n\\nUsage: ex...sage or the help of the given subcommand(s)\\n\\nOptions:\\n  -h, --help     Print help\\n  -V, --version  Print version\\n' = CompletedProcess(args=['/workspace/executable', '--help'], returncode=0, stdout='RnR is a command-line tool to rename ...help of the given subcommand(s)\\n\\nOptions:\\n  -h, --help     Print help\\n  -V, --version  Print version\\n', stderr='').stdout\n\ntest_cli.py:31: AssertionError"
+      }
+    },
+    {
+      "name": "test_cli.test_command_help[regex-help]",
+      "branch": "generated",
+      "status": "passed",
+      "extra": {
+        "time": 0.212
+      }
+    },
+    {
+      "name": "test_cli.test_command_help[replay-help]",
+      "branch": "generated",
+      "status": "passed",
+      "extra": {
+        "time": 0.011
+      }
+    },
+    {
+      "name": "test_cli.test_command_help[ascii-help]",
+      "branch": "generated",
+      "status": "passed",
+      "extra": {
+        "time": 0.01
+      }
+    },
+    {
+      "name": "test_cli.test_missing_and_unknown_commands",
+      "branch": "generated",
+      "status": "passed",
+      "extra": {
+        "time": 0.012
+      }
+    },
+    {
+      "name": "test_cli.test_cli_errors[missing-replacement]",
+      "branch": "generated",
+      "status": "passed",
+      "extra": {
+        "time": 0.006
+      }
+    },
+    {
+      "name": "test_cli.test_cli_errors[missing-path]",
+      "branch": "generated",
+      "status": "passed",
+      "extra": {
+        "time": 0.006
+      }
+    },
+    {
+      "name": "test_cli.test_cli_errors[ascii-no-path]",
+      "branch": "generated",
+      "status": "passed",
+      "extra": {
+        "time": 0.007
+      }
+    },
+    {
+      "name": "test_cli.test_cli_errors[unknown-option]",
+      "branch": "generated",
+      "status": "passed",
+      "extra": {
+        "time": 0.006
+      }
+    },
+    {
+      "name": "test_cli.test_cli_errors[bad-color]",
+      "branch": "generated",
+      "status": "passed",
+      "extra": {
+        "time": 0.006
+      }
+    },
+    {
+      "name": "test_cli.test_cli_errors[repeat-color]",
+      "branch": "generated",
+      "status": "passed",
+      "extra": {
+        "time": 0.005
+      }
+    },
+    {
+      "name": "test_cli.test_cli_errors[mode-conflict]",
+      "branch": "generated",
+      "status": "passed",
+      "extra": {
+        "time": 0.004
+      }
+    },
+    {
+      "name": "test_cli.test_cli_errors[dump-conflict]",
+      "branch": "generated",
+      "status": "passed",
+      "extra": {
+        "time": 0.006
+      }
+    },
+    {
+      "name": "test_cli.test_cli_errors[pre-command-option]",
+      "branch": "generated",
+      "status": "passed",
+      "extra": {
+        "time": 0.007
+      }
+    },
+    {
+      "name": "test_cli.test_cli_errors[hidden-needs-recursive]",
+      "branch": "generated",
+      "status": "failure",
+      "extra": {
+        "time": 0.006,
+        "message": "assert (2 == 2 and '' == '' and \"requires '--recursive'\" in \"error: the following required arguments were not provided:\\n  --recursive\\n\\nUsage: executable regex --recursive --hidden <EXPRESSION> <REPLACEMENT> <PATH(S)>...\\n\\nFor more information, try '--help'.\\n\")\n +  where 2 = CompletedProcess(args=['/workspace/executable', 'regex', 'a', 'b', 'x', '--hidden'], returncode=2, stdout='', stderr=\"...xecutable regex --recursive --hidden <EXPRESSION> <REPLACEMENT> <PATH(S)>...\\n\\nFor more information, try '--help'.\\n\").returncode\n +  and   '' = CompletedProcess(args=['/workspace/executable', 'regex', 'a', 'b', 'x', '--hidden'], returncode=2, stdout='', stderr=\"...xecutable regex --recursive --hidden <EXPRESSION> <REPLACEMENT> <PATH(S)>...\\n\\nFor more information, try '--help'.\\n\").stdout\n +  and   \"error: the following required arguments were not provided:\\n  --recursive\\n\\nUsage: executable regex --recursive --hidden <EXPRESSION> <REPLACEMENT> <PATH(S)>...\\n\\nFor more information, try '--help'.\\n\" = CompletedProcess(args=['/workspace/executable', 'regex', 'a', 'b', 'x', '--hidden'], returncode=2, stdout='', stderr=\"...xecutable regex --recursive --hidden <EXPRESSION> <REPLACEMENT> <PATH(S)>...\\n\\nFor more information, try '--help'.\\n\").stderr",
+        "text": "args = ['regex', 'a', 'b', 'x', '--hidden'], fragment = \"requires '--recursive'\"\nwork = PosixPath('/workspace/eval/.pytest-tmp/test_cli_errors_hidden_needs_r0')\n\n    @pytest.mark.parametrize('args,fragment', [\n        (['regex', 'a'], '<REPLACEMENT>'),\n        (['regex', 'a', 'b'], '<PATH(S)>'),\n        (['to-ascii'], 'Replace file name UTF-8 chars'),\n        (['regex', 'a', 'b', 'x', '--unknown'], \"unexpected argument '--unknown'\"),\n        (['regex', 'a', 'b', 'x', '--color', 'bogus'], \"invalid value 'bogus'\"),\n        (['regex', 'a', 'b', 'x', '--color', 'never', '--color', 'auto'], 'cannot be used multiple times'),\n        (['regex', 'a', 'b', 'x', '-nf'], \"'--dry-run' cannot be used with '--force'\"),\n        (['regex', 'a', 'b', 'x', '--dump', '--no-dump'], \"'--dump' cannot be used with '--no-dump'\"),\n        (['--color', 'never', 'regex', '--help'], \"unexpected argument '--color'\"),\n        (['regex', 'a', 'b', 'x', '--hidden'], \"requires '--recursive'\"),\n    ], ids=['missing-replacement', 'missing-path', 'ascii-no-path', 'unknown-option', 'bad-color', 'repeat-color', 'mode-conflict', 'dump-conflict', 'pre-command-option', 'hidden-needs-recursive'])\n    def test_cli_errors(args, fragment, work):\n        p = run(args, work)\n>       assert p.returncode == 2 and p.stdout == '' and fragment in p.stderr\nE       assert (2 == 2 and '' == '' and \"requires '--recursive'\" in \"error: the following required arguments were not provided:\\n  --recursive\\n\\nUsage: executable regex --recursive --hidden <EXPRESSION> <REPLACEMENT> <PATH(S)>...\\n\\nFor more information, try '--help'.\\n\")\nE        +  where 2 = CompletedProcess(args=['/workspace/executable', 'regex', 'a', 'b', 'x', '--hidden'], returncode=2, stdout='', stderr=\"...xecutable regex --recursive --hidden <EXPRESSION> <REPLACEMENT> <PATH(S)>...\\n\\nFor more information, try '--help'.\\n\").returncode\nE        +  and   '' = CompletedProcess(args=['/workspace/executable', 'regex', 'a', 'b', 'x', '--hidden'], returncode=2, stdout='', stderr=\"...xecutable regex --recursive --hidden <EXPRESSION> <REPLACEMENT> <PATH(S)>...\\n\\nFor more information, try '--help'.\\n\").stdout\nE        +  and   \"error: the following required arguments were not provided:\\n  --recursive\\n\\nUsage: executable regex --recursive --hidden <EXPRESSION> <REPLACEMENT> <PATH(S)>...\\n\\nFor more information, try '--help'.\\n\" = CompletedProcess(args=['/workspace/executable', 'regex', 'a', 'b', 'x', '--hidden'], returncode=2, stdout='', stderr=\"...xecutable regex --recursive --hidden <EXPRESSION> <REPLACEMENT> <PATH(S)>...\\n\\nFor more information, try '--help'.\\n\").stderr\n\ntest_cli.py:77: AssertionError"
+      }
+    },
+    {
+      "name": "test_cli.test_default_preview_and_no_match",
+      "branch": "generated",
+      "status": "passed",
+      "extra": {
+        "time": 0.011
+      }
+    },
+    {
+      "name": "test_cli.test_regex_replacement_limit[default-limit]",
+      "branch": "generated",
+      "status": "passed",
+      "extra": {
+        "time": 0.006
+      }
+    },
+    {
+      "name": "test_cli.test_regex_replacement_limit[limit-two]",
+      "branch": "generated",
+      "status": "passed",
+      "extra": {
+        "time": 0.007
+      }
+    },
+    {
+      "name": "test_cli.test_regex_replacement_limit[unlimited]",
+      "branch": "generated",
+      "status": "passed",
+      "extra": {
+        "time": 0.007
+      }
+    },
+    {
+      "name": "test_cli.test_regex_captures_and_transform",
+      "branch": "generated",
+      "status": "passed",
+      "extra": {
+        "time": 0.015
+      }
+    },
+    {
+      "name": "test_cli.test_ascii_examples[accent]",
+      "branch": "generated",
+      "status": "passed",
+      "extra": {
+        "time": 0.008
+      }
+    },
+    {
+      "name": "test_cli.test_ascii_examples[multi-accent]",
+      "branch": "generated",
+      "status": "passed",
+      "extra": {
+        "time": 0.006
+      }
+    },
+    {
+      "name": "test_cli.test_ascii_examples[german-sharp-s]",
+      "branch": "generated",
+      "status": "passed",
+      "extra": {
+        "time": 0.007
+      }
+    },
+    {
+      "name": "test_cli.test_ascii_examples[thorn]",
+      "branch": "generated",
+      "status": "passed",
+      "extra": {
+        "time": 0.007
+      }
+    },
+    {
+      "name": "test_cli.test_ascii_examples[ligature]",
+      "branch": "generated",
+      "status": "passed",
+      "extra": {
+        "time": 0.006
+      }
+    },
+    {
+      "name": "test_cli.test_ascii_examples[cyrillic]",
+      "branch": "generated",
+      "status": "passed",
+      "extra": {
+        "time": 0.105
+      }
+    },
+    {
+      "name": "test_cli.test_ascii_examples[japanese]",
+      "branch": "generated",
+      "status": "passed",
+      "extra": {
+        "time": 0.009
+      }
+    },
+    {
+      "name": "test_cli.test_ascii_examples[korean]",
+      "branch": "generated",
+      "status": "passed",
+      "extra": {
+        "time": 0.009
+      }
+    },
+    {
+      "name": "test_cli.test_ascii_examples[greek]",
+      "branch": "generated",
+      "status": "passed",
+      "extra": {
+        "time": 0.007
+      }
+    },
+    {
+      "name": "test_cli.test_ascii_examples[arabic]",
+      "branch": "generated",
+      "status": "passed",
+      "extra": {
+        "time": 0.008
+      }
+    },
+    {
+      "name": "test_cli.test_ascii_examples[emoji]",
+      "branch": "generated",
+      "status": "passed",
+      "extra": {
+        "time": 0.008
+      }
+    },
+    {
+      "name": "test_cli.test_ascii_examples[slash-like]",
+      "branch": "generated",
+      "status": "passed",
+      "extra": {
+        "time": 0.007
+      }
+    },
+    {
+      "name": "test_cli.test_force_backup_and_no_dump",
+      "branch": "generated",
+      "status": "passed",
+      "extra": {
+        "time": 0.005
+      }
+    },
+    {
+      "name": "test_cli.test_recursive_hidden_depth_and_dirs",
+      "branch": "generated",
+      "status": "failure",
+      "extra": {
+        "time": 0.011,
+        "message": "AssertionError: assert '.secret.txt -> .secret.doc' in 'This is a DRY-RUN\\nroot/inner/b.txt -> root/inner/b.doc\\nroot/a.txt -> root/a.doc\\nroot/.secret.txt -> root/.secret.doc\\n'\n +  where 'This is a DRY-RUN\\nroot/inner/b.txt -> root/inner/b.doc\\nroot/a.txt -> root/a.doc\\nroot/.secret.txt -> root/.secret.doc\\n' = CompletedProcess(args=['/workspace/executable', 'regex', '-r', '-x', 'txt', 'doc', 'root'], returncode=0, stdout='This...UN\\nroot/inner/b.txt -> root/inner/b.doc\\nroot/a.txt -> root/a.doc\\nroot/.secret.txt -> root/.secret.doc\\n', stderr='').stdout",
+        "text": "work = PosixPath('/workspace/eval/.pytest-tmp/test_recursive_hidden_depth_an0')\n\n    def test_recursive_hidden_depth_and_dirs(work):\n        (work / 'root').mkdir(); (work / 'root' / 'inner').mkdir()\n        (work / 'root' / 'a.txt').touch(); (work / 'root' / 'inner' / 'b.txt').touch()\n        (work / 'root' / '.secret.txt').touch()\n        p = run(['regex', '-r', '-d', '1', 'txt', 'doc', 'root'], work)\n        assert 'root/a.txt -> root/a.doc' in p.stdout\n        assert 'b.txt' not in p.stdout and '.secret' not in p.stdout\n        q = run(['regex', '-r', '-x', 'txt', 'doc', 'root'], work)\n>       assert '.secret.txt -> .secret.doc' in q.stdout\nE       AssertionError: assert '.secret.txt -> .secret.doc' in 'This is a DRY-RUN\\nroot/inner/b.txt -> root/inner/b.doc\\nroot/a.txt -> root/a.doc\\nroot/.secret.txt -> root/.secret.doc\\n'\nE        +  where 'This is a DRY-RUN\\nroot/inner/b.txt -> root/inner/b.doc\\nroot/a.txt -> root/a.doc\\nroot/.secret.txt -> root/.secret.doc\\n' = CompletedProcess(args=['/workspace/executable', 'regex', '-r', '-x', 'txt', 'doc', 'root'], returncode=0, stdout='This...UN\\nroot/inner/b.txt -> root/inner/b.doc\\nroot/a.txt -> root/a.doc\\nroot/.secret.txt -> root/.secret.doc\\n', stderr='').stdout\n\ntest_cli.py:139: AssertionError"
+      }
+    },
+    {
+      "name": "test_cli.test_symlink_and_lexical_alias_dedup",
+      "branch": "generated",
+      "status": "passed",
+      "extra": {
+        "time": 0.01
+      }
+    },
+    {
+      "name": "test_cli.test_collisions_and_occupied_target",
+      "branch": "generated",
+      "status": "passed",
+      "extra": {
+        "time": 0.01
+      }
+    },
+    {
+      "name": "test_cli.test_chain_order_execution",
+      "branch": "generated",
+      "status": "passed",
+      "extra": {
+        "time": 0.007
+      }
+    },
+    {
+      "name": "test_cli.test_from_file_preview_force_undo_and_validation",
+      "branch": "generated",
+      "status": "passed",
+      "extra": {
+        "time": 0.033
+      }
+    },
+    {
+      "name": "test_cli.test_dump_json_schema_and_preview_dump",
+      "branch": "generated",
+      "status": "passed",
+      "extra": {
+        "time": 0.01
+      }
+    },
+    {
+      "name": "test_cli.test_dump_failure_order_and_silence",
+      "branch": "generated",
+      "status": "passed",
+      "extra": {
+        "time": 0.011
+      }
+    },
+    {
+      "name": "test_cli.test_replay_errors_and_missing_source",
+      "branch": "generated",
+      "status": "passed",
+      "extra": {
+        "time": 0.011
+      }
+    },
+    {
+      "name": "test_cli.test_color_always_preview",
+      "branch": "generated",
+      "status": "passed",
+      "extra": {
+        "time": 0.007
+      }
+    },
+    {
+      "name": "test_cli.test_bad_regex_even_silent[backreference]",
+      "branch": "generated",
+      "status": "passed",
+      "extra": {
+        "time": 0.007
+      }
+    },
+    {
+      "name": "test_cli.test_bad_regex_even_silent[lookaround]",
+      "branch": "generated",
+      "status": "passed",
+      "extra": {
+        "time": 0.007
+      }
+    },
+    {
+      "name": "test_cli.test_bad_regex_even_silent[malformed-class]",
+      "branch": "generated",
+      "status": "passed",
+      "extra": {
+        "time": 0.008
+      }
+    }
+  ],
+  "mutant_tests": [
+    {
+      "name": "test_cli.test_global_help_and_version",
+      "branch": "generated",
+      "status": "failure",
+      "extra": {
+        "time": 0.006,
+        "message": "AssertionError: assert False\n +  where False = <built-in method startswith of str object at 0x58949e8ef8e0>('RnR is a command-line tool to rename multiple files and directories that\\nsupports regular expressions\\n\\nUsage: executable <COMMAND>\\n')\n +    where <built-in method startswith of str object at 0x58949e8ef8e0> = 'RnR is a command-line tool to rename multiple files and directories that\\nsupports regular expressions\\n\\n\\nUsage: ex...sage or the help of the given subcommand(s)\\n\\nOptions:\\n  -h, --help     Print help\\n  -V, --version  Print version\\n'.startswith\n +      where 'RnR is a command-line tool to rename multiple files and directories that\\nsupports regular expressions\\n\\n\\nUsage: ex...sage or the help of the given subcommand(s)\\n\\nOptions:\\n  -h, --help     Print help\\n  -V, --version  Print version\\n' = CompletedProcess(args=['/workspace/executable', '--help'], returncode=0, stdout='RnR is a command-line tool to rename ...help of the given subcommand(s)\\n\\nOptions:\\n  -h, --help     Print help\\n  -V, --version  Print version\\n', stderr='').stdout",
+        "text": "work = PosixPath('/workspace/eval/.pytest-tmp/test_global_help_and_version0')\n\n    def test_global_help_and_version(work):\n        p = run(['--help'], work)\n        assert p.returncode == 0 and p.stderr == ''\n>       assert p.stdout.startswith('RnR is a command-line tool to rename multiple files and directories that\\nsupports regular expressions\\n\\nUsage: executable <COMMAND>\\n')\nE       AssertionError: assert False\nE        +  where False = <built-in method startswith of str object at 0x58949e8ef8e0>('RnR is a command-line tool to rename multiple files and directories that\\nsupports regular expressions\\n\\nUsage: executable <COMMAND>\\n')\nE        +    where <built-in method startswith of str object at 0x58949e8ef8e0> = 'RnR is a command-line tool to rename multiple files and directories that\\nsupports regular expressions\\n\\n\\nUsage: ex...sage or the help of the given subcommand(s)\\n\\nOptions:\\n  -h, --help     Print help\\n  -V, --version  Print version\\n'.startswith\nE        +      where 'RnR is a command-line tool to rename multiple files and directories that\\nsupports regular expressions\\n\\n\\nUsage: ex...sage or the help of the given subcommand(s)\\n\\nOptions:\\n  -h, --help     Print help\\n  -V, --version  Print version\\n' = CompletedProcess(args=['/workspace/executable', '--help'], returncode=0, stdout='RnR is a command-line tool to rename ...help of the given subcommand(s)\\n\\nOptions:\\n  -h, --help     Print help\\n  -V, --version  Print version\\n', stderr='').stdout\n\ntest_cli.py:31: AssertionError"
+      }
+    },
+    {
+      "name": "test_cli.test_command_help[regex-help]",
+      "branch": "generated",
+      "status": "passed",
+      "extra": {
+        "time": 0.008
+      }
+    },
+    {
+      "name": "test_cli.test_command_help[replay-help]",
+      "branch": "generated",
+      "status": "passed",
+      "extra": {
+        "time": 0.009
+      }
+    },
+    {
+      "name": "test_cli.test_command_help[ascii-help]",
+      "branch": "generated",
+      "status": "passed",
+      "extra": {
+        "time": 0.009
+      }
+    },
+    {
+      "name": "test_cli.test_missing_and_unknown_commands",
+      "branch": "generated",
+      "status": "passed",
+      "extra": {
+        "time": 0.011
+      }
+    },
+    {
+      "name": "test_cli.test_cli_errors[missing-replacement]",
+      "branch": "generated",
+      "status": "passed",
+      "extra": {
+        "time": 0.006
+      }
+    },
+    {
+      "name": "test_cli.test_cli_errors[missing-path]",
+      "branch": "generated",
+      "status": "passed",
+      "extra": {
+        "time": 0.005
+      }
+    },
+    {
+      "name": "test_cli.test_cli_errors[ascii-no-path]",
+      "branch": "generated",
+      "status": "passed",
+      "extra": {
+        "time": 0.006
+      }
+    },
+    {
+      "name": "test_cli.test_cli_errors[unknown-option]",
+      "branch": "generated",
+      "status": "passed",
+      "extra": {
+        "time": 0.005
+      }
+    },
+    {
+      "name": "test_cli.test_cli_errors[bad-color]",
+      "branch": "generated",
+      "status": "passed",
+      "extra": {
+        "time": 0.005
+      }
+    },
+    {
+      "name": "test_cli.test_cli_errors[repeat-color]",
+      "branch": "generated",
+      "status": "passed",
+      "extra": {
+        "time": 0.006
+      }
+    },
+    {
+      "name": "test_cli.test_cli_errors[mode-conflict]",
+      "branch": "generated",
+      "status": "passed",
+      "extra": {
+        "time": 0.005
+      }
+    },
+    {
+      "name": "test_cli.test_cli_errors[dump-conflict]",
+      "branch": "generated",
+      "status": "passed",
+      "extra": {
+        "time": 0.005
+      }
+    },
+    {
+      "name": "test_cli.test_cli_errors[pre-command-option]",
+      "branch": "generated",
+      "status": "passed",
+      "extra": {
+        "time": 0.004
+      }
+    },
+    {
+      "name": "test_cli.test_cli_errors[hidden-needs-recursive]",
+      "branch": "generated",
+      "status": "failure",
+      "extra": {
+        "time": 0.005,
+        "message": "assert (2 == 2 and '' == '' and \"requires '--recursive'\" in \"error: the following required arguments were not provided:\\n  --recursive\\n\\nUsage: executable regex --recursive --hidden <EXPRESSION> <REPLACEMENT> <PATH(S)>...\\n\\nFor more information, try '--help'.\\n\")\n +  where 2 = CompletedProcess(args=['/workspace/executable', 'regex', 'a', 'b', 'x', '--hidden'], returncode=2, stdout='', stderr=\"...xecutable regex --recursive --hidden <EXPRESSION> <REPLACEMENT> <PATH(S)>...\\n\\nFor more information, try '--help'.\\n\").returncode\n +  and   '' = CompletedProcess(args=['/workspace/executable', 'regex', 'a', 'b', 'x', '--hidden'], returncode=2, stdout='', stderr=\"...xecutable regex --recursive --hidden <EXPRESSION> <REPLACEMENT> <PATH(S)>...\\n\\nFor more information, try '--help'.\\n\").stdout\n +  and   \"error: the following required arguments were not provided:\\n  --recursive\\n\\nUsage: executable regex --recursive --hidden <EXPRESSION> <REPLACEMENT> <PATH(S)>...\\n\\nFor more information, try '--help'.\\n\" = CompletedProcess(args=['/workspace/executable', 'regex', 'a', 'b', 'x', '--hidden'], returncode=2, stdout='', stderr=\"...xecutable regex --recursive --hidden <EXPRESSION> <REPLACEMENT> <PATH(S)>...\\n\\nFor more information, try '--help'.\\n\").stderr",
+        "text": "args = ['regex', 'a', 'b', 'x', '--hidden'], fragment = \"requires '--recursive'\"\nwork = PosixPath('/workspace/eval/.pytest-tmp/test_cli_errors_hidden_needs_r0')\n\n    @pytest.mark.parametrize('args,fragment', [\n        (['regex', 'a'], '<REPLACEMENT>'),\n        (['regex', 'a', 'b'], '<PATH(S)>'),\n        (['to-ascii'], 'Replace file name UTF-8 chars'),\n        (['regex', 'a', 'b', 'x', '--unknown'], \"unexpected argument '--unknown'\"),\n        (['regex', 'a', 'b', 'x', '--color', 'bogus'], \"invalid value 'bogus'\"),\n        (['regex', 'a', 'b', 'x', '--color', 'never', '--color', 'auto'], 'cannot be used multiple times'),\n        (['regex', 'a', 'b', 'x', '-nf'], \"'--dry-run' cannot be used with '--force'\"),\n        (['regex', 'a', 'b', 'x', '--dump', '--no-dump'], \"'--dump' cannot be used with '--no-dump'\"),\n        (['--color', 'never', 'regex', '--help'], \"unexpected argument '--color'\"),\n        (['regex', 'a', 'b', 'x', '--hidden'], \"requires '--recursive'\"),\n    ], ids=['missing-replacement', 'missing-path', 'ascii-no-path', 'unknown-option', 'bad-color', 'repeat-color', 'mode-conflict', 'dump-conflict', 'pre-command-option', 'hidden-needs-recursive'])\n    def test_cli_errors(args, fragment, work):\n        p = run(args, work)\n>       assert p.returncode == 2 and p.stdout == '' and fragment in p.stderr\nE       assert (2 == 2 and '' == '' and \"requires '--recursive'\" in \"error: the following required arguments were not provided:\\n  --recursive\\n\\nUsage: executable regex --recursive --hidden <EXPRESSION> <REPLACEMENT> <PATH(S)>...\\n\\nFor more information, try '--help'.\\n\")\nE        +  where 2 = CompletedProcess(args=['/workspace/executable', 'regex', 'a', 'b', 'x', '--hidden'], returncode=2, stdout='', stderr=\"...xecutable regex --recursive --hidden <EXPRESSION> <REPLACEMENT> <PATH(S)>...\\n\\nFor more information, try '--help'.\\n\").returncode\nE        +  and   '' = CompletedProcess(args=['/workspace/executable', 'regex', 'a', 'b', 'x', '--hidden'], returncode=2, stdout='', stderr=\"...xecutable regex --recursive --hidden <EXPRESSION> <REPLACEMENT> <PATH(S)>...\\n\\nFor more information, try '--help'.\\n\").stdout\nE        +  and   \"error: the following required arguments were not provided:\\n  --recursive\\n\\nUsage: executable regex --recursive --hidden <EXPRESSION> <REPLACEMENT> <PATH(S)>...\\n\\nFor more information, try '--help'.\\n\" = CompletedProcess(args=['/workspace/executable', 'regex', 'a', 'b', 'x', '--hidden'], returncode=2, stdout='', stderr=\"...xecutable regex --recursive --hidden <EXPRESSION> <REPLACEMENT> <PATH(S)>...\\n\\nFor more information, try '--help'.\\n\").stderr\n\ntest_cli.py:77: AssertionError"
+      }
+    },
+    {
+      "name": "test_cli.test_default_preview_and_no_match",
+      "branch": "generated",
+      "status": "passed",
+      "extra": {
+        "time": 0.011
+      }
+    },
+    {
+      "name": "test_cli.test_regex_replacement_limit[default-limit]",
+      "branch": "generated",
+      "status": "passed",
+      "extra": {
+        "time": 0.007
+      }
+    },
+    {
+      "name": "test_cli.test_regex_replacement_limit[limit-two]",
+      "branch": "generated",
+      "status": "passed",
+      "extra": {
+        "time": 0.006
+      }
+    },
+    {
+      "name": "test_cli.test_regex_replacement_limit[unlimited]",
+      "branch": "generated",
+      "status": "passed",
+      "extra": {
+        "time": 0.006
+      }
+    },
+    {
+      "name": "test_cli.test_regex_captures_and_transform",
+      "branch": "generated",
+      "status": "passed",
+      "extra": {
+        "time": 0.013
+      }
+    },
+    {
+      "name": "test_cli.test_ascii_examples[accent]",
+      "branch": "generated",
+      "status": "passed",
+      "extra": {
+        "time": 0.006
+      }
+    },
+    {
+      "name": "test_cli.test_ascii_examples[multi-accent]",
+      "branch": "generated",
+      "status": "passed",
+      "extra": {
+        "time": 0.005
+      }
+    },
+    {
+      "name": "test_cli.test_ascii_examples[german-sharp-s]",
+      "branch": "generated",
+      "status": "passed",
+      "extra": {
+        "time": 0.005
+      }
+    },
+    {
+      "name": "test_cli.test_ascii_examples[thorn]",
+      "branch": "generated",
+      "status": "passed",
+      "extra": {
+        "time": 0.007
+      }
+    },
+    {
+      "name": "test_cli.test_ascii_examples[ligature]",
+      "branch": "generated",
+      "status": "passed",
+      "extra": {
+        "time": 0.007
+      }
+    },
+    {
+      "name": "test_cli.test_ascii_examples[cyrillic]",
+      "branch": "generated",
+      "status": "passed",
+      "extra": {
+        "time": 0.007
+      }
+    },
+    {
+      "name": "test_cli.test_ascii_examples[japanese]",
+      "branch": "generated",
+      "status": "passed",
+      "extra": {
+        "time": 0.007
+      }
+    },
+    {
+      "name": "test_cli.test_ascii_examples[korean]",
+      "branch": "generated",
+      "status": "passed",
+      "extra": {
+        "time": 0.006
+      }
+    },
+    {
+      "name": "test_cli.test_ascii_examples[greek]",
+      "branch": "generated",
+      "status": "passed",
+      "extra": {
+        "time": 0.005
+      }
+    },
+    {
+      "name": "test_cli.test_ascii_examples[arabic]",
+      "branch": "generated",
+      "status": "passed",
+      "extra": {
+        "time": 0.006
+      }
+    },
+    {
+      "name": "test_cli.test_ascii_examples[emoji]",
+      "branch": "generated",
+      "status": "passed",
+      "extra": {
+        "time": 0.005
+      }
+    },
+    {
+      "name": "test_cli.test_ascii_examples[slash-like]",
+      "branch": "generated",
+      "status": "passed",
+      "extra": {
+        "time": 0.006
+      }
+    },
+    {
+      "name": "test_cli.test_force_backup_and_no_dump",
+      "branch": "generated",
+      "status": "passed",
+      "extra": {
+        "time": 0.005
+      }
+    },
+    {
+      "name": "test_cli.test_recursive_hidden_depth_and_dirs",
+      "branch": "generated",
+      "status": "failure",
+      "extra": {
+        "time": 0.012,
+        "message": "AssertionError: assert '.secret.txt -> .secret.doc' in 'This is a DRY-RUN\\nroot/inner/b.txt -> root/inner/b.doc\\nroot/a.txt -> root/a.doc\\nroot/.secret.txt -> root/.secret.doc\\n'\n +  where 'This is a DRY-RUN\\nroot/inner/b.txt -> root/inner/b.doc\\nroot/a.txt -> root/a.doc\\nroot/.secret.txt -> root/.secret.doc\\n' = CompletedProcess(args=['/workspace/executable', 'regex', '-r', '-x', 'txt', 'doc', 'root'], returncode=0, stdout='This...UN\\nroot/inner/b.txt -> root/inner/b.doc\\nroot/a.txt -> root/a.doc\\nroot/.secret.txt -> root/.secret.doc\\n', stderr='').stdout",
+        "text": "work = PosixPath('/workspace/eval/.pytest-tmp/test_recursive_hidden_depth_an0')\n\n    def test_recursive_hidden_depth_and_dirs(work):\n        (work / 'root').mkdir(); (work / 'root' / 'inner').mkdir()\n        (work / 'root' / 'a.txt').touch(); (work / 'root' / 'inner' / 'b.txt').touch()\n        (work / 'root' / '.secret.txt').touch()\n        p = run(['regex', '-r', '-d', '1', 'txt', 'doc', 'root'], work)\n        assert 'root/a.txt -> root/a.doc' in p.stdout\n        assert 'b.txt' not in p.stdout and '.secret' not in p.stdout\n        q = run(['regex', '-r', '-x', 'txt', 'doc', 'root'], work)\n>       assert '.secret.txt -> .secret.doc' in q.stdout\nE       AssertionError: assert '.secret.txt -> .secret.doc' in 'This is a DRY-RUN\\nroot/inner/b.txt -> root/inner/b.doc\\nroot/a.txt -> root/a.doc\\nroot/.secret.txt -> root/.secret.doc\\n'\nE        +  where 'This is a DRY-RUN\\nroot/inner/b.txt -> root/inner/b.doc\\nroot/a.txt -> root/a.doc\\nroot/.secret.txt -> root/.secret.doc\\n' = CompletedProcess(args=['/workspace/executable', 'regex', '-r', '-x', 'txt', 'doc', 'root'], returncode=0, stdout='This...UN\\nroot/inner/b.txt -> root/inner/b.doc\\nroot/a.txt -> root/a.doc\\nroot/.secret.txt -> root/.secret.doc\\n', stderr='').stdout\n\ntest_cli.py:139: AssertionError"
+      }
+    },
+    {
+      "name": "test_cli.test_symlink_and_lexical_alias_dedup",
+      "branch": "generated",
+      "status": "passed",
+      "extra": {
+        "time": 0.011
+      }
+    },
+    {
+      "name": "test_cli.test_collisions_and_occupied_target",
+      "branch": "generated",
+      "status": "passed",
+      "extra": {
+        "time": 0.011
+      }
+    },
+    {
+      "name": "test_cli.test_chain_order_execution",
+      "branch": "generated",
+      "status": "passed",
+      "extra": {
+        "time": 0.008
+      }
+    },
+    {
+      "name": "test_cli.test_from_file_preview_force_undo_and_validation",
+      "branch": "generated",
+      "status": "passed",
+      "extra": {
+        "time": 0.026
+      }
+    },
+    {
+      "name": "test_cli.test_dump_json_schema_and_preview_dump",
+      "branch": "generated",
+      "status": "passed",
+      "extra": {
+        "time": 0.008
+      }
+    },
+    {
+      "name": "test_cli.test_dump_failure_order_and_silence",
+      "branch": "generated",
+      "status": "passed",
+      "extra": {
+        "time": 0.009
+      }
+    },
+    {
+      "name": "test_cli.test_replay_errors_and_missing_source",
+      "branch": "generated",
+      "status": "passed",
+      "extra": {
+        "time": 0.01
+      }
+    },
+    {
+      "name": "test_cli.test_color_always_preview",
+      "branch": "generated",
+      "status": "passed",
+      "extra": {
+        "time": 0.008
+      }
+    },
+    {
+      "name": "test_cli.test_bad_regex_even_silent[backreference]",
+      "branch": "generated",
+      "status": "passed",
+      "extra": {
+        "time": 0.006
+      }
+    },
+    {
+      "name": "test_cli.test_bad_regex_even_silent[lookaround]",
+      "branch": "generated",
+      "status": "passed",
+      "extra": {
+        "time": 0.006
+      }
+    },
+    {
+      "name": "test_cli.test_bad_regex_even_silent[malformed-class]",
+      "branch": "generated",
+      "status": "passed",
+      "extra": {
+        "time": 0.007
+      }
+    }
+  ],
+  "valid_test_failures": [],
+  "source_directory": "reports/business-behavior-gap-20261116/cases/03"
+}
