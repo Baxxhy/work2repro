@@ -1,0 +1,116 @@
+{
+  "item_id": "prestashop/tests/Integration/Behaviour/Features/Scenario/Discount/FO/discount_with_restricted_products.feature:15",
+  "outcome": "failed",
+  "outcomes_all_runs": [
+    "failed"
+  ],
+  "per_step": [
+    {
+      "error": null,
+      "result": "passed",
+      "seconds": 0.0682,
+      "text": "there is a customer named \"testCustomer\" whose email is \"pub2@prestashop.com\""
+    },
+    {
+      "error": null,
+      "result": "passed",
+      "seconds": 0.0121,
+      "text": "language with iso code \"en\" is the default one"
+    },
+    {
+      "error": "Property Language->language_code is not valid",
+      "result": "failed",
+      "seconds": 1.3499,
+      "text": "language \"french\" with locale \"fr-FR\" exists"
+    }
+  ],
+  "index_errors": {},
+  "stdout_tail": "wing information:\n      | delta_quantity | 123 |\n    And I enable product \"nuggets_bucket_product\"\n    And I update product \"nuggets_bucket_product\" with following values:\n      | price | 12.00 |\n    When I create a \"free_shipping\" discount \"free_shipping_discount_with_restricted_products\" with following properties:\n      | name[en-US]                | Trois bières et/ou chips equal free shipping |\n      | name[fr-FR]                | Trois bière et/ou chips donne envoi gratuit  |\n      | active                     | true                                         |\n      | valid_from                 | 2025-01-01 11:05:00                          |\n      | valid_to                   | 2026-12-01 00:00:00                          |\n      | code                       | FREE_SHIPPING_THREE_PRODUCTS                 |\n      | productConditionQuantity   | 3                                            |\n      | productCondition[products] | beer_product, potato_chips_product           |\n    Then discount \"free_shipping_discount_with_restricted_products\" should have the following properties:\n      | name[en-US]                | Trois bières et/ou chips equal free shipping |\n      | name[fr-FR]                | Trois bière et/ou chips donne envoi gratuit  |\n      | active                     | true                                         |\n      | valid_from                 | 2025-01-01 11:05:00                          |\n      | valid_to                   | 2026-12-01 00:00:00                          |\n      | code                       | FREE_SHIPPING_THREE_PRODUCTS                 |\n      | minimum_product_quantity   | 0                                            |\n      | productConditionQuantity   | 3                                            |\n      | productCondition[products] | beer_product, potato_chips_product           |\n\n--- Failed scenarios:\n\n    _bench/item.feature:14 (on line 8)\n\n1 scenario (1 failed)\n19 steps (2 passed, 1 failed, 16 skipped)\n2m31.95s (203.75Mb)\n",
+  "bench_meta": {
+    "dependency_profile": [
+      "database"
+    ],
+    "live_background_step_count": 5,
+    "live_step_count": 14,
+    "n_closure_contexts": 10,
+    "n_closure_files": 10,
+    "n_oracle_steps": 1,
+    "round_trip_seconds": 142.32,
+    "signature": "44869752ca3e",
+    "steps_removable": 19,
+    "steps_retained": 0,
+    "tags": [
+      "@restore-all-tables-before-feature",
+      "@discount-condition-restricted-products"
+    ],
+    "upstream_selected": null
+  },
+  "written_files": [
+    "tests/Integration/Behaviour/Features/Context/Discount/RestrictedProductsDiscountContext.php"
+  ],
+  "_source": "/root/lby-docker/req2test/user/benchmark/runs/req2test-recovery8-20261113-v1-prestashop/prestashop/th/exec.jsonl",
+  "requirement": {
+    "feature": {
+      "background": "  Background:\n    Given there is a customer named \"testCustomer\" whose email is \"pub2@prestashop.com\"\n    Given language with iso code \"en\" is the default one\n    And language \"french\" with locale \"fr-FR\" exists\n    Given shop \"shop1\" with name \"test_shop\" exists\n    And there is a currency named \"usd\" with iso code \"USD\" and exchange rate of 0.92",
+      "file_path": "tests/Integration/Behaviour/Features/Scenario/Discount/FO/discount_with_restricted_products.feature",
+      "narrative": "  PrestaShop allows discounts with restricted products as the condition",
+      "title": "Full UX discount test"
+    },
+    "scenario": {
+      "gherkin": "  Scenario: First create products and the discount that will be used in following scenarios\n    Given I add product \"beer_product\" with following information:\n      | name[en-US] | bottle of beer     |\n      | name[fr-FR] | bouteille de bière |\n      | type        | standard           |\n    And I update product \"beer_product\" stock with following information:\n      | delta_quantity | 51 |\n    And I enable product \"beer_product\"\n    And I update product \"beer_product\" with following values:\n      | price | 20.00 |\n    And I add product \"potato_chips_product\" with following information:\n      | name[en-US] | potato chips |\n      | name[fr-FR] | chips        |\n      | type        | standard     |\n    And I update product \"potato_chips_product\" stock with following information:\n      | delta_quantity | 123 |\n    And I enable product \"potato_chips_product\"\n    And I update product \"potato_chips_product\" with following values:\n      | price | 5.00 |\n    # This one is not part of the condition it is used to ensure the condition only works with matching products\n    And I add product \"nuggets_bucket_product\" with following information:\n      | name[en-US] | nuggets bucket |\n      | name[fr-FR] | sot de nuggets |\n      | type        | standard       |\n    And I update product \"nuggets_bucket_product\" stock with following information:\n      | delta_quantity | 123 |\n    And I enable product \"nuggets_bucket_product\"\n    And I update product \"nuggets_bucket_product\" with following values:\n      | price | 12.00 |\n    # Now create the discount\n    When I create a \"free_shipping\" discount \"free_shipping_discount_with_restricted_products\" with following properties:\n      | name[en-US]                | Trois bières et/ou chips equal free shipping |\n      | name[fr-FR]                | Trois bière et/ou chips donne envoi gratuit  |\n      | active                     | true                                         |\n      | valid_from                 | 2025-01-01 11:05:00                          |\n      | valid_to                   | 2026-12-01 00:00:00                          |\n      | code                       | FREE_SHIPPING_THREE_PRODUCTS                 |\n      | productConditionQuantity   | 3                                            |\n      | productCondition[products] | beer_product, potato_chips_product           |\n    Then discount \"free_shipping_discount_with_restricted_products\" should have the following properties:\n      | name[en-US]              | Trois bières et/ou chips equal free shipping |\n      | name[fr-FR]              | Trois bière et/ou chips donne envoi gratuit  |\n      | active                   | true                                         |\n      | valid_from               | 2025-01-01 11:05:00                          |\n      | valid_to                 | 2026-12-01 00:00:00                          |\n      | code                       | FREE_SHIPPING_THREE_PRODUCTS       |\n      | minimum_product_quantity   | 0                                  |\n      | productConditionQuantity   | 3                                  |\n      | productCondition[products] | beer_product, potato_chips_product |",
+      "kind": "scenario",
+      "line": 15,
+      "tags": [
+        "@restore-all-tables-before-feature",
+        "@discount-condition-restricted-products"
+      ],
+      "title": "First create products and the discount that will be used in following scenarios"
+    }
+  },
+  "official_result": {
+    "instance_id": "prestashop/tests/Integration/Behaviour/Features/Scenario/Discount/FO/discount_with_restricted_products.feature:15",
+    "project": "prestashop",
+    "view": "th",
+    "outcome": "assertion_failure",
+    "passed": false,
+    "api_f1": null,
+    "coverage_j": null,
+    "recall": null,
+    "kill_complete": false,
+    "kill_complete_strict": false,
+    "kill_complete_95": false,
+    "mutation_status": "not_passed",
+    "mutation_baseline": null,
+    "behaviour_status": "measured",
+    "n_gt_kills": 23,
+    "n_scored": 0,
+    "n_killed": 0,
+    "n_dropped": 0,
+    "n_crash_kills": 0,
+    "n_timeout_kills": 0,
+    "exclusion": null,
+    "engine_outcome": "failed",
+    "harness_version": 27,
+    "rejected_files": []
+  },
+  "population_exclusion": null,
+  "generated_files": [
+    {
+      "path": "tests/Integration/Behaviour/Features/Context/Discount/RestrictedProductsDiscountContext.php",
+      "sha256": "2ed3d17a89f7e5821ae3e5294671fa5e08ba27d80d1402722b28ea2c77862b29"
+    }
+  ],
+  "final_agent_message": "Added [RestrictedProductsDiscountContext.php](/root/lby-docker/req2test/user/runs/req2test-subset160-20261112-v1/generation/60c29d9f12be66c08a15/attempt-2/workspaces/0000/repo/tests/Integration/Behaviour/Features/Context/Discount/RestrictedProductsDiscountContext.php) with step definitions for the scenario’s background, product setup, discount creation, and property checks.\n\nI couldn’t run the scenario here, so the code remains unverified against the harness.",
+  "denied_commands": [
+    {
+      "id": "item_1",
+      "type": "command_execution",
+      "command": "/usr/bin/bash -lc 'ls repo/tests/Integration/Behaviour/Features/Context; rg -n \"add product|discount .*properties|currency named|language with iso|customer named|shop .*exists\" repo/tests/Integration/Behaviour/Features/Context repo/tests/Integration/Behaviour/Features/Transform'",
+      "aggregated_output": "AbstractPrestaShopFeatureContext.php\nCartAwareTrait.php\nCommonFeatureContext.php\nConfiguration\nContextFeatureContext.php\nDomain\nLastExceptionTrait.php\nOrderMessageContext.php\nSharedStorage.php\nSharedStorageTrait.php\nUtil\n/usr/bin/bash: line 1: /usr/bin/rg: Permission denied\n",
+      "exit_code": 126,
+      "status": "failed"
+    }
+  ],
+  "diagnostic_addendum": null,
+  "trace_path": "results/test-generation-20261114/req2test/tasks/60c29d9f12be66c08a15/trajectory-excerpt.json"
+}

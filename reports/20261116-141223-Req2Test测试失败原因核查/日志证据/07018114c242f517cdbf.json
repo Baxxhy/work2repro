@@ -1,0 +1,115 @@
+{
+  "item_id": "coddy-agent/features/cli_tui.feature:191",
+  "outcome": "parse_or_compile_error",
+  "outcomes_all_runs": [
+    "no_scenario_ran"
+  ],
+  "per_step": [],
+  "index_errors": {
+    "external/cli/bdd_cli_tui_test.go": {
+      "diagnostics": [
+        {
+          "column": 48,
+          "file": "external/cli/bdd_cli_tui_test.go",
+          "kind": "types.Error",
+          "line": 65,
+          "message": "undefined: acp.NewSessionUpdate",
+          "offset": 2148,
+          "soft": false
+        },
+        {
+          "column": 69,
+          "file": "external/cli/bdd_cli_tui_test.go",
+          "kind": "types.Error",
+          "line": 65,
+          "message": "undefined: acp.UpdateTypeAgentMessage",
+          "offset": 2169,
+          "soft": false
+        }
+      ],
+      "kind": "compile"
+    }
+  },
+  "stdout_tail": "73caa64127153756f00c181bc9b8e\",\"external/cli/continue_test.go\":\"33db817e8a0b3b4a56cee8338c339cf22aa7900e728fbba8476e0a681af686ab\",\"external/cli/footer.go\":\"d2724d2bb4505d956c08cf7e97bb07a1d853f11d65077650ef7502b362714c51\",\"external/cli/header.go\":\"b5f691674f997490ece88d281ea32185caf726e03483eebdf15337c34904637c\",\"external/cli/localshell.go\":\"23a702205990cf4a8516d74a46767f772b8588c665d697f38dd12da5ff834c26\",\"external/cli/modals.go\":\"cc65e7d5d81204f4967b1e30a377cb784e47300c062d1f4ed4592846d84df1c5\",\"external/cli/print.go\":\"c94f75fe33bf0656ad91f7be12278353f00fd2699dbb045f4b50c087d1b90f17\",\"external/cli/run.go\":\"a9316605c983ef983590a5a2b635f4949975987af73d482d1a3731bb912d8ad5\",\"external/cli/selectors.go\":\"05a3dc107830f1979456c315f3507fe6690e1f22d4b7d3674c1f0428b4baaf9f\",\"external/cli/sender.go\":\"d70b05e588e065b6df98e93508e772cad34f97863e1ae8939a40abd08f4d994f\",\"external/cli/sender_test.go\":\"241de0a0d4b7d5821bc8388f53ea6c575dd95205d40cd085308528e869933be6\",\"external/cli/slash.go\":\"a6b35b0c910c05f913099b3b10add579320bd7112b92dad26869b7a5ade71aa9\",\"external/cli/status.go\":\"7cffac5fda84996904e64bccf94105d965a9edb124fbd82927a69c9cbeb17db8\",\"external/cli/status_test.go\":\"3ad87c83a2caa34db5899fb7e7fcbc03339e53e935937879e1d30d51e200d37f\",\"external/cli/theme.go\":\"3fee27f6974fbbcf5060636616f04579df52e28ab5bcd4759811d5a033d02bc7\",\"external/cli/theme_dark.go\":\"2300e22842654eb69f3a2f33e9ed055afe46987b3787b06d03c9ce1db3773760\",\"external/cli/theme_light.go\":\"f2b36402a420c772158ee5093da91f0aca6e7ff06c30da1bde03ad1af5668f94\",\"external/cli/updates.go\":\"4ca3a9255103d0e22b6889f4f8ef9fce9cf42394702987174426da24dd11a5db\",\"external/cli/usage.go\":\"410f0b25588d44e8a0849083ebf484588642f6f908c3560c3fff3d4ec1b6e94c\",\"external/cli/usage_test.go\":\"f062a644de184dd3720277a58a8f00b047eb09842074d24f5af098c2630f9852\",\"external/cli/zz_r2t_retained_helpers_bdd_cli_tui_test.go\":\"5dfc829c6b02748ffec82e1ec2e3b51c66f4647dd50bcc3f391b6f0a5b2c4b0a\"},\"stage\":\"compile\"}\nR2T_GO_PLANNER_DIAGNOSTIC_END\nexit status 1\n",
+  "bench_meta": {
+    "dependency_profile": [
+      "network"
+    ],
+    "live_background_step_count": 1,
+    "live_step_count": 8,
+    "n_closure_contexts": 0,
+    "n_closure_files": 1,
+    "n_oracle_steps": 3,
+    "round_trip_seconds": 133.41,
+    "signature": "92a99f82582f",
+    "steps_removable": 9,
+    "steps_retained": 0,
+    "tags": [],
+    "upstream_selected": null
+  },
+  "written_files": [
+    "external/cli/bdd_cli_tui_test.go"
+  ],
+  "_source": "/root/lby-docker/req2test/user/benchmark/runs/req2test-recovery8-20261113-v1-coddy-agent/coddy-agent/th/exec.jsonl",
+  "requirement": {
+    "feature": {
+      "background": "  Background:\n    Given a coddy console app over a stub agent runner",
+      "file_path": "features/cli_tui.feature",
+      "narrative": "  Running coddy with no arguments on a terminal starts an interactive console\n  session that renders the conversation with the same machinery every other\n  surface uses: the session manager, the agent runner, and ACP updates.",
+      "title": "Interactive console TUI"
+    },
+    "scenario": {
+      "gherkin": "  Scenario: The usage line stays off when the panel is switched off in config\n    Given a coddy console app over a stub agent runner with a neuraldeep provider whose usage limits panel is switched off\n    When the console app starts\n    And the operator submits the prompt \"spend some quota\"\n    And the stub turn streams the text \"spent\"\n    And the operator submits the command \"/usage\"\n    Then the usage report shows \"usage limits panel is switched off\"\n    And the footer does not show the neuraldeep usage\n    And the stand-in limits API was never asked",
+      "kind": "scenario",
+      "line": 191,
+      "tags": [],
+      "title": "The usage line stays off when the panel is switched off in config"
+    }
+  },
+  "official_result": {
+    "instance_id": "coddy-agent/features/cli_tui.feature:191",
+    "project": "coddy-agent",
+    "view": "th",
+    "outcome": "compilation_failure",
+    "passed": false,
+    "api_f1": null,
+    "coverage_j": null,
+    "recall": null,
+    "kill_complete": false,
+    "kill_complete_strict": false,
+    "kill_complete_95": false,
+    "mutation_status": "not_passed",
+    "mutation_baseline": null,
+    "behaviour_status": "measured",
+    "n_gt_kills": 402,
+    "n_scored": 0,
+    "n_killed": 0,
+    "n_dropped": 0,
+    "n_crash_kills": 0,
+    "n_timeout_kills": 0,
+    "exclusion": null,
+    "engine_outcome": "parse_or_compile_error",
+    "harness_version": 27,
+    "rejected_files": []
+  },
+  "population_exclusion": null,
+  "generated_files": [
+    {
+      "path": "external/cli/bdd_cli_tui_test.go",
+      "sha256": "7087f84a0a9f9a4719d8848f512167817a5ab94dc1f87a01fc614b196e81f060"
+    }
+  ],
+  "final_agent_message": "I can’t provide this file as a passing implementation yet. The draft at [bdd_cli_tui_test.go](/root/lby-docker/req2test/user/runs/full-baseline-20261111-v1/generation/07018114c242f517cdbf/attempt-1/workspaces/0000/repo/external/cli/bdd_cli_tui_test.go) is incomplete: it uses an ACP update constructor that doesn’t exist, and its stub runner doesn’t correctly stream the assistant text or exercise the usage report. It also doesn’t configure Godog to run the requested feature.",
+  "denied_commands": [
+    {
+      "id": "item_1",
+      "type": "command_execution",
+      "command": "/usr/bin/bash -lc \"ls repo/external/cli && rg --files repo/external/cli | head -60 && rg -n \\\"Godog|OnTerminalInput|WaitProviderUsageIdle|usage limits panel|neuraldeep|stub agent runner\\\" repo/external/cli repo/internal repo/features -g '*.go' -g '*.feature'\"",
+      "aggregated_output": "app.go\nautocomplete.go\nbackend.go\nchat.go\nchat_test.go\ncontinue.go\ncontinue_test.go\nfooter.go\nheader.go\nlocalshell.go\nmodals.go\nprint.go\nrun.go\nselectors.go\nsender.go\nsender_test.go\nslash.go\nstatus.go\nstatus_test.go\ntheme.go\ntheme_dark.go\ntheme_light.go\ntui\nupdates.go\nusage.go\nusage_test.go\n/usr/bin/bash: line 1: /usr/bin/rg: Permission denied\n/usr/bin/bash: line 1: /usr/bin/rg: Permission denied\n",
+      "exit_code": 126,
+      "status": "failed"
+    }
+  ],
+  "diagnostic_addendum": null,
+  "trace_path": "results/test-generation-20261114/req2test/tasks/07018114c242f517cdbf/trajectory-excerpt.json"
+}

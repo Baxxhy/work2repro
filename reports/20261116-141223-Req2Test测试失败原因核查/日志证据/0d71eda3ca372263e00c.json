@@ -1,0 +1,135 @@
+{
+  "item_id": "coddy-agent/features/hooks_tool_calls.feature:16",
+  "outcome": "failed",
+  "outcomes_all_runs": [
+    "failed"
+  ],
+  "per_step": [
+    {
+      "error": null,
+      "result": "passed",
+      "seconds": 0.000356188,
+      "text": "the operator's hooks.json has a PreToolUse hook for \"run_command\" that allows every call"
+    },
+    {
+      "error": null,
+      "result": "passed",
+      "seconds": 0.006635696,
+      "text": "an agent session in permission mode \"ask\""
+    },
+    {
+      "error": null,
+      "result": "passed",
+      "seconds": 0.061096652,
+      "text": "the model runs the command \"echo allowed-by-hook\""
+    },
+    {
+      "error": null,
+      "result": "passed",
+      "seconds": 9.8154e-05,
+      "text": "the tool result contains \"allowed-by-hook\""
+    },
+    {
+      "error": "received 1 permission requests",
+      "result": "failed",
+      "seconds": 9.6411e-05,
+      "text": "the client received no permission request"
+    }
+  ],
+  "index_errors": {},
+  "stdout_tail": "=== RUN   TestHooksFeature\n=== RUN   TestHooksFeature/A_PreToolUse_hook_allows_a_command_without_a_permission_prompt\n    suite.go:640: received 1 permission requests\nR2T_GODOG_EXIT TestHooksFeature 1\n=== NAME  TestHooksFeature\n    bdd_hooks_test.go:123: Godog suite failed with status 1\n--- FAIL: TestHooksFeature (0.07s)\n    --- FAIL: TestHooksFeature/A_PreToolUse_hook_allows_a_command_without_a_permission_prompt (0.07s)\nFAIL\nFAIL\tgithub.com/EvilFreelancer/coddy-agent/internal/agent\t0.113s\nFAIL\n",
+  "bench_meta": {
+    "dependency_profile": [],
+    "live_background_step_count": 0,
+    "live_step_count": 5,
+    "n_closure_contexts": 0,
+    "n_closure_files": 4,
+    "n_oracle_steps": 2,
+    "round_trip_seconds": 134.06,
+    "signature": "179386a33220",
+    "steps_removable": 5,
+    "steps_retained": 0,
+    "tags": [],
+    "upstream_selected": null
+  },
+  "written_files": [
+    "internal/agent/bdd_compaction_test.go",
+    "internal/agent/bdd_hooks_test.go",
+    "internal/agent/bdd_loop_guard_test.go",
+    "internal/agent/bdd_subagents_test.go"
+  ],
+  "_source": "/root/lby-docker/req2test/user/benchmark/runs/req2test-recovery8-20261113-v1-coddy-agent/coddy-agent/th/exec.jsonl",
+  "requirement": {
+    "feature": {
+      "background": null,
+      "file_path": "features/hooks_tool_calls.feature",
+      "narrative": "  An operator attaches their own commands to the points where the agent is about to run\n  a tool and where it just did. A hook is a command that reads one JSON document on\n  stdin and answers with an exit code and optional JSON on stdout. Definitions live in\n  the operator's own ~/.coddy/hooks.json in the shape Claude Code uses, so a hook\n  written for Claude Code works unchanged.",
+      "title": "Operator hooks around tool calls"
+    },
+    "scenario": {
+      "gherkin": "  Scenario: A PreToolUse hook allows a command without a permission prompt\n    Given the operator's hooks.json has a PreToolUse hook for \"run_command\" that allows every call\n    And an agent session in permission mode \"ask\"\n    When the model runs the command \"echo allowed-by-hook\"\n    Then the tool result contains \"allowed-by-hook\"\n    And the client received no permission request",
+      "kind": "scenario",
+      "line": 16,
+      "tags": [],
+      "title": "A PreToolUse hook allows a command without a permission prompt"
+    }
+  },
+  "official_result": {
+    "instance_id": "coddy-agent/features/hooks_tool_calls.feature:16",
+    "project": "coddy-agent",
+    "view": "th",
+    "outcome": "assertion_failure",
+    "passed": false,
+    "api_f1": null,
+    "coverage_j": null,
+    "recall": null,
+    "kill_complete": false,
+    "kill_complete_strict": false,
+    "kill_complete_95": false,
+    "mutation_status": "not_passed",
+    "mutation_baseline": null,
+    "behaviour_status": "measured",
+    "n_gt_kills": 353,
+    "n_scored": 0,
+    "n_killed": 0,
+    "n_dropped": 0,
+    "n_crash_kills": 0,
+    "n_timeout_kills": 0,
+    "exclusion": null,
+    "engine_outcome": "failed",
+    "harness_version": 27,
+    "rejected_files": []
+  },
+  "population_exclusion": null,
+  "generated_files": [
+    {
+      "path": "internal/agent/bdd_compaction_test.go",
+      "sha256": "c950b8708ac8978296da6490efdb6df3d4835a1917f47221fffcddab76c5a8a7"
+    },
+    {
+      "path": "internal/agent/bdd_hooks_test.go",
+      "sha256": "996cc0fa37a985a2c59fc657eca7b7fac07b82055623bc4b6e5c417758f30d32"
+    },
+    {
+      "path": "internal/agent/bdd_loop_guard_test.go",
+      "sha256": "c950b8708ac8978296da6490efdb6df3d4835a1917f47221fffcddab76c5a8a7"
+    },
+    {
+      "path": "internal/agent/bdd_subagents_test.go",
+      "sha256": "c950b8708ac8978296da6490efdb6df3d4835a1917f47221fffcddab76c5a8a7"
+    }
+  ],
+  "final_agent_message": "[repo/internal/agent/bdd_hooks_test.go](/root/lby-docker/req2test/user/runs/full-baseline-20261111-v1/generation/0d71eda3ca372263e00c/attempt-1/workspaces/0000/repo/internal/agent/bdd_hooks_test.go) contains the Godog suite and hook scenario glue.\n\nThe three additional required files are package-only placeholders: [bdd_compaction_test.go](/root/lby-docker/req2test/user/runs/full-baseline-20261111-v1/generation/0d71eda3ca372263e00c/attempt-1/workspaces/0000/repo/internal/agent/bdd_compaction_test.go), [bdd_loop_guard_test.go](/root/lby-docker/req2test/user/runs/full-baseline-20261111-v1/generation/0d71eda3ca372263e00c/attempt-1/workspaces/0000/repo/internal/agent/bdd_loop_guard_test.go), and [bdd_subagents_test.go](/root/lby-docker/req2test/user/runs/full-baseline-20261111-v1/generation/0d71eda3ca372263e00c/attempt-1/workspaces/0000/repo/internal/agent/bdd_subagents_test.go).",
+  "denied_commands": [
+    {
+      "id": "item_1",
+      "type": "command_execution",
+      "command": "/usr/bin/bash -lc 'ls repo/internal/agent && rg -n \"Godog|Test.*Feature|ProviderFactory|HandleSessionPromptWithSender|Permission|PreToolUse|hook\" repo/internal/agent repo/internal/session repo/internal/config repo'",
+      "aggregated_output": "background_notify.go\nbackground_notify_test.go\ncompact.go\ncontext_usage.go\nexport_command.go\nhooks.go\nidentity_prompt_test.go\nlimit_wait.go\nlimit_wait_test.go\nlive_neuraldeep_test.go\nloopguard.go\nloopguard_test.go\nmemory_hooks.go\nmemory_hooks_stub.go\nplugin_command.go\nplugin_command_test.go\nreact.go\nreact_test.go\nresult_eviction.go\nresult_eviction_test.go\nresume_permission.go\nrules_activation.go\nrules_activation_test.go\nrules_prompt.go\nscheduled.go\nsubagent.go\nsubagent_test.go\nsystem_prompt.go\ntoolsets.go\n/usr/bin/bash: line 1: /usr/bin/rg: Permission denied\n",
+      "exit_code": 126,
+      "status": "failed"
+    }
+  ],
+  "diagnostic_addendum": null,
+  "trace_path": "results/test-generation-20261114/req2test/tasks/0d71eda3ca372263e00c/trajectory-excerpt.json"
+}

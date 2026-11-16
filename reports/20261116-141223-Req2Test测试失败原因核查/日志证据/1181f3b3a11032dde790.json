@@ -1,0 +1,114 @@
+{
+  "item_id": "algorand-sdk/features/unit/v2indexerclient_paths.feature:150",
+  "outcome": "passed",
+  "outcomes_all_runs": [
+    "passed"
+  ],
+  "per_step": [
+    {
+      "error": null,
+      "result": "passed",
+      "seconds": 0.033037,
+      "text": "mock server recording request paths"
+    },
+    {
+      "error": null,
+      "result": "passed",
+      "seconds": 0.022716,
+      "text": "we make a SearchForAssets call with limit 0 creator \"\" name \"\" unit \"\" index 0"
+    },
+    {
+      "error": null,
+      "result": "passed",
+      "seconds": 0.155177,
+      "text": "expect the path used to be \"/v2/assets\""
+    }
+  ],
+  "index_errors": {},
+  "stdout_tail": "resources:3.3.1:resources (default-resources) @ algosdk ---\n[INFO] skip non existing resourceDirectory /work/src/main/resources\n[INFO] \n[INFO] --- compiler:3.8.1:compile (default-compile) @ algosdk ---\n[INFO] Nothing to compile - all classes are up to date\n[INFO] \n[INFO] --- resources:3.3.1:testResources (default-testResources) @ algosdk ---\n[INFO] Copying 259 resources from src/test/resources to target/test-classes\n[INFO] \n[INFO] --- compiler:3.8.1:testCompile (default-testCompile) @ algosdk ---\n[INFO] Changes detected - recompiling the module!\n[INFO] Compiling 37 source files to /work/target/test-classes\n[INFO] /work/src/test/java/com/algorand/algosdk/transaction/TestTransaction.java: Some input files use or override a deprecated API.\n[INFO] /work/src/test/java/com/algorand/algosdk/transaction/TestTransaction.java: Recompile with -Xlint:deprecation for details.\n[INFO] \n[INFO] --- surefire:3.0.0-M5:test (default-test) @ algosdk ---\n[INFO] Tests are skipped.\n[INFO] \n[INFO] --- surefire:3.0.0-M5:test (unit-tests) @ algosdk ---\n[INFO] \n[INFO] -------------------------------------------------------\n[INFO]  T E S T S\n[INFO] -------------------------------------------------------\n[INFO] Running com.algorand.algosdk.unit.R2TBenchCucumberTest\n[INFO] Tests run: 6, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.805 s - in com.algorand.algosdk.unit.R2TBenchCucumberTest\n[INFO] \n[INFO] Results:\n[INFO] \n[INFO] Tests run: 6, Failures: 0, Errors: 0, Skipped: 0\n[INFO] \n[INFO] \n[INFO] --- jacoco:0.8.11:report (report) @ algosdk ---\n[INFO] Loading execution data file /work/target/jacoco.exec\n[INFO] Analyzed bundle 'com.algorand:algosdk' with 484 classes\n[INFO] ------------------------------------------------------------------------\n[INFO] BUILD SUCCESS\n[INFO] ------------------------------------------------------------------------\n[INFO] Total time:  11.555 s\n[INFO] Finished at: 2026-11-12T12:29:24Z\n[INFO] ------------------------------------------------------------------------\n",
+  "bench_meta": {
+    "dependency_profile": [],
+    "live_background_step_count": 1,
+    "live_step_count": 2,
+    "n_closure_contexts": 2,
+    "n_closure_files": 2,
+    "n_oracle_steps": 1,
+    "round_trip_seconds": null,
+    "signature": "26342163075d",
+    "steps_removable": 18,
+    "steps_retained": 0,
+    "tags": [
+      "@unit",
+      "@unit.indexer"
+    ],
+    "upstream_selected": null
+  },
+  "written_files": [
+    "src/test/java/com/algorand/algosdk/unit/IndexerClientV2PathsSteps.java"
+  ],
+  "_source": "/root/lby-docker/req2test/user/benchmark/runs/req2test-recovery8-20261113-v1-algorand-sdk/algorand-sdk/th/exec.jsonl",
+  "requirement": {
+    "feature": {
+      "background": "  Background:\n    Given mock server recording request paths",
+      "file_path": "features/unit/v2indexerclient_paths.feature",
+      "narrative": null,
+      "title": "Indexer Client v2 Paths"
+    },
+    "scenario": {
+      "gherkin": "  Scenario Outline: SearchForAssets path\n    When we make a SearchForAssets call with limit <limit> creator \"<creator>\" name \"<name>\" unit \"<unit>\" index <index>\n    Then expect the path used to be \"<path>\"\n    Examples:\n      | path                                                                          | limit | index | creator                                                    | name      | unit     |\n      | /v2/assets                                                                    | 0     | 0     |                                                            |           |          |\n      | /v2/assets?asset-id=22                                                        | 0     | 22    |                                                            |           |          |\n      | /v2/assets?creator=PNWOET7LLOWMBMLE4KOCELCX6X3D3Q4H2Q4QJASYIEOF7YIPPQBG3YQ5YI | 0     | 0     | PNWOET7LLOWMBMLE4KOCELCX6X3D3Q4H2Q4QJASYIEOF7YIPPQBG3YQ5YI |           |          |\n      | /v2/assets?limit=30                                                           | 30    | 0     |                                                            |           |          |\n      | /v2/assets?name=assetname                                                     | 0     | 0     |                                                            | assetname |          |\n      | /v2/assets?unit=unitname                                                      | 0     | 0     |                                                            |           | unitname |",
+      "kind": "outline",
+      "line": 150,
+      "tags": [
+        "@unit",
+        "@unit.indexer"
+      ],
+      "title": "SearchForAssets path"
+    }
+  },
+  "official_result": {
+    "instance_id": "algorand-sdk/features/unit/v2indexerclient_paths.feature:150",
+    "project": "algorand-sdk",
+    "view": "th",
+    "outcome": "pass",
+    "passed": true,
+    "api_f1": 1.0,
+    "coverage_j": 0.9565217391304348,
+    "recall": 1.0,
+    "kill_complete": true,
+    "kill_complete_strict": true,
+    "kill_complete_95": true,
+    "mutation_status": "scored",
+    "mutation_baseline": "passed",
+    "behaviour_status": "measured",
+    "n_gt_kills": 21,
+    "n_scored": 21,
+    "n_killed": 21,
+    "n_dropped": 0,
+    "n_crash_kills": 0,
+    "n_timeout_kills": 0,
+    "exclusion": null,
+    "engine_outcome": "passed",
+    "harness_version": 27,
+    "rejected_files": []
+  },
+  "population_exclusion": null,
+  "generated_files": [
+    {
+      "path": "src/test/java/com/algorand/algosdk/unit/IndexerClientV2PathsSteps.java",
+      "sha256": "1936add884c9ac6ac05590fc05ebced44508f2db3a1398f7f26f0f5563b84670"
+    }
+  ],
+  "final_agent_message": "Added the step definitions in [IndexerClientV2PathsSteps.java](/root/lby-docker/req2test/user/runs/full-baseline-20261111-v1/generation/1181f3b3a11032dde790/attempt-1/workspaces/0000/repo/src/test/java/com/algorand/algosdk/unit/IndexerClientV2PathsSteps.java). They build the `SearchForAssets` query, omit zero/empty filters, and compare its path and query string with the expected value.",
+  "denied_commands": [
+    {
+      "id": "item_1",
+      "type": "command_execution",
+      "command": "/usr/bin/bash -lc 'rg --files repo/src/test/java/com/algorand/algosdk/unit repo/src/test/java/com/algorand/algosdk/cucumber/shared repo | head -80 && rg -n \"mock server recording request paths|recording request paths|SearchForAssets|getRequestUrl|ClientMocker\" repo/src/test/java repo/src/main/java/com/algorand/algosdk/v2/client | head -160'",
+      "aggregated_output": "/usr/bin/bash: line 1: /usr/bin/rg: Permission denied\n/usr/bin/bash: line 1: /usr/bin/rg: Permission denied\n",
+      "exit_code": 0,
+      "status": "completed"
+    }
+  ],
+  "diagnostic_addendum": null,
+  "trace_path": "results/test-generation-20261114/req2test/tasks/1181f3b3a11032dde790/trajectory-excerpt.json"
+}

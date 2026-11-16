@@ -1,0 +1,101 @@
+{
+  "item_id": "sylius/features/shop/account/resetting_password.feature:26",
+  "outcome": "container_error",
+  "outcomes_all_runs": [
+    "container_error"
+  ],
+  "per_step": [],
+  "index_errors": {},
+  "stdout_tail": "\nIn DefinitionErrorExceptionPass.php line 48:\n                                                                                                                                                                                                                                                                                                                                                                                        \n  Cannot autowire service \"Sylius\\Behat\\Context\\Api\\Shop\\ResettingPasswordContext\": argument \"$client\" of method \"__construct()\" references interface \"Sylius\\Behat\\Client\\ApiClientInterface\" but no such service exists. You should maybe alias this interface to one of these existing services: \"sylius.behat.api_platform_client.shop\", \"sylius.behat.api_platform_client.admin\".  \n                                                                                                                                                                                                                                                                                                                                                                                        \n\n",
+  "bench_meta": {
+    "dependency_profile": [
+      "database"
+    ],
+    "live_background_step_count": 3,
+    "live_step_count": 5,
+    "n_closure_contexts": 2,
+    "n_closure_files": 3,
+    "n_oracle_steps": 2,
+    "round_trip_seconds": 12.22,
+    "signature": "c8d6eb0861bf",
+    "steps_removable": 5,
+    "steps_retained": 3,
+    "tags": [
+      "@customer_login",
+      "@api",
+      "@ui",
+      "@email"
+    ],
+    "upstream_selected": null
+  },
+  "written_files": [
+    "src/Sylius/Behat/Context/Api/Shop/ResettingPasswordContext.php"
+  ],
+  "_source": "/root/lby-docker/req2test/user/benchmark/runs/req2test-recovery8-20261113-v1-sylius/sylius/th/exec.jsonl",
+  "requirement": {
+    "feature": {
+      "background": "    Background:\n        Given the store operates on a single channel in \"United States\"\n        And that channel allows to shop using \"English (United States)\" and \"Polish (Poland)\" locales\n        And there is a user \"goodman@example.com\" identified by \"heisenberg\"",
+      "file_path": "features/shop/account/resetting_password.feature",
+      "narrative": "    In order to login to my account when I forgot my password\n    As a Visitor\n    I need to be able to reset my password",
+      "title": "Resetting a password"
+    },
+    "scenario": {
+      "gherkin": "    Scenario: Notifying about sending reset instructions even when an account with email does not exist\n        When I want to reset password\n        And I specify customer email as \"does-not-exist@example.com\"\n        And I reset it\n        Then I should be notified that email with reset instruction has been sent\n        But \"does-not-exist@example.com\" should receive no emails",
+      "kind": "scenario",
+      "line": 26,
+      "tags": [
+        "@customer_login",
+        "@api",
+        "@ui",
+        "@email"
+      ],
+      "title": "Notifying about sending reset instructions even when an account with email does not exist"
+    }
+  },
+  "official_result": {
+    "instance_id": "sylius/features/shop/account/resetting_password.feature:26",
+    "project": "sylius",
+    "view": "th",
+    "outcome": "compilation_failure",
+    "passed": false,
+    "api_f1": null,
+    "coverage_j": null,
+    "recall": null,
+    "kill_complete": false,
+    "kill_complete_strict": false,
+    "kill_complete_95": false,
+    "mutation_status": "not_passed",
+    "mutation_baseline": null,
+    "behaviour_status": "measured",
+    "n_gt_kills": 77,
+    "n_scored": 0,
+    "n_killed": 0,
+    "n_dropped": 0,
+    "n_crash_kills": 0,
+    "n_timeout_kills": 0,
+    "exclusion": null,
+    "engine_outcome": "container_error",
+    "harness_version": 27,
+    "rejected_files": []
+  },
+  "population_exclusion": null,
+  "generated_files": [
+    {
+      "path": "src/Sylius/Behat/Context/Api/Shop/ResettingPasswordContext.php",
+      "sha256": "e782a16747ce2f2816c1953b2438f02df3f03853d00968af0f1e2a6543f480e2"
+    }
+  ],
+  "final_agent_message": "Added [ResettingPasswordContext.php](/root/lby-docker/req2test/user/runs/req2test-subset160-20261112-v1/generation/bf665f46c188b3b4299c/attempt-1/workspaces/0000/repo/src/Sylius/Behat/Context/Api/Shop/ResettingPasswordContext.php) to submit the shop password-reset form, check the generic notification, and assert no email went to the nonexistent address. PHP syntax validation passed.",
+  "denied_commands": [
+    {
+      "id": "item_1",
+      "type": "command_execution",
+      "command": "/usr/bin/bash -lc \"rg --files repo/src/Sylius/Behat repo | rg '(TARGET_CONTRACTS|ApiClient|RequestFactory|ResponseChecker|reset|Reset|Account|Context/Api)' | head -n 200\"",
+      "aggregated_output": "/usr/bin/bash: line 1: /usr/bin/rg: Permission denied\n/usr/bin/bash: line 1: /usr/bin/rg: Permission denied\n",
+      "exit_code": 0,
+      "status": "completed"
+    }
+  ],
+  "diagnostic_addendum": null,
+  "trace_path": "results/test-generation-20261114/req2test/tasks/bf665f46c188b3b4299c/trajectory-excerpt.json"
+}

@@ -1,0 +1,126 @@
+{
+  "item_id": "python-docx/features/blk-add-paragraph.feature:6",
+  "outcome": "passed",
+  "outcomes_all_runs": [
+    "passed"
+  ],
+  "per_step": [
+    {
+      "error": null,
+      "result": "passed",
+      "seconds": 0.025084,
+      "text": "a document"
+    },
+    {
+      "error": null,
+      "result": "passed",
+      "seconds": 0.001685,
+      "text": "I add a paragraph"
+    },
+    {
+      "error": null,
+      "result": "passed",
+      "seconds": 0.000425,
+      "text": "I add a run to the paragraph"
+    },
+    {
+      "error": null,
+      "result": "passed",
+      "seconds": 0.000373,
+      "text": "I add text to the run"
+    },
+    {
+      "error": null,
+      "result": "passed",
+      "seconds": 0.014942,
+      "text": "I save the document"
+    },
+    {
+      "error": null,
+      "result": "passed",
+      "seconds": 0.018509,
+      "text": "the document contains the text I added"
+    }
+  ],
+  "index_errors": {},
+  "stdout_tail": "USING RUNNER: behave.runner:Runner\nFeature: Add a paragraph of text # features/_bench_item.feature:1\n  In order to populate the text of a document\n  As a developer using python-docx\n  I need the ability to add a paragraph\n  Scenario: Add a paragraph using low-level text API  # features/_bench_item.feature:6\n    Given a document                                  # features/steps/add_paragraph_steps.py:13\n    When I add a paragraph                            # features/steps/add_paragraph_steps.py:20\n    And I add a run to the paragraph                  # features/steps/add_paragraph_steps.py:25\n    And I add text to the run                         # features/steps/add_paragraph_steps.py:30\n    And I save the document                           # features/steps/add_paragraph_steps.py:35\n    Then the document contains the text I added       # features/steps/add_paragraph_steps.py:40\n\n1 feature passed, 0 failed, 0 skipped\n1 scenario passed, 0 failed, 0 skipped\n6 steps passed, 0 failed, 0 skipped\nTook 0min 0.061s\n",
+  "bench_meta": {
+    "dependency_profile": [],
+    "live_background_step_count": 0,
+    "live_step_count": 6,
+    "n_closure_contexts": 4,
+    "n_closure_files": 5,
+    "n_oracle_steps": 1,
+    "round_trip_seconds": 2.95,
+    "signature": "6a5e3ad8ad90",
+    "steps_removable": 6,
+    "steps_retained": 0,
+    "tags": [],
+    "upstream_selected": null
+  },
+  "written_files": [
+    "features/steps/add_paragraph_steps.py"
+  ],
+  "_source": "/root/lby-docker/req2test/user/benchmark/runs/req2test-recovery8-20261113-v1-python-docx/python-docx/th/exec.jsonl",
+  "requirement": {
+    "feature": {
+      "background": null,
+      "file_path": "features/blk-add-paragraph.feature",
+      "narrative": "  In order to populate the text of a document\n  As a developer using python-docx\n  I need the ability to add a paragraph",
+      "title": "Add a paragraph of text"
+    },
+    "scenario": {
+      "gherkin": "  Scenario: Add a paragraph using low-level text API\n    Given a document\n     When I add a paragraph\n      And I add a run to the paragraph\n      And I add text to the run\n      And I save the document\n     Then the document contains the text I added",
+      "kind": "scenario",
+      "line": 6,
+      "tags": [],
+      "title": "Add a paragraph using low-level text API"
+    }
+  },
+  "official_result": {
+    "instance_id": "python-docx/features/blk-add-paragraph.feature:6",
+    "project": "python-docx",
+    "view": "th",
+    "outcome": "pass",
+    "passed": true,
+    "api_f1": 1.0,
+    "coverage_j": 1.0,
+    "recall": 0.9885714285714285,
+    "kill_complete": false,
+    "kill_complete_strict": false,
+    "kill_complete_95": true,
+    "mutation_status": "scored",
+    "mutation_baseline": "passed",
+    "behaviour_status": "measured",
+    "n_gt_kills": 175,
+    "n_scored": 175,
+    "n_killed": 173,
+    "n_dropped": 0,
+    "n_crash_kills": 0,
+    "n_timeout_kills": 0,
+    "exclusion": null,
+    "engine_outcome": "passed",
+    "harness_version": 27,
+    "rejected_files": []
+  },
+  "population_exclusion": null,
+  "generated_files": [
+    {
+      "path": "features/steps/add_paragraph_steps.py",
+      "sha256": "a858cdef4d5f28dad83e029cdd50ee68de3c449f9ed2fa8dec3359a21ef07a43"
+    }
+  ],
+  "final_agent_message": "Added the step definitions in [add_paragraph_steps.py](/root/lby-docker/req2test/user/runs/req2test-subset160-20261112-v1/generation/ea8281d48c4736a84d4f/attempt-1/workspaces/0000/repo/features/steps/add_paragraph_steps.py). They create a document, add a paragraph and run, add text with `Run.add_text()`, save under `features/_scratch/`, and reopen the file to verify the text persisted.\n\nThe file passed Python syntax compilation.",
+  "denied_commands": [
+    {
+      "id": "item_1",
+      "type": "command_execution",
+      "command": "/usr/bin/bash -lc \"rg --files repo/features repo/src/docx | head -80 && sed -n '1,240p' repo/features/environment.py && rg -n \\\"def add_paragraph|def add_run|def add_text|def save\\\\(\\\" repo/src/docx\"",
+      "aggregated_output": "/usr/bin/bash: line 1: /usr/bin/rg: Permission denied\n\"\"\"S4 — the harness-owned behave recorder, installed as `features/environment.py`.\n\n`strip_repo_behave` copies this file over the project's own twelve-line\n`environment.py` (which moves to gold) — the same move CoreShop makes when it\ninstalls `BenchRecorderHook.php` under the retained tree.  From then on it is\nSUBSTRATE: `features/environment.py` is a file root in\n`repo.BEHAVE_SUBSTRATE_ROOTS`, its hash is in the strip baseline, and a\nsolution that rewrites the recorder that scores it is a `substrate_violation`,\nnot a better number.\n\nIt writes `r2t.record/1` (`stacks.base.RECORD_SCHEMA`): one JSON line per\nscenario into the file named by `$BENCH_RECORD_PATH`, appended at\n`after_scenario`.  Four properties carry the measurement and each is pinned\nby a selftest or a live probe rather than assumed:\n\n* **One record per Examples row.**  behave builds a real Scenario per data row\n  (`ScenarioOutlineBuilder`) and fires `after_scenario` for each, stamping\n  `scenario.line` with the DATA ROW's line — verified live against behave\n  1.3.3 in `r2t_docx_img:base`.  That is exactly the shape\n  `harness.fold_scenario_records` folds, so an outline needs no code here.\n* **Coverage is per scenario, in memory, and `src/`-restricted.**\n  `Coverage(source=[\"src\"], data_file=None)` — a `.coverage` file on disk\n  would be a file ADDED under a hashed root, i.e. this recorder tampering\n  with the substrate it is part of.  The `src/` filter is applied AGAIN on\n  the collected paths, because instrument-crediting (a collector at\n  whole-tree scope crediting the harness's own code) is the documented\n  failure mode of the measure.\n* **`direct_calls` records the CALLER of every production call.**  A\n  `sys.setprofile` hook installed beside the coverage collector and under the\n  same `$BENCH_COVERAGE=1` condition, so an in-trajectory trial pays neither\n  the hook nor the field, and its record carries `null` for the same reason it\n  carries a null `coverage`.  Per activation it keeps the callee's file, its\n  `co_firstlineno` and `co_qualname`, and the file the CALLING frame is in,\n  walking past descriptor frames. Generated xmlchemy properties additionally\n  identify the actual installed accessor through its function and closure;\n  ordinary calls carry `accessor_binding: null`. It applies ONE fence, the `src/` root the\n  collector already uses, and no boundary: the removable test, the public test\n  and the index mapping are applied at scoring on the host, exactly as\n  `production_lines` applies the boundary to coverage\n  (`API_DIRECT_INVOCATION_SPEC.md` §2.4).  `co_qualname` is 3.11+ and the\n  execution image is pinned to `python:3.12-slim`, so `stacks.behave.\n  selftest` pins the field's SHAPE on the host and the hook's behaviour is\n  pinned by the spec's §8 validation, run in that image.\n* **Every event names the step that made it.**  `before_step` looks the\n  step up by identity in the list `after_scenario` serialises (the\n  Background's steps, then the scenario's own) and the hook stamps that index\n  on each event as `step`; `after_step` clears it, so a call made by a hook\n  between two steps carries `null`.  Identity rather than a counter, because\n  behave runs no hook for a step it skips after a failure.  That index is\n  what `toolkit/checked_interfaces.py` reads (TARGET_INTERFACES_V2_SPEC §4);\n  which steps are actions or checks is decided there, from the feature, never\n  here.  The marker moved to `r2t.python_direct_calls/3` with the field.\n* **The recorder never decides the run.**  `scenario_result` is behave's own\n  verdict, recorded for the row but never trusted: the harness folds the\n  per-step results and cross-checks the process exit code (the two-witness\n  rule), because a recorder living inside the bind-mounted workspace is not\n  an independent witness to its own run.\n\nSTDLIB-ONLY AT IMPORT, deliberately.  Hooks receive live behave objects and\nnever need to import the framework; `coverage` \n[TRUNCATED: full original retained on experiment server]",
+      "exit_code": 126,
+      "status": "failed"
+    }
+  ],
+  "diagnostic_addendum": null,
+  "trace_path": "results/test-generation-20261114/req2test/tasks/ea8281d48c4736a84d4f/trajectory-excerpt.json"
+}

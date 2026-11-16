@@ -1,0 +1,122 @@
+{
+  "item_id": "prestashop/tests/Integration/Behaviour/Features/Scenario/Product/update_prices.feature:280",
+  "outcome": "failed",
+  "outcomes_all_runs": [
+    "failed"
+  ],
+  "per_step": [
+    {
+      "error": null,
+      "result": "passed",
+      "seconds": 0.1956,
+      "text": "I add product \"product1\" with following information:"
+    },
+    {
+      "error": "Fatal error: Call to undefined method TaxRulesGroup::getNameById()",
+      "result": "failed",
+      "seconds": 0.2401,
+      "text": "product product1 should have following prices information:"
+    }
+  ],
+  "index_errors": {},
+  "stdout_tail": "AK           |\n    And I add the tax rule \"us-tax-state-2\" for tax rule group \"us-tax-group-multiple-states\":\n      | name    | US Tax (5%) |\n      | country | US          |\n      | state   | AR          |\n    And product product1 should not have any suppliers assigned\n    And product product1 should not have a default supplier\n    When I update product \"product1\" with following values:\n      | price           | 100.99       |\n      | ecotax          | 0            |\n      | tax rules group | US Tax group |\n      | on_sale         | true         |\n      | wholesale_price | 70           |\n      | unit_price      | 900          |\n      | unity           | bag of ten   |\n    Then product product1 should have following prices information:\n      | price                   | 100.99       |\n      | price_tax_included      | 107.0494     |\n      | ecotax                  | 0            |\n      | tax rules group         | US Tax group |\n      | on_sale                 | true         |\n      | wholesale_price         | 70           |\n      | unit_price              | 900          |\n      | unit_price_tax_included | 954          |\n      | unit_price_ratio        | 0.112211     |\n      | unity                   | bag of ten   |\n    When I delete tax rules that has tax \"us-tax-state-1\":\n    Then product product1 should have following prices information:\n      | price                   | 100.99       |\n      | price_tax_included      | 106.0395     |\n      | ecotax                  | 0            |\n      | tax rules group         | US Tax group |\n      | on_sale                 | true         |\n      | wholesale_price         | 70           |\n      | unit_price              | 900          |\n      | unit_price_tax_included | 945          |\n      | unit_price_ratio        | 0.112211     |\n      | unity                   | bag of ten   |\n\n--- Failed scenarios:\n\n    _bench/item.feature:20 (on line 9)\n\n1 scenario (1 failed)\n12 steps (1 passed, 1 failed, 10 skipped)\n2m38.08s (183.09Mb)\n",
+  "bench_meta": {
+    "dependency_profile": [
+      "database"
+    ],
+    "live_background_step_count": 2,
+    "live_step_count": 10,
+    "n_closure_contexts": 6,
+    "n_closure_files": 6,
+    "n_oracle_steps": 4,
+    "round_trip_seconds": 60.82,
+    "signature": "86edcf600924",
+    "steps_removable": 12,
+    "steps_retained": 0,
+    "tags": [
+      "@restore-products-before-feature",
+      "@restore-taxes-after-feature",
+      "@update-product-prices",
+      "@update-prices"
+    ],
+    "upstream_selected": null
+  },
+  "written_files": [
+    "tests/Integration/Behaviour/Features/Context/Domain/Product/UpdatePricesContext.php"
+  ],
+  "_source": "/root/lby-docker/req2test/user/benchmark/runs/req2test-recovery8-20261113-v1-prestashop/prestashop/th/exec.jsonl",
+  "requirement": {
+    "feature": {
+      "background": "  Background:\n    Given I add product \"product1\" with following information:\n      | name[en-US] | magic staff |\n      | type        | standard    |\n    And product product1 should have following prices information:\n      | price              | 0               |\n      | price_tax_included | 0               |\n      | ecotax             | 0               |\n      | tax rules group    | US-FL Rate (6%) |\n      | on_sale            | false           |\n      | wholesale_price    | 0               |\n      | unit_price         | 0               |\n      | unit_price_ratio   | 0               |\n      | unity              |                 |",
+      "file_path": "tests/Integration/Behaviour/Features/Scenario/Product/update_prices.feature",
+      "narrative": "  As a BO user I want to be able to update product fields associated with price.",
+      "title": "Update product price fields from Back Office (BO) when default country has states."
+    },
+    "scenario": {
+      "gherkin": "  Scenario: When first tax rule for specific state is deleted the tax rule group takes the next one\n    And I add new tax \"us-tax-state-1\" with following properties:\n      | name       | US Tax (6%) |\n      | rate       | 6           |\n      | is_enabled | true        |\n    And I add new tax \"us-tax-state-2\" with following properties:\n      | name       | US Tax (5%) |\n      | rate       | 5           |\n      | is_enabled | true        |\n    And I add the tax rule group \"us-tax-group-multiple-states\" for the tax \"us-tax-state-1\" with the following conditions:\n      | name    | US Tax group |\n      | country | US           |\n      | state   | AK           |\n    And I add the tax rule \"us-tax-state-2\" for tax rule group \"us-tax-group-multiple-states\":\n      | name    | US Tax (5%) |\n      | country | US          |\n      | state   | AR          |\n    And product product1 should not have any suppliers assigned\n    And product product1 should not have a default supplier\n    When I update product \"product1\" with following values:\n      | price           | 100.99       |\n      | ecotax          | 0            |\n      | tax rules group | US Tax group |\n      | on_sale         | true         |\n      | wholesale_price | 70           |\n      | unit_price      | 900          |\n      | unity           | bag of ten   |\n    Then product product1 should have following prices information:\n      | price                   | 100.99       |\n      | price_tax_included      | 107.0494     |\n      | ecotax                  | 0            |\n      | tax rules group         | US Tax group |\n      | on_sale                 | true         |\n      | wholesale_price         | 70           |\n      | unit_price              | 900          |\n      | unit_price_tax_included | 954          |\n      | unit_price_ratio        | 0.112211     |\n      | unity                   | bag of ten   |\n    When I delete tax rules that has tax \"us-tax-state-1\":\n    Then product product1 should have following prices information:\n      | price                   | 100.99       |\n      | price_tax_included      | 106.0395     |\n      | ecotax                  | 0            |\n      | tax rules group         | US Tax group |\n      | on_sale                 | true         |\n      | wholesale_price         | 70           |\n      | unit_price              | 900          |\n      | unit_price_tax_included | 945          |\n      | unit_price_ratio        | 0.112211     |\n      | unity                   | bag of ten   |",
+      "kind": "scenario",
+      "line": 280,
+      "tags": [
+        "@restore-products-before-feature",
+        "@restore-taxes-after-feature",
+        "@update-product-prices",
+        "@update-prices"
+      ],
+      "title": "When first tax rule for specific state is deleted the tax rule group takes the next one"
+    }
+  },
+  "official_result": {
+    "instance_id": "prestashop/tests/Integration/Behaviour/Features/Scenario/Product/update_prices.feature:280",
+    "project": "prestashop",
+    "view": "th",
+    "outcome": "assertion_failure",
+    "passed": false,
+    "api_f1": null,
+    "coverage_j": null,
+    "recall": null,
+    "kill_complete": false,
+    "kill_complete_strict": false,
+    "kill_complete_95": false,
+    "mutation_status": "not_passed",
+    "mutation_baseline": null,
+    "behaviour_status": "measured",
+    "n_gt_kills": 39,
+    "n_scored": 0,
+    "n_killed": 0,
+    "n_dropped": 0,
+    "n_crash_kills": 0,
+    "n_timeout_kills": 0,
+    "exclusion": null,
+    "engine_outcome": "failed",
+    "harness_version": 27,
+    "rejected_files": []
+  },
+  "population_exclusion": null,
+  "generated_files": [
+    {
+      "path": "tests/Integration/Behaviour/Features/Context/Domain/Product/UpdatePricesContext.php",
+      "sha256": "7d7596f7d9925e676364eb5aaa1629934bb427cddde226c9860200db24aa60be"
+    }
+  ],
+  "final_agent_message": "Added [UpdatePricesContext.php](/root/lby-docker/req2test/user/runs/req2test-subset160-20261112-v1/generation/de0e70999f05fe75a9b5/attempt-1/workspaces/0000/repo/tests/Integration/Behaviour/Features/Context/Domain/Product/UpdatePricesContext.php) with definitions for the scenario’s product setup, price checks and updates, tax/rule creation and deletion, and supplier checks. PHP syntax validation passed. The scenario itself wasn’t run.",
+  "denied_commands": [
+    {
+      "id": "item_1",
+      "type": "command_execution",
+      "command": "/usr/bin/bash -lc 'ls repo/tests/Integration/Behaviour/Features/Context; rg \"add product|prices information|update product|tax rule group|new tax|delete tax rules|supplier\" repo/tests/Integration/Behaviour/Features/Context -n'",
+      "aggregated_output": "AbstractPrestaShopFeatureContext.php\nCartAwareTrait.php\nCommonFeatureContext.php\nConfiguration\nContextFeatureContext.php\nDomain\nLastExceptionTrait.php\nOrderMessageContext.php\nSharedStorage.php\nSharedStorageTrait.php\nUtil\n/usr/bin/bash: line 1: /usr/bin/rg: Permission denied\n",
+      "exit_code": 126,
+      "status": "failed"
+    },
+    {
+      "id": "item_7",
+      "type": "command_execution",
+      "command": "/usr/bin/bash -lc \"rg -n \\\"extractValueFromProductForEditing|PricesInformation|tax rules group\\\" repo/tests/Integration/Behaviour/Features/Context/Domain/Product/AbstractProductFeatureContext.php; sed -n '1,120p' repo/tests/Integration/Behaviour/Features/Scenario/Product/update_prices.feature\"",
+      "aggregated_output": "/usr/bin/bash: line 1: /usr/bin/rg: Permission denied\n# ./vendor/bin/behat -c tests/Integration/Behaviour/behat.yml -s product --tags update-prices\n@restore-products-before-feature\n@restore-taxes-after-feature\n@update-product-prices\n@update-prices\nFeature: Update product price fields from Back Office (BO) when default country has states.\n  As a BO user I want to be able to update product fields associated with price.\n\n  Background:\n    Given I add product \"product1\" with following information:\n      | name[en-US] | magic staff |\n      | type        | standard    |\n    And product product1 should have following prices information:\n      | price              | 0               |\n      | price_tax_included | 0               |\n      | ecotax             | 0               |\n      | tax rules group    | US-FL Rate (6%) |\n      | on_sale            | false           |\n      | wholesale_price    | 0               |\n      | unit_price         | 0               |\n      | unit_price_ratio   | 0               |\n      | unity              |                 |\n\n  Scenario: I update product prices\n    And tax rules group named \"US-AL Rate (4%)\" exists\n    And product product1 should not have any suppliers assigned\n    And product product1 should not have a default supplier\n    When I update product \"product1\" with following values:\n      | price              | 100.99          |\n      | ecotax             | 0               |\n      | tax rules group    | US-AL Rate (4%) |\n      | on_sale            | true            |\n      | wholesale_price    | 70              |\n      | unit_price         | 900             |\n      | unity              | bag of ten      |\n    Then product product1 should have following prices information:\n      | price                   | 100.99          |\n      | price_tax_included      | 105.0296        |\n      | ecotax                  | 0               |\n      | tax rules group         | US-AL Rate (4%) |\n      | on_sale                 | true            |\n      | wholesale_price         | 70              |\n      | unit_price              | 900             |\n      | unit_price_tax_included | 936             |\n      | unit_price_ratio        | 0.112211        |\n      | unity                   | bag of ten      |\n\n  Scenario: I partially update product prices, providing only those values which I want to update\n    Given I update product \"product1\" with following values:\n      | price              | 100.99          |\n      | ecotax             | 0               |\n      | tax rules group    | US-AL Rate (4%) |\n      | on_sale            | true            |\n      | wholesale_price    | 70              |\n      | unit_price         | 900             |\n      | unity              | bag of ten      |\n    Given product product1 should have following prices information:\n      | price                   | 100.99          |\n      | price_tax_included      | 105.0296        |\n      | ecotax                  | 0               |\n      | tax rules group         | US-AL Rate (4%) |\n      | on_sale                 | true            |\n      | wholesale_price         | 70              |\n      | unit_price              | 900             |\n      | unit_price_tax_included | 936             |\n      | unit_price_ratio        | 0.112211        |\n      | unity                   | bag of ten      |\n    When I update product \"product1\" with following values:\n      | price | 200 |\n    Then product product1 should have following prices information:\n      | price                   | 200             |\n      | price_tax_included      | 208             |\n      | ecotax                  | 0               |\n      | tax rules group         | US-AL Rate (4%) |\n      | on_sale                 | true            |\n      | wholesale_price         | 70              |\n      | unit_price              | 900             |\n      | unit_price_tax_included | 936             |\n      | unit_price_ratio        | 0.222222        |\n      | unity                   | bag of ten      \n[TRUNCATED: full original retained on experiment server]",
+      "exit_code": 0,
+      "status": "completed"
+    }
+  ],
+  "diagnostic_addendum": null,
+  "trace_path": "results/test-generation-20261114/req2test/tasks/de0e70999f05fe75a9b5/trajectory-excerpt.json"
+}

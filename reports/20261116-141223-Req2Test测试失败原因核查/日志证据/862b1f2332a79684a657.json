@@ -1,0 +1,99 @@
+{
+  "item_id": "sylius/features/shop/cart/shopping_cart/clearing_cart_after_logging_out.feature:28",
+  "outcome": "container_error",
+  "outcomes_all_runs": [
+    "container_error"
+  ],
+  "per_step": [],
+  "index_errors": {},
+  "stdout_tail": "\nIn DefinitionErrorExceptionPass.php line 48:\n                                                                                                                                                                                                                                                                                                                        \n  Cannot autowire service \"Sylius\\Behat\\Context\\Api\\Shop\\Cart\\CartLogoutContext\": argument \"$cartContext\" of method \"__construct()\" references class \"Sylius\\Behat\\Context\\Setup\\CartContext\" but no such service exists. You should maybe alias this class to the existing \"sylius.behat.context.setup.cart\" service.  \n                                                                                                                                                                                                                                                                                                                        \n\n",
+  "bench_meta": {
+    "dependency_profile": [
+      "database"
+    ],
+    "live_background_step_count": 2,
+    "live_step_count": 6,
+    "n_closure_contexts": 3,
+    "n_closure_files": 4,
+    "n_oracle_steps": 1,
+    "round_trip_seconds": 14.6,
+    "signature": "253c2f0b6dc7",
+    "steps_removable": 5,
+    "steps_retained": 3,
+    "tags": [
+      "@shopping_cart",
+      "@api",
+      "@no-ui"
+    ],
+    "upstream_selected": null
+  },
+  "written_files": [
+    "src/Sylius/Behat/Context/Api/Shop/Cart/CartLogoutContext.php"
+  ],
+  "_source": "/root/lby-docker/req2test/user/benchmark/runs/req2test-recovery8-20261113-v1-sylius/sylius/th/exec.jsonl",
+  "requirement": {
+    "feature": {
+      "background": "    Background:\n        Given the store operates on a single channel in \"United States\"\n        And the store has a product \"Stark T-Shirt\" priced at \"$12.00\"",
+      "file_path": "features/shop/cart/shopping_cart/clearing_cart_after_logging_out.feature",
+      "narrative": "    In order to not allow to use my cart by anybody\n    As a Customer\n    I want to be able to have my cart cleared after logging out",
+      "title": "Clearing cart after logging out"
+    },
+    "scenario": {
+      "gherkin": "    Scenario: Blocking access to cart if logged user did any action over it (what can be treated as signing it)\n        Given there is a user \"john@snow.com\"\n        When I add this product to the cart\n        And I log in as \"john@snow.com\" with \"sylius\" password\n        And I add this product to the cart\n        And I log out\n        Then I should not have access to the summary of my previous cart",
+      "kind": "scenario",
+      "line": 28,
+      "tags": [
+        "@shopping_cart",
+        "@api",
+        "@no-ui"
+      ],
+      "title": "Blocking access to cart if logged user did any action over it (what can be treated as signing it)"
+    }
+  },
+  "official_result": {
+    "instance_id": "sylius/features/shop/cart/shopping_cart/clearing_cart_after_logging_out.feature:28",
+    "project": "sylius",
+    "view": "th",
+    "outcome": "compilation_failure",
+    "passed": false,
+    "api_f1": null,
+    "coverage_j": null,
+    "recall": null,
+    "kill_complete": false,
+    "kill_complete_strict": false,
+    "kill_complete_95": false,
+    "mutation_status": "not_passed",
+    "mutation_baseline": null,
+    "behaviour_status": "measured",
+    "n_gt_kills": 197,
+    "n_scored": 0,
+    "n_killed": 0,
+    "n_dropped": 0,
+    "n_crash_kills": 0,
+    "n_timeout_kills": 0,
+    "exclusion": null,
+    "engine_outcome": "container_error",
+    "harness_version": 27,
+    "rejected_files": []
+  },
+  "population_exclusion": null,
+  "generated_files": [
+    {
+      "path": "src/Sylius/Behat/Context/Api/Shop/Cart/CartLogoutContext.php",
+      "sha256": "482744e9d1ef0522c0bc8907027c810d440b3b090a7714bd7b5c3b83b1693d58"
+    }
+  ],
+  "final_agent_message": "Added [CartLogoutContext.php](/root/lby-docker/req2test/user/runs/req2test-subset160-20261112-v1/generation/862b1f2332a79684a657/attempt-1/workspaces/0000/repo/src/Sylius/Behat/Context/Api/Shop/Cart/CartLogoutContext.php) with steps for adding the shared product, logging in, logging out, and checking that the user and authentication token are absent afterward. PHP syntax validation passed.",
+  "denied_commands": [
+    {
+      "id": "item_1",
+      "type": "command_execution",
+      "command": "/usr/bin/bash -lc 'ls repo/src/Sylius/Behat && rg -n \"add this product|log in as|log out|summary of my previous cart|previous cart\" repo/src/Sylius/Behat repo/features | head -100'",
+      "aggregated_output": "Application\nBehaviour\nBench\nClient\nContext\nElement\nException\nNotificationType.php\nPage\nResources\nService\ntests\n/usr/bin/bash: line 1: /usr/bin/rg: Permission denied\n",
+      "exit_code": 0,
+      "status": "completed"
+    }
+  ],
+  "diagnostic_addendum": null,
+  "trace_path": "results/test-generation-20261114/req2test/tasks/862b1f2332a79684a657/trajectory-excerpt.json"
+}

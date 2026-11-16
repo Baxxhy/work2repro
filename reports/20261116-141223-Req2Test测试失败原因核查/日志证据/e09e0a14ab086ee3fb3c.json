@@ -1,0 +1,76 @@
+{
+  "item_id": "prestashop/tests/Integration/Behaviour/Features/Scenario/Product/Shop/shop_management.feature:290",
+  "outcome": "no_files_returned",
+  "outcomes_all_runs": null,
+  "per_step": null,
+  "index_errors": {},
+  "stdout_tail": null,
+  "bench_meta": null,
+  "written_files": [],
+  "_source": "/root/lby-docker/req2test/user/benchmark/runs/req2test-recovery8-20261113-v1-prestashop/prestashop/th/exec.jsonl",
+  "requirement": {
+    "feature": {
+      "background": "  Background:\n    Given I enable multishop feature\n    And language with iso code \"en\" is the default one\n    And attribute group \"Size\" named \"Size\" in en language exists\n    And attribute group \"Color\" named \"Color\" in en language exists\n    And attribute \"S\" named \"S\" in en language exists\n    And attribute \"M\" named \"M\" in en language exists\n    And attribute \"L\" named \"L\" in en language exists\n    And attribute \"White\" named \"White\" in en language exists\n    And attribute \"Black\" named \"Black\" in en language exists\n    And attribute \"Blue\" named \"Blue\" in en language exists\n    And shop \"shop1\" with name \"test_shop\" exists\n    And shop group \"default_shop_group\" with name \"Default\" exists\n    And I add a shop \"shop2\" with name \"test_second_shop\" and color \"red\" for the group \"default_shop_group\"\n    And I add a shop group \"test_second_shop_group\" with name \"Test second shop group\" and color \"green\"\n    And I add a shop \"shop3\" with name \"test_third_shop\" and color \"blue\" for the group \"test_second_shop_group\"\n    And I add a shop \"shop4\" with name \"test_shop_without_url\" and color \"blue\" for the group \"test_second_shop_group\"\n    And single shop context is loaded\n    And language \"french\" with locale \"fr-FR\" exists",
+      "file_path": "tests/Integration/Behaviour/Features/Scenario/Product/Shop/shop_management.feature",
+      "narrative": "  As a BO user I want to be able to copy product from shop to shop.",
+      "title": "Copy product from shop to shop."
+    },
+    "scenario": {
+      "gherkin": "  Scenario: I unassociate product from one shop the data are still present in the other shop\n    # By default the product is created for default shop\n    Given I add product \"productToDelete\" to shop \"shop2\" with following information:\n      | name[en-US] | magic staff |\n      | type        | standard    |\n    Then product productToDelete is associated to shop shop2\n    And default shop for product productToDelete is shop2\n    # First modify data for default shop\n    When I update product \"productToDelete\" for shop shop2 with following values:\n      | pack_stock_type               | pack_only    |\n      | minimal_quantity              | 12           |\n      | low_stock_threshold           | 42           |\n      | available_now_labels[en-US]   | get it now   |\n      | available_later_labels[en-US] | too late bro |\n      | available_date                | 1969-07-16   |\n    And I update product \"productToDelete\" stock for shop shop2 with following information:\n      | out_of_stock_type | available |\n      | delta_quantity    | 42        |\n      | location          | dtc       |\n    And I update product \"productToDelete\" for shop shop2 with following values:\n      | name[en-US]              | photo of super mug2 |\n      | description[en-US]       | super mug           |\n      | description_short[en-US] | Just a super mug    |\n    When I update product \"productToDelete\" for shop shop2 with following values:\n      | price           | 100.99          |\n      | ecotax          | 0               |\n      | tax rules group | US-AL Rate (4%) |\n      | on_sale         | true            |\n      | wholesale_price | 70              |\n      | unit_price      | 10              |\n      | unity           | bag of ten      |\n    # Copy values to another shop which was not associated yet\n    When I set following shops for product \"productToDelete\":\n      | source shop | shop2             |\n      | shops       | shop1,shop2,shop3 |\n    # update product with different values for shops\n    And I update product \"productToDelete\" for shop \"shop1\" with following values:\n      | name[en-US] | photo of super mug1 |\n    And I update product \"productToDelete\" for shop \"shop3\" with following values:\n      | name[en-US] | photo of super mug3 |\n    Then product productToDelete is associated to shops \"shop1,shop2,shop3\"\n    And product productToDelete is not associated to shop shop4\n    And default shop for product productToDelete is shop2\n    And product \"productToDelete\" localized \"name\" for shops \"shop1\" should be:\n      | locale | value               |\n      | en-US  | photo of super mug1 |\n    And product \"productToDelete\" localized \"name\" for shops \"shop2\" should be:\n      | locale | value               |\n      | en-US  | photo of super mug2 |\n    And product \"productToDelete\" localized \"name\" for shops \"shop3\" should be:\n      | locale | value               |\n      | en-US  | photo of super mug3 |\n    And product \"productToDelete\" localized \"description\" for shops \"shop1,shop2,shop3\" should be:\n      | locale | value     |\n      | en-US  | super mug |\n    And product \"productToDelete\" localized \"description_short\" for shops \"shop1,shop2,shop3\" should be:\n      | locale | value            |\n      | en-US  | Just a super mug |\n    Then product \"productToDelete\" should have following stock information for shops \"shop1,shop2,shop3\":\n      | pack_stock_type     | pack_only  |\n      | out_of_stock_type   | available  |\n      | quantity            | 42         |\n      | minimal_quantity    | 12         |\n      | location            | dtc        |\n      | low_stock_threshold | 42         |\n      | low_stock_alert     | true       |\n      | available_date      | 1969-07-16 |\n    And product \"productToDelete\" localized \"available_now_labels\" for shops \"shop1,shop2,shop3\" should be:\n      | locale | value      |\n      | en-US  | get it now |\n      | fr-FR  |            |\n    And product \"productToDelete\" localized \"available_later_labels\" for shops \"shop1,shop2,shop3\" should be:\n      | locale | value        |\n      | en-US  | too late bro |\n      | fr-FR  |              |\n    And product \"productToDelete\" should have following stock information for shops \"shop1,shop2,shop3\":\n      | pack_stock_type     | pack_only  |\n      | out_of_stock_type   | available  |\n      | quantity            | 42         |\n      | minimal_quantity    | 12         |\n      | location            | dtc        |\n      | low_stock_threshold | 42         |\n      | low_stock_alert     | true       |\n      | available_date      | 1969-07-16 |\n    And product \"productToDelete\" localized \"available_now_labels\" for shops \"shop1,shop2,shop3\" should be:\n      | locale | value      |\n      | en-US  | get it now |\n      | fr-FR  |            |\n    And product \"productToDelete\" localized \"available_later_labels\" for shops \"shop1,shop2,shop3\" should be:\n      | locale | value        |\n      | en-US  | too late bro |\n      | fr-FR  |              |\n    Then product productToDelete should have following prices information for shops \"shop1,shop2,shop3\":\n      | price              | 100.99          |\n      | price_tax_included | 105.0296        |\n      | ecotax             | 0               |\n      | tax rules group    | US-AL Rate (4%) |\n      | on_sale            | true            |\n      | wholesale_price    | 70              |\n      | unit_price         | 10              |\n      | unity              | bag of ten      |\n      | unit_price_ratio   | 10.099          |\n    # Now I unasociate product from its default shop, a new default shop is assigned\n    When I set following shops for product \"productToDelete\":\n      | source shop | shop1       |\n      | shops       | shop1,shop3 |\n    Then product productToDelete is associated to shops \"shop1,shop3\"\n    And product productToDelete is not associated to shops \"shop2,shop4\"\n    And default shop for product productToDelete is shop1\n    # Check that values are still present for other shops and that they were not altered\n    And product \"productToDelete\" localized \"name\" for shops \"shop1\" should be:\n      | locale | value               |\n      | en-US  | photo of super mug1 |\n    And product \"productToDelete\" localized \"name\" for shops \"shop3\" should be:\n      | locale | value               |\n      | en-US  | photo of super mug3 |\n    And product \"productToDelete\" localized \"description\" for shops \"shop1,shop3\" should be:\n      | locale | value     |\n      | en-US  | super mug |\n    And product \"productToDelete\" localized \"description_short\" for shops \"shop1,shop3\" should be:\n      | locale | value            |\n      | en-US  | Just a super mug |\n    Then product \"productToDelete\" should have following stock information for shops \"shop1,shop3\":\n      | pack_stock_type     | pack_only  |\n      | out_of_stock_type   | available  |\n      | quantity            | 42         |\n      | minimal_quantity    | 12         |\n      | location            | dtc        |\n      | low_stock_threshold | 42         |\n      | low_stock_alert     | true       |\n      | available_date      | 1969-07-16 |\n    And product \"productToDelete\" localized \"available_now_labels\" for shops \"shop1,shop3\" should be:\n      | locale | value      |\n      | en-US  | get it now |\n      | fr-FR  |            |\n    And product \"productToDelete\" localized \"available_later_labels\" for shops \"shop1,shop3\" should be:\n      | locale | value        |\n      | en-US  | too late bro |\n      | fr-FR  |              |\n    And product \"productToDelete\" should have following stock information for shops \"shop1,shop3\":\n      | pack_stock_type     | pack_only  |\n      | out_of_stock_type   | available  |\n      | quantity            | 42         |\n      | minimal_quantity    | 12         |\n      | location            | dtc        |\n      | low_stock_threshold | 42         |\n      | low_stock_alert     | true       |\n      | available_date      | 1969-07-16 |\n    And product \"productToDelete\" localized \"available_now_labels\" for shops \"shop1,shop3\" should be:\n      | locale | value      |\n      | en-US  | get it now |\n      | fr-FR  |            |\n    And product \"productToDelete\" localized \"available_later_labels\" for shops \"shop1,shop3\" should be:\n      | locale | value        |\n      | en-US  | too late bro |\n      | fr-FR  |              |\n    Then product productToDelete should have following prices information for shops \"shop1,shop3\":\n      | price              | 100.99          |\n      | price_tax_included | 105.0296        |\n      | ecotax             | 0               |\n      | tax rules group    | US-AL Rate (4%) |\n      | on_sale            | true            |\n      | wholesale_price    | 70              |\n      | unit_price         | 10              |\n      | unity              | bag of ten      |\n      | unit_price_ratio   | 10.099          |\n    # Now I delete product from remaining shops it should be completely removed\n    When I delete product productToDelete from shops \"shop1,shop3\"\n    Then product productToDelete should not exist anymore",
+      "kind": "scenario",
+      "line": 290,
+      "tags": [
+        "@restore-products-before-feature",
+        "@clear-cache-before-feature",
+        "@restore-shops-after-feature",
+        "@restore-languages-after-feature",
+        "@reset-img-after-feature",
+        "@clear-cache-after-feature",
+        "@product-multishop",
+        "@shop-management"
+      ],
+      "title": "I unassociate product from one shop the data are still present in the other shop"
+    }
+  },
+  "official_result": {
+    "instance_id": "prestashop/tests/Integration/Behaviour/Features/Scenario/Product/Shop/shop_management.feature:290",
+    "project": "prestashop",
+    "view": "th",
+    "outcome": "generation_failure",
+    "passed": false,
+    "api_f1": null,
+    "coverage_j": null,
+    "recall": null,
+    "kill_complete": false,
+    "kill_complete_strict": false,
+    "kill_complete_95": false,
+    "mutation_status": "not_passed",
+    "mutation_baseline": null,
+    "behaviour_status": "measured",
+    "n_gt_kills": 34,
+    "n_scored": 0,
+    "n_killed": 0,
+    "n_dropped": 0,
+    "n_crash_kills": 0,
+    "n_timeout_kills": 0,
+    "exclusion": null,
+    "engine_outcome": "no_files_returned",
+    "harness_version": 27,
+    "rejected_files": []
+  },
+  "population_exclusion": null,
+  "generated_files": [],
+  "final_agent_message": "I can’t provide a credible implementation that makes this scenario pass from the available context alone. It needs definitions for the full Background and scenario, including shop setup, product creation and updates, multishop association changes, and detailed per-shop assertions. The retained helpers provide command/query-bus access, but not the setup or the product steps needed to complete that flow.\n\nI haven’t added a partial step-definition file: matching steps without performing or checking the required behavior would risk a vacuous pass, and strict Behat execution would still fail on the undefined steps.",
+  "denied_commands": [
+    {
+      "id": "item_1",
+      "type": "command_execution",
+      "command": "/usr/bin/bash -lc 'ls repo/tests/Integration/Behaviour/Features/Context && rg -n \"SetProductShops|ProductForEditing|product .*associated|localized .* for shops|add product\" repo/tests/Integration/Behaviour/Features/Context repo/tests/Integration/Behaviour/Features/Context*'",
+      "aggregated_output": "AbstractPrestaShopFeatureContext.php\nCartAwareTrait.php\nCommonFeatureContext.php\nConfiguration\nContextFeatureContext.php\nDomain\nLastExceptionTrait.php\nOrderMessageContext.php\nSharedStorage.php\nSharedStorageTrait.php\nUtil\n/usr/bin/bash: line 1: /usr/bin/rg: Permission denied\n",
+      "exit_code": 126,
+      "status": "failed"
+    }
+  ],
+  "diagnostic_addendum": null,
+  "trace_path": "results/test-generation-20261114/req2test/tasks/e09e0a14ab086ee3fb3c/trajectory-excerpt.json"
+}

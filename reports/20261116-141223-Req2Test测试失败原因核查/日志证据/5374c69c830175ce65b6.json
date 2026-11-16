@@ -1,0 +1,112 @@
+{
+  "item_id": "prestashop/tests/Integration/Behaviour/Features/Scenario/Order/order_from_bo.feature:497",
+  "outcome": "undefined_steps",
+  "outcomes_all_runs": [
+    "undefined_steps"
+  ],
+  "per_step": [
+    {
+      "error": null,
+      "result": "passed",
+      "seconds": 0.0353,
+      "text": "email sending is disabled"
+    },
+    {
+      "error": null,
+      "result": "undefined",
+      "seconds": 0.0057,
+      "text": "the current currency is \"USD\""
+    }
+  ],
+  "index_errors": {},
+  "stdout_tail": "            |\n      | message             | test                       |\n      | payment module name | dummy_payment              |\n      | status              | Awaiting bank wire payment |\n\n  Scenario: Change order shipping address\n    Given I create customer \"testFirstName\" with following details:\n      | firstName | testFirstName       |\n      | lastName  | testLastName        |\n      | email     | test@mailexample.eu |\n      | password  | secret              |\n    When I add new address to customer \"testFirstName\" with following details:\n      | Address alias | test-address                |\n      | First name    | testFirstName               |\n      | Last name     | testLastName                |\n      | Address       | Work address st. 1234567890 |\n      | City          | Birmingham                  |\n      | Country       | United States               |\n      | State         | Alabama                     |\n      | Postal code   | 12345                       |\n    When I change order \"bo_order1\" shipping address to \"test-address\"\n    Then order \"bo_order1\" shipping address should be \"test-address\"\n\n1 scenario (1 undefined)\n16 steps (1 passed, 11 undefined, 4 skipped)\n2m34.15s (183.64Mb)\n\n--- Use --snippets-for CLI option to generate snippets for following bench suite steps:\n\n    And the current currency is \"USD\"\n    And country \"US\" is enabled\n    And the module \"dummy_payment\" is installed\n    And I am logged in as \"test@prestashop.com\" employee\n    And there is customer \"testCustomer\" with email \"pub@prestashop.com\"\n    And customer \"testCustomer\" has address in \"US\" country\n    And a carrier \"default_carrier\" with name \"My carrier\" exists\n    And I create an empty cart \"dummy_cart\" for customer \"testCustomer\"\n    And I select \"US\" address as delivery and invoice address for customer \"testCustomer\" in cart \"dummy_cart\"\n    And I add 2 products \"Mug The best is yet to come\" to the cart \"dummy_cart\"\n    And I add order \"bo_order1\" with the following details:\n\n",
+  "bench_meta": {
+    "dependency_profile": [
+      "database"
+    ],
+    "live_background_step_count": 12,
+    "live_step_count": 4,
+    "n_closure_contexts": 12,
+    "n_closure_files": 12,
+    "n_oracle_steps": 1,
+    "round_trip_seconds": 92.29,
+    "signature": "1e0dbc968d38",
+    "steps_removable": 15,
+    "steps_retained": 1,
+    "tags": [
+      "@restore-all-tables-before-feature",
+      "@clear-cache-before-feature",
+      "@order-from-bo"
+    ],
+    "upstream_selected": null
+  },
+  "written_files": [
+    "tests/Integration/Behaviour/Features/Context/Order/ChangeOrderShippingAddressContext.php"
+  ],
+  "_source": "/root/lby-docker/req2test/user/benchmark/runs/req2test-recovery8-20261113-v1-prestashop/prestashop/th/exec.jsonl",
+  "requirement": {
+    "feature": {
+      "background": "  Background:\n    Given email sending is disabled\n    #    todo: improve context to accept EditableCurrency|ReferenceCurrency instead of legacy Currency object\n    #    todo: use domain GetCurrencyForEditing|GetReferenceCurrency to add currency to context\n    And the current currency is \"USD\"\n    #    todo: use domain context for Country\n    And country \"US\" is enabled\n    And the module \"dummy_payment\" is installed\n    #    todo: use domain context to get employee when is merged: https://github.com/PrestaShop/PrestaShop/pull/16757\n    And I am logged in as \"test@prestashop.com\" employee\n     #    todo: use domain context to get customer: GetCustomerForViewing;\n     #    todo: find a way how to get customer object/id by its properties without using legacy objects\n    And there is customer \"testCustomer\" with email \"pub@prestashop.com\"\n    And customer \"testCustomer\" has address in \"US\" country\n    And a carrier \"default_carrier\" with name \"My carrier\" exists\n    And I create an empty cart \"dummy_cart\" for customer \"testCustomer\"\n    #    todo: find a way to create country without legacy object\n    And I select \"US\" address as delivery and invoice address for customer \"testCustomer\" in cart \"dummy_cart\"\n    And I add 2 products \"Mug The best is yet to come\" to the cart \"dummy_cart\"\n    And I add order \"bo_order1\" with the following details:\n      | cart                | dummy_cart                 |\n      | message             | test                       |\n      | payment module name | dummy_payment              |\n      | status              | Awaiting bank wire payment |",
+      "file_path": "tests/Integration/Behaviour/Features/Scenario/Order/order_from_bo.feature",
+      "narrative": "  In order to manage orders for FO customers\n  As a BO user\n  I need to be able to customize orders from the BO\n\n  #  todo: fix the failing scenarios/code\n  #  todo: make scenarios independent\n  #  todo: change legacy classes with domain where possible\n  #  todo: increase code re-use",
+      "title": "Order from Back Office (BO)"
+    },
+    "scenario": {
+      "gherkin": "  Scenario: Change order shipping address\n    Given I create customer \"testFirstName\" with following details:\n      | firstName        | testFirstName                      |\n      | lastName         | testLastName                       |\n      | email            | test@mailexample.eu                |\n      | password         | secret                             |\n    When I add new address to customer \"testFirstName\" with following details:\n      | Address alias    | test-address                       |\n      | First name       | testFirstName                      |\n      | Last name        | testLastName                       |\n      | Address          | Work address st. 1234567890        |\n      | City             | Birmingham                         |\n      | Country          | United States                      |\n      | State            | Alabama                            |\n      | Postal code      | 12345                              |\n    When I change order \"bo_order1\" shipping address to \"test-address\"\n    Then order \"bo_order1\" shipping address should be \"test-address\"",
+      "kind": "scenario",
+      "line": 497,
+      "tags": [
+        "@restore-all-tables-before-feature",
+        "@clear-cache-before-feature",
+        "@order-from-bo"
+      ],
+      "title": "Change order shipping address"
+    }
+  },
+  "official_result": {
+    "instance_id": "prestashop/tests/Integration/Behaviour/Features/Scenario/Order/order_from_bo.feature:497",
+    "project": "prestashop",
+    "view": "th",
+    "outcome": "binding_failure",
+    "passed": false,
+    "api_f1": null,
+    "coverage_j": null,
+    "recall": null,
+    "kill_complete": false,
+    "kill_complete_strict": false,
+    "kill_complete_95": false,
+    "mutation_status": "not_passed",
+    "mutation_baseline": null,
+    "behaviour_status": "measured",
+    "n_gt_kills": 21,
+    "n_scored": 0,
+    "n_killed": 0,
+    "n_dropped": 0,
+    "n_crash_kills": 0,
+    "n_timeout_kills": 0,
+    "exclusion": null,
+    "engine_outcome": "undefined_steps",
+    "harness_version": 27,
+    "rejected_files": []
+  },
+  "population_exclusion": null,
+  "generated_files": [
+    {
+      "path": "tests/Integration/Behaviour/Features/Context/Order/ChangeOrderShippingAddressContext.php",
+      "sha256": "01d70f9a4789b913436967fab2719479d2dcd4a66ad2bc28dc61accaafa0f7e2"
+    }
+  ],
+  "final_agent_message": "Added [ChangeOrderShippingAddressContext.php](/root/lby-docker/req2test/user/runs/req2test-subset160-20261112-v1/generation/5374c69c830175ce65b6/attempt-2/workspaces/0000/repo/tests/Integration/Behaviour/Features/Context/Order/ChangeOrderShippingAddressContext.php) with steps to create the customer and address, change the order’s delivery address through the command bus, and verify it through the order query bus.\n\nThe file passes PHP syntax validation. I could not verify the scenario end to end: its Background also requires glue for setting up the currency, country, employee, module, cart, carrier, and order, which is not present in the retained contexts.",
+  "denied_commands": [
+    {
+      "id": "item_1",
+      "type": "command_execution",
+      "command": "/usr/bin/bash -lc 'pwd; rg -n \"order_from_bo|ChangeOrderDeliveryAddress|AddCustomerAddress|CountryStateByIdChoiceProvider|CountryByIdChoiceProvider\" repo/tests/Integration/Behaviour repo/src repo/classes | head -150'",
+      "aggregated_output": "/root/lby-docker/req2test/user/runs/req2test-subset160-20261112-v1/generation/5374c69c830175ce65b6/attempt-2/workspaces/0000\n/usr/bin/bash: line 1: /usr/bin/rg: Permission denied\n",
+      "exit_code": 0,
+      "status": "completed"
+    }
+  ],
+  "diagnostic_addendum": null,
+  "trace_path": "results/test-generation-20261114/req2test/tasks/5374c69c830175ce65b6/trajectory-excerpt.json"
+}

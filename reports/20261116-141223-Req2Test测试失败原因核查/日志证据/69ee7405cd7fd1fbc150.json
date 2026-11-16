@@ -1,0 +1,99 @@
+{
+  "item_id": "kapua/service/device/registry/test/src/test/resources/features/DeviceEvent.feature:40",
+  "outcome": "parse_or_compile_error",
+  "outcomes_all_runs": [
+    "no_scenario_ran"
+  ],
+  "per_step": [],
+  "index_errors": {
+    "service/device/registry/test/src/test/java/org/eclipse/kapua/service/device/registry/test/r2t/generated/DeviceEventNullScopeSteps.java": "44:94 error: method create in interface KapuaEntityService<E,C> cannot be applied to given types;"
+  },
+  "stdout_tail": "ed/DeviceEventNullScopeSteps.java:[44,94] error: method create in interface KapuaEntityService<E,C> cannot be applied to given types;\n  required: DeviceCreator\n  found:    KapuaId,DeviceCreator\n  reason: actual and formal argument lists differ in length\n  where E,C are type-variables:\n    E extends KapuaEntity declared in interface KapuaEntityService\n    C extends KapuaEntityCreator<E> declared in interface KapuaEntityService\n[INFO] 1 error\n[INFO] -------------------------------------------------------------\n[INFO] ------------------------------------------------------------------------\n[INFO] BUILD FAILURE\n[INFO] ------------------------------------------------------------------------\n[INFO] Total time:  6.155 s\n[INFO] Finished at: 2026-11-12T17:33:23Z\n[INFO] ------------------------------------------------------------------------\n[ERROR] Failed to execute goal org.apache.maven.plugins:maven-compiler-plugin:3.6.1:testCompile (default-testCompile) on project kapua-device-registry-test: Compilation failure\n[ERROR] /work/service/device/registry/test/src/test/java/org/eclipse/kapua/service/device/registry/test/r2t/generated/DeviceEventNullScopeSteps.java:[44,94] error: method create in interface KapuaEntityService<E,C> cannot be applied to given types;\n[ERROR]   required: DeviceCreator\n[ERROR]   found:    KapuaId,DeviceCreator\n[ERROR]   reason: actual and formal argument lists differ in length\n[ERROR]   where E,C are type-variables:\n[ERROR]     E extends KapuaEntity declared in interface KapuaEntityService\n[ERROR]     C extends KapuaEntityCreator<E> declared in interface KapuaEntityService\n[ERROR] -> [Help 1]\n[ERROR] \n[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.\n[ERROR] Re-run Maven using the -X switch to enable full debug logging.\n[ERROR] \n[ERROR] For more information about the errors and possible solutions, please read the following articles:\n[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/MojoFailureException\n",
+  "bench_meta": {
+    "dependency_profile": [],
+    "live_background_step_count": 0,
+    "live_step_count": 6,
+    "n_closure_contexts": 1,
+    "n_closure_files": 1,
+    "n_oracle_steps": 2,
+    "round_trip_seconds": 127.96,
+    "signature": "a8147ce44d12",
+    "steps_removable": 3,
+    "steps_retained": 3,
+    "tags": [
+      "@deviceRegistry",
+      "@deviceEvents",
+      "@env_none"
+    ],
+    "upstream_selected": null
+  },
+  "written_files": [
+    "service/device/registry/test/src/test/java/org/eclipse/kapua/service/device/registry/test/r2t/generated/DeviceEventNullScopeSteps.java"
+  ],
+  "_source": "/root/lby-docker/req2test/user/benchmark/runs/req2test-recovery8-20261113-v1-kapua/kapua/th/exec.jsonl",
+  "requirement": {
+    "feature": {
+      "background": null,
+      "file_path": "service/device/registry/test/src/test/resources/features/DeviceEvent.feature",
+      "narrative": "  The Device Event service is responsible for handling the incoming device\n  events.",
+      "title": "Device Event CRUD tests"
+    },
+    "scenario": {
+      "gherkin": "  Scenario: Create an event with a null scope ID\n  It should be impossible to create an event with a null scope ID. Such attempt\n  must raise an exception.\n\n    Given A device named \"first\"\n    And A device named \"second\"\n    Given A null scope\n    And I expect the exception \"KapuaIllegalNullArgumentException\" with the text \"An illegal null value was provided\"\n    When A \"CREATE\" event from device \"first\"\n    Then An exception was thrown",
+      "kind": "scenario",
+      "line": 40,
+      "tags": [
+        "@deviceRegistry",
+        "@deviceEvents",
+        "@env_none"
+      ],
+      "title": "Create an event with a null scope ID"
+    }
+  },
+  "official_result": {
+    "instance_id": "kapua/service/device/registry/test/src/test/resources/features/DeviceEvent.feature:40",
+    "project": "kapua",
+    "view": "th",
+    "outcome": "compilation_failure",
+    "passed": false,
+    "api_f1": null,
+    "coverage_j": null,
+    "recall": null,
+    "kill_complete": false,
+    "kill_complete_strict": false,
+    "kill_complete_95": false,
+    "mutation_status": "not_passed",
+    "mutation_baseline": null,
+    "behaviour_status": "measured",
+    "n_gt_kills": 38,
+    "n_scored": 0,
+    "n_killed": 0,
+    "n_dropped": 0,
+    "n_crash_kills": 0,
+    "n_timeout_kills": 0,
+    "exclusion": null,
+    "engine_outcome": "parse_or_compile_error",
+    "harness_version": 27,
+    "rejected_files": []
+  },
+  "population_exclusion": null,
+  "generated_files": [
+    {
+      "path": "service/device/registry/test/src/test/java/org/eclipse/kapua/service/device/registry/test/r2t/generated/DeviceEventNullScopeSteps.java",
+      "sha256": "f9737e728f4389e24449ea9b1e6f1b8acd0aa53dcda0bc9ef097ee82f433abb3"
+    }
+  ],
+  "final_agent_message": "Added [DeviceEventNullScopeSteps.java](/root/lby-docker/req2test/user/runs/req2test-subset160-20261112-v1/generation/69ee7405cd7fd1fbc150/attempt-1/workspaces/0000/repo/service/device/registry/test/src/test/java/org/eclipse/kapua/service/device/registry/test/r2t/generated/DeviceEventNullScopeSteps.java). It creates the two devices, then creates an event using the null scope from the retained `A null scope` step and passes any exception to the retained expected-exception verifier.\n\nI haven’t run the harness; this workspace does not execute the submitted test artifacts.",
+  "denied_commands": [
+    {
+      "id": "item_1",
+      "type": "command_execution",
+      "command": "/usr/bin/bash -lc 'ls repo/service/device/registry/test/src/test/java/org/eclipse/kapua/service/device/registry/test && rg \"Device Event|A device named|expect the exception|An exception was thrown\" repo/service/device/registry/test/src/test/java repo/qa/common -n'",
+      "aggregated_output": "DeviceRegistryLocatorConfiguration.java\nR2TBenchRunDeviceRegistryUnitTest.java\nR2TStepTagListener.java\nRunDeviceRegistryUnitTest.java\n/usr/bin/bash: line 1: /usr/bin/rg: Permission denied\n",
+      "exit_code": 126,
+      "status": "failed"
+    }
+  ],
+  "diagnostic_addendum": null,
+  "trace_path": "results/test-generation-20261114/req2test/tasks/69ee7405cd7fd1fbc150/trajectory-excerpt.json"
+}

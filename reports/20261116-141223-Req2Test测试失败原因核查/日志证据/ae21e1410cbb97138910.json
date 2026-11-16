@@ -1,0 +1,70 @@
+{
+  "item_id": "coreshop/features/domain/product/price_rules/category_condition.feature:29",
+  "outcome": "no_files_returned",
+  "outcomes_all_runs": null,
+  "per_step": null,
+  "index_errors": {},
+  "stdout_tail": null,
+  "bench_meta": null,
+  "written_files": [],
+  "_source": "/root/lby-docker/req2test/user/benchmark/runs/req2test-recovery8-20261113-v1-coreshop/coreshop/th/exec.jsonl",
+  "requirement": {
+    "feature": {
+      "background": "  Background:\n    Given the site operates on a store in \"Austria\"\n    And the site has a currency \"Euro\" with iso \"EUR\"\n    And I am in country \"Austria\"\n    And the site has two categories \"Shoes\" and \"Coats\"\n    And the site has a category \"Sneakers\"\n    And the category \"Sneakers\" is child of category \"Shoes\"\n    And the site has a product \"Shoe\" priced at 100\n    And it is in category \"Shoes\"\n    And the site has a product \"Shoe 2\" priced at 150\n    And it is in category \"Shoes\"\n    And the site has a product \"Jacket\" priced at 400\n    And it is in category \"Coats\"\n    And the site has a product \"Sneaker\" priced at 3500\n    And it is in category \"Sneakers\"",
+      "file_path": "features/domain/product/price_rules/category_condition.feature",
+      "narrative": "  In order to extend my catalog\n  The catalog has a price-rule for a category\n  I want to create a new product",
+      "title": "Adding a new Product"
+    },
+    "scenario": {
+      "gherkin": "  Scenario: Add a new category product price rule which is invalid\n    Given adding a product price rule named \"category-discount\"\n    And the price rule is active\n    And the price rule has a condition categories with category \"Shoes\"\n    And the price rule should be invalid for product \"Jacket\"",
+      "kind": "scenario",
+      "line": 29,
+      "tags": [
+        "@domain",
+        "@product"
+      ],
+      "title": "Add a new category product price rule which is invalid"
+    }
+  },
+  "official_result": {
+    "instance_id": "coreshop/features/domain/product/price_rules/category_condition.feature:29",
+    "project": "coreshop",
+    "view": "th",
+    "outcome": "generation_failure",
+    "passed": false,
+    "api_f1": null,
+    "coverage_j": null,
+    "recall": null,
+    "kill_complete": false,
+    "kill_complete_strict": false,
+    "kill_complete_95": false,
+    "mutation_status": "not_passed",
+    "mutation_baseline": null,
+    "behaviour_status": "measured",
+    "n_gt_kills": 98,
+    "n_scored": 0,
+    "n_killed": 0,
+    "n_dropped": 0,
+    "n_crash_kills": 0,
+    "n_timeout_kills": 0,
+    "exclusion": null,
+    "engine_outcome": "no_files_returned",
+    "harness_version": 27,
+    "rejected_files": []
+  },
+  "population_exclusion": null,
+  "generated_files": [],
+  "final_agent_message": "`Jacket` must be a real product in the product repository, and the `\"Shoes\"` category must be a real category; otherwise the production category checker can’t evaluate the condition. Since the removed Behat contexts also supplied the background fixtures, a minimal context with no-op background steps would not make this scenario reliably pass.\n\nI haven’t added code: the retained files don’t show enough fixture setup to recreate those products, categories, store, and currency safely. The needed context should define the background fixture steps, create and persist those objects, build an active `ProductPriceRule` with a `categories` condition configured for `\"Shoes\"`, then assert that the rule-validation processor returns `false` for `Jacket`.",
+  "denied_commands": [
+    {
+      "id": "item_1",
+      "type": "command_execution",
+      "command": "/usr/bin/bash -lc \"pwd && rg --files repo | head -80 && rg --files repo | rg 'TARGET_CONTRACTS|TestBundle|RuleValidationProcessor|PriceRule|Product' | head -100\"",
+      "aggregated_output": "/root/lby-docker/req2test/user/runs/full-baseline-20261111-v1/generation/ae21e1410cbb97138910/attempt-1/workspaces/0000\n/usr/bin/bash: line 1: /usr/bin/rg: Permission denied\n/usr/bin/bash: line 1: /usr/bin/rg: Permission denied\n/usr/bin/bash: line 1: /usr/bin/rg: Permission denied\n",
+      "exit_code": 0,
+      "status": "completed"
+    }
+  ],
+  "diagnostic_addendum": null,
+  "trace_path": "results/test-generation-20261114/req2test/tasks/ae21e1410cbb97138910/trajectory-excerpt.json"
+}

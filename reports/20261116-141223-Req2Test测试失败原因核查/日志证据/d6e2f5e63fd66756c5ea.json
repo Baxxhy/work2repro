@@ -1,0 +1,97 @@
+{
+  "item_id": "algorand-sdk/features/unit/abijson.feature:33",
+  "outcome": "parse_or_compile_error",
+  "outcomes_all_runs": [
+    "no_scenario_ran"
+  ],
+  "per_step": [],
+  "index_errors": {
+    "src/test/java/com/algorand/algosdk/unit/AbiJsonSteps.java": "41:47 cannot find symbol"
+  },
+  "stdout_tail": "ces to target/test-classes\n[INFO] \n[INFO] --- compiler:3.8.1:testCompile (default-testCompile) @ algosdk ---\n[INFO] Changes detected - recompiling the module!\n[INFO] Compiling 37 source files to /work/target/test-classes\n[INFO] /work/src/test/java/com/algorand/algosdk/transaction/TestTransaction.java: Some input files use or override a deprecated API.\n[INFO] /work/src/test/java/com/algorand/algosdk/transaction/TestTransaction.java: Recompile with -Xlint:deprecation for details.\n[INFO] -------------------------------------------------------------\n[ERROR] COMPILATION ERROR : \n[INFO] -------------------------------------------------------------\n[ERROR] /work/src/test/java/com/algorand/algosdk/unit/AbiJsonSteps.java:[41,47] cannot find symbol\n  symbol:   method readAllBytes()\n  location: variable input of type java.io.InputStream\n[INFO] 1 error\n[INFO] -------------------------------------------------------------\n[INFO] ------------------------------------------------------------------------\n[INFO] BUILD FAILURE\n[INFO] ------------------------------------------------------------------------\n[INFO] Total time:  4.882 s\n[INFO] Finished at: 2026-11-12T12:28:50Z\n[INFO] ------------------------------------------------------------------------\n[ERROR] Failed to execute goal org.apache.maven.plugins:maven-compiler-plugin:3.8.1:testCompile (default-testCompile) on project algosdk: Compilation failure\n[ERROR] /work/src/test/java/com/algorand/algosdk/unit/AbiJsonSteps.java:[41,47] cannot find symbol\n[ERROR]   symbol:   method readAllBytes()\n[ERROR]   location: variable input of type java.io.InputStream\n[ERROR] -> [Help 1]\n[ERROR] \n[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.\n[ERROR] Re-run Maven using the -X switch to enable full debug logging.\n[ERROR] \n[ERROR] For more information about the errors and possible solutions, please read the following articles:\n[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/MojoFailureException\n",
+  "bench_meta": {
+    "dependency_profile": [],
+    "live_background_step_count": 0,
+    "live_step_count": 4,
+    "n_closure_contexts": 1,
+    "n_closure_files": 1,
+    "n_oracle_steps": 2,
+    "round_trip_seconds": null,
+    "signature": "0bb00cba8e3e",
+    "steps_removable": 4,
+    "steps_retained": 0,
+    "tags": [
+      "@unit",
+      "@unit.abijson"
+    ],
+    "upstream_selected": null
+  },
+  "written_files": [
+    "src/test/java/com/algorand/algosdk/unit/AbiJsonSteps.java"
+  ],
+  "_source": "/root/lby-docker/req2test/user/benchmark/runs/req2test-recovery8-20261113-v1-algorand-sdk/algorand-sdk/th/exec.jsonl",
+  "requirement": {
+    "feature": {
+      "background": null,
+      "file_path": "features/unit/abijson.feature",
+      "narrative": null,
+      "title": "AbiJson"
+    },
+    "scenario": {
+      "gherkin": "  Scenario Outline: Create and serialize Method object into json with arg names\n    When I create the Method object with name \"<name>\" first argument name \"<firstargname>\" first argument type \"<firstargtype>\" second argument name \"<secondargname>\" second argument type \"<secondargtype>\" and return type \"<returntype>\"\n    And I serialize the Method object into json\n    Then the produced json should equal \"<jsonfile>\" loaded from \"<directory>\"\n    And the deserialized json should equal the original Method object\n\n    Examples:\n      | name | firstargname | firstargtype | secondargname | secondargtype | returntype | jsonfile                   | directory         |\n      | add  | first        | uint32       | second        | uint32        | uint32     | addMethodWithArgNames.json | abi_responsejsons |",
+      "kind": "outline",
+      "line": 33,
+      "tags": [
+        "@unit",
+        "@unit.abijson"
+      ],
+      "title": "Create and serialize Method object into json with arg names"
+    }
+  },
+  "official_result": {
+    "instance_id": "algorand-sdk/features/unit/abijson.feature:33",
+    "project": "algorand-sdk",
+    "view": "th",
+    "outcome": "compilation_failure",
+    "passed": false,
+    "api_f1": null,
+    "coverage_j": null,
+    "recall": null,
+    "kill_complete": false,
+    "kill_complete_strict": false,
+    "kill_complete_95": false,
+    "mutation_status": "not_passed",
+    "mutation_baseline": null,
+    "behaviour_status": "measured",
+    "n_gt_kills": 17,
+    "n_scored": 0,
+    "n_killed": 0,
+    "n_dropped": 0,
+    "n_crash_kills": 0,
+    "n_timeout_kills": 0,
+    "exclusion": null,
+    "engine_outcome": "parse_or_compile_error",
+    "harness_version": 27,
+    "rejected_files": []
+  },
+  "population_exclusion": null,
+  "generated_files": [
+    {
+      "path": "src/test/java/com/algorand/algosdk/unit/AbiJsonSteps.java",
+      "sha256": "a4c4137d974492e804f063e2e994c1bf64778e9df73447a0f99e0f66a25cd505"
+    }
+  ],
+  "final_agent_message": "Added [AbiJsonSteps.java](/root/lby-docker/req2test/user/runs/full-baseline-20261111-v1/generation/d6e2f5e63fd66756c5ea/attempt-2/workspaces/0000/repo/src/test/java/com/algorand/algosdk/unit/AbiJsonSteps.java). It creates the named-argument `Method`, serializes and deserializes it with `Encoder`, compares the JSON to the classpath fixture, and checks object equality.",
+  "denied_commands": [
+    {
+      "id": "item_1",
+      "type": "command_execution",
+      "command": "/usr/bin/bash -lc 'rg --files repo/src/test/java/com/algorand/algosdk/unit repo/src/test/resources | head -60 && rg -n \"AbiJson|Method object|produced json|Method\" repo/src/test/java repo/src/test/resources repo/src/main/java/com/algorand/algosdk/abi/Method.java'",
+      "aggregated_output": "/usr/bin/bash: line 1: /usr/bin/rg: Permission denied\n/usr/bin/bash: line 1: /usr/bin/rg: Permission denied\n",
+      "exit_code": 126,
+      "status": "failed"
+    }
+  ],
+  "diagnostic_addendum": null,
+  "trace_path": "results/test-generation-20261114/req2test/tasks/d6e2f5e63fd66756c5ea/trajectory-excerpt.json"
+}

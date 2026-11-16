@@ -1,0 +1,145 @@
+{
+  "item_id": "coddy-agent/features/subagents_http.feature:32",
+  "outcome": "passed",
+  "outcomes_all_runs": [
+    "passed"
+  ],
+  "per_step": [
+    {
+      "error": null,
+      "result": "passed",
+      "seconds": 6.5664e-05,
+      "text": "a running coddy http server with a session"
+    },
+    {
+      "error": null,
+      "result": "passed",
+      "seconds": 0.0003039,
+      "text": "the server workspace has a subagent definition \"reviewer\" under .coddy/agents"
+    },
+    {
+      "error": null,
+      "result": "passed",
+      "seconds": 0.005747159,
+      "text": "I GET the subagent catalog for the server workspace"
+    },
+    {
+      "error": null,
+      "result": "passed",
+      "seconds": 4.6597e-05,
+      "text": "the catalog names the built-in \"explore\""
+    },
+    {
+      "error": null,
+      "result": "passed",
+      "seconds": 6.8128e-05,
+      "text": "the catalog names \"reviewer\" with scope \"project\" needing approval"
+    },
+    {
+      "error": null,
+      "result": "passed",
+      "seconds": 0.003174273,
+      "text": "I POST trust for the subagent \"reviewer\" in the server workspace"
+    },
+    {
+      "error": null,
+      "result": "passed",
+      "seconds": 0.002605066,
+      "text": "I GET the subagent catalog for the server workspace"
+    },
+    {
+      "error": null,
+      "result": "passed",
+      "seconds": 0.00034677,
+      "text": "the catalog names \"reviewer\" as trusted"
+    }
+  ],
+  "index_errors": {},
+  "stdout_tail": "=== RUN   TestSubagentsHTTPFeature\n=== RUN   TestSubagentsHTTPFeature/The_catalog_lists_built-ins_and_project_definitions_with_their_trust_state\n2026/11/12 13:14:54 INFO session created id=sess_1db2f0aba140ce92eb0a222b cwd=/r2t-go/tmp/TestSubagentsHTTPFeature3505900874/001 mode=agent\n2026/11/12 13:14:54 INFO subagent approved for workspace name=reviewer workspace=/r2t-go/tmp/TestSubagentsHTTPFeature3505900874/001 digest=8e6c61416d348f8ccccb2c9701e3d3c6039312450c402e58650a779b4ed7926e\nR2T_GODOG_EXIT TestSubagentsHTTPFeature 0\n--- PASS: TestSubagentsHTTPFeature (0.03s)\n    --- PASS: TestSubagentsHTTPFeature/The_catalog_lists_built-ins_and_project_definitions_with_their_trust_state (0.03s)\nPASS\nok  \tgithub.com/EvilFreelancer/coddy-agent/external/httpserver\t0.075s\n",
+  "bench_meta": {
+    "dependency_profile": [
+      "network"
+    ],
+    "live_background_step_count": 0,
+    "live_step_count": 8,
+    "n_closure_contexts": 0,
+    "n_closure_files": 2,
+    "n_oracle_steps": 3,
+    "round_trip_seconds": 128.5,
+    "signature": "7212b517655d",
+    "steps_removable": 8,
+    "steps_retained": 0,
+    "tags": [],
+    "upstream_selected": null
+  },
+  "written_files": [
+    "external/httpserver/bdd_compaction_http_test.go",
+    "external/httpserver/bdd_subagents_test.go"
+  ],
+  "_source": "/root/lby-docker/req2test/user/benchmark/runs/req2test-recovery8-20261113-v1-coddy-agent/coddy-agent/th/exec.jsonl",
+  "requirement": {
+    "feature": {
+      "background": null,
+      "file_path": "features/subagents_http.feature",
+      "narrative": "  A subagent run is a background task of the parent session, so the tasks drawer already\n  polls it. The REST surface tells the drawer that a task is an agent and which child\n  session holds its transcript, keeps child sessions out of the History list unless asked,\n  lists the definitions a workspace offers with their trust state, and removes a whole\n  session tree when the parent goes.",
+      "title": "The HTTP surface exposes subagent runs and definitions"
+    },
+    "scenario": {
+      "gherkin": "  Scenario: The catalog lists built-ins and project definitions with their trust state\n    Given a running coddy http server with a session\n    And the server workspace has a subagent definition \"reviewer\" under .coddy/agents\n    When I GET the subagent catalog for the server workspace\n    Then the catalog names the built-in \"explore\"\n    And the catalog names \"reviewer\" with scope \"project\" needing approval\n    When I POST trust for the subagent \"reviewer\" in the server workspace\n    And I GET the subagent catalog for the server workspace\n    Then the catalog names \"reviewer\" as trusted",
+      "kind": "scenario",
+      "line": 32,
+      "tags": [],
+      "title": "The catalog lists built-ins and project definitions with their trust state"
+    }
+  },
+  "official_result": {
+    "instance_id": "coddy-agent/features/subagents_http.feature:32",
+    "project": "coddy-agent",
+    "view": "th",
+    "outcome": "pass",
+    "passed": true,
+    "api_f1": 0.7692307692307693,
+    "coverage_j": 0.9809134287661895,
+    "recall": 0.9774011299435028,
+    "kill_complete": false,
+    "kill_complete_strict": false,
+    "kill_complete_95": true,
+    "mutation_status": "scored",
+    "mutation_baseline": "passed",
+    "behaviour_status": "measured",
+    "n_gt_kills": 182,
+    "n_scored": 177,
+    "n_killed": 173,
+    "n_dropped": 5,
+    "n_crash_kills": 27,
+    "n_timeout_kills": 0,
+    "exclusion": null,
+    "engine_outcome": "passed",
+    "harness_version": 27,
+    "rejected_files": []
+  },
+  "population_exclusion": null,
+  "generated_files": [
+    {
+      "path": "external/httpserver/bdd_compaction_http_test.go",
+      "sha256": "bd2b2f75df455bb3f841d5c00af0f87bbd3345640dc68a60d90621bca5de037c"
+    },
+    {
+      "path": "external/httpserver/bdd_subagents_test.go",
+      "sha256": "a2f975a57d498829a698aa372ee518a6522283541008a4ba2d43f5d63eae3fee"
+    }
+  ],
+  "final_agent_message": "Added the Godog glue in [bdd_subagents_test.go](/root/lby-docker/req2test/user/runs/full-baseline-20261111-v1/generation/c543ea848ebeeeb4b47c/attempt-1/workspaces/0000/repo/external/httpserver/bdd_subagents_test.go) and the required build-tagged companion file [bdd_compaction_http_test.go](/root/lby-docker/req2test/user/runs/full-baseline-20261111-v1/generation/c543ea848ebeeeb4b47c/attempt-1/workspaces/0000/repo/external/httpserver/bdd_compaction_http_test.go).\n\nI couldn’t verify execution: the package build currently fails because retained `server_test.go` references the missing `cannedSummaryProvider`.",
+  "denied_commands": [
+    {
+      "id": "item_1",
+      "type": "command_execution",
+      "command": "/usr/bin/bash -lc 'pwd; rg --files repo/external/httpserver; rg -n \"subagent|Subagent|godog|Test.*HTTPFeature|running coddy http server|catalog\" repo/external/httpserver repo/features repo/TARGET_CONTRACTS.md'",
+      "aggregated_output": "/root/lby-docker/req2test/user/runs/full-baseline-20261111-v1/generation/c543ea848ebeeeb4b47c/attempt-1/workspaces/0000\n/usr/bin/bash: line 1: /usr/bin/rg: Permission denied\n/usr/bin/bash: line 1: /usr/bin/rg: Permission denied\n",
+      "exit_code": 126,
+      "status": "failed"
+    }
+  ],
+  "diagnostic_addendum": null,
+  "trace_path": "results/test-generation-20261114/req2test/tasks/c543ea848ebeeeb4b47c/trajectory-excerpt.json"
+}

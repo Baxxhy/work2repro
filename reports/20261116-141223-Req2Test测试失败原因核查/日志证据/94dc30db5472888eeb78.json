@@ -1,0 +1,86 @@
+{
+  "item_id": "coreshop/features/domain/product/price_rules/customer_group_condition.feature:24",
+  "outcome": "no_files_returned",
+  "outcomes_all_runs": null,
+  "per_step": null,
+  "index_errors": {},
+  "stdout_tail": null,
+  "bench_meta": null,
+  "written_files": [],
+  "_source": "/root/lby-docker/req2test/user/benchmark/runs/req2test-recovery8-20261113-v1-coreshop/coreshop/th/exec.jsonl",
+  "requirement": {
+    "feature": {
+      "background": "  Background:\n    Given the site operates on a store in \"Austria\"\n    And the site has a currency \"Euro\" with iso \"EUR\"\n    And the site has a customer-group \"Frequent Buyers\"\n    And the site has a customer \"some-customer@something.com\"\n    And it is in customer-group \"Frequent Buyers\"\n    And I am customer \"some-customer@something.com\"\n    And the site has a product \"Shoe\" priced at 100\n    Then the product \"Shoe\" should be priced at \"100\"\n    Then I should be logged in with email \"some-customer@something.com\"",
+      "file_path": "features/domain/product/price_rules/customer_group_condition.feature",
+      "narrative": "  In order to extend my catalog\n  the catalog has a price-rule for a customer group\n  I want to create a new product",
+      "title": "Adding a new Product"
+    },
+    "scenario": {
+      "gherkin": "  Scenario: Add a new customer-group category price rule which is invalid\n    Given the site has a customer-group \"New Customers\"\n    And the customer \"some-customer@something.com\" is in customer-group \"New Customers\"\n    And adding a product price rule named \"customer-group-discount\"\n    And the price rule is active\n    And the price rule has a condition customer-groups with customer-group \"Frequent Buyers\"\n    Then the price rule should be invalid for product \"Shoe\"",
+      "kind": "scenario",
+      "line": 24,
+      "tags": [
+        "@domain",
+        "@product"
+      ],
+      "title": "Add a new customer-group category price rule which is invalid"
+    }
+  },
+  "official_result": {
+    "instance_id": "coreshop/features/domain/product/price_rules/customer_group_condition.feature:24",
+    "project": "coreshop",
+    "view": "th",
+    "outcome": "generation_failure",
+    "passed": false,
+    "api_f1": null,
+    "coverage_j": null,
+    "recall": null,
+    "kill_complete": false,
+    "kill_complete_strict": false,
+    "kill_complete_95": false,
+    "mutation_status": "not_passed",
+    "mutation_baseline": null,
+    "behaviour_status": "measured",
+    "n_gt_kills": 113,
+    "n_scored": 0,
+    "n_killed": 0,
+    "n_dropped": 0,
+    "n_crash_kills": 0,
+    "n_timeout_kills": 0,
+    "exclusion": null,
+    "engine_outcome": "no_files_returned",
+    "harness_version": 27,
+    "rejected_files": []
+  },
+  "population_exclusion": null,
+  "generated_files": [],
+  "final_agent_message": "I wasn’t able to produce a reliable, runnable context within the constraints. The scenario needs setup definitions for the store, currency, customer group, customer, login, and product, plus product-price-rule creation and validation. Those definitions were removed, and the remaining repository APIs don’t establish enough of their setup behavior to safely recreate it. No files were changed.",
+  "denied_commands": [
+    {
+      "id": "item_2",
+      "type": "command_execution",
+      "command": "/usr/bin/bash -lc \"rg --files repo/features | rg 'customer_group_condition|price_rules'\"",
+      "aggregated_output": "/usr/bin/bash: line 1: /usr/bin/rg: Permission denied\n/usr/bin/bash: line 1: /usr/bin/rg: Permission denied\n",
+      "exit_code": 126,
+      "status": "failed"
+    },
+    {
+      "id": "item_4",
+      "type": "command_execution",
+      "command": "/usr/bin/bash -lc 'rg -n \"customer-group|customer group|adding a product price rule|price rule should be invalid|customer-groups\" repo/features repo/src/CoreShop/Behat repo/src'",
+      "aggregated_output": "/usr/bin/bash: line 1: /usr/bin/rg: Permission denied\n",
+      "exit_code": 126,
+      "status": "failed"
+    },
+    {
+      "id": "item_5",
+      "type": "command_execution",
+      "command": "/usr/bin/bash -lc 'rg -n \"class (PimcoreRepository|ShopperContext|RuleValidationProcessor)|interface .*Repository|class .*Rule.*Condition\" repo/src'",
+      "aggregated_output": "/usr/bin/bash: line 1: /usr/bin/rg: Permission denied\n",
+      "exit_code": 126,
+      "status": "failed"
+    }
+  ],
+  "diagnostic_addendum": null,
+  "trace_path": "results/test-generation-20261114/req2test/tasks/94dc30db5472888eeb78/trajectory-excerpt.json"
+}

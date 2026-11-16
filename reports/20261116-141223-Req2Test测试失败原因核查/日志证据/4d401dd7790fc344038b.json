@@ -1,0 +1,63 @@
+{
+  "item_id": "sylius/features/admin/promotion/managing_catalog_promotions/editing_catalog_promotion.feature:140",
+  "outcome": "no_files_returned",
+  "outcomes_all_runs": null,
+  "per_step": null,
+  "index_errors": {},
+  "stdout_tail": null,
+  "bench_meta": null,
+  "written_files": [],
+  "_source": "/root/lby-docker/req2test/user/benchmark/runs/req2test-recovery8-20261113-v1-sylius/sylius/th/exec.jsonl",
+  "requirement": {
+    "feature": {
+      "background": "    Background:\n        Given the store operates on a single channel in \"United States\"\n        And the store has \"Clothes\" taxonomy\n        And the store has a \"T-Shirt\" configurable product\n        And this product belongs to \"Clothes\"\n        And this product has \"PHP T-Shirt\" variant priced at \"$20.00\"\n        And this product has \"Kotlin T-Shirt\" variant priced at \"$40.00\"\n        And there is a catalog promotion with \"christmas_sale\" code and \"Christmas sale\" name\n        And it applies on \"PHP T-Shirt\" variant\n        And it reduces price by \"30%\"\n        And it is enabled\n        And I am logged in as an administrator",
+      "file_path": "features/admin/promotion/managing_catalog_promotions/editing_catalog_promotion.feature",
+      "narrative": "    In order to change catalog promotion details\n    As an Administrator\n    I want to be able to edit a catalog promotion",
+      "title": "Editing catalog promotion"
+    },
+    "scenario": {
+      "gherkin": "    Scenario: Editing catalog promotion action to be a fixed discount and not filling amount\n        Given there is a catalog promotion \"Winter sale\" that reduces price by fixed \"$10.00\" in the \"United States\" channel and applies on \"T-Shirt\" product\n        When I want to modify a catalog promotion \"Winter sale\"\n        And I edit it to have empty amount of fixed discount in the \"United States\" channel\n        And I save my changes\n        Then I should be notified that the fixed amount cannot be empty",
+      "kind": "scenario",
+      "line": 140,
+      "tags": [
+        "@managing_catalog_promotions",
+        "@api",
+        "@ui",
+        "@mink:chromedriver"
+      ],
+      "title": "Editing catalog promotion action to be a fixed discount and not filling amount"
+    }
+  },
+  "official_result": {
+    "instance_id": "sylius/features/admin/promotion/managing_catalog_promotions/editing_catalog_promotion.feature:140",
+    "project": "sylius",
+    "view": "th",
+    "outcome": "generation_failure",
+    "passed": false,
+    "api_f1": null,
+    "coverage_j": null,
+    "recall": null,
+    "kill_complete": false,
+    "kill_complete_strict": false,
+    "kill_complete_95": false,
+    "mutation_status": "not_passed",
+    "mutation_baseline": null,
+    "behaviour_status": "measured",
+    "n_gt_kills": 143,
+    "n_scored": 0,
+    "n_killed": 0,
+    "n_dropped": 0,
+    "n_crash_kills": 0,
+    "n_timeout_kills": 0,
+    "exclusion": null,
+    "engine_outcome": "no_files_returned",
+    "harness_version": 27,
+    "rejected_files": []
+  },
+  "population_exclusion": null,
+  "generated_files": [],
+  "final_agent_message": "The retained `CatalogPromotionContext` already defines the scenario’s `Given` step. I can’t provide a reliable API step definition for the remaining steps from the available details: this feature’s expected notification is a Symfony form validation message, but the API suite uses HTTP requests and does not expose that form notification. An API implementation would need a different, verified assertion contract.",
+  "denied_commands": [],
+  "diagnostic_addendum": null,
+  "trace_path": "results/test-generation-20261114/req2test/tasks/4d401dd7790fc344038b/trajectory-excerpt.json"
+}

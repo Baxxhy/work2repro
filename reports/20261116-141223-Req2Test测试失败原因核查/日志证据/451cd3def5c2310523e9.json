@@ -1,0 +1,134 @@
+{
+  "item_id": "prestashop/tests/Integration/Behaviour/Features/Scenario/Tax/tax_management.feature:43",
+  "outcome": "failed",
+  "outcomes_all_runs": [
+    "failed"
+  ],
+  "per_step": [
+    {
+      "error": null,
+      "result": "passed",
+      "seconds": 0.1107,
+      "text": "I add new tax \"beard-tax\" with following properties:"
+    },
+    {
+      "error": null,
+      "result": "passed",
+      "seconds": 0.0144,
+      "text": "I add new tax \"state-tax\" with following properties:"
+    },
+    {
+      "error": null,
+      "result": "passed",
+      "seconds": 0.0144,
+      "text": "I add new tax \"pvm-tax\" with following properties:"
+    },
+    {
+      "error": null,
+      "result": "passed",
+      "seconds": 0.0438,
+      "text": "I disable taxes: \"beard-tax, state-tax, pvm-tax\""
+    },
+    {
+      "error": "Tax 53 should be disabled\nFailed asserting that true is false.",
+      "result": "failed",
+      "seconds": 0.1431,
+      "text": "taxes: \"beard-tax, state-tax\" should be disabled"
+    }
+  ],
+  "index_errors": {},
+  "stdout_tail": "@restore-all-tables-before-feature\nFeature: Manage tax\n  As an employee\n  I must be able to add, edit and delete taxes\n\n  Scenario: Disabling multiple taxes in bulk action\n    When I add new tax \"beard-tax\" with following properties:\n      | name       | Beard tax |\n      | rate       | 0.1       |\n      | is_enabled | true      |\n    And I add new tax \"state-tax\" with following properties:\n      | name       | State tax |\n      | rate       | 15.23     |\n      | is_enabled | true      |\n    And I add new tax \"pvm-tax\" with following properties:\n      | name       | PVM   |\n      | rate       | 99.9  |\n      | is_enabled | false |\n    When I disable taxes: \"beard-tax, state-tax, pvm-tax\"\n    Then taxes: \"beard-tax, state-tax\" should be disabled\n      Tax 53 should be disabled\n      Failed asserting that true is false.\n\n--- Failed scenarios:\n\n    _bench/item.feature:6 (on line 20)\n\n1 scenario (1 failed)\n5 steps (4 passed, 1 failed)\n2m28.55s (186.95Mb)\n",
+  "bench_meta": {
+    "dependency_profile": [
+      "database"
+    ],
+    "live_background_step_count": 0,
+    "live_step_count": 5,
+    "n_closure_contexts": 1,
+    "n_closure_files": 1,
+    "n_oracle_steps": 1,
+    "round_trip_seconds": 73.12,
+    "signature": "d05f8ef5e89e",
+    "steps_removable": 5,
+    "steps_retained": 0,
+    "tags": [
+      "@restore-all-tables-before-feature"
+    ],
+    "upstream_selected": null
+  },
+  "written_files": [
+    "tests/Integration/Behaviour/Features/Context/Domain/Tax/TaxFeatureContext.php"
+  ],
+  "_source": "/root/lby-docker/req2test/user/benchmark/runs/req2test-recovery8-20261113-v1-prestashop/prestashop/th/exec.jsonl",
+  "requirement": {
+    "feature": {
+      "background": null,
+      "file_path": "tests/Integration/Behaviour/Features/Scenario/Tax/tax_management.feature",
+      "narrative": "  As an employee\n  I must be able to add, edit and delete taxes",
+      "title": "Manage tax"
+    },
+    "scenario": {
+      "gherkin": "  Scenario: Disabling multiple taxes in bulk action\n    When I add new tax \"beard-tax\" with following properties:\n      | name         | Beard tax         |\n      | rate         | 0.1               |\n      | is_enabled   | true              |\n    And I add new tax \"state-tax\" with following properties:\n      | name         | State tax         |\n      | rate         | 15.23             |\n      | is_enabled   | true              |\n    And I add new tax \"pvm-tax\" with following properties:\n      | name         | PVM               |\n      | rate         | 99.9              |\n      | is_enabled   | false             |\n    When I disable taxes: \"beard-tax, state-tax, pvm-tax\"\n    Then taxes: \"beard-tax, state-tax\" should be disabled",
+      "kind": "scenario",
+      "line": 43,
+      "tags": [
+        "@restore-all-tables-before-feature"
+      ],
+      "title": "Disabling multiple taxes in bulk action"
+    }
+  },
+  "official_result": {
+    "instance_id": "prestashop/tests/Integration/Behaviour/Features/Scenario/Tax/tax_management.feature:43",
+    "project": "prestashop",
+    "view": "th",
+    "outcome": "assertion_failure",
+    "passed": false,
+    "api_f1": null,
+    "coverage_j": null,
+    "recall": null,
+    "kill_complete": false,
+    "kill_complete_strict": false,
+    "kill_complete_95": false,
+    "mutation_status": "not_passed",
+    "mutation_baseline": null,
+    "behaviour_status": "measured",
+    "n_gt_kills": 26,
+    "n_scored": 0,
+    "n_killed": 0,
+    "n_dropped": 0,
+    "n_crash_kills": 0,
+    "n_timeout_kills": 0,
+    "exclusion": null,
+    "engine_outcome": "failed",
+    "harness_version": 27,
+    "rejected_files": []
+  },
+  "population_exclusion": null,
+  "generated_files": [
+    {
+      "path": "tests/Integration/Behaviour/Features/Context/Domain/Tax/TaxFeatureContext.php",
+      "sha256": "2117f88baa5171a5a4cc200aacf3b079f54be4cedc4cc6c6255b0426acead76b"
+    }
+  ],
+  "final_agent_message": "Added [TaxFeatureContext.php](/root/lby-docker/req2test/user/runs/req2test-subset160-20261112-v1/generation/451cd3def5c2310523e9/attempt-1/workspaces/0000/repo/tests/Integration/Behaviour/Features/Context/Domain/Tax/TaxFeatureContext.php) with steps to add taxes, bulk-disable them, and verify they’re disabled. I couldn’t run the scenario in this workspace.",
+  "denied_commands": [
+    {
+      "id": "item_1",
+      "type": "command_execution",
+      "command": "/usr/bin/bash -lc 'ls repo/tests/Integration/Behaviour/Features/Context && rg -n \"AddTaxCommand|BulkToggleTaxStatusCommand|TaxId|tax.*disabled|add new tax\" repo/tests/Integration/Behaviour repo/src repo/classes | head -80'",
+      "aggregated_output": "AbstractPrestaShopFeatureContext.php\nCartAwareTrait.php\nCommonFeatureContext.php\nConfiguration\nContextFeatureContext.php\nDomain\nLastExceptionTrait.php\nOrderMessageContext.php\nSharedStorage.php\nSharedStorageTrait.php\nUtil\n/usr/bin/bash: line 1: /usr/bin/rg: Permission denied\n",
+      "exit_code": 0,
+      "status": "completed"
+    },
+    {
+      "id": "item_5",
+      "type": "command_execution",
+      "command": "/usr/bin/bash -lc \"find repo/tests/Integration/Behaviour/Features/Context/Domain -type f | head -10; rg -n \\\"getCommandBus\\\\(\\\\)->handle|new Add.*Command|should be disabled|isEnabled\\\\(\\\\)|Get.*ForEditing\\\" repo/tests/Integration/Behaviour/Features/Context repo/tests/Integration/Behaviour/Features/Scenario/Tax repo/tests/Integration/Behaviour/Features/Scenario | head -60\"",
+      "aggregated_output": "repo/tests/Integration/Behaviour/Features/Context/Domain/AbstractDomainFeatureContext.php\nrepo/tests/Integration/Behaviour/Features/Context/Domain/Product/Combination/AbstractCombinationFeatureContext.php\nrepo/tests/Integration/Behaviour/Features/Context/Domain/Product/AbstractShippingFeatureContext.php\nrepo/tests/Integration/Behaviour/Features/Context/Domain/Product/AbstractProductFeatureContext.php\n/usr/bin/bash: line 1: /usr/bin/rg: Permission denied\n",
+      "exit_code": 0,
+      "status": "completed"
+    }
+  ],
+  "diagnostic_addendum": null,
+  "trace_path": "results/test-generation-20261114/req2test/tasks/451cd3def5c2310523e9/trajectory-excerpt.json"
+}

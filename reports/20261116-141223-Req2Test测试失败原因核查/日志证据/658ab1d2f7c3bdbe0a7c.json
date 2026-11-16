@@ -1,0 +1,105 @@
+{
+  "item_id": "sylius/features/admin/order/managing_orders/modifying_billing_address/modifying_billing_address_on_order_with_taxes.feature:21",
+  "outcome": "container_error",
+  "outcomes_all_runs": [
+    "container_error"
+  ],
+  "per_step": [],
+  "index_errors": {},
+  "stdout_tail": "                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              \n\n",
+  "bench_meta": {
+    "dependency_profile": [
+      "database"
+    ],
+    "live_background_step_count": 11,
+    "live_step_count": 9,
+    "n_closure_contexts": 4,
+    "n_closure_files": 6,
+    "n_oracle_steps": 4,
+    "round_trip_seconds": 14.16,
+    "signature": "926d46c671fa",
+    "steps_removable": 8,
+    "steps_retained": 12,
+    "tags": [
+      "@modifying_placed_order_address",
+      "@api",
+      "@ui"
+    ],
+    "upstream_selected": null
+  },
+  "written_files": [
+    "src/Sylius/Behat/Context/Api/Admin/Order/BillingAddressContext.php"
+  ],
+  "_source": "/root/lby-docker/req2test/user/benchmark/runs/req2test-recovery8-20261113-v1-sylius/sylius/th/exec.jsonl",
+  "requirement": {
+    "feature": {
+      "background": "    Background:\n        Given the store operates on a single channel in \"United States\"\n        And the store ships everything for Free within the \"US\" zone\n        And the store allows paying Offline\n        And the store has \"VAT\" tax rate of 20% for \"Suits\" within the \"US\" zone\n        And the store has a product \"Suit\" priced at \"$400.00\"\n        And it belongs to \"Suits\" tax category\n        And there is a customer \"mike@ross.com\" that placed an order \"#00000001\"\n        And the customer bought a single \"Suit\"\n        And the customer \"Mike Ross\" addressed it to \"350 5th Ave\", \"10118\" \"New York\" in the \"United States\" with identical billing address\n        And the customer chose \"Free\" shipping method with \"Offline\" payment\n        And I am logged in as an administrator",
+      "file_path": "features/admin/order/managing_orders/modifying_billing_address/modifying_billing_address_on_order_with_taxes.feature",
+      "narrative": "    In order to ship an order's bill to a correct place\n    As an Administrator\n    I want to be able to modify a customer's billing address without changing the order's total",
+      "title": "Modifying a customer's billing address on an order with taxes"
+    },
+    "scenario": {
+      "gherkin": "    Scenario: Modifying a customer's billing address of already placed order after the VAT tax rate has been changed\n        Given the \"VAT\" tax rate has changed to 10%\n        When I view the summary of the order \"#00000001\"\n        And I want to modify a customer's billing address of this order\n        And I specify their new billing address as \"Los Angeles\", \"Seaside Fwy\", \"90802\", \"United States\" for \"Lucifer Morningstar\"\n        And I save my changes\n        Then I should be notified that it has been successfully edited\n        And this order should have \"Lucifer Morningstar\", \"Seaside Fwy\", \"90802\", \"Los Angeles\", \"United States\" as its billing address\n        And the order's total should still be \"$480.00\"\n        And the order's tax total should still be \"$80.00\"",
+      "kind": "scenario",
+      "line": 21,
+      "tags": [
+        "@modifying_placed_order_address",
+        "@api",
+        "@ui"
+      ],
+      "title": "Modifying a customer's billing address of already placed order after the VAT tax rate has been changed"
+    }
+  },
+  "official_result": {
+    "instance_id": "sylius/features/admin/order/managing_orders/modifying_billing_address/modifying_billing_address_on_order_with_taxes.feature:21",
+    "project": "sylius",
+    "view": "th",
+    "outcome": "compilation_failure",
+    "passed": false,
+    "api_f1": null,
+    "coverage_j": null,
+    "recall": null,
+    "kill_complete": false,
+    "kill_complete_strict": false,
+    "kill_complete_95": false,
+    "mutation_status": "not_passed",
+    "mutation_baseline": null,
+    "behaviour_status": "measured",
+    "n_gt_kills": 335,
+    "n_scored": 0,
+    "n_killed": 0,
+    "n_dropped": 0,
+    "n_crash_kills": 0,
+    "n_timeout_kills": 0,
+    "exclusion": null,
+    "engine_outcome": "container_error",
+    "harness_version": 27,
+    "rejected_files": []
+  },
+  "population_exclusion": null,
+  "generated_files": [
+    {
+      "path": "src/Sylius/Behat/Context/Api/Admin/Order/BillingAddressContext.php",
+      "sha256": "b3db8aef18374612a46c2160d291840b2bd5ad68eb446bfc08eb9b2d351ce490"
+    }
+  ],
+  "final_agent_message": "Added [BillingAddressContext.php](/root/lby-docker/req2test/user/runs/req2test-subset160-20261112-v1/generation/658ab1d2f7c3bdbe0a7c/attempt-1/workspaces/0000/repo/src/Sylius/Behat/Context/Api/Admin/Order/BillingAddressContext.php) with the scenario’s order-summary, billing-address edit, success, and total-check steps.\n\nI couldn’t confirm syntax or run the scenario: the validation command did not return.",
+  "denied_commands": [
+    {
+      "id": "item_1",
+      "type": "command_execution",
+      "command": "/usr/bin/bash -lc \"ls repo/src/Sylius/Behat && rg -n \\\"billing address|billingAddress|order.*summary|successfully edited|VAT.*changed|tax rate has changed\\\" repo/src/Sylius/Behat repo/src/Sylius -g '*.php' | head -100\"",
+      "aggregated_output": "Application\nBehaviour\nBench\nClient\nContext\nElement\nException\nNotificationType.php\nPage\nResources\nService\ntests\n/usr/bin/bash: line 1: /usr/bin/rg: Permission denied\n",
+      "exit_code": 0,
+      "status": "completed"
+    }
+  ],
+  "diagnostic_addendum": {
+    "instance_id": "sylius/features/admin/order/managing_orders/modifying_billing_address/modifying_billing_address_on_order_with_taxes.feature:21",
+    "outcome": "container_error",
+    "full_stdout_source": "/root/lby-docker/req2test/user/runs/req2test-recovery8-20261113-v1/evaluation-diagnostics/658ab1d2f7c3bdbe0a7c-245768-1794559259526077339.json",
+    "message": "In DefinitionErrorExceptionPass.php line 48: Cannot autowire service \"Sylius\\Behat\\Context\\Api\\Admin\\Order\\BillingAddressContext\": argument \"$objectManager\" of method \"__construct()\" references interface \"Doctrine\\Persistence\\ObjectManager\" but no such service exists. Did you mean to target one of \"adjustment manager\", \"order manager\", \"order item manager\", \"order item unit manager\", \"order sequence manager\", \"currency manager\", \"exchange rate manager\", \"locale manager\", \"product manager\", \"product translation manager\", \"product variant manager\", \"product variant translation manager\", \"product option manager\", \"product option translation manager\", \"product association manager\", \"product option value manager\", \"product option value translation manager\", \"product association type manager\", \"product association type translation manager\", \"channel manager\", \"product attribute manager\", \"product attribute translation manager\", \"product attribute value manager\", \"tax rate manager\", \"tax category manager\", \"shipment manager\", \"shipment unit manager\", \"shipping method manager\", \"shipping method translation manager\", \"shipping category manager\", \"shipping method rule manager\", \"payment manager\", \"payment method manager\", \"payment method translation manager\", \"gateway config manager\", \"payment request manager\", \"catalog promotion manager\", \"catalog promotion translation manager\", \"catalog promotion scope manager\", \"promotion subject manager\", \"promotion manager\", \"promotion translation manager\", \"promotion coupon manager\", \"catalog promotion action manager\", \"promotion rule manager\", \"promotion action manager\", \"address manager\", \"address log entry manager\", \"country manager\", \"pro",
+    "baseline_score_kept": true
+  },
+  "trace_path": "results/test-generation-20261114/req2test/tasks/658ab1d2f7c3bdbe0a7c/trajectory-excerpt.json"
+}

@@ -1,0 +1,101 @@
+{
+  "item_id": "sylius/features/admin/product/managing_products/managing_attributes/adding_product_with_text_attribute.feature:41",
+  "outcome": "container_error",
+  "outcomes_all_runs": [
+    "container_error"
+  ],
+  "per_step": [],
+  "index_errors": {},
+  "stdout_tail": "\nIn DefinitionErrorExceptionPass.php line 48:\n                                                                                                                                                                                                                                                                                                                                                                                                         \n  Cannot autowire service \"Sylius\\Behat\\Context\\Api\\Admin\\Product\\TextProductAttributeContext\": argument \"$adminClient\" of method \"__construct()\" references interface \"Sylius\\Behat\\Client\\ApiClientInterface\" but no such service exists. You should maybe alias this interface to one of these existing services: \"sylius.behat.api_platform_client.shop\", \"sylius.behat.api_platform_client.admin\".  \n                                                                                                                                                                                                                                                                                                                                                                                                         \n\n",
+  "bench_meta": {
+    "dependency_profile": [
+      "database"
+    ],
+    "live_background_step_count": 5,
+    "live_step_count": 14,
+    "n_closure_contexts": 1,
+    "n_closure_files": 3,
+    "n_oracle_steps": 4,
+    "round_trip_seconds": 13.54,
+    "signature": "0a1ac4babcb7",
+    "steps_removable": 14,
+    "steps_retained": 5,
+    "tags": [
+      "@managing_products",
+      "@api",
+      "@ui",
+      "@mink:chromedriver"
+    ],
+    "upstream_selected": null
+  },
+  "written_files": [
+    "src/Sylius/Behat/Context/Api/Admin/Product/TextProductAttributeContext.php"
+  ],
+  "_source": "/root/lby-docker/req2test/user/benchmark/runs/req2test-recovery8-20261113-v1-sylius/sylius/th/exec.jsonl",
+  "requirement": {
+    "feature": {
+      "background": "    Background:\n        Given the store operates on a single channel in \"United States\"\n        And the store has a text product attribute \"Gun caliber\"\n        And the store has a text product attribute \"Overall length\"\n        And the store has a non-translatable text product attribute \"Author\"\n        And I am logged in as an administrator",
+      "file_path": "features/admin/product/managing_products/managing_attributes/adding_product_with_text_attribute.feature",
+      "narrative": "    In order to extend my merchandise with more complex products\n    As an Administrator\n    I want to add a new product with text attribute to the shop",
+      "title": "Adding a new product with text attribute"
+    },
+    "scenario": {
+      "gherkin": "    Scenario: Adding and removing text attributes on product create page\n        When I want to create a new configurable product\n        And I specify its code as \"44_MAGNUM\"\n        And I name it \"44 Magnum\" in \"English (United States)\" locale\n        And I set its slug to \"44-magnum\"\n        And I add the \"Gun caliber\" attribute\n        And I set the \"Gun caliber\" attribute value to \"11 mm\" in \"English (United States)\" locale\n        And I add the \"Overall length\" attribute\n        And I set the \"Overall length\" attribute value to \"30.5 cm\" in \"English (United States)\" locale\n        And I remove its \"Gun caliber\" attribute\n        And I add it\n        Then I should be notified that it has been successfully created\n        And the product \"44 Magnum\" should appear in the store\n        And attribute \"Overall length\" of product \"44 Magnum\" should be \"30.5 cm\"\n        And product \"44 Magnum\" should not have a \"Gun caliber\" attribute",
+      "kind": "scenario",
+      "line": 41,
+      "tags": [
+        "@managing_products",
+        "@api",
+        "@ui",
+        "@mink:chromedriver"
+      ],
+      "title": "Adding and removing text attributes on product create page"
+    }
+  },
+  "official_result": {
+    "instance_id": "sylius/features/admin/product/managing_products/managing_attributes/adding_product_with_text_attribute.feature:41",
+    "project": "sylius",
+    "view": "th",
+    "outcome": "compilation_failure",
+    "passed": false,
+    "api_f1": null,
+    "coverage_j": null,
+    "recall": null,
+    "kill_complete": false,
+    "kill_complete_strict": false,
+    "kill_complete_95": false,
+    "mutation_status": "not_passed",
+    "mutation_baseline": null,
+    "behaviour_status": "measured",
+    "n_gt_kills": 119,
+    "n_scored": 0,
+    "n_killed": 0,
+    "n_dropped": 0,
+    "n_crash_kills": 0,
+    "n_timeout_kills": 0,
+    "exclusion": null,
+    "engine_outcome": "container_error",
+    "harness_version": 27,
+    "rejected_files": []
+  },
+  "population_exclusion": null,
+  "generated_files": [
+    {
+      "path": "src/Sylius/Behat/Context/Api/Admin/Product/TextProductAttributeContext.php",
+      "sha256": "314de19eb72baf918de05f98426b62d3c2f344a5176847fd8c9950da35bc8065"
+    }
+  ],
+  "final_agent_message": "Added [TextProductAttributeContext.php](/root/lby-docker/req2test/user/runs/req2test-subset160-20261112-v1/generation/06db5dc18b504e008c21/attempt-1/workspaces/0000/repo/src/Sylius/Behat/Context/Api/Admin/Product/TextProductAttributeContext.php) with step definitions for creating the product, setting and removing attributes, and checking the result.\n\nI haven’t run the scenario. The context has ambiguous constructor dependencies for API clients and repositories, so it may need explicit service wiring in `behat_services.yml` before Behat can instantiate it.",
+  "denied_commands": [
+    {
+      "id": "item_1",
+      "type": "command_execution",
+      "command": "/usr/bin/bash -lc 'ls repo/src/Sylius/Behat && rg -n \"create a new configurable product|successfully created|product.*attribute\" repo/src/Sylius/Behat repo/features/admin/product/managing_products/managing_attributes/adding_product_with_text_attribute.feature'",
+      "aggregated_output": "Application\nBehaviour\nBench\nClient\nContext\nElement\nException\nNotificationType.php\nPage\nResources\nService\ntests\n/usr/bin/bash: line 1: /usr/bin/rg: Permission denied\n",
+      "exit_code": 126,
+      "status": "failed"
+    }
+  ],
+  "diagnostic_addendum": null,
+  "trace_path": "results/test-generation-20261114/req2test/tasks/06db5dc18b504e008c21/trajectory-excerpt.json"
+}

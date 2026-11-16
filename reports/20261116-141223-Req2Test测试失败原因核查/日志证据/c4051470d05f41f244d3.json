@@ -1,0 +1,192 @@
+{
+  "item_id": "prestashop/tests/Integration/Behaviour/Features/Scenario/Product/duplicate_product.feature:549",
+  "outcome": "failed",
+  "outcomes_all_runs": [
+    "failed"
+  ],
+  "per_step": [
+    {
+      "error": null,
+      "result": "passed",
+      "seconds": 0.0234,
+      "text": "manufacturer studioDesign named \"Studio Design\" exists"
+    },
+    {
+      "error": null,
+      "result": "passed",
+      "seconds": 0.0146,
+      "text": "language \"language1\" with locale \"en-US\" exists"
+    },
+    {
+      "error": null,
+      "result": "passed",
+      "seconds": 0.0104,
+      "text": "language with iso code \"en\" is the default one"
+    },
+    {
+      "error": null,
+      "result": "passed",
+      "seconds": 0.0138,
+      "text": "language \"language2\" with locale \"fr-FR\" exists"
+    },
+    {
+      "error": null,
+      "result": "passed",
+      "seconds": 0.0109,
+      "text": "I create carrier \"carrier1\" with specified properties:"
+    },
+    {
+      "error": null,
+      "result": "passed",
+      "seconds": 0.0161,
+      "text": "I create carrier \"carrier2\" with specified properties:"
+    },
+    {
+      "error": null,
+      "result": "passed",
+      "seconds": 0.0169,
+      "text": "attribute group \"Color\" named \"Color\" in en language exists"
+    },
+    {
+      "error": null,
+      "result": "passed",
+      "seconds": 0.0172,
+      "text": "attribute \"Red\" named \"Red\" in en language exists"
+    },
+    {
+      "error": null,
+      "result": "passed",
+      "seconds": 0.0105,
+      "text": "attribute \"Blue\" named \"Blue\" in en language exists"
+    },
+    {
+      "error": null,
+      "result": "passed",
+      "seconds": 0.0106,
+      "text": "attribute \"Pink\" named \"Pink\" in en language exists"
+    },
+    {
+      "error": null,
+      "result": "passed",
+      "seconds": 0.0095,
+      "text": "shop \"shop1\" with name \"test_shop\" exists"
+    },
+    {
+      "error": null,
+      "result": "passed",
+      "seconds": 0.0065,
+      "text": "single shop shop1 context is loaded"
+    },
+    {
+      "error": null,
+      "result": "passed",
+      "seconds": 0.2908,
+      "text": "I add product \"virtualProduct\" with following information:"
+    },
+    {
+      "error": "Type error: Tests\\Integration\\Behaviour\\Features\\Context\\AbstractPrestaShopFeatureContext::referenceToId(): Return value must be of type int, PrestaShop\\PrestaShop\\Core\\Domain\\Product\\ValueObject\\ProductId returned",
+      "result": "failed",
+      "seconds": 0.0119,
+      "text": "I add virtual product file \"file1\" to product \"virtualProduct\" with following details:"
+    }
+  ],
+  "index_errors": {},
+  "stdout_tail": "text\\AbstractPrestaShopFeatureContext::referenceToId(): Return value must be of type int, PrestaShop\\PrestaShop\\Core\\Domain\\Product\\ValueObject\\ProductId returned (Behat\\Testwork\\Call\\Exception\\FatalThrowableError)\n    Then product \"virtualProduct\" should have a virtual product file \"file1\" with following details:\n      | display name         | puffin-logo.png |\n      | access days          | 0               |\n      | download times limit | 0               |\n      | expiration date      |                 |\n    And file \"file1\" for product \"virtualProduct\" should exist in system\n    When I duplicate product virtualProduct to a virtualProductCopy\n    Then product virtualProductCopy type should be virtual\n    And product \"virtualProductCopy\" should be disabled\n    And product virtualProductCopy should have a virtual product file which reference is file1Copy and has following details:\n      | display name         | puffin-logo.png |\n      | access days          | 0               |\n      | download times limit | 0               |\n      | expiration date      |                 |\n    And file file1Copy for product virtualProductCopy should exist in system\n    And virtualProduct and virtualProductCopy have different values\n    And file1 and file1Copy have different values\n      Ambiguous match of \"file1 and file1Copy have different values\":\n      to `:firstReference and :secondReference have different values` from Tests\\Integration\\Behaviour\\Features\\Context\\CommonFeatureContext::assertDifferentValues()\n      to `/^file1 and file1Copy have different values$/` from Tests\\Integration\\Behaviour\\Features\\Context\\VirtualProductDuplicateContext::filesDiffer()\n    And file file1 for product virtualProduct should have same file as app_icon.png\n    And file file1Copy for product virtualProductCopy should have same file as app_icon.png\n\n--- Failed scenarios:\n\n    _bench/item.feature:21 (on line 25)\n\n1 scenario (1 failed)\n25 steps (13 passed, 2 failed, 10 skipped)\n2m36.82s (186.48Mb)\n",
+  "bench_meta": {
+    "dependency_profile": [
+      "database"
+    ],
+    "live_background_step_count": 12,
+    "live_step_count": 13,
+    "n_closure_contexts": 13,
+    "n_closure_files": 13,
+    "n_oracle_steps": 10,
+    "round_trip_seconds": 90.12,
+    "signature": "7a82e6f588a9",
+    "steps_removable": 23,
+    "steps_retained": 2,
+    "tags": [
+      "@restore-products-before-feature",
+      "@restore-languages-after-feature",
+      "@restore-taxes-after-feature",
+      "@reset-downloads-after-feature",
+      "@reset-img-after-feature",
+      "@clear-cache-after-feature",
+      "@duplicate-product"
+    ],
+    "upstream_selected": null
+  },
+  "written_files": [
+    "tests/Integration/Behaviour/Features/Context/VirtualProductDuplicateContext.php"
+  ],
+  "_source": "/root/lby-docker/req2test/user/benchmark/runs/req2test-recovery8-20261113-v1-prestashop/prestashop/th/exec.jsonl",
+  "requirement": {
+    "feature": {
+      "background": "  Background:\n    Given manufacturer studioDesign named \"Studio Design\" exists\n    And language \"language1\" with locale \"en-US\" exists\n    And language with iso code \"en\" is the default one\n    And language \"language2\" with locale \"fr-FR\" exists\n    And I create carrier \"carrier1\" with specified properties:\n      | name | ecoCarrier |\n    And I create carrier \"carrier2\" with specified properties:\n      | name | Fast carry |\n    And attribute group \"Color\" named \"Color\" in en language exists\n    And attribute \"Red\" named \"Red\" in en language exists\n    And attribute \"Blue\" named \"Blue\" in en language exists\n    And attribute \"Pink\" named \"Pink\" in en language exists\n    And shop \"shop1\" with name \"test_shop\" exists\n    And single shop shop1 context is loaded",
+      "file_path": "tests/Integration/Behaviour/Features/Scenario/Product/duplicate_product.feature",
+      "narrative": "  As an employee I want to be able to duplicate product",
+      "title": "Duplicate product from Back Office (BO)."
+    },
+    "scenario": {
+      "gherkin": "  Scenario: I duplicate virtual product its file should be copied\n    Given I add product \"virtualProduct\" with following information:\n      | name[en-US] | puffin icon |\n      | type        | virtual     |\n    When I add virtual product file \"file1\" to product \"virtualProduct\" with following details:\n      | display name | puffin-logo.png |\n      | file name    | app_icon.png    |\n    Then product \"virtualProduct\" should have a virtual product file \"file1\" with following details:\n      | display name         | puffin-logo.png |\n      | access days          | 0               |\n      | download times limit | 0               |\n      | expiration date      |                 |\n    And file \"file1\" for product \"virtualProduct\" should exist in system\n    When I duplicate product virtualProduct to a virtualProductCopy\n    Then product virtualProductCopy type should be virtual\n    And product \"virtualProductCopy\" should be disabled\n    And product virtualProductCopy should have a virtual product file which reference is file1Copy and has following details:\n      | display name         | puffin-logo.png |\n      | access days          | 0               |\n      | download times limit | 0               |\n      | expiration date      |                 |\n    And file file1Copy for product virtualProductCopy should exist in system\n    And virtualProduct and virtualProductCopy have different values\n    And file1 and file1Copy have different values\n    And file file1 for product virtualProduct should have same file as app_icon.png\n    And file file1Copy for product virtualProductCopy should have same file as app_icon.png",
+      "kind": "scenario",
+      "line": 549,
+      "tags": [
+        "@restore-products-before-feature",
+        "@restore-languages-after-feature",
+        "@restore-taxes-after-feature",
+        "@reset-downloads-after-feature",
+        "@reset-img-after-feature",
+        "@clear-cache-after-feature",
+        "@duplicate-product"
+      ],
+      "title": "I duplicate virtual product its file should be copied"
+    }
+  },
+  "official_result": {
+    "instance_id": "prestashop/tests/Integration/Behaviour/Features/Scenario/Product/duplicate_product.feature:549",
+    "project": "prestashop",
+    "view": "th",
+    "outcome": "assertion_failure",
+    "passed": false,
+    "api_f1": null,
+    "coverage_j": null,
+    "recall": null,
+    "kill_complete": false,
+    "kill_complete_strict": false,
+    "kill_complete_95": false,
+    "mutation_status": "not_passed",
+    "mutation_baseline": null,
+    "behaviour_status": "measured",
+    "n_gt_kills": 26,
+    "n_scored": 0,
+    "n_killed": 0,
+    "n_dropped": 0,
+    "n_crash_kills": 0,
+    "n_timeout_kills": 0,
+    "exclusion": null,
+    "engine_outcome": "failed",
+    "harness_version": 27,
+    "rejected_files": []
+  },
+  "population_exclusion": null,
+  "generated_files": [
+    {
+      "path": "tests/Integration/Behaviour/Features/Context/VirtualProductDuplicateContext.php",
+      "sha256": "6f6d11e09552d82ad7c7d93f552f1c995c006ef615b57833697b266bfafd2e03"
+    }
+  ],
+  "final_agent_message": "I added [VirtualProductDuplicateContext.php](/root/lby-docker/req2test/user/runs/req2test-subset160-20261112-v1/generation/c4051470d05f41f244d3/attempt-1/workspaces/0000/repo/tests/Integration/Behaviour/Features/Context/VirtualProductDuplicateContext.php) with definitions for product creation, virtual-file upload and checks, and product duplication. PHP syntax validation passes.\n\nI couldn’t run the scenario here. The background fixture definitions are lightweight placeholders, so this still needs validation against the harness to confirm those fixtures are already available and the scenario passes end to end.",
+  "denied_commands": [
+    {
+      "id": "item_1",
+      "type": "command_execution",
+      "command": "/usr/bin/bash -lc 'ls repo/tests/Integration/Behaviour/Features/Context && rg -n \"virtual product file|duplicate product|add product|manufacturer .* exists|carrier|attribute group|single shop\" repo/tests/Integration/Behaviour/Features/Context repo/tests/Integration/Behaviour/Features/Scenario/Product/duplicate_product.feature'",
+      "aggregated_output": "AbstractPrestaShopFeatureContext.php\nCartAwareTrait.php\nCommonFeatureContext.php\nConfiguration\nContextFeatureContext.php\nDomain\nLastExceptionTrait.php\nOrderMessageContext.php\nSharedStorage.php\nSharedStorageTrait.php\nUtil\n/usr/bin/bash: line 1: /usr/bin/rg: Permission denied\n",
+      "exit_code": 126,
+      "status": "failed"
+    }
+  ],
+  "diagnostic_addendum": null,
+  "trace_path": "results/test-generation-20261114/req2test/tasks/c4051470d05f41f244d3/trajectory-excerpt.json"
+}

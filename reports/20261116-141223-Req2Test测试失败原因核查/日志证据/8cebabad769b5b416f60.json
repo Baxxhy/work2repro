@@ -1,0 +1,194 @@
+{
+  "item_id": "sylius/features/shop/promotion/complex_promotions.feature:52",
+  "outcome": "failed",
+  "outcomes_all_runs": [
+    "failed"
+  ],
+  "per_step": [
+    {
+      "error": null,
+      "result": "passed",
+      "seconds": 0.3527,
+      "text": "the store operates on a single channel in \"United States\""
+    },
+    {
+      "error": null,
+      "result": "passed",
+      "seconds": 0.3245,
+      "text": "the store classifies its products as \"Jackets\", \"Trousers\", \"Formal attire\" and \"Dresses\""
+    },
+    {
+      "error": null,
+      "result": "passed",
+      "seconds": 0.3934,
+      "text": "the store has a product \"Black Sabbath jacket\" priced at \"$100.00\""
+    },
+    {
+      "error": null,
+      "result": "passed",
+      "seconds": 0.0849,
+      "text": "this product belongs to \"Jackets\""
+    },
+    {
+      "error": null,
+      "result": "passed",
+      "seconds": 0.1357,
+      "text": "the store has a product \"Iron Maiden trousers\" priced at \"$80.00\""
+    },
+    {
+      "error": null,
+      "result": "passed",
+      "seconds": 0.0769,
+      "text": "this product belongs to \"Trousers\""
+    },
+    {
+      "error": null,
+      "result": "passed",
+      "seconds": 0.1451,
+      "text": "the store has a product \"Metallica dress\" priced at \"$50.00\""
+    },
+    {
+      "error": null,
+      "result": "passed",
+      "seconds": 0.0758,
+      "text": "this product belongs to \"Dresses\""
+    },
+    {
+      "error": null,
+      "result": "passed",
+      "seconds": 0.1583,
+      "text": "the store has a product \"Rammstein bow tie\" priced at \"$10.00\""
+    },
+    {
+      "error": null,
+      "result": "passed",
+      "seconds": 0.0774,
+      "text": "this product belongs to \"Formal attire\""
+    },
+    {
+      "error": null,
+      "result": "passed",
+      "seconds": 0.1206,
+      "text": "I am a logged in customer"
+    },
+    {
+      "error": null,
+      "result": "passed",
+      "seconds": 0.0746,
+      "text": "there is a promotion \"Greatest promotion\""
+    },
+    {
+      "error": null,
+      "result": "passed",
+      "seconds": 0.1209,
+      "text": "it gives \"20%\" off on every product classified as \"Jackets\" and a \"$50.00\" discount to every order with items total equal at least \"$500.00\""
+    },
+    {
+      "error": null,
+      "result": "passed",
+      "seconds": 0.3698,
+      "text": "I added 7 products \"Black Sabbath jacket\" to the cart"
+    },
+    {
+      "error": "URI should not start with a slash.",
+      "result": "failed",
+      "seconds": 0.0157,
+      "text": "I check the details of my cart"
+    }
+  ],
+  "index_errors": {},
+  "stdout_tail": "@applying_promotion_rules\nFeature: Receiving a discount based on a configured promotion\n  In order to pay less for my order during a promotion period\n  As a Customer\n  I want to receive a discount for my purchase\n\n  Background:\n    Given the store operates on a single channel in \"United States\"\n    And the store classifies its products as \"Jackets\", \"Trousers\", \"Formal attire\" and \"Dresses\"\n    And the store has a product \"Black Sabbath jacket\" priced at \"$100.00\"\n    And this product belongs to \"Jackets\"\n    And the store has a product \"Iron Maiden trousers\" priced at \"$80.00\"\n    And this product belongs to \"Trousers\"\n    And the store has a product \"Metallica dress\" priced at \"$50.00\"\n    And this product belongs to \"Dresses\"\n    And the store has a product \"Rammstein bow tie\" priced at \"$10.00\"\n    And this product belongs to \"Formal attire\"\n    And I am a logged in customer\n\n  @api @ui\n  Scenario: Receiving a discount on items and the whole order from one promotion based on items total\n    Given there is a promotion \"Greatest promotion\"\n    And it gives \"20%\" off on every product classified as \"Jackets\" and a \"$50.00\" discount to every order with items total equal at least \"$500.00\"\n    And I added 7 products \"Black Sabbath jacket\" to the cart\n    When I check the details of my cart\n      URI should not start with a slash. (InvalidArgumentException)\n    Then theirs subtotal price should be decreased by \"$140.00\"\n    And my cart total should be \"$510.00\"\n    And my discount should be \"-$50.00\"\n\n--- Failed scenarios:\n\n    _bench/item.feature:21 (on line 25)\n\n1 scenario (1 failed)\n18 steps (14 passed, 1 failed, 3 skipped)\n1m11.68s (260.31Mb)\n",
+  "bench_meta": {
+    "dependency_profile": [
+      "database"
+    ],
+    "live_background_step_count": 11,
+    "live_step_count": 7,
+    "n_closure_contexts": 3,
+    "n_closure_files": 4,
+    "n_oracle_steps": 3,
+    "round_trip_seconds": 14.56,
+    "signature": "8092166b9e7a",
+    "steps_removable": 4,
+    "steps_retained": 14,
+    "tags": [
+      "@applying_promotion_rules",
+      "@api",
+      "@ui"
+    ],
+    "upstream_selected": null
+  },
+  "written_files": [
+    "src/Sylius/Behat/Context/Api/Shop/PromotionCartContext.php"
+  ],
+  "_source": "/root/lby-docker/req2test/user/benchmark/runs/req2test-recovery8-20261113-v1-sylius/sylius/th/exec.jsonl",
+  "requirement": {
+    "feature": {
+      "background": "    Background:\n        Given the store operates on a single channel in \"United States\"\n        And the store classifies its products as \"Jackets\", \"Trousers\", \"Formal attire\" and \"Dresses\"\n        And the store has a product \"Black Sabbath jacket\" priced at \"$100.00\"\n        And this product belongs to \"Jackets\"\n        And the store has a product \"Iron Maiden trousers\" priced at \"$80.00\"\n        And this product belongs to \"Trousers\"\n        And the store has a product \"Metallica dress\" priced at \"$50.00\"\n        And this product belongs to \"Dresses\"\n        And the store has a product \"Rammstein bow tie\" priced at \"$10.00\"\n        And this product belongs to \"Formal attire\"\n        And I am a logged in customer",
+      "file_path": "features/shop/promotion/complex_promotions.feature",
+      "narrative": "    In order to pay less for my order during a promotion period\n    As a Customer\n    I want to receive a discount for my purchase",
+      "title": "Receiving a discount based on a configured promotion"
+    },
+    "scenario": {
+      "gherkin": "    Scenario: Receiving a discount on items and the whole order from one promotion based on items total\n        Given there is a promotion \"Greatest promotion\"\n        And it gives \"20%\" off on every product classified as \"Jackets\" and a \"$50.00\" discount to every order with items total equal at least \"$500.00\"\n        And I added 7 products \"Black Sabbath jacket\" to the cart\n        When I check the details of my cart\n        Then theirs subtotal price should be decreased by \"$140.00\"\n        And my cart total should be \"$510.00\"\n        And my discount should be \"-$50.00\"",
+      "kind": "scenario",
+      "line": 52,
+      "tags": [
+        "@applying_promotion_rules",
+        "@api",
+        "@ui"
+      ],
+      "title": "Receiving a discount on items and the whole order from one promotion based on items total"
+    }
+  },
+  "official_result": {
+    "instance_id": "sylius/features/shop/promotion/complex_promotions.feature:52",
+    "project": "sylius",
+    "view": "th",
+    "outcome": "assertion_failure",
+    "passed": false,
+    "api_f1": null,
+    "coverage_j": null,
+    "recall": null,
+    "kill_complete": false,
+    "kill_complete_strict": false,
+    "kill_complete_95": false,
+    "mutation_status": "not_passed",
+    "mutation_baseline": null,
+    "behaviour_status": "measured",
+    "n_gt_kills": 389,
+    "n_scored": 0,
+    "n_killed": 0,
+    "n_dropped": 0,
+    "n_crash_kills": 0,
+    "n_timeout_kills": 0,
+    "exclusion": null,
+    "engine_outcome": "failed",
+    "harness_version": 27,
+    "rejected_files": []
+  },
+  "population_exclusion": null,
+  "generated_files": [
+    {
+      "path": "behat_services.yml",
+      "sha256": "06247455cf052cbc89594f57a2ef236f64dc595ccc20004b0f4de67409e2c145"
+    },
+    {
+      "path": "src/Sylius/Behat/Context/Api/Shop/PromotionCartContext.php",
+      "sha256": "5777896f2990480db35242debf31b95455cf1bc4b1bcd57ee31f94ab4f6f06a9"
+    }
+  ],
+  "final_agent_message": "Added [PromotionCartContext.php](/root/lby-docker/req2test/user/runs/req2test-subset160-20261112-v1/generation/8cebabad769b5b416f60/attempt-1/workspaces/0000/repo/src/Sylius/Behat/Context/Api/Shop/PromotionCartContext.php) with the cart-detail step and assertions for the discounted subtotal, total, and promotion discount. Added [behat_services.yml](/root/lby-docker/req2test/user/runs/req2test-subset160-20261112-v1/generation/8cebabad769b5b416f60/attempt-1/workspaces/0000/repo/behat_services.yml) to wire the shop API client and shared storage. PHP syntax validation passed; I couldn’t run the scenario here.",
+  "denied_commands": [
+    {
+      "id": "item_1",
+      "type": "command_execution",
+      "command": "/usr/bin/bash -lc 'pwd && rg --files repo/src/Sylius/Behat repo | head -100 && rg -n \"promotion|cart total|subtotal|single channel|classified\" repo/src/Sylius/Behat repo/features/shop/promotion repo/TARGET_CONTRACTS.md'",
+      "aggregated_output": "/root/lby-docker/req2test/user/runs/req2test-subset160-20261112-v1/generation/8cebabad769b5b416f60/attempt-1/workspaces/0000\n/usr/bin/bash: line 1: /usr/bin/rg: Permission denied\n/usr/bin/bash: line 1: /usr/bin/rg: Permission denied\n",
+      "exit_code": 126,
+      "status": "failed"
+    }
+  ],
+  "diagnostic_addendum": null,
+  "trace_path": "results/test-generation-20261114/req2test/tasks/8cebabad769b5b416f60/trajectory-excerpt.json"
+}

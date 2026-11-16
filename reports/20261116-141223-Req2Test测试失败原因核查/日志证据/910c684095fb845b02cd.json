@@ -1,0 +1,99 @@
+{
+  "item_id": "kapua/qa/integration/src/test/resources/features/authorization/AccessInfoService.feature:405",
+  "outcome": "parse_or_compile_error",
+  "outcomes_all_runs": [
+    "no_scenario_ran"
+  ],
+  "per_step": [],
+  "index_errors": {
+    "qa/integration/src/test/java/org/eclipse/kapua/integration/service/authorization/r2t/generated/AccessInfoSteps.java": "10:46 error: cannot find symbol"
+  },
+  "stdout_tail": "NFO] Copying 113 resources\n[INFO] \n[INFO] --- compiler:3.6.1:testCompile (default-testCompile) @ kapua-qa-integration ---\n[INFO] Toolchain in maven-compiler-plugin: JDK[/opt/r2t/jdk17]\n[INFO] Changes detected - recompiling the module!\n[INFO] Compiling 83 source files to /work/qa/integration/target/test-classes\n[INFO] -------------------------------------------------------------\n[ERROR] COMPILATION ERROR : \n[INFO] -------------------------------------------------------------\n[ERROR] /work/qa/integration/src/test/java/org/eclipse/kapua/integration/service/authorization/r2t/generated/AccessInfoSteps.java:[10,46] error: cannot find symbol\n  symbol:   class KapuaConfigurableService\n  location: package org.eclipse.kapua.commons.configuration\n[INFO] 1 error\n[INFO] -------------------------------------------------------------\n[INFO] ------------------------------------------------------------------------\n[INFO] BUILD FAILURE\n[INFO] ------------------------------------------------------------------------\n[INFO] Total time:  6.258 s\n[INFO] Finished at: 2026-11-12T17:31:12Z\n[INFO] ------------------------------------------------------------------------\n[ERROR] Failed to execute goal org.apache.maven.plugins:maven-compiler-plugin:3.6.1:testCompile (default-testCompile) on project kapua-qa-integration: Compilation failure\n[ERROR] /work/qa/integration/src/test/java/org/eclipse/kapua/integration/service/authorization/r2t/generated/AccessInfoSteps.java:[10,46] error: cannot find symbol\n[ERROR]   symbol:   class KapuaConfigurableService\n[ERROR]   location: package org.eclipse.kapua.commons.configuration\n[ERROR] -> [Help 1]\n[ERROR] \n[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.\n[ERROR] Re-run Maven using the -X switch to enable full debug logging.\n[ERROR] \n[ERROR] For more information about the errors and possible solutions, please read the following articles:\n[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/MojoFailureException\n",
+  "bench_meta": {
+    "dependency_profile": [],
+    "live_background_step_count": 0,
+    "live_step_count": 14,
+    "n_closure_contexts": 2,
+    "n_closure_files": 2,
+    "n_oracle_steps": 3,
+    "round_trip_seconds": 120.381,
+    "signature": "509f2a71ddb2",
+    "steps_removable": 11,
+    "steps_retained": 3,
+    "tags": [
+      "@security",
+      "@accessInfoService",
+      "@env_none"
+    ],
+    "upstream_selected": null
+  },
+  "written_files": [
+    "qa/integration/src/test/java/org/eclipse/kapua/integration/service/authorization/r2t/generated/AccessInfoSteps.java"
+  ],
+  "_source": "/root/lby-docker/req2test/user/benchmark/runs/req2test-recovery8-20261113-v1-kapua/kapua/th/exec.jsonl",
+  "requirement": {
+    "feature": {
+      "background": null,
+      "file_path": "qa/integration/src/test/resources/features/authorization/AccessInfoService.feature",
+      "narrative": null,
+      "title": "Access Info Service CRUD tests"
+    },
+    "scenario": {
+      "gherkin": "  Scenario: Delete an existing access permission entity\n  It must be possibel to delete a specific permission entry.\n\n    When I login as user with name \"kapua-sys\" and password \"kapua-password\"\n    Given Scope with ID 10\n    When I configure the user service for the account with the id 10\n      | type    | name                   | value |\n      | boolean | infiniteChildEntities  | true  |\n      | integer | maxNumberChildEntities | 5     |\n    And I have the following user\n      | name     | displayName  | email              | phoneNumber     |\n      | kapua-u1 | Kapua User 1 | kapua_u1@kapua.com | +386 31 323 555 |\n    And I create the domain\n      | name | actions             |\n      | test | read,write, execute |\n    When I create the access info entity\n    And The permissions \"read, write, execute\"\n    And I create the permissions\n    When I count the permissions in scope 10\n    Then I count 3\n    When I delete the last created access permission\n    And I count the permissions in scope 10\n    Then I count 2\n    Then I logout",
+      "kind": "scenario",
+      "line": 405,
+      "tags": [
+        "@security",
+        "@accessInfoService",
+        "@env_none"
+      ],
+      "title": "Delete an existing access permission entity"
+    }
+  },
+  "official_result": {
+    "instance_id": "kapua/qa/integration/src/test/resources/features/authorization/AccessInfoService.feature:405",
+    "project": "kapua",
+    "view": "th",
+    "outcome": "compilation_failure",
+    "passed": false,
+    "api_f1": null,
+    "coverage_j": null,
+    "recall": null,
+    "kill_complete": false,
+    "kill_complete_strict": false,
+    "kill_complete_95": false,
+    "mutation_status": "not_passed",
+    "mutation_baseline": null,
+    "behaviour_status": "measured",
+    "n_gt_kills": 42,
+    "n_scored": 0,
+    "n_killed": 0,
+    "n_dropped": 0,
+    "n_crash_kills": 0,
+    "n_timeout_kills": 0,
+    "exclusion": null,
+    "engine_outcome": "parse_or_compile_error",
+    "harness_version": 27,
+    "rejected_files": []
+  },
+  "population_exclusion": null,
+  "generated_files": [
+    {
+      "path": "qa/integration/src/test/java/org/eclipse/kapua/integration/service/authorization/r2t/generated/AccessInfoSteps.java",
+      "sha256": "3f1ee248b725f0a0dfafc726185c28cd035634a026535e9c70ece0164c69ea24"
+    }
+  ],
+  "final_agent_message": "Added [AccessInfoSteps.java](/root/lby-docker/req2test/user/runs/full-baseline-20261111-v1/generation/910c684095fb845b02cd/attempt-1/workspaces/0000/repo/qa/integration/src/test/java/org/eclipse/kapua/integration/service/authorization/r2t/generated/AccessInfoSteps.java) with step definitions for the scenario’s login, setup, user/domain/access-permission creation, counting, deletion, and logout.\n\nI couldn’t run the scenario in this workspace, so the code remains unverified against the Maven test classpath.",
+  "denied_commands": [
+    {
+      "id": "item_1",
+      "type": "command_execution",
+      "command": "/usr/bin/bash -lc 'pwd && rg --files repo/qa | head'",
+      "aggregated_output": "/root/lby-docker/req2test/user/runs/full-baseline-20261111-v1/generation/910c684095fb845b02cd/attempt-1/workspaces/0000\n/usr/bin/bash: line 1: /usr/bin/rg: Permission denied\n",
+      "exit_code": 0,
+      "status": "completed"
+    }
+  ],
+  "diagnostic_addendum": null,
+  "trace_path": "results/test-generation-20261114/req2test/tasks/910c684095fb845b02cd/trajectory-excerpt.json"
+}

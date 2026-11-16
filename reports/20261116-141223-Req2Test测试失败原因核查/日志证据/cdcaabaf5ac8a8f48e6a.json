@@ -1,0 +1,111 @@
+{
+  "item_id": "coreshop/features/domain/product/specific_price_rules/customer_condition.feature:23",
+  "outcome": "container_error",
+  "outcomes_all_runs": [
+    "container_error"
+  ],
+  "per_step": [],
+  "index_errors": {},
+  "stdout_tail": "                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              \n\n",
+  "bench_meta": {
+    "dependency_profile": [
+      "database"
+    ],
+    "live_background_step_count": 8,
+    "live_step_count": 5,
+    "n_closure_contexts": 13,
+    "n_closure_files": 15,
+    "n_oracle_steps": 1,
+    "round_trip_seconds": 9.96,
+    "signature": "67fd79a4ca1e",
+    "steps_removable": 13,
+    "steps_retained": 0,
+    "tags": [
+      "@domain",
+      "@product"
+    ],
+    "upstream_selected": true
+  },
+  "written_files": [
+    "src/CoreShop/Behat/Context/Domain/Product/SpecificPriceRuleContext.php"
+  ],
+  "_source": "/root/lby-docker/req2test/user/benchmark/runs/req2test-recovery8-20261113-v1-coreshop/coreshop/th/exec.jsonl",
+  "requirement": {
+    "feature": {
+      "background": "  Background:\n    Given the site operates on a store in \"Austria\"\n    Given the site has a currency \"Euro\" with iso \"EUR\"\n    Given I am in country \"Austria\"\n    Given the site has a customer \"some-customer@something.com\"\n    Given I am customer \"some-customer@something.com\"\n    Given the site has a product \"Shoe\" priced at 100\n    Then the product \"Shoe\" should be priced at \"100\"\n    Then I should be logged in with email \"some-customer@something.com\"",
+      "file_path": "features/domain/product/specific_price_rules/customer_condition.feature",
+      "narrative": "  In order to extend my catalog\n  the product has a specific-price-rule for a customer\n  I want to create a new product",
+      "title": "Adding a new Product"
+    },
+    "scenario": {
+      "gherkin": "  Scenario: Add a new customer product specific price rule which is invalid\n    Given the site has a customer \"some-other-customer@something.com\"\n    Given adding a product specific price rule to product \"Shoe\" named \"customer-discount\"\n    And the specific price rule is active\n    And the specific price rule has a condition customers with customer \"some-other-customer@something.com\"\n    Then the specific price rule should be invalid for product \"Shoe\"",
+      "kind": "scenario",
+      "line": 23,
+      "tags": [
+        "@domain",
+        "@product"
+      ],
+      "title": "Add a new customer product specific price rule which is invalid"
+    }
+  },
+  "official_result": {
+    "instance_id": "coreshop/features/domain/product/specific_price_rules/customer_condition.feature:23",
+    "project": "coreshop",
+    "view": "th",
+    "outcome": "compilation_failure",
+    "passed": false,
+    "api_f1": null,
+    "coverage_j": null,
+    "recall": null,
+    "kill_complete": false,
+    "kill_complete_strict": false,
+    "kill_complete_95": false,
+    "mutation_status": "not_passed",
+    "mutation_baseline": null,
+    "behaviour_status": "measured",
+    "n_gt_kills": 108,
+    "n_scored": 0,
+    "n_killed": 0,
+    "n_dropped": 0,
+    "n_crash_kills": 0,
+    "n_timeout_kills": 0,
+    "exclusion": null,
+    "engine_outcome": "container_error",
+    "harness_version": 27,
+    "rejected_files": []
+  },
+  "population_exclusion": null,
+  "generated_files": [
+    {
+      "path": "src/CoreShop/Behat/Context/Domain/Product/SpecificPriceRuleContext.php",
+      "sha256": "09b18493da52007f1341f40baa18dda78996994263607928be4df4be05ceaf23"
+    }
+  ],
+  "final_agent_message": "Added [SpecificPriceRuleContext.php](/root/lby-docker/req2test/user/runs/full-baseline-20261111-v1/generation/cdcaabaf5ac8a8f48e6a/attempt-1/workspaces/0000/repo/src/CoreShop/Behat/Context/Domain/Product/SpecificPriceRuleContext.php).\n\nIt defines the rule-creation, activation, customer-condition, and invalidity-check steps. It does not define the feature’s Background steps, so this context alone is not sufficient to run the full scenario. I also could not run the scenario to verify the code.",
+  "denied_commands": [
+    {
+      "id": "item_2",
+      "type": "command_execution",
+      "command": "/usr/bin/bash -lc 'rg -n \"Adding a new Product|specific price rule|customer_condition\" repo'",
+      "aggregated_output": "/usr/bin/bash: line 1: /usr/bin/rg: Permission denied\n",
+      "exit_code": 126,
+      "status": "failed"
+    },
+    {
+      "id": "item_3",
+      "type": "command_execution",
+      "command": "/usr/bin/bash -lc \"rg --files repo | rg '(TARGET_CONTRACTS|features/domain/product|TestBundle|PimcoreRepository|ShopperContext|RuleValidationProcessor|Product.*Repository|behat)' | head -100\"",
+      "aggregated_output": "/usr/bin/bash: line 1: /usr/bin/rg: Permission denied\n/usr/bin/bash: line 1: /usr/bin/rg: Permission denied\n",
+      "exit_code": 0,
+      "status": "completed"
+    }
+  ],
+  "diagnostic_addendum": {
+    "instance_id": "coreshop/features/domain/product/specific_price_rules/customer_condition.feature:23",
+    "outcome": "container_error",
+    "full_stdout_source": "/root/lby-docker/req2test/user/runs/req2test-recovery8-20261113-v1/evaluation-diagnostics/cdcaabaf5ac8a8f48e6a-229062-1794559043086353858.json",
+    "message": "In DefinitionErrorExceptionPass.php line 48: Cannot autowire service \"CoreShop\\Behat\\Context\\Domain\\Product\\SpecificPriceRuleContext\": argument \"$productRepository\" of method \"__construct()\" references class \"CoreShop\\Bundle\\ResourceBundle\\Pimcore\\PimcoreRepository\" but no such service exists. You should maybe alias this class to one of these existing services: \"app.repository.car\", \"coreshop.repository.order\", \"coreshop.repository.order_item\", \"coreshop.repository.order_shipment\", \"coreshop.repository.order_shipment_item\", \"coreshop.repository.order_invoice\", \"coreshop.repository.order_invoice_item\", \"coreshop.repository.cart_price_rule_item\", \"coreshop.repository.price_rule_item\", \"coreshop.repository.adjustment\", \"coreshop.repository.order_item_attribute\", \"coreshop.repository.customer_group\", \"coreshop.repository.customer\", \"coreshop.repository.company\", \"coreshop.repository.user\", \"coreshop.repository.attribute_group\", \"coreshop.repository.attribute_value\", \"coreshop.repository.attribute_color\", \"coreshop.repository.category\", \"coreshop.repository.product\", \"coreshop.repository.manufacturer\", \"coreshop.repository.address\", \"coreshop.repository.tax_item\", \"coreshop.repository.wishlist\", \"coreshop.repository.wishlist_item\", \"coreshop.repository.stack.purchasable\", \"coreshop.repository.stack.order\", \"coreshop.repository.stack.order_item\", \"coreshop.repository.stack.order_invoice\", \"coreshop.repository.stack.order_invoice_item\", \"coreshop.repository.stack.order_shipment\", \"coreshop.repository.stack.order_shipment_item\", \"coreshop.repository.stack.customer\", \"coreshop.repository.stack.customer_group\", \"coreshop.repository.stack.company\", \"coreshop.repository.stack.user\", ",
+    "baseline_score_kept": true
+  },
+  "trace_path": "results/test-generation-20261114/req2test/tasks/cdcaabaf5ac8a8f48e6a/trajectory-excerpt.json"
+}

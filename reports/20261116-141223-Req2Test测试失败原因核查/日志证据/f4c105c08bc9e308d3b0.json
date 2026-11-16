@@ -1,0 +1,97 @@
+{
+  "item_id": "kapua/service/user/test/src/test/resources/features/UserService.feature:25",
+  "outcome": "parse_or_compile_error",
+  "outcomes_all_runs": [
+    "no_scenario_ran"
+  ],
+  "per_step": [],
+  "index_errors": {
+    "service/user/test/src/test/java/org/eclipse/kapua/service/user/test/r2t/generated/UserSteps.java": "53:54 error: incompatible types: Object cannot be converted to CucUser"
+  },
+  "stdout_tail": "--\n[INFO] Toolchain in maven-compiler-plugin: JDK[/opt/r2t/jdk17]\n[INFO] No sources to compile\n[INFO] \n[INFO] --- resources:3.3.0:testResources (default-testResources) @ kapua-user-test ---\n[INFO] Copying 7 resources\n[INFO] \n[INFO] --- compiler:3.6.1:testCompile (default-testCompile) @ kapua-user-test ---\n[INFO] Toolchain in maven-compiler-plugin: JDK[/opt/r2t/jdk17]\n[INFO] Changes detected - recompiling the module!\n[INFO] Compiling 5 source files to /work/service/user/test/target/test-classes\n[INFO] -------------------------------------------------------------\n[ERROR] COMPILATION ERROR : \n[INFO] -------------------------------------------------------------\n[ERROR] /work/service/user/test/src/test/java/org/eclipse/kapua/service/user/test/r2t/generated/UserSteps.java:[53,54] error: incompatible types: Object cannot be converted to CucUser\n[INFO] 1 error\n[INFO] -------------------------------------------------------------\n[INFO] ------------------------------------------------------------------------\n[INFO] BUILD FAILURE\n[INFO] ------------------------------------------------------------------------\n[INFO] Total time:  5.479 s\n[INFO] Finished at: 2026-11-12T17:35:35Z\n[INFO] ------------------------------------------------------------------------\n[ERROR] Failed to execute goal org.apache.maven.plugins:maven-compiler-plugin:3.6.1:testCompile (default-testCompile) on project kapua-user-test: Compilation failure\n[ERROR] /work/service/user/test/src/test/java/org/eclipse/kapua/service/user/test/r2t/generated/UserSteps.java:[53,54] error: incompatible types: Object cannot be converted to CucUser\n[ERROR] -> [Help 1]\n[ERROR] \n[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.\n[ERROR] Re-run Maven using the -X switch to enable full debug logging.\n[ERROR] \n[ERROR] For more information about the errors and possible solutions, please read the following articles:\n[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/MojoFailureException\n",
+  "bench_meta": {
+    "dependency_profile": [],
+    "live_background_step_count": 0,
+    "live_step_count": 4,
+    "n_closure_contexts": 1,
+    "n_closure_files": 1,
+    "n_oracle_steps": 1,
+    "round_trip_seconds": 119.33999999999999,
+    "signature": "160a4c9c4118",
+    "steps_removable": 4,
+    "steps_retained": 0,
+    "tags": [
+      "@user",
+      "@env_none"
+    ],
+    "upstream_selected": null
+  },
+  "written_files": [
+    "service/user/test/src/test/java/org/eclipse/kapua/service/user/test/r2t/generated/UserSteps.java"
+  ],
+  "_source": "/root/lby-docker/req2test/user/benchmark/runs/req2test-recovery8-20261113-v1-kapua/kapua/th/exec.jsonl",
+  "requirement": {
+    "feature": {
+      "background": null,
+      "file_path": "service/user/test/src/test/resources/features/UserService.feature",
+      "narrative": "  User Service is responsible for CRUD operations on User objects in Kapua\n  database.",
+      "title": "User Service"
+    },
+    "scenario": {
+      "gherkin": "  Scenario: Creating user\n  Create user with all User entity fields set and persist it in database. Then try to\n  find it by name and check all the fields.\n\n    When I configure the user service for the account with the id 42\n      | type    | name                       | value |\n      | boolean | infiniteChildEntities      | true  |\n      | integer | maxNumberChildEntities     | 5     |\n      | boolean | lockoutPolicy.enabled      | false |\n      | integer | lockoutPolicy.maxFailures  | 3     |\n      | integer | lockoutPolicy.resetAfter   | 300   |\n      | integer | lockoutPolicy.lockDuration | 3     |\n    Given I have the following user\n      | name     | displayName  | email              | phoneNumber     | status  |\n      | kapua-u1 | Kapua User 1 | kapua_u1@kapua.com | +386 31 323 555 | ENABLED |\n    When I search for user with name \"kapua-u1\"\n    Then I find user\n      | kapua-u1 | Kapua User 1 | kapua_u1@kapua.com | +386 31 323 555 | ENABLED |",
+      "kind": "scenario",
+      "line": 25,
+      "tags": [
+        "@user",
+        "@env_none"
+      ],
+      "title": "Creating user"
+    }
+  },
+  "official_result": {
+    "instance_id": "kapua/service/user/test/src/test/resources/features/UserService.feature:25",
+    "project": "kapua",
+    "view": "th",
+    "outcome": "compilation_failure",
+    "passed": false,
+    "api_f1": null,
+    "coverage_j": null,
+    "recall": null,
+    "kill_complete": false,
+    "kill_complete_strict": false,
+    "kill_complete_95": false,
+    "mutation_status": "not_passed",
+    "mutation_baseline": null,
+    "behaviour_status": "measured",
+    "n_gt_kills": 50,
+    "n_scored": 0,
+    "n_killed": 0,
+    "n_dropped": 0,
+    "n_crash_kills": 0,
+    "n_timeout_kills": 0,
+    "exclusion": null,
+    "engine_outcome": "parse_or_compile_error",
+    "harness_version": 27,
+    "rejected_files": []
+  },
+  "population_exclusion": null,
+  "generated_files": [
+    {
+      "path": "service/user/test/src/test/java/org/eclipse/kapua/service/user/test/r2t/generated/UserSteps.java",
+      "sha256": "d5ccd96caecc53f968896577a0a848af072af803943cccd6de14809f947464b8"
+    }
+  ],
+  "final_agent_message": "Added the step definitions in [UserSteps.java](/root/lby-docker/req2test/user/runs/req2test-subset160-20261112-v1/generation/f4c105c08bc9e308d3b0/attempt-1/workspaces/0000/repo/service/user/test/src/test/java/org/eclipse/kapua/service/user/test/r2t/generated/UserSteps.java). They configure the user service, create the user from the table, find it by name, and assert its fields and identity. I couldn’t run the scenario in this workspace.",
+  "denied_commands": [
+    {
+      "id": "item_3",
+      "type": "command_execution",
+      "command": "/usr/bin/bash -lc \"rg --files repo | rg '(BasicSteps|StepData|UserService.feature|UserServiceImpl|User.*Steps|LocatorConfiguration|TARGET_CONTRACTS)'\"",
+      "aggregated_output": "/usr/bin/bash: line 1: /usr/bin/rg: Permission denied\n/usr/bin/bash: line 1: /usr/bin/rg: Permission denied\n",
+      "exit_code": 126,
+      "status": "failed"
+    }
+  ],
+  "diagnostic_addendum": null,
+  "trace_path": "results/test-generation-20261114/req2test/tasks/f4c105c08bc9e308d3b0/trajectory-excerpt.json"
+}

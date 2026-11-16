@@ -1,0 +1,126 @@
+{
+  "item_id": "prestashop/tests/Integration/Behaviour/Features/Scenario/Cart/Product/add_pack.feature:14",
+  "outcome": "failed",
+  "outcomes_all_runs": [
+    "failed"
+  ],
+  "per_step": [
+    {
+      "error": null,
+      "result": "passed",
+      "seconds": 0.0383,
+      "text": "specific shop configuration for \"pack stock type\" is set to decrement products only"
+    },
+    {
+      "error": null,
+      "result": "passed",
+      "seconds": 0.3135,
+      "text": "there is a product in the catalog named \"product5\" with a price of 23.86 and 50 items in stock"
+    },
+    {
+      "error": null,
+      "result": "passed",
+      "seconds": 0.0866,
+      "text": "there is a product in the catalog named \"product6\" with a price of 12.34 and 10 items in stock"
+    },
+    {
+      "error": null,
+      "result": "passed",
+      "seconds": 0.0243,
+      "text": "product \"product6\" is a pack containing 10 items of product \"product5\""
+    },
+    {
+      "error": "Failed asserting that 10 is identical to 5.",
+      "result": "failed",
+      "seconds": 0.1494,
+      "text": "the remaining available stock for product \"product6\" should be 5"
+    }
+  ],
+  "index_errors": {},
+  "stdout_tail": "@restore-all-tables-before-feature\nFeature: Add product pack in cart\n  As a customer\n  I must be able to correctly add product packs in my cart\n\n  Scenario: Check remaining quantity of pack when config is set to STOCK_TYPE_PRODUCTS_ONLY\n    Given specific shop configuration for \"pack stock type\" is set to decrement products only\n    Given there is a product in the catalog named \"product5\" with a price of 23.86 and 50 items in stock\n    Given there is a product in the catalog named \"product6\" with a price of 12.34 and 10 items in stock\n    Given product \"product6\" is a pack containing 10 items of product \"product5\"\n    Then the remaining available stock for product \"product6\" should be 5\n      Failed asserting that 10 is identical to 5.\n    Then the remaining available stock for product \"product5\" should be 50\n\n--- Failed scenarios:\n\n    _bench/item.feature:6 (on line 11)\n\n1 scenario (1 failed)\n6 steps (4 passed, 1 failed, 1 skipped)\n2m32.43s (188.52Mb)\n",
+  "bench_meta": {
+    "dependency_profile": [
+      "database"
+    ],
+    "live_background_step_count": 0,
+    "live_step_count": 6,
+    "n_closure_contexts": 2,
+    "n_closure_files": 2,
+    "n_oracle_steps": 2,
+    "round_trip_seconds": 85.3,
+    "signature": "f0baea564321",
+    "steps_removable": 5,
+    "steps_retained": 1,
+    "tags": [
+      "@restore-all-tables-before-feature"
+    ],
+    "upstream_selected": null
+  },
+  "written_files": [
+    "tests/Integration/Behaviour/Features/Context/Domain/Product/PackStockFeatureContext.php"
+  ],
+  "_source": "/root/lby-docker/req2test/user/benchmark/runs/req2test-recovery8-20261113-v1-prestashop/prestashop/th/exec.jsonl",
+  "requirement": {
+    "feature": {
+      "background": null,
+      "file_path": "tests/Integration/Behaviour/Features/Scenario/Cart/Product/add_pack.feature",
+      "narrative": "  As a customer\n  I must be able to correctly add product packs in my cart",
+      "title": "Add product pack in cart"
+    },
+    "scenario": {
+      "gherkin": "  Scenario: Check remaining quantity of pack when config is set to STOCK_TYPE_PRODUCTS_ONLY\n    Given specific shop configuration for \"pack stock type\" is set to decrement products only\n    Given there is a product in the catalog named \"product5\" with a price of 23.86 and 50 items in stock\n    Given there is a product in the catalog named \"product6\" with a price of 12.34 and 10 items in stock\n    Given product \"product6\" is a pack containing 10 items of product \"product5\"\n    Then the remaining available stock for product \"product6\" should be 5\n    Then the remaining available stock for product \"product5\" should be 50",
+      "kind": "scenario",
+      "line": 14,
+      "tags": [
+        "@restore-all-tables-before-feature"
+      ],
+      "title": "Check remaining quantity of pack when config is set to STOCK_TYPE_PRODUCTS_ONLY"
+    }
+  },
+  "official_result": {
+    "instance_id": "prestashop/tests/Integration/Behaviour/Features/Scenario/Cart/Product/add_pack.feature:14",
+    "project": "prestashop",
+    "view": "th",
+    "outcome": "assertion_failure",
+    "passed": false,
+    "api_f1": null,
+    "coverage_j": null,
+    "recall": null,
+    "kill_complete": false,
+    "kill_complete_strict": false,
+    "kill_complete_95": false,
+    "mutation_status": "not_passed",
+    "mutation_baseline": null,
+    "behaviour_status": "measured",
+    "n_gt_kills": 19,
+    "n_scored": 0,
+    "n_killed": 0,
+    "n_dropped": 0,
+    "n_crash_kills": 0,
+    "n_timeout_kills": 0,
+    "exclusion": null,
+    "engine_outcome": "failed",
+    "harness_version": 27,
+    "rejected_files": []
+  },
+  "population_exclusion": null,
+  "generated_files": [
+    {
+      "path": "tests/Integration/Behaviour/Features/Context/Domain/Product/PackStockFeatureContext.php",
+      "sha256": "b8bf70d655d4c211775f5903cbfbe1b30203ec8248a05845e5cd2e39450ede34"
+    }
+  ],
+  "final_agent_message": "Added [PackStockFeatureContext.php](/root/lby-docker/req2test/user/runs/req2test-subset160-20261112-v1/generation/136d7e5296e9458e555b/attempt-1/workspaces/0000/repo/tests/Integration/Behaviour/Features/Context/Domain/Product/PackStockFeatureContext.php), which creates products and stock, adds a product to a pack, and checks available quantity. The retained pack-configuration context provides the configuration step. PHP syntax validation passed; I couldn’t verify the scenario against the application runtime.",
+  "denied_commands": [
+    {
+      "id": "item_1",
+      "type": "command_execution",
+      "command": "/usr/bin/bash -lc 'rg -n \"pack stock type|STOCK_TYPE_PRODUCTS_ONLY|remaining available stock|containing .*items|product in the catalog named\" repo/tests/Integration/Behaviour/Features repo/src repo/classes'",
+      "aggregated_output": "/usr/bin/bash: line 1: /usr/bin/rg: Permission denied\n",
+      "exit_code": 126,
+      "status": "failed"
+    }
+  ],
+  "diagnostic_addendum": null,
+  "trace_path": "results/test-generation-20261114/req2test/tasks/136d7e5296e9458e555b/trajectory-excerpt.json"
+}

@@ -1,0 +1,120 @@
+{
+  "item_id": "coddy-agent/features/config_tools.feature:58",
+  "outcome": "passed",
+  "outcomes_all_runs": [
+    "passed"
+  ],
+  "per_step": [
+    {
+      "error": null,
+      "result": "passed",
+      "seconds": 0.00583815,
+      "text": "an active Coddy config:"
+    },
+    {
+      "error": null,
+      "result": "passed",
+      "seconds": 0.000215424,
+      "text": "the session can hot-reload its runtime configuration"
+    },
+    {
+      "error": null,
+      "result": "passed",
+      "seconds": 0.005365553,
+      "text": "the agent stages config commands:"
+    },
+    {
+      "error": null,
+      "result": "passed",
+      "seconds": 0.000822763,
+      "text": "the agent lists config changes"
+    },
+    {
+      "error": null,
+      "result": "passed",
+      "seconds": 4.9132e-05,
+      "text": "the change list shows \"set agent.max_turns=20\""
+    }
+  ],
+  "index_errors": {},
+  "stdout_tail": "=== RUN   TestConfigToolsFeature\n=== RUN   TestConfigToolsFeature/Review_pending_commands_before_asking_the_user_to_save\nR2T_GODOG_EXIT TestConfigToolsFeature 0\n--- PASS: TestConfigToolsFeature (0.02s)\n    --- PASS: TestConfigToolsFeature/Review_pending_commands_before_asking_the_user_to_save (0.01s)\nPASS\nok  \tgithub.com/EvilFreelancer/coddy-agent/internal/tools\t0.045s\n",
+  "bench_meta": {
+    "dependency_profile": [],
+    "live_background_step_count": 2,
+    "live_step_count": 3,
+    "n_closure_contexts": 0,
+    "n_closure_files": 1,
+    "n_oracle_steps": 1,
+    "round_trip_seconds": 123.13,
+    "signature": "6c88cf6db657",
+    "steps_removable": 5,
+    "steps_retained": 0,
+    "tags": [],
+    "upstream_selected": null
+  },
+  "written_files": [
+    "internal/tools/bdd_config_tools_test.go"
+  ],
+  "_source": "/root/lby-docker/req2test/user/benchmark/runs/req2test-recovery8-20261113-v1-coddy-agent/coddy-agent/th/exec.jsonl",
+  "requirement": {
+    "feature": {
+      "background": "  Background:\n    Given an active Coddy config:\n      \"\"\"\n      agent:\n        max_turns: 17\n      skills:\n        dirs:\n          - /opt/coddy/skills\n      mcp_servers:\n        - name: filesystem\n          command: npx\n          args: [\"-y\", \"@modelcontextprotocol/server-filesystem\"]\n          env:\n            - name: ROOT_TOKEN\n              value: super-secret\n      \"\"\"\n    And the session can hot-reload its runtime configuration",
+      "file_path": "features/config_tools.feature",
+      "narrative": "  Coddy exposes its own YAML configuration to the agent through UCI-style typed\n  tools, so a request such as \"find a browser MCP and install it\" can be\n  completed without hand-editing config.yaml or restarting the process.\n\n  \"config_get\" reads one dotted path and redacts secret-shaped values. Edits are\n  staged like OpenWrt's uci CLI: \"config_set\" records commands (set, add_list,\n  del_list, delete) without touching the active file, \"config_changes\" lists the\n  pending commands, and nothing applies until the user agrees and the\n  permission-gated \"config_commit\" validates the batch, snapshots the previous\n  file next to the config, writes atomically, and hot-reloads the running\n  session. \"config_revert\" discards pending commands, and \"config_rollback\"\n  restores the pre-commit snapshot with a warning.\n\n  Paths are dotted like uci with a selector for named sequence entries:\n  \"agent.max_turns\" walks mappings, \"skills.dirs.0\" indexes a sequence, and\n  \"mcp_servers[name=context7]\" selects a sequence entry by a scalar field, or\n  appends it on set when no entry matches.",
+      "title": "Agent-managed Coddy configuration"
+    },
+    "scenario": {
+      "gherkin": "  Scenario: Review pending commands before asking the user to save\n    When the agent stages config commands:\n      \"\"\"\n      set agent.max_turns=20\n      \"\"\"\n    And the agent lists config changes\n    Then the change list shows \"set agent.max_turns=20\"",
+      "kind": "scenario",
+      "line": 58,
+      "tags": [],
+      "title": "Review pending commands before asking the user to save"
+    }
+  },
+  "official_result": {
+    "instance_id": "coddy-agent/features/config_tools.feature:58",
+    "project": "coddy-agent",
+    "view": "th",
+    "outcome": "pass",
+    "passed": true,
+    "api_f1": 1.0,
+    "coverage_j": 1.0,
+    "recall": 1.0,
+    "kill_complete": true,
+    "kill_complete_strict": true,
+    "kill_complete_95": true,
+    "mutation_status": "scored",
+    "mutation_baseline": "passed",
+    "behaviour_status": "measured",
+    "n_gt_kills": 205,
+    "n_scored": 205,
+    "n_killed": 205,
+    "n_dropped": 0,
+    "n_crash_kills": 2,
+    "n_timeout_kills": 0,
+    "exclusion": null,
+    "engine_outcome": "passed",
+    "harness_version": 27,
+    "rejected_files": []
+  },
+  "population_exclusion": null,
+  "generated_files": [
+    {
+      "path": "internal/tools/bdd_config_tools_test.go",
+      "sha256": "f5910ab847e5a98b3fbde1aeed82b67654bb92dc9f0f4ea936e3fc51620f24b5"
+    }
+  ],
+  "final_agent_message": "Added the Godog glue in [bdd_config_tools_test.go](/root/lby-docker/req2test/user/runs/full-baseline-20261111-v1/generation/ffee1edff496f2038c9e/attempt-1/workspaces/0000/repo/internal/tools/bdd_config_tools_test.go). It sets up the active config, stages the command through the registry, lists pending changes, and checks the expected command is present.",
+  "denied_commands": [
+    {
+      "id": "item_1",
+      "type": "command_execution",
+      "command": "/usr/bin/bash -lc 'rg -n \"config_(get|set|changes|commit|revert|rollback)|type Env|type Registry|NewRegistry|Godog\" repo/internal repo/TARGET_CONTRACTS.md'",
+      "aggregated_output": "/usr/bin/bash: line 1: /usr/bin/rg: Permission denied\n",
+      "exit_code": 126,
+      "status": "failed"
+    }
+  ],
+  "diagnostic_addendum": null,
+  "trace_path": "results/test-generation-20261114/req2test/tasks/ffee1edff496f2038c9e/trajectory-excerpt.json"
+}

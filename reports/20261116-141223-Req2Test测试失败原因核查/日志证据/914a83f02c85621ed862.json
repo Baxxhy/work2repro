@@ -1,0 +1,106 @@
+{
+  "item_id": "prestashop/tests/Integration/Behaviour/Features/Scenario/Discount/BO/add_cart_level_discount.feature:110",
+  "outcome": "undefined_steps",
+  "outcomes_all_runs": [
+    "undefined_steps"
+  ],
+  "per_step": [
+    {
+      "error": null,
+      "result": "undefined",
+      "seconds": 0.0149,
+      "text": "shop \"shop1\" with name \"test_shop\" exists"
+    }
+  ],
+  "index_errors": {},
+  "stdout_tail": "@restore-all-tables-before-feature @restore-languages-after-feature @add-cart-level-discount\nFeature: Add discount\n  PrestaShop allows BO users to create discounts\n  As a BO user\n  I must be able to create discounts\n\n  Background:\n    Given shop \"shop1\" with name \"test_shop\" exists\n    Given there is a currency named \"usd\" with iso code \"USD\" and exchange rate of 0.92\n    Given there is a currency named \"chf\" with iso code \"CHF\" and exchange rate of 1.25\n    Given currency \"usd\" is the default one\n    And language with iso code \"en\" is the default one\n    And language \"french\" with locale \"fr-FR\" exists\n\n  Scenario: Create a discount with name only in default language, non-default languages should fallback to default language name\n    When I create a \"cart_level\" discount \"fallback_name_discount\" with following properties:\n      | name[en-US]       | Promotion fallback  |\n      | active            | true                |\n      | valid_from        | 2019-01-01 11:05:00 |\n      | valid_to          | 2019-12-01 00:00:00 |\n      | reduction_percent | 10.0                |\n    And discount \"fallback_name_discount\" should have the following properties:\n      | name[en-US] | Promotion fallback |\n      | name[fr-FR] | Promotion fallback |\n\n1 scenario (1 undefined)\n8 steps (6 undefined, 2 skipped)\n2m39.70s (183.40Mb)\n\n--- Use --snippets-for CLI option to generate snippets for following bench suite steps:\n\n    Given shop \"shop1\" with name \"test_shop\" exists\n    Given there is a currency named \"usd\" with iso code \"USD\" and exchange rate of 0.92\n    Given there is a currency named \"chf\" with iso code \"CHF\" and exchange rate of 1.25\n    Given currency \"usd\" is the default one\n    And language with iso code \"en\" is the default one\n    And language \"french\" with locale \"fr-FR\" exists\n\n",
+  "bench_meta": {
+    "dependency_profile": [
+      "database"
+    ],
+    "live_background_step_count": 6,
+    "live_step_count": 2,
+    "n_closure_contexts": 4,
+    "n_closure_files": 4,
+    "n_oracle_steps": 1,
+    "round_trip_seconds": 80.9,
+    "signature": "a53fb6cbacb7",
+    "steps_removable": 8,
+    "steps_retained": 0,
+    "tags": [
+      "@restore-all-tables-before-feature",
+      "@restore-languages-after-feature",
+      "@add-cart-level-discount"
+    ],
+    "upstream_selected": null
+  },
+  "written_files": [
+    "tests/Integration/Behaviour/Features/Context/DiscountFeatureContext.php"
+  ],
+  "_source": "/root/lby-docker/req2test/user/benchmark/runs/req2test-recovery8-20261113-v1-prestashop/prestashop/th/exec.jsonl",
+  "requirement": {
+    "feature": {
+      "background": "  Background:\n    Given shop \"shop1\" with name \"test_shop\" exists\n    Given there is a currency named \"usd\" with iso code \"USD\" and exchange rate of 0.92\n    Given there is a currency named \"chf\" with iso code \"CHF\" and exchange rate of 1.25\n    Given currency \"usd\" is the default one\n    And language with iso code \"en\" is the default one\n    And language \"french\" with locale \"fr-FR\" exists",
+      "file_path": "tests/Integration/Behaviour/Features/Scenario/Discount/BO/add_cart_level_discount.feature",
+      "narrative": "  PrestaShop allows BO users to create discounts\n  As a BO user\n  I must be able to create discounts",
+      "title": "Add discount"
+    },
+    "scenario": {
+      "gherkin": "  Scenario: Create a discount with name only in default language, non-default languages should fallback to default language name\n    When I create a \"cart_level\" discount \"fallback_name_discount\" with following properties:\n      | name[en-US]       | Promotion fallback  |\n      | active            | true                |\n      | valid_from        | 2019-01-01 11:05:00 |\n      | valid_to          | 2019-12-01 00:00:00 |\n      | reduction_percent | 10.0                |\n    And discount \"fallback_name_discount\" should have the following properties:\n      | name[en-US]       | Promotion fallback  |\n      | name[fr-FR]       | Promotion fallback  |",
+      "kind": "scenario",
+      "line": 110,
+      "tags": [
+        "@restore-all-tables-before-feature",
+        "@restore-languages-after-feature",
+        "@add-cart-level-discount"
+      ],
+      "title": "Create a discount with name only in default language, non-default languages should fallback to default language name"
+    }
+  },
+  "official_result": {
+    "instance_id": "prestashop/tests/Integration/Behaviour/Features/Scenario/Discount/BO/add_cart_level_discount.feature:110",
+    "project": "prestashop",
+    "view": "th",
+    "outcome": "binding_failure",
+    "passed": false,
+    "api_f1": null,
+    "coverage_j": null,
+    "recall": null,
+    "kill_complete": false,
+    "kill_complete_strict": false,
+    "kill_complete_95": false,
+    "mutation_status": "not_passed",
+    "mutation_baseline": null,
+    "behaviour_status": "measured",
+    "n_gt_kills": 36,
+    "n_scored": 0,
+    "n_killed": 0,
+    "n_dropped": 0,
+    "n_crash_kills": 0,
+    "n_timeout_kills": 0,
+    "exclusion": null,
+    "engine_outcome": "undefined_steps",
+    "harness_version": 27,
+    "rejected_files": []
+  },
+  "population_exclusion": null,
+  "generated_files": [
+    {
+      "path": "tests/Integration/Behaviour/Features/Context/DiscountFeatureContext.php",
+      "sha256": "a365c56abb57c882feab0e2c3c532274e25a73009b86311b8e1a880ac3f2ae4a"
+    }
+  ],
+  "final_agent_message": "Added [DiscountFeatureContext.php](/root/lby-docker/req2test/user/runs/req2test-subset160-20261112-v1/generation/914a83f02c85621ed862/attempt-1/workspaces/0000/repo/tests/Integration/Behaviour/Features/Context/DiscountFeatureContext.php). It defines the create and verify steps using the discount command bus and editing query, and maps localized names through language locales. PHP syntax validation passed.\n\nThis context does not define the Background steps. The scenario will still need definitions for shop, currency, and language setup unless those are provided by the retained contexts registered in its suite.",
+  "denied_commands": [
+    {
+      "id": "item_1",
+      "type": "command_execution",
+      "command": "/usr/bin/bash -lc 'pwd; rg --files repo/tests/Integration/Behaviour/Features/Context | head; rg -n \"discount|currency named|default one|shop .*exists|localizedNames\" repo/tests/Integration/Behaviour repo/src/Core/Domain/Discount repo/TARGET_CONTRACTS.md'",
+      "aggregated_output": "/root/lby-docker/req2test/user/runs/req2test-subset160-20261112-v1/generation/914a83f02c85621ed862/attempt-1/workspaces/0000\n/usr/bin/bash: line 1: /usr/bin/rg: Permission denied\n/usr/bin/bash: line 1: /usr/bin/rg: Permission denied\n",
+      "exit_code": 126,
+      "status": "failed"
+    }
+  ],
+  "diagnostic_addendum": null,
+  "trace_path": "results/test-generation-20261114/req2test/tasks/914a83f02c85621ed862/trajectory-excerpt.json"
+}

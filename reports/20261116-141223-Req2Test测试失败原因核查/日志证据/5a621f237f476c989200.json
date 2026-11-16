@@ -1,0 +1,120 @@
+{
+  "item_id": "prestashop/tests/Integration/Behaviour/Features/Scenario/Currency/currency_data.feature:16",
+  "outcome": "failed",
+  "outcomes_all_runs": [
+    "failed"
+  ],
+  "per_step": [
+    {
+      "error": null,
+      "result": "passed",
+      "seconds": 0.0152,
+      "text": "shop \"shop1\" with name \"test_shop\" exists"
+    },
+    {
+      "error": null,
+      "result": "passed",
+      "seconds": 0.0063,
+      "text": "language \"language1\" with locale \"en-US\" exists"
+    },
+    {
+      "error": "Language with locale \"fr-FR\" does not exist",
+      "result": "failed",
+      "seconds": 0.0071,
+      "text": "language \"language2\" with locale \"fr-FR\" exists"
+    }
+  ],
+  "index_errors": {},
+  "stdout_tail": "@restore-all-tables-before-feature @clear-cache-before-feature @reboot-kernel-before-feature @currency-data\nFeature: Currency Data\n  PrestaShop provides handlers for currency data\n  As a BO user\n  I must be able to get data for a currency\n\n  Background:\n    Given shop \"shop1\" with name \"test_shop\" exists\n    And language \"language1\" with locale \"en-US\" exists\n    And language \"language2\" with locale \"fr-FR\" exists\n      Language with locale \"fr-FR\" does not exist (RuntimeException)\n\n  Scenario: Get data from an official currency\n    When I request reference data for \"EUR\"\n    And I should get currency data:\n      | iso_code         | EUR        |\n      | numeric_iso_code | 978        |\n      | precision        | 2          |\n      | names[en-US]     | Euro       |\n      | names[fr-FR]     | euro       |\n      | symbols[en-US]   | €          |\n      | symbols[fr-FR]   | €          |\n      | patterns[en-US]  | ¤#,##0.00  |\n      | patterns[fr-FR]  | #,##0.00 ¤ |\n\n--- Failed scenarios:\n\n    _bench/item.feature:12 (on line 10)\n\n1 scenario (1 failed)\n5 steps (2 passed, 1 failed, 2 skipped)\n2m55.60s (187.44Mb)\n",
+  "bench_meta": {
+    "dependency_profile": [
+      "database"
+    ],
+    "live_background_step_count": 3,
+    "live_step_count": 2,
+    "n_closure_contexts": 3,
+    "n_closure_files": 3,
+    "n_oracle_steps": 1,
+    "round_trip_seconds": 122.67,
+    "signature": "25ba14083406",
+    "steps_removable": 5,
+    "steps_retained": 0,
+    "tags": [
+      "@restore-all-tables-before-feature",
+      "@clear-cache-before-feature",
+      "@reboot-kernel-before-feature",
+      "@currency-data"
+    ],
+    "upstream_selected": null
+  },
+  "written_files": [
+    "tests/Integration/Behaviour/Features/Context/Domain/Currency/CurrencyDataFeatureContext.php"
+  ],
+  "_source": "/root/lby-docker/req2test/user/benchmark/runs/req2test-recovery8-20261113-v1-prestashop/prestashop/th/exec.jsonl",
+  "requirement": {
+    "feature": {
+      "background": "  Background:\n    Given shop \"shop1\" with name \"test_shop\" exists\n    And language \"language1\" with locale \"en-US\" exists\n    And language \"language2\" with locale \"fr-FR\" exists",
+      "file_path": "tests/Integration/Behaviour/Features/Scenario/Currency/currency_data.feature",
+      "narrative": "  PrestaShop provides handlers for currency data\n  As a BO user\n  I must be able to get data for a currency",
+      "title": "Currency Data"
+    },
+    "scenario": {
+      "gherkin": "  Scenario: Get data from an official currency\n    When I request reference data for \"EUR\"\n    And I should get currency data:\n      | iso_code         | EUR        |\n      | numeric_iso_code | 978        |\n      | precision        | 2          |\n      | names[en-US]     | Euro       |\n      | names[fr-FR]     | euro       |\n      | symbols[en-US]   | €          |\n      | symbols[fr-FR]   | €          |\n      | patterns[en-US]  | ¤#,##0.00  |\n      | patterns[fr-FR]  | #,##0.00 ¤ |",
+      "kind": "scenario",
+      "line": 16,
+      "tags": [
+        "@restore-all-tables-before-feature",
+        "@clear-cache-before-feature",
+        "@reboot-kernel-before-feature",
+        "@currency-data"
+      ],
+      "title": "Get data from an official currency"
+    }
+  },
+  "official_result": {
+    "instance_id": "prestashop/tests/Integration/Behaviour/Features/Scenario/Currency/currency_data.feature:16",
+    "project": "prestashop",
+    "view": "th",
+    "outcome": "assertion_failure",
+    "passed": false,
+    "api_f1": null,
+    "coverage_j": null,
+    "recall": null,
+    "kill_complete": false,
+    "kill_complete_strict": false,
+    "kill_complete_95": false,
+    "mutation_status": "not_passed",
+    "mutation_baseline": null,
+    "behaviour_status": "measured",
+    "n_gt_kills": 30,
+    "n_scored": 0,
+    "n_killed": 0,
+    "n_dropped": 0,
+    "n_crash_kills": 0,
+    "n_timeout_kills": 0,
+    "exclusion": null,
+    "engine_outcome": "failed",
+    "harness_version": 27,
+    "rejected_files": []
+  },
+  "population_exclusion": null,
+  "generated_files": [
+    {
+      "path": "tests/Integration/Behaviour/Features/Context/Domain/Currency/CurrencyDataFeatureContext.php",
+      "sha256": "2473067a751a278169ee5ea621d8e2c13800ab771af2102195a62685c9c7bc20"
+    }
+  ],
+  "final_agent_message": "Added [CurrencyDataFeatureContext.php](/root/lby-docker/req2test/user/runs/req2test-subset160-20261112-v1/generation/5a621f237f476c989200/attempt-1/workspaces/0000/repo/tests/Integration/Behaviour/Features/Context/Domain/Currency/CurrencyDataFeatureContext.php). It defines the background steps, dispatches `GetReferenceCurrency`, and checks the returned fields against the table, resolving localized values by locale.\n\nPHP syntax validation passed. I couldn’t run the scenario in this workspace.",
+  "denied_commands": [
+    {
+      "id": "item_1",
+      "type": "command_execution",
+      "command": "/usr/bin/bash -lc 'rg --files repo/tests/Integration/Behaviour/Features/Context | head -80 && rg -n \"ReferenceCurrency|GetReferenceCurrency|currency.*data|shop .*exists|language .*exists\" repo/src repo/tests/Integration/Behaviour/Features/Context repo/tests/Integration/Behaviour/Features/Scenario/Currency/currency_data.feature'",
+      "aggregated_output": "/usr/bin/bash: line 1: /usr/bin/rg: Permission denied\n/usr/bin/bash: line 1: /usr/bin/rg: Permission denied\n",
+      "exit_code": 126,
+      "status": "failed"
+    }
+  ],
+  "diagnostic_addendum": null,
+  "trace_path": "results/test-generation-20261114/req2test/tasks/5a621f237f476c989200/trajectory-excerpt.json"
+}

@@ -1,0 +1,106 @@
+{
+  "item_id": "prestashop/tests/Integration/Behaviour/Features/Scenario/Discount/BO/add_discount_with_brand_trigger.feature:14",
+  "outcome": "failed",
+  "outcomes_all_runs": [
+    "failed"
+  ],
+  "per_step": [
+    {
+      "error": "Deprecated: Creation of dynamic property Shop::$id_theme is deprecated in /var/www/html/tests/Integration/Behaviour/Features/Context/DiscountBrandTriggerContext.php line 29",
+      "result": "failed",
+      "seconds": 0.0178,
+      "text": "shop \"shop1\" with name \"test_shop\" exists"
+    }
+  ],
+  "index_errors": {},
+  "stdout_tail": "te discounts\n\n  Background:\n    Given shop \"shop1\" with name \"test_shop\" exists\n      Deprecated: Creation of dynamic property Shop::$id_theme is deprecated in tests/Integration/Behaviour/Features/Context/DiscountBrandTriggerContext.php line 29\n    Given there is a currency named \"usd\" with iso code \"USD\" and exchange rate of 0.92\n\n  Scenario: Create discount with brand trigger\n    Given I add new manufacturer \"rocket\" with following properties:\n      | name                     | Rocket                                                                                      |\n      | short_description[en-US] | Cigarettes manufacturer                                                                     |\n      | description[en-US]       | Morbi at nulla id mi gravida blandit a non erat. Mauris nec lorem vel odio sagittis ornare. |\n      | meta_title[en-US]        | You smoke - you die!                                                                        |\n      | meta_description[en-US]  | The sun is shining and the weather is sweet                                                 |\n      | enabled                  | true                                                                                        |\n    When I create a \"free_shipping\" discount \"discount_with_brand_trigger\" with following properties:\n      | name[en-US]                     | Promotion |\n      | productConditionQuantity        | 42        |\n      | productCondition[manufacturers] | rocket    |\n    Then discount \"discount_with_brand_trigger\" should have the following properties:\n      | name[en-US]                     | Promotion     |\n      | type                            | free_shipping |\n      | minimum_product_quantity        | 0             |\n      | productConditionQuantity        | 42            |\n      | productCondition[manufacturers] | rocket        |\n\n--- Failed scenarios:\n\n    _bench/item.feature:11 (on line 8)\n\n1 scenario (1 failed)\n5 steps (1 failed, 4 skipped)\n2m31.34s (183.47Mb)\n",
+  "bench_meta": {
+    "dependency_profile": [
+      "database"
+    ],
+    "live_background_step_count": 2,
+    "live_step_count": 3,
+    "n_closure_contexts": 4,
+    "n_closure_files": 4,
+    "n_oracle_steps": 1,
+    "round_trip_seconds": 78.45,
+    "signature": "a40a7efb1720",
+    "steps_removable": 5,
+    "steps_retained": 0,
+    "tags": [
+      "@restore-all-tables-before-feature",
+      "@restore-languages-after-feature",
+      "@add-discount-with-brand-trigger"
+    ],
+    "upstream_selected": null
+  },
+  "written_files": [
+    "tests/Integration/Behaviour/Features/Context/DiscountBrandTriggerContext.php"
+  ],
+  "_source": "/root/lby-docker/req2test/user/benchmark/runs/req2test-recovery8-20261113-v1-prestashop/prestashop/th/exec.jsonl",
+  "requirement": {
+    "feature": {
+      "background": "  Background:\n    Given shop \"shop1\" with name \"test_shop\" exists\n    Given there is a currency named \"usd\" with iso code \"USD\" and exchange rate of 0.92",
+      "file_path": "tests/Integration/Behaviour/Features/Scenario/Discount/BO/add_discount_with_brand_trigger.feature",
+      "narrative": "  PrestaShop allows BO users to update discounts conditions\n  As a BO user\n  I must be able to create discounts",
+      "title": "Add discount with brand trigger"
+    },
+    "scenario": {
+      "gherkin": "  Scenario: Create discount with brand trigger\n    Given I add new manufacturer \"rocket\" with following properties:\n      | name                     | Rocket                             |\n      | short_description[en-US] | Cigarettes manufacturer            |\n      | description[en-US]       | Morbi at nulla id mi gravida blandit a non erat. Mauris nec lorem vel odio sagittis ornare.|\n      | meta_title[en-US]        | You smoke - you die!               |\n      | meta_description[en-US]  | The sun is shining and the weather is sweet|\n      | enabled                  | true                               |\n    When I create a \"free_shipping\" discount \"discount_with_brand_trigger\" with following properties:\n      | name[en-US]                     | Promotion |\n      | productConditionQuantity        | 42        |\n      | productCondition[manufacturers] | rocket    |\n    Then discount \"discount_with_brand_trigger\" should have the following properties:\n      | name[en-US]                     | Promotion     |\n      | type                            | free_shipping |\n      | minimum_product_quantity        | 0             |\n      | productConditionQuantity        | 42            |\n      | productCondition[manufacturers] | rocket        |",
+      "kind": "scenario",
+      "line": 14,
+      "tags": [
+        "@restore-all-tables-before-feature",
+        "@restore-languages-after-feature",
+        "@add-discount-with-brand-trigger"
+      ],
+      "title": "Create discount with brand trigger"
+    }
+  },
+  "official_result": {
+    "instance_id": "prestashop/tests/Integration/Behaviour/Features/Scenario/Discount/BO/add_discount_with_brand_trigger.feature:14",
+    "project": "prestashop",
+    "view": "th",
+    "outcome": "assertion_failure",
+    "passed": false,
+    "api_f1": null,
+    "coverage_j": null,
+    "recall": null,
+    "kill_complete": false,
+    "kill_complete_strict": false,
+    "kill_complete_95": false,
+    "mutation_status": "not_passed",
+    "mutation_baseline": null,
+    "behaviour_status": "measured",
+    "n_gt_kills": 31,
+    "n_scored": 0,
+    "n_killed": 0,
+    "n_dropped": 0,
+    "n_crash_kills": 0,
+    "n_timeout_kills": 0,
+    "exclusion": null,
+    "engine_outcome": "failed",
+    "harness_version": 27,
+    "rejected_files": []
+  },
+  "population_exclusion": null,
+  "generated_files": [
+    {
+      "path": "tests/Integration/Behaviour/Features/Context/DiscountBrandTriggerContext.php",
+      "sha256": "b9c8562351ccc435b9af0be45809f2bb8645e7236a71e8e8143955979fac8d75"
+    }
+  ],
+  "final_agent_message": "Added [DiscountBrandTriggerContext.php](/root/lby-docker/req2test/user/runs/req2test-subset160-20261112-v1/generation/d4213e3d7eeab96f43e6/attempt-2/workspaces/0000/repo/tests/Integration/Behaviour/Features/Context/DiscountBrandTriggerContext.php) with definitions for the shop and currency background, manufacturer creation, discount creation, and discount property checks. PHP syntax validation passes.",
+  "denied_commands": [
+    {
+      "id": "item_1",
+      "type": "command_execution",
+      "command": "/usr/bin/bash -lc 'pwd && rg --files repo/tests/Integration/Behaviour/Features/Context repo/tests/Integration/Behaviour/Features/Scenario/Discount/BO | head -100 && rg -n \"AddDiscountCommand|DiscountForEditing|manufacturer|shop .*exists|currency named|discount .*should have\" repo/src repo/tests/Integration/Behaviour/Features/Context repo/tests/Integration/Behaviour/Features/Scenario/Discount/BO/add_discount_with_brand_trigger.feature'",
+      "aggregated_output": "/root/lby-docker/req2test/user/runs/req2test-subset160-20261112-v1/generation/d4213e3d7eeab96f43e6/attempt-2/workspaces/0000\n/usr/bin/bash: line 1: /usr/bin/rg: Permission denied\n/usr/bin/bash: line 1: /usr/bin/rg: Permission denied\n",
+      "exit_code": 126,
+      "status": "failed"
+    }
+  ],
+  "diagnostic_addendum": null,
+  "trace_path": "results/test-generation-20261114/req2test/tasks/d4213e3d7eeab96f43e6/trajectory-excerpt.json"
+}

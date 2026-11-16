@@ -1,0 +1,71 @@
+{
+  "item_id": "prestashop/tests/Integration/Behaviour/Features/Scenario/Order/order_shipping_recalculate.feature:26",
+  "outcome": "no_files_returned",
+  "outcomes_all_runs": null,
+  "per_step": null,
+  "index_errors": {},
+  "stdout_tail": null,
+  "bench_meta": null,
+  "written_files": [],
+  "_source": "/root/lby-docker/req2test/user/benchmark/runs/req2test-recovery8-20261113-v1-prestashop/prestashop/th/exec.jsonl",
+  "requirement": {
+    "feature": {
+      "background": "  Background:\n    Given email sending is disabled\n    And the current currency is \"USD\"\n    And country \"US\" is enabled\n    And country \"FR\" is enabled\n    And the module \"dummy_payment\" is installed\n    And I am logged in as \"test@prestashop.com\" employee\n    And there is customer \"testCustomer\" with email \"pub@prestashop.com\"\n    And customer \"testCustomer\" has address in \"US\" country\n    And a carrier \"default_carrier\" with name \"My carrier\" exists\n    And a carrier \"price_carrier\" with name \"My cheap carrier\" exists\n    And a carrier \"weight_carrier\" with name \"My light carrier\" exists\n    And I create an empty cart \"dummy_cart\" for customer \"testCustomer\"\n    And I add 2 products \"Mug The best is yet to come\" to the cart \"dummy_cart\"\n    And I select \"US\" address as delivery and invoice address for customer \"testCustomer\" in cart \"dummy_cart\"",
+      "file_path": "tests/Integration/Behaviour/Features/Scenario/Order/order_shipping_recalculate.feature",
+      "narrative": "  In order to manage orders for FO customers\n  As a BO user\n  I need to be able to customize orders from the BO",
+      "title": "Order from Back Office (BO)"
+    },
+    "scenario": {
+      "gherkin": "  Scenario: With PS_ORDER_RECALCULATE_SHIPPING = 1 & status = Awaiting bank wire payment, check the total price is recalculated\n    Given shop configuration for \"PS_ORDER_RECALCULATE_SHIPPING\" is set to 1\n    And I edit carrier \"weight_carrier\" with specified properties:\n      | active | true |\n    When I select carrier \"default_carrier\" for cart \"dummy_cart\"\n    Then cart \"dummy_cart\" should have \"default_carrier\" as a carrier\n    When I add order \"bo_order1\" with the following details:\n      | cart                | dummy_cart                 |\n      | message             | test                       |\n      | payment module name | dummy_payment              |\n      | status              | Awaiting bank wire payment |\n    Then order \"bo_order1\" should have 2 products in total\n    And order \"bo_order1\" should have 0 invoices\n    And order \"bo_order1\" should have 0 cart rule\n    # Carrier less expensive is chosen by default\n    And order \"bo_order1\" should have \"default_carrier\" as a carrier\n    And order \"bo_order1\" should have following details:\n      | total_products           | 23.800 |\n      | total_products_wt        | 25.230 |\n      | total_discounts_tax_excl | 0.0    |\n      | total_discounts_tax_incl | 0.0    |\n      | total_paid_tax_excl      | 30.800 |\n      | total_paid_tax_incl      | 32.650 |\n      | total_paid               | 32.650 |\n      | total_paid_real          | 0.0    |\n      | total_shipping_tax_excl  | 7.0    |\n      | total_shipping_tax_incl  | 7.42   |\n    When I update order \"bo_order1\" Tracking number to \"TEST1234\" and Carrier to \"weight_carrier\"\n    Then order \"bo_order1\" should have \"weight_carrier\" as a carrier\n    And order \"bo_order1\" should have following details:\n      | total_products           | 23.800 |\n      | total_products_wt        | 25.230 |\n      | total_discounts_tax_excl | 0.0    |\n      | total_discounts_tax_incl | 0.0    |\n      | total_paid_tax_excl      | 25.800 |\n      | total_paid_tax_incl      | 27.350 |\n      | total_paid               | 27.350 |\n      | total_paid_real          | 0.0    |\n      | total_shipping_tax_excl  | 2.00   |\n      | total_shipping_tax_incl  | 2.12   |\n    Then order \"bo_order1\" has 0 payments",
+      "kind": "scenario",
+      "line": 26,
+      "tags": [
+        "@restore-all-tables-before-feature",
+        "@order-shipping-recalculate",
+        "@clear-cache-before-feature"
+      ],
+      "title": "With PS_ORDER_RECALCULATE_SHIPPING = 1 & status = Awaiting bank wire payment, check the total price is recalculated"
+    }
+  },
+  "official_result": {
+    "instance_id": "prestashop/tests/Integration/Behaviour/Features/Scenario/Order/order_shipping_recalculate.feature:26",
+    "project": "prestashop",
+    "view": "th",
+    "outcome": "generation_failure",
+    "passed": false,
+    "api_f1": null,
+    "coverage_j": null,
+    "recall": null,
+    "kill_complete": false,
+    "kill_complete_strict": false,
+    "kill_complete_95": false,
+    "mutation_status": "not_passed",
+    "mutation_baseline": null,
+    "behaviour_status": "measured",
+    "n_gt_kills": 26,
+    "n_scored": 0,
+    "n_killed": 0,
+    "n_dropped": 0,
+    "n_crash_kills": 0,
+    "n_timeout_kills": 0,
+    "exclusion": null,
+    "engine_outcome": "no_files_returned",
+    "harness_version": 27,
+    "rejected_files": []
+  },
+  "population_exclusion": null,
+  "generated_files": [],
+  "final_agent_message": "I can’t provide a complete step-definition file that makes this scenario pass from the available interfaces alone. The scenario’s Background requires definitions and fixture setup for the employee, customer, address, three carriers, cart, and products. Those definitions are among the removed code; the retained helpers don’t create those fixtures. The available context also doesn’t identify the original suite’s registered contexts or the carrier/product setup conventions.\n\nThe scenario-specific order steps can be implemented with the command and query APIs shown, but that would leave the Background undefined and wouldn’t make the scenario runnable. A partial file would therefore fail Behat’s strict undefined-step check rather than satisfy the request.",
+  "denied_commands": [
+    {
+      "id": "item_1",
+      "type": "command_execution",
+      "command": "/usr/bin/bash -lc \"ls repo/tests/Integration/Behaviour/Features/Context && rg -n \\\"OrderStateByIdChoiceProvider|getCommandBus\\\\(|UpdateOrderShippingDetailsCommand|AddOrderFromBackOfficeCommand|select carrier|order .*should have\\\" repo/tests/Integration/Behaviour/Features/Context repo/src repo/classes | head -100\"",
+      "aggregated_output": "AbstractPrestaShopFeatureContext.php\nCartAwareTrait.php\nCommonFeatureContext.php\nConfiguration\nContextFeatureContext.php\nDomain\nLastExceptionTrait.php\nOrderMessageContext.php\nSharedStorage.php\nSharedStorageTrait.php\nUtil\n/usr/bin/bash: line 1: /usr/bin/rg: Permission denied\n",
+      "exit_code": 0,
+      "status": "completed"
+    }
+  ],
+  "diagnostic_addendum": null,
+  "trace_path": "results/test-generation-20261114/req2test/tasks/943d21b350e2173caf4a/trajectory-excerpt.json"
+}

@@ -1,0 +1,114 @@
+{
+  "item_id": "algorand-sdk/features/unit/v2indexerclient_paths.feature:41",
+  "outcome": "failed",
+  "outcomes_all_runs": [
+    "failed"
+  ],
+  "per_step": [
+    {
+      "error": null,
+      "result": "passed",
+      "seconds": 0.000174,
+      "text": "mock server recording request paths"
+    },
+    {
+      "error": null,
+      "result": "passed",
+      "seconds": 0.002918,
+      "text": "we make a Lookup Account Transactions call against account \"PNWOET7LLOWMBMLE4KOCELCX6X3D3Q4H2Q4QJASYIEOF7YIPPQBG3YQ5YI\" with NotePrefix \"\" TxType \"\" SigType \"\" txid \"\" round 0 minRound 0 maxRound 0 limit 0 beforeTime \"\" afterTime \"\" currencyGreaterThan 0 currencyLessThan 10000000 assetIndex 0"
+    },
+    {
+      "error": "org.opentest4j.AssertionFailedError: \nexpected: \"/v2/accounts/PNWOET7LLOWMBMLE4KOCELCX6X3D3Q4H2Q4QJASYIEOF7YIPPQBG3YQ5YI/transactions?currency-greater-than=0&currency-less-than=10000000\"\n but was: \"/v2/accounts/PNWOET7LLOWMBMLE4KOCELCX6X3D3Q4H2Q4QJASYIEOF7YIPPQBG3YQ5YI/transactions?currency-less-than=10000000&currency-greater-than=0\"",
+      "result": "failed",
+      "seconds": 0.015794,
+      "text": "expect the path used to be \"/v2/accounts/PNWOET7LLOWMBMLE4KOCELCX6X3D3Q4H2Q4QJASYIEOF7YIPPQBG3YQ5YI/transactions?currency-greater-than=0&currency-less-than=10000000\""
+    }
+  ],
+  "index_errors": {},
+  "stdout_tail": "&currency-greater-than=0\"\n[ERROR]   \nexpected: \"/v2/accounts/PNWOET7LLOWMBMLE4KOCELCX6X3D3Q4H2Q4QJASYIEOF7YIPPQBG3YQ5YI/transactions?currency-greater-than=0&limit=60\"\n but was: \"/v2/accounts/PNWOET7LLOWMBMLE4KOCELCX6X3D3Q4H2Q4QJASYIEOF7YIPPQBG3YQ5YI/transactions?limit=60&currency-greater-than=0\"\n[ERROR]   \nexpected: \"/v2/accounts/PNWOET7LLOWMBMLE4KOCELCX6X3D3Q4H2Q4QJASYIEOF7YIPPQBG3YQ5YI/transactions?currency-greater-than=0&max-round=52\"\n but was: \"/v2/accounts/PNWOET7LLOWMBMLE4KOCELCX6X3D3Q4H2Q4QJASYIEOF7YIPPQBG3YQ5YI/transactions?max-round=52&currency-greater-than=0\"\n[ERROR]   \nexpected: \"/v2/accounts/PNWOET7LLOWMBMLE4KOCELCX6X3D3Q4H2Q4QJASYIEOF7YIPPQBG3YQ5YI/transactions?currency-greater-than=0&min-round=51\"\n but was: \"/v2/accounts/PNWOET7LLOWMBMLE4KOCELCX6X3D3Q4H2Q4QJASYIEOF7YIPPQBG3YQ5YI/transactions?min-round=51&currency-greater-than=0\"\n[INFO] \n[ERROR] Tests run: 14, Failures: 7, Errors: 0, Skipped: 0\n[INFO] \n[INFO] ------------------------------------------------------------------------\n[INFO] BUILD FAILURE\n[INFO] ------------------------------------------------------------------------\n[INFO] Total time:  14.900 s\n[INFO] Finished at: 2026-11-12T12:29:19Z\n[INFO] ------------------------------------------------------------------------\n[ERROR] Failed to execute goal org.apache.maven.plugins:maven-surefire-plugin:3.0.0-M5:test (unit-tests) on project algosdk: There are test failures.\n[ERROR] \n[ERROR] Please refer to /work/target/surefire-reports for the individual test results.\n[ERROR] Please refer to dump files (if any exist) [date].dump, [date]-jvmRun[N].dump and [date].dumpstream.\n[ERROR] -> [Help 1]\n[ERROR] \n[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.\n[ERROR] Re-run Maven using the -X switch to enable full debug logging.\n[ERROR] \n[ERROR] For more information about the errors and possible solutions, please read the following articles:\n[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/MojoFailureException\n",
+  "bench_meta": {
+    "dependency_profile": [],
+    "live_background_step_count": 1,
+    "live_step_count": 2,
+    "n_closure_contexts": 2,
+    "n_closure_files": 2,
+    "n_oracle_steps": 1,
+    "round_trip_seconds": null,
+    "signature": "d53e10451ed8",
+    "steps_removable": 42,
+    "steps_retained": 0,
+    "tags": [
+      "@unit",
+      "@unit.indexer"
+    ],
+    "upstream_selected": null
+  },
+  "written_files": [
+    "src/test/java/com/algorand/algosdk/unit/IndexerClientV2PathsSteps.java"
+  ],
+  "_source": "/root/lby-docker/req2test/user/benchmark/runs/req2test-recovery8-20261113-v1-algorand-sdk/algorand-sdk/th/exec.jsonl",
+  "requirement": {
+    "feature": {
+      "background": "  Background:\n    Given mock server recording request paths",
+      "file_path": "features/unit/v2indexerclient_paths.feature",
+      "narrative": null,
+      "title": "Indexer Client v2 Paths"
+    },
+    "scenario": {
+      "gherkin": "  Scenario Outline: LookupAccountTransactions path\n    When we make a Lookup Account Transactions call against account \"<account>\" with NotePrefix \"<notePrefixB64>\" TxType \"<txType>\" SigType \"<sigType>\" txid \"<txid>\" round <round> minRound <minRound> maxRound <maxRound> limit <limit> beforeTime \"<beforeTime>\" afterTime \"<afterTime>\" currencyGreaterThan <currencyGreaterThan> currencyLessThan <currencyLessThan> assetIndex <index>\n    Then expect the path used to be \"<path>\"\n    Examples:\n      | path                                                                                                                                                                    | account                                                    | notePrefixB64 | txType | sigType | txid                                                 | round | minRound | maxRound | limit | beforeTime              | afterTime               | currencyGreaterThan | currencyLessThan | index |\n      | /v2/accounts/PNWOET7LLOWMBMLE4KOCELCX6X3D3Q4H2Q4QJASYIEOF7YIPPQBG3YQ5YI/transactions?currency-greater-than=0                                                           | PNWOET7LLOWMBMLE4KOCELCX6X3D3Q4H2Q4QJASYIEOF7YIPPQBG3YQ5YI |               |        |         |                                                      | 0     | 0        | 0        | 0     |                         |                         | 0                   | 0                | 0     |\n      | /v2/accounts/PNWOET7LLOWMBMLE4KOCELCX6X3D3Q4H2Q4QJASYIEOF7YIPPQBG3YQ5YI/transactions?after-time=2019-10-13T07%3A20%3A50.52Z&currency-greater-than=0                    | PNWOET7LLOWMBMLE4KOCELCX6X3D3Q4H2Q4QJASYIEOF7YIPPQBG3YQ5YI |               |        |         |                                                      | 0     | 0        | 0        | 0     |                         | 2019-10-13T07:20:50.52Z | 0                   | 0                | 0     |\n      | /v2/accounts/PNWOET7LLOWMBMLE4KOCELCX6X3D3Q4H2Q4QJASYIEOF7YIPPQBG3YQ5YI/transactions?asset-id=100&currency-greater-than=0                                              | PNWOET7LLOWMBMLE4KOCELCX6X3D3Q4H2Q4QJASYIEOF7YIPPQBG3YQ5YI |               |        |         |                                                      | 0     | 0        | 0        | 0     |                         |                         | 0                   | 0                | 100   |\n      | /v2/accounts/PNWOET7LLOWMBMLE4KOCELCX6X3D3Q4H2Q4QJASYIEOF7YIPPQBG3YQ5YI/transactions?before-time=2019-10-12T07%3A20%3A50.52Z&currency-greater-than=0                   | PNWOET7LLOWMBMLE4KOCELCX6X3D3Q4H2Q4QJASYIEOF7YIPPQBG3YQ5YI |               |        |         |                                                      | 0     | 0        | 0        | 0     | 2019-10-12T07:20:50.52Z |                         | 0                   | 0                | 0     |\n      | /v2/accounts/PNWOET7LLOWMBMLE4KOCELCX6X3D3Q4H2Q4QJASYIEOF7YIPPQBG3YQ5YI/transactions?currency-greater-than=12                                                           | PNWOET7LLOWMBMLE4KOCELCX6X3D3Q4H2Q4QJASYIEOF7YIPPQBG3YQ5YI |               |        |         |                                                      | 0     | 0        | 0        | 0     |                         |                         | 12                  | 0                | 0     |\n      | /v2/accounts/PNWOET7LLOWMBMLE4KOCELCX6X3D3Q4H2Q4QJASYIEOF7YIPPQBG3YQ5YI/transactions?currency-greater-than=0&currency-less-than=10000000                               | PNWOET7LLOWMBMLE4KOCELCX6X3D3Q4H2Q4QJASYIEOF7YIPPQBG3YQ5YI |               |        |         |                                                      | 0     | 0        | 0        | 0     |                         |                         | 0                   | 10000000         | 0     |\n      | /v2/accounts/PNWOET7LLOWMBMLE4KOCELCX6X3D3Q4H2Q4QJASYIEOF7YIPPQBG3YQ5YI/transactions?currency-greater-than=0&limit=60                                                  | PNWOET7LLOWMBMLE4KOCELCX6X3D3Q4H2Q4QJASYIEOF7YIPPQBG3YQ5YI |               |        |         |                                                      | 0     | 0        | 0        | 60    |                         |                         | 0                   | 0                | 0     |\n      | /v2/accounts/PNWOET7LLOWMBMLE4KOCELCX6X3D3Q4H2Q4QJASYIEOF7YIPPQBG3YQ5YI/transactions?currency-greater-than=0&max-round=52                                              | PNWOET7LLOWMBMLE4KOCELCX6X3D3Q4H2Q4QJASYIEOF7YIPPQBG3YQ5YI |               |        |         |                                                      | 0     | 0        | 52       | 0     |                         |                         | 0                   | 0                | 0     |\n      | /v2/accounts/PNWOET7LLOWMBMLE4KOCELCX6X3D3Q4H2Q4QJASYIEOF7YIPPQBG3YQ5YI/transactions?currency-greater-than=0&min-round=51                                              | PNWOET7LLOWMBMLE4KOCELCX6X3D3Q4H2Q4QJASYIEOF7YIPPQBG3YQ5YI |               |        |         |                                                      | 0     | 51       | 0        | 0     |                         |                         | 0                   | 0                | 0     |\n      | /v2/accounts/PNWOET7LLOWMBMLE4KOCELCX6X3D3Q4H2Q4QJASYIEOF7YIPPQBG3YQ5YI/transactions?currency-greater-than=0&note-prefix=6gAVR0Nsv5Y%3D                                | PNWOET7LLOWMBMLE4KOCELCX6X3D3Q4H2Q4QJASYIEOF7YIPPQBG3YQ5YI | 6gAVR0Nsv5Y=  |        |         |                                                      | 0     | 0        | 0        | 0     |                         |                         | 0                   | 0                | 0     |\n      | /v2/accounts/PNWOET7LLOWMBMLE4KOCELCX6X3D3Q4H2Q4QJASYIEOF7YIPPQBG3YQ5YI/transactions?currency-greater-than=0&round=102                                                 | PNWOET7LLOWMBMLE4KOCELCX6X3D3Q4H2Q4QJASYIEOF7YIPPQBG3YQ5YI |               |        |         |                                                      | 102   | 0        | 0        | 0     |                         |                         | 0                   | 0                | 0     |\n      | /v2/accounts/PNWOET7LLOWMBMLE4KOCELCX6X3D3Q4H2Q4QJASYIEOF7YIPPQBG3YQ5YI/transactions?currency-greater-than=0&sig-type=sig                                              | PNWOET7LLOWMBMLE4KOCELCX6X3D3Q4H2Q4QJASYIEOF7YIPPQBG3YQ5YI |               |        | sig     |                                                      | 0     | 0        | 0        | 0     |                         |                         | 0                   | 0                | 0     |\n      | /v2/accounts/PNWOET7LLOWMBMLE4KOCELCX6X3D3Q4H2Q4QJASYIEOF7YIPPQBG3YQ5YI/transactions?currency-greater-than=0&txid=TDIO6RJWJIVDDJZELMSX5CPJW7MUNM3QR4YAHYAKHF3W2CFRTI7A | PNWOET7LLOWMBMLE4KOCELCX6X3D3Q4H2Q4QJASYIEOF7YIPPQBG3YQ5YI |               |        |         | TDIO6RJWJIVDDJZELMSX5CPJW7MUNM3QR4YAHYAKHF3W2CFRTI7A | 0     | 0        | 0        | 0     |                         |                         | 0                   | 0                | 0     |\n      | /v2/accounts/PNWOET7LLOWMBMLE4KOCELCX6X3D3Q4H2Q4QJASYIEOF7YIPPQBG3YQ5YI/transactions?currency-greater-than=0&tx-type=acfg                                              | PNWOET7LLOWMBMLE4KOCELCX6X3D3Q4H2Q4QJASYIEOF7YIPPQBG3YQ5YI |               | acfg   |         |                                                      | 0     | 0        | 0        | 0     |                         |                         | 0                   | 0                | 0     |",
+      "kind": "outline",
+      "line": 41,
+      "tags": [
+        "@unit",
+        "@unit.indexer"
+      ],
+      "title": "LookupAccountTransactions path"
+    }
+  },
+  "official_result": {
+    "instance_id": "algorand-sdk/features/unit/v2indexerclient_paths.feature:41",
+    "project": "algorand-sdk",
+    "view": "th",
+    "outcome": "assertion_failure",
+    "passed": false,
+    "api_f1": null,
+    "coverage_j": null,
+    "recall": null,
+    "kill_complete": false,
+    "kill_complete_strict": false,
+    "kill_complete_95": false,
+    "mutation_status": "not_passed",
+    "mutation_baseline": null,
+    "behaviour_status": "measured",
+    "n_gt_kills": 58,
+    "n_scored": 0,
+    "n_killed": 0,
+    "n_dropped": 0,
+    "n_crash_kills": 0,
+    "n_timeout_kills": 0,
+    "exclusion": null,
+    "engine_outcome": "failed",
+    "harness_version": 27,
+    "rejected_files": []
+  },
+  "population_exclusion": null,
+  "generated_files": [
+    {
+      "path": "src/test/java/com/algorand/algosdk/unit/IndexerClientV2PathsSteps.java",
+      "sha256": "2d3e122286eea73f7a0f9e108b82267ee778ecd6f4fa448f316f50d6b37d5ece"
+    }
+  ],
+  "final_agent_message": "Added [IndexerClientV2PathsSteps.java](/root/lby-docker/req2test/user/runs/full-baseline-20261111-v1/generation/874367991f392c8473d1/attempt-1/workspaces/0000/repo/src/test/java/com/algorand/algosdk/unit/IndexerClientV2PathsSteps.java). It builds the account-transactions query, applies the supplied filters, and compares its generated request path with the expected path without making a network request.",
+  "denied_commands": [
+    {
+      "id": "item_1",
+      "type": "command_execution",
+      "command": "/usr/bin/bash -lc 'rg --files repo/src/test/java repo/src/main/java | head -80; rg -n \"recording request paths|Lookup Account Transactions|ClientMocker|parseDate\" repo/src/test/java repo/src/main/java/com/algorand/algosdk/v2/client'",
+      "aggregated_output": "/usr/bin/bash: line 1: /usr/bin/rg: Permission denied\n/usr/bin/bash: line 1: /usr/bin/rg: Permission denied\n",
+      "exit_code": 126,
+      "status": "failed"
+    }
+  ],
+  "diagnostic_addendum": null,
+  "trace_path": "results/test-generation-20261114/req2test/tasks/874367991f392c8473d1/trajectory-excerpt.json"
+}

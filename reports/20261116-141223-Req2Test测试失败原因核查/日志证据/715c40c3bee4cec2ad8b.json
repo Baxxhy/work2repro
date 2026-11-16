@@ -1,0 +1,107 @@
+{
+  "item_id": "kapua/service/device/registry/test/src/test/resources/features/DeviceRegistryConnection.feature:26",
+  "outcome": "parse_or_compile_error",
+  "outcomes_all_runs": [
+    "no_scenario_ran"
+  ],
+  "per_step": [],
+  "index_errors": {
+    "service/device/registry/test/src/test/java/org/eclipse/kapua/service/device/registry/test/r2t/generated/RegularConnectionSteps.java": "34:78 error: incompatible types: Map<Object,Object> cannot be converted to Map<String,String>"
+  },
+  "stdout_tail": "-----------------------------\n[ERROR] /work/service/device/registry/test/src/test/java/org/eclipse/kapua/service/device/registry/test/r2t/generated/RegularConnectionSteps.java:[34,78] error: incompatible types: Map<Object,Object> cannot be converted to Map<String,String>\n[ERROR] /work/service/device/registry/test/src/test/java/org/eclipse/kapua/service/device/registry/test/r2t/generated/RegularConnectionSteps.java:[58,78] error: incompatible types: Map<Object,Object> cannot be converted to Map<String,String>\n[INFO] 2 errors \n[INFO] -------------------------------------------------------------\n[INFO] ------------------------------------------------------------------------\n[INFO] BUILD FAILURE\n[INFO] ------------------------------------------------------------------------\n[INFO] Total time:  5.974 s\n[INFO] Finished at: 2026-11-12T17:34:01Z\n[INFO] ------------------------------------------------------------------------\n[ERROR] Failed to execute goal org.apache.maven.plugins:maven-compiler-plugin:3.6.1:testCompile (default-testCompile) on project kapua-device-registry-test: Compilation failure: Compilation failure: \n[ERROR] /work/service/device/registry/test/src/test/java/org/eclipse/kapua/service/device/registry/test/r2t/generated/RegularConnectionSteps.java:[34,78] error: incompatible types: Map<Object,Object> cannot be converted to Map<String,String>\n[ERROR] /work/service/device/registry/test/src/test/java/org/eclipse/kapua/service/device/registry/test/r2t/generated/RegularConnectionSteps.java:[58,78] error: incompatible types: Map<Object,Object> cannot be converted to Map<String,String>\n[ERROR] -> [Help 1]\n[ERROR] \n[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.\n[ERROR] Re-run Maven using the -X switch to enable full debug logging.\n[ERROR] \n[ERROR] For more information about the errors and possible solutions, please read the following articles:\n[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/MojoFailureException\n",
+  "bench_meta": {
+    "dependency_profile": [],
+    "live_background_step_count": 0,
+    "live_step_count": 6,
+    "n_closure_contexts": 1,
+    "n_closure_files": 1,
+    "n_oracle_steps": 3,
+    "round_trip_seconds": 110.493,
+    "signature": "de11da1c4c00",
+    "steps_removable": 4,
+    "steps_retained": 2,
+    "tags": [
+      "@deviceRegistry",
+      "@deviceConnection",
+      "@env_none"
+    ],
+    "upstream_selected": null
+  },
+  "written_files": [
+    "service/device/registry/test/src/test/java/org/eclipse/kapua/service/device/registry/test/r2t/generated/RegularConnectionSteps.java"
+  ],
+  "_source": "/root/lby-docker/req2test/user/benchmark/runs/req2test-recovery8-20261113-v1-kapua/kapua/th/exec.jsonl",
+  "requirement": {
+    "feature": {
+      "background": null,
+      "file_path": "service/device/registry/test/src/test/resources/features/DeviceRegistryConnection.feature",
+      "narrative": "  The Device Registry Connection service is responsible for performing CRUD operations\n  regarding device connections on the Kapua database.",
+      "title": "Device Registry Connection tests"
+    },
+    "scenario": {
+      "gherkin": "  Scenario: Regular connection\n  It must be possible to create a device connection entry in the database. The entry\n  must match the creator parameters. The connection status must also be\n  implicitly set to CONNECTED.\n\n    Given The User ID 1\n    And Scope with ID 1\n    And I have the following connection\n      | clientId    | clientIp    | serverIp   | protocol | allowUserChange |\n      | testClient1 | 127.0.0.101 | 127.0.0.10 | tcp      | true            |\n    Then The connection object is regular\n    And The connection details match\n      | clientId    | clientIp    | serverIp   | protocol | allowUserChange |\n      | testClient1 | 127.0.0.101 | 127.0.0.10 | tcp      | true            |\n    And The connection status is \"CONNECTED\"",
+      "kind": "scenario",
+      "line": 26,
+      "tags": [
+        "@deviceRegistry",
+        "@deviceConnection",
+        "@env_none"
+      ],
+      "title": "Regular connection"
+    }
+  },
+  "official_result": {
+    "instance_id": "kapua/service/device/registry/test/src/test/resources/features/DeviceRegistryConnection.feature:26",
+    "project": "kapua",
+    "view": "th",
+    "outcome": "compilation_failure",
+    "passed": false,
+    "api_f1": null,
+    "coverage_j": null,
+    "recall": null,
+    "kill_complete": false,
+    "kill_complete_strict": false,
+    "kill_complete_95": false,
+    "mutation_status": "not_passed",
+    "mutation_baseline": null,
+    "behaviour_status": "measured",
+    "n_gt_kills": 40,
+    "n_scored": 0,
+    "n_killed": 0,
+    "n_dropped": 0,
+    "n_crash_kills": 0,
+    "n_timeout_kills": 0,
+    "exclusion": null,
+    "engine_outcome": "parse_or_compile_error",
+    "harness_version": 27,
+    "rejected_files": []
+  },
+  "population_exclusion": null,
+  "generated_files": [
+    {
+      "path": "service/device/registry/test/src/test/java/org/eclipse/kapua/service/device/registry/test/r2t/generated/RegularConnectionSteps.java",
+      "sha256": "43b8eb929726daf74e410d8326aaffa2534ec88b04a49909fe0495d0d625789d"
+    }
+  ],
+  "final_agent_message": "Added [RegularConnectionSteps.java](/root/lby-docker/req2test/user/runs/req2test-subset160-20261112-v1/generation/715c40c3bee4cec2ad8b/attempt-1/workspaces/0000/repo/service/device/registry/test/src/test/java/org/eclipse/kapua/service/device/registry/test/r2t/generated/RegularConnectionSteps.java). It creates the connection through the real factory and service, then checks its ID, supplied details, and status. I didn’t run the scenario in this workspace.",
+  "denied_commands": [
+    {
+      "id": "item_1",
+      "type": "command_execution",
+      "command": "/usr/bin/bash -lc 'rg --files repo/service/device/registry/test/src/test/java repo/service/device/registry/test/src/test/resources/features | head -100'",
+      "aggregated_output": "/usr/bin/bash: line 1: /usr/bin/rg: Permission denied\n",
+      "exit_code": 0,
+      "status": "completed"
+    },
+    {
+      "id": "item_7",
+      "type": "command_execution",
+      "command": "/usr/bin/bash -lc \"rg -n 'create\\\\(|newEntity|KapuaId.*of|The User ID|Scope with ID|connection object is regular' repo/service/device/registry repo/qa/common/src/main/java/org/eclipse/kapua/qa/common repo/service/device/registry/test/src/test/java | head -50; cat repo/service/device/registry/api/src/main/java/org/eclipse/kapua/service/device/registry/connection/DeviceConnection.java | head -100\"",
+      "aggregated_output": "/usr/bin/bash: line 1: /usr/bin/rg: Permission denied\n/*******************************************************************************\n * Copyright (c) 2016, 2022 Eurotech and/or its affiliates and others\n *\n * This program and the accompanying materials are made\n * available under the terms of the Eclipse Public License 2.0\n * which is available at https://www.eclipse.org/legal/epl-2.0/\n *\n * SPDX-License-Identifier: EPL-2.0\n *\n * Contributors:\n *     Eurotech - initial API and implementation\n *******************************************************************************/\npackage org.eclipse.kapua.service.device.registry.connection;\n\nimport org.eclipse.kapua.model.KapuaEntity;\nimport org.eclipse.kapua.model.KapuaUpdatableEntity;\nimport org.eclipse.kapua.model.id.KapuaId;\nimport org.eclipse.kapua.model.id.KapuaIdAdapter;\nimport org.eclipse.kapua.service.device.registry.ConnectionUserCouplingMode;\n\nimport javax.xml.bind.annotation.XmlAccessType;\nimport javax.xml.bind.annotation.XmlAccessorType;\nimport javax.xml.bind.annotation.XmlElement;\nimport javax.xml.bind.annotation.XmlRootElement;\nimport javax.xml.bind.annotation.XmlType;\nimport javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;\n\n/**\n * {@link DeviceConnection} {@link KapuaEntity} definition.\n *\n * @since 1.0.0\n */\n@XmlRootElement(name = \"deviceConnection\")\n@XmlAccessorType(XmlAccessType.PROPERTY)\n@XmlType(factoryClass = DeviceConnectionXmlRegistry.class, factoryMethod = \"newDeviceConnection\")\npublic interface DeviceConnection extends KapuaUpdatableEntity {\n\n    String TYPE = \"deviceConnection\";\n\n    @Override\n    default String getType() {\n        return TYPE;\n    }\n\n    /**\n     * Get the device connection status\n     *\n     * @return\n     */\n    @XmlElement(name = \"status\")\n    DeviceConnectionStatus getStatus();\n\n    /**\n     * Set the device connection status\n     *\n     * @param status\n     */\n    void setStatus(DeviceConnectionStatus status);\n\n    /**\n     * Get the client identifier\n     *\n     * @return\n     */\n    @XmlElement(name = \"clientId\")\n    String getClientId();\n\n    /**\n     * Set the client identifier\n     *\n     * @param clientId\n     */\n    void setClientId(String clientId);\n\n    /**\n     * Get the user identifier\n     *\n     * @return\n     */\n    @XmlElement(name = \"userId\")\n    @XmlJavaTypeAdapter(KapuaIdAdapter.class)\n    KapuaId getUserId();\n\n    /**\n     * Set the user identifier\n     *\n     * @param userId\n     */\n    void setUserId(KapuaId userId);\n\n    /**\n     * Gets whether or not the {@link DeviceConnection} can change user on the next login.\n     *\n     * @return <code>true</code> if device can changhe user to connect, <code>false</code> if not.\n     */\n    @XmlElement(name = \"allowUserChange\")\n    boolean getAllowUserChange();\n\n    /**\n     * Sets whether or not the {@link DeviceConnection} can change user on the next login.\n",
+      "exit_code": 0,
+      "status": "completed"
+    }
+  ],
+  "diagnostic_addendum": null,
+  "trace_path": "results/test-generation-20261114/req2test/tasks/715c40c3bee4cec2ad8b/trajectory-excerpt.json"
+}

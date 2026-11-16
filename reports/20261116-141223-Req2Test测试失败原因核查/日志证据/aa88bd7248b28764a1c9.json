@@ -1,0 +1,108 @@
+{
+  "item_id": "prestashop/tests/Integration/Behaviour/Features/Scenario/Product/Combination/Shop/update_combination_stock_multishop.feature:484",
+  "outcome": "undefined_steps",
+  "outcomes_all_runs": [
+    "undefined_steps"
+  ],
+  "per_step": [
+    {
+      "error": null,
+      "result": "undefined",
+      "seconds": 0.0113,
+      "text": "language with iso code \"en\" is the default one"
+    }
+  ],
+  "index_errors": {},
+  "stdout_tail": "attribute group \"Color\" with shops \"shop1,shop2\"\n    And I associate attribute \"S\" with shops \"shop1,shop2\"\n    And I associate attribute \"M\" with shops \"shop1,shop2\"\n    And I associate attribute \"L\" with shops \"shop1,shop2\"\n    And I associate attribute \"White\" with shops \"shop1,shop2\"\n    And I associate attribute \"Black\" with shops \"shop1,shop2\"\n    And I associate attribute \"Blue\" with shops \"shop1,shop2\"\n    And I associate attribute \"Red\" with shops \"shop1,shop2\"\n    And I add a shop group \"test_second_shop_group\" with name \"Test second shop group\" and color \"green\"\n    And Shop group test_second_shop_group shares its stock\n    And I add a shop \"shop3\" with name \"test_third_shop\" and color \"blue\" for the group \"test_second_shop_group\"\n    And I add a shop \"shop4\" with name \"test_shop_without_url\" and color \"blue\" for the group \"test_second_shop_group\"\n    And single shop context is loaded\n    And I add product \"product1\" with following information:\n    And product product1 type should be combinations\n    And I set following shops for product \"product1\":\n    And I generate combinations in shop \"shop1\" for product product1 using following attributes:\n    And product \"product1\" should have no combinations for shops \"shop2\"\n    And I generate combinations in shop \"shop2\" for product product1 using following attributes:\n    And product \"product1\" should have the following combinations for shops \"shop1,shop2\":\n    And product \"product1\" default combination for shop \"shop1\" should be \"product1SWhite\"\n    And product \"product1\" default combination for shop \"shop2\" should be \"product1SWhite\"\n    And combinations \"product1SWhite,product1SBlack,product1SBlue,product1MWhite,product1MBlack,product1MBlue\" are associated to shop \"shop1\"\n    And combinations \"product1SWhite,product1SBlack,product1SBlue,product1MWhite,product1MBlack,product1MBlue\" are associated to shop \"shop2\"\n    And combination \"product1SBlack\" should have following stock details for shops \"shop1,shop2\":\n\n",
+  "bench_meta": {
+    "dependency_profile": [
+      "database"
+    ],
+    "live_background_step_count": 41,
+    "live_step_count": 10,
+    "n_closure_contexts": 14,
+    "n_closure_files": 14,
+    "n_oracle_steps": 6,
+    "round_trip_seconds": 79.4,
+    "signature": "54c028a5409a",
+    "steps_removable": 51,
+    "steps_retained": 0,
+    "tags": [
+      "@restore-products-before-feature",
+      "@clear-cache-before-feature",
+      "@product-combination",
+      "@update-combination-stock-multishop"
+    ],
+    "upstream_selected": null
+  },
+  "written_files": [
+    "tests/Integration/Behaviour/Features/Context/Domain/Product/Combination/CombinationStockPolicyFeatureContext.php"
+  ],
+  "_source": "/root/lby-docker/req2test/user/benchmark/runs/req2test-recovery8-20261113-v1-prestashop/prestashop/th/exec.jsonl",
+  "requirement": {
+    "feature": {
+      "background": "  Background:\n    Given language with iso code \"en\" is the default one\n    And attribute group \"Size\" named \"Size\" in en language exists\n    And attribute group \"Color\" named \"Color\" in en language exists\n    And attribute \"S\" named \"S\" in en language exists\n    And attribute \"M\" named \"M\" in en language exists\n    And attribute \"L\" named \"L\" in en language exists\n    And attribute \"White\" named \"White\" in en language exists\n    And attribute \"Black\" named \"Black\" in en language exists\n    And attribute \"Blue\" named \"Blue\" in en language exists\n    And attribute \"Red\" named \"Red\" in en language exists\n    And shop \"shop1\" with name \"test_shop\" exists\n    And I enable multishop feature\n    And shop group \"default_shop_group\" with name \"Default\" exists\n    And I add a shop \"shop2\" with name \"default_shop_group\" and color \"red\" for the group \"default_shop_group\"\n    And I associate attribute group \"Size\" with shops \"shop1,shop2\"\n    And I associate attribute group \"Color\" with shops \"shop1,shop2\"\n    And I associate attribute \"S\" with shops \"shop1,shop2\"\n    And I associate attribute \"M\" with shops \"shop1,shop2\"\n    And I associate attribute \"L\" with shops \"shop1,shop2\"\n    And I associate attribute \"White\" with shops \"shop1,shop2\"\n    And I associate attribute \"Black\" with shops \"shop1,shop2\"\n    And I associate attribute \"Blue\" with shops \"shop1,shop2\"\n    And I associate attribute \"Red\" with shops \"shop1,shop2\"\n    And I add a shop group \"test_second_shop_group\" with name \"Test second shop group\" and color \"green\"\n    And Shop group test_second_shop_group shares its stock\n    And I add a shop \"shop3\" with name \"test_third_shop\" and color \"blue\" for the group \"test_second_shop_group\"\n    And I add a shop \"shop4\" with name \"test_shop_without_url\" and color \"blue\" for the group \"test_second_shop_group\"\n    And single shop context is loaded\n    And I add product \"product1\" with following information:\n      | name[en-US] | universal T-shirt |\n      | type        | combinations      |\n    And product product1 type should be combinations\n    And I set following shops for product \"product1\":\n      | source shop | shop1       |\n      | shops       | shop1,shop2 |\n    And I generate combinations in shop \"shop1\" for product product1 using following attributes:\n      | Size  | [S,M]              |\n      | Color | [White,Black,Blue] |\n    And product \"product1\" should have no combinations for shops \"shop2\"\n    And I generate combinations in shop \"shop2\" for product product1 using following attributes:\n      | Size  | [S,M]              |\n      | Color | [White,Black,Blue] |\n    And product \"product1\" should have the following combinations for shops \"shop1,shop2\":\n      | id reference   | combination name        | reference | attributes           | impact on price | quantity | is default |\n      | product1SWhite | Size - S, Color - White |           | [Size:S,Color:White] | 0               | 0        | true       |\n      | product1SBlack | Size - S, Color - Black |           | [Size:S,Color:Black] | 0               | 0        | false      |\n      | product1SBlue  | Size - S, Color - Blue  |           | [Size:S,Color:Blue]  | 0               | 0        | false      |\n      | product1MWhite | Size - M, Color - White |           | [Size:M,Color:White] | 0               | 0        | false      |\n      | product1MBlack | Size - M, Color - Black |           | [Size:M,Color:Black] | 0               | 0        | false      |\n      | product1MBlue  | Size - M, Color - Blue  |           | [Size:M,Color:Blue]  | 0               | 0        | false      |\n    And product \"product1\" default combination for shop \"shop1\" should be \"product1SWhite\"\n    And product \"product1\" default combination for shop \"shop2\" should be \"product1SWhite\"\n    And combinations \"product1SWhite,product1SBlack,product1SBlue,product1MWhite,product1MBlack,product1MBlue\" are associated to shop \"shop1\"\n    And combinations \"product1SWhite,product1SBlack,product1SBlue,product1MWhite,product1MBlack,product1MBlue\" are associated to shop \"shop2\"\n    And product \"product1\" should have following stock information for shops \"shop1,shop2\":\n      | pack_stock_type     | default |\n      | out_of_stock_type   | default |\n      | quantity            | 0       |\n      | minimal_quantity    | 1       |\n      | location            |         |\n      | low_stock_threshold | 0       |\n      | low_stock_alert     | false   |\n      | available_date      |         |\n    And combination \"product1SBlack\" should have following stock details for shops \"shop1,shop2\":\n      | combination stock detail   | value |\n      | quantity                   | 0     |\n      | minimal quantity           | 1     |\n      | low stock threshold        | 0     |\n      | low stock alert is enabled | false |\n      | location                   |       |\n      | available date             |       |",
+      "file_path": "tests/Integration/Behaviour/Features/Scenario/Product/Combination/Shop/update_combination_stock_multishop.feature",
+      "narrative": "  As an employee\n  I need to be able to update product combination stock information from BO for multiple shops",
+      "title": "Update product combination stock information in Back Office (BO) in multi shop context"
+    },
+    "scenario": {
+      "gherkin": "  Scenario: I update product out of stock type to see how the combinations stock policy depends on it\n    And product \"product1\" should have following stock information for shops \"shop1,shop2\":\n      | out_of_stock_type | default |\n    And all combinations of product \"product1\" for shops \"shop1,shop2\" should have the stock policy to \"default\"\n    When I update product \"product1\" stock for shop \"shop1\" with following information:\n      | out_of_stock_type | available |\n    And I update product \"product1\" stock for shop \"shop2\" with following information:\n      | out_of_stock_type | default |\n    Then all combinations of product \"product1\" for shops \"shop1\" should have the stock policy to \"available\"\n    Then all combinations of product \"product1\" for shops \"shop2\" should have the stock policy to \"default\"\n    When I update product \"product1\" stock for shop \"shop2\" with following information:\n      | out_of_stock_type | available |\n    Then all combinations of product \"product1\" for shops \"shop1,shop2\" should have the stock policy to \"available\"\n    When I update product \"product1\" stock for all shops with following information:\n      | out_of_stock_type | not_available |\n    Then all combinations of product \"product1\" for shops \"shop1,shop2\" should have the stock policy to \"not_available\"",
+      "kind": "scenario",
+      "line": 484,
+      "tags": [
+        "@restore-products-before-feature",
+        "@clear-cache-before-feature",
+        "@product-combination",
+        "@update-combination-stock-multishop"
+      ],
+      "title": "I update product out of stock type to see how the combinations stock policy depends on it"
+    }
+  },
+  "official_result": {
+    "instance_id": "prestashop/tests/Integration/Behaviour/Features/Scenario/Product/Combination/Shop/update_combination_stock_multishop.feature:484",
+    "project": "prestashop",
+    "view": "th",
+    "outcome": "binding_failure",
+    "passed": false,
+    "api_f1": null,
+    "coverage_j": null,
+    "recall": null,
+    "kill_complete": false,
+    "kill_complete_strict": false,
+    "kill_complete_95": false,
+    "mutation_status": "not_passed",
+    "mutation_baseline": null,
+    "behaviour_status": "measured",
+    "n_gt_kills": 36,
+    "n_scored": 0,
+    "n_killed": 0,
+    "n_dropped": 0,
+    "n_crash_kills": 0,
+    "n_timeout_kills": 0,
+    "exclusion": null,
+    "engine_outcome": "undefined_steps",
+    "harness_version": 27,
+    "rejected_files": []
+  },
+  "population_exclusion": null,
+  "generated_files": [
+    {
+      "path": "tests/Integration/Behaviour/Features/Context/Domain/Product/Combination/CombinationStockPolicyFeatureContext.php",
+      "sha256": "fee114465ea7de59ff239725f418c7bc1372bb87b59080168e43110e6b50b6f1"
+    }
+  ],
+  "final_agent_message": "Added [CombinationStockPolicyFeatureContext.php](/root/lby-docker/req2test/user/runs/req2test-subset160-20261112-v1/generation/aa88bd7248b28764a1c9/attempt-2/workspaces/0000/repo/tests/Integration/Behaviour/Features/Context/Domain/Product/Combination/CombinationStockPolicyFeatureContext.php). It implements the scenario’s stock update and stock-policy assertion steps, plus the background stock-information assertion. PHP lint passes.\n\nThis is not enough to make the scenario run: the many other Background steps (shops, attributes, product and combinations) still need definitions, and I did not implement them. I also could not verify suite registration or execute the scenario because `tests/Integration/Behaviour/behat.yml` is absent.",
+  "denied_commands": [
+    {
+      "id": "item_1",
+      "type": "command_execution",
+      "command": "/usr/bin/bash -lc 'rg --files repo/tests/Integration/Behaviour/Features/Context | head -n 100 && rg -n \"stock information|combinations of product|associate attribute|generate combinations|add product|set following shops|attribute group\" repo/tests/Integration/Behaviour/Features/Context repo/tests/Integration/Behaviour/Features/Scenario/Product/Combination/Shop/update_combination_stock_multishop.feature'",
+      "aggregated_output": "/usr/bin/bash: line 1: /usr/bin/rg: Permission denied\n/usr/bin/bash: line 1: /usr/bin/rg: Permission denied\n",
+      "exit_code": 126,
+      "status": "failed"
+    }
+  ],
+  "diagnostic_addendum": null,
+  "trace_path": "results/test-generation-20261114/req2test/tasks/aa88bd7248b28764a1c9/trajectory-excerpt.json"
+}

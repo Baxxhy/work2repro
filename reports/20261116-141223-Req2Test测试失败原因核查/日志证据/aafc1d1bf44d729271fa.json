@@ -1,0 +1,70 @@
+{
+  "item_id": "coreshop/features/domain/cart/rules/discount_over_100_percent.feature:17",
+  "outcome": "no_files_returned",
+  "outcomes_all_runs": null,
+  "per_step": null,
+  "index_errors": {},
+  "stdout_tail": null,
+  "bench_meta": null,
+  "written_files": [],
+  "_source": "/root/lby-docker/req2test/user/benchmark/runs/req2test-recovery8-20261113-v1-coreshop/coreshop/th/exec.jsonl",
+  "requirement": {
+    "feature": {
+      "background": "  Background:\n    Given the site operates on a store in \"Austria\"\n    And the site has a currency \"Euro\" with iso \"EUR\"\n    And I am in country \"Austria\"\n    And the site has a tax rate \"AT\" with \"20%\" rate\n    And the site has a tax rule group \"AT\"\n    And the tax rule group has a tax rule for country \"Austria\" with tax rate \"AT\"\n    And the site has a product \"Shoe\" priced at 10000\n    And the product has the tax rule group \"AT\"\n    And I add the product \"Shoe\" to my cart",
+      "file_path": "features/domain/cart/rules/discount_over_100_percent.feature",
+      "narrative": "  In order to give the customer discounts\n  based on the cart, we add a new rule with a 100% discount",
+      "title": "Adding a new cart rule"
+    },
+    "scenario": {
+      "gherkin": "  Scenario: Add a new discount rule with 100 percent discount\n    Given adding a cart price rule named \"discount\"\n    And the cart rule is a voucher rule with code \"asdf\"\n    And the cart rule is active\n    And the cart rule has a action discount-percent with 10% discount\n    Given adding a cart price rule named \"discount2\"\n    And the cart rule is a voucher rule with code \"asdf2\"\n    And the cart rule is active\n    And the cart rule has a action discount-percent with 100% discount\n    And I apply the voucher code \"asdf2\" to my cart\n    Then the cart discount should be \"-12000\" including tax\n    Then the cart discount should be \"-10000\" excluding tax\n    Then the cart total tax should be \"0\"\n    Then the cart total should be \"0\" excluding tax\n    Then the cart total should be \"0\" including tax",
+      "kind": "scenario",
+      "line": 17,
+      "tags": [
+        "@domain",
+        "@cart"
+      ],
+      "title": "Add a new discount rule with 100 percent discount"
+    }
+  },
+  "official_result": {
+    "instance_id": "coreshop/features/domain/cart/rules/discount_over_100_percent.feature:17",
+    "project": "coreshop",
+    "view": "th",
+    "outcome": "generation_failure",
+    "passed": false,
+    "api_f1": null,
+    "coverage_j": null,
+    "recall": null,
+    "kill_complete": false,
+    "kill_complete_strict": false,
+    "kill_complete_95": false,
+    "mutation_status": "not_passed",
+    "mutation_baseline": null,
+    "behaviour_status": "measured",
+    "n_gt_kills": 284,
+    "n_scored": 0,
+    "n_killed": 0,
+    "n_dropped": 0,
+    "n_crash_kills": 0,
+    "n_timeout_kills": 0,
+    "exclusion": null,
+    "engine_outcome": "no_files_returned",
+    "harness_version": 27,
+    "rejected_files": []
+  },
+  "population_exclusion": null,
+  "generated_files": [],
+  "final_agent_message": "I haven’t added a step-definition file: I couldn’t establish a reliable setup path for the Background or the cart-rule creation and voucher application from the APIs inspected. Code that only asserts the cart totals—or treats those setup steps as no-ops—would not make this scenario pass against production.",
+  "denied_commands": [
+    {
+      "id": "item_2",
+      "type": "command_execution",
+      "command": "/usr/bin/bash -lc 'pwd && ls repo && rg --files repo | head -80'",
+      "aggregated_output": "/root/lby-docker/req2test/user/runs/full-baseline-20261111-v1/generation/aafc1d1bf44d729271fa/attempt-1/workspaces/0000\nFORM_CONTRACTS.md\nRESOURCE_CONTRACTS.md\nTARGET_CONTRACTS.md\n_bench\nbehat-bootstrap.php\nbin\ncomposer.json\ncomposer.lock\nconfig\nfeatures\npublic\nsrc\ntemplates\nvar\nvendor\n/usr/bin/bash: line 1: /usr/bin/rg: Permission denied\n",
+      "exit_code": 0,
+      "status": "completed"
+    }
+  ],
+  "diagnostic_addendum": null,
+  "trace_path": "results/test-generation-20261114/req2test/tasks/aafc1d1bf44d729271fa/trajectory-excerpt.json"
+}

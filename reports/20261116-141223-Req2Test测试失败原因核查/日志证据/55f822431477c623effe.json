@@ -1,0 +1,70 @@
+{
+  "item_id": "coreshop/features/domain/filter/load_index_with_raw_results.feature:15",
+  "outcome": "no_files_returned",
+  "outcomes_all_runs": null,
+  "per_step": null,
+  "index_errors": {},
+  "stdout_tail": null,
+  "bench_meta": null,
+  "written_files": [],
+  "_source": "/root/lby-docker/req2test/user/benchmark/runs/req2test-recovery8-20261113-v1-coreshop/coreshop/th/exec.jsonl",
+  "requirement": {
+    "feature": {
+      "background": "  Background:\n    Given the site operates on a store in \"Austria\"\n    And the site has a index \"myindex\" for class \"CoreShopProduct\" with type \"mysql\"\n    And the site has a filter \"myfilter\" for index \"myindex\"\n    And  the index has following fields:\n      | key   | name            | type            | getter          | interpreter   | columnType   |\n      | sku   | sku             | object          |                 |               | STRING       |\n      | ean   | ean             | object          |                 |               | STRING       |\n      | name  | internalName    | localizedfields | localizedfield  | localeMapping | STRING       |",
+      "file_path": "features/domain/filter/load_index_with_raw_results.feature",
+      "narrative": "  without needing pimcore's data objects",
+      "title": "To get more performance out of the index, we can also load the raw result"
+    },
+    "scenario": {
+      "gherkin": "  Scenario: Adding a simple product to the index\n    And the site has a product \"Shoe\" priced at 100\n    And the products ean is \"123456\"\n    And the products sku is \"654321\"\n    And the product is active\n    And the product is published\n    Then the raw result for the filter should look like:\n      | o_classId  | o_className     | o_type | active | categoryIds | parentCategoryIds | sku    | ean    | language | name | internalName |\n      | cs_product | CoreShopProduct | object | 1      | ,,          | ,,                | 654321 | 123456 | en       | Shoe | Shoe         |",
+      "kind": "scenario",
+      "line": 15,
+      "tags": [
+        "@domain",
+        "@filter"
+      ],
+      "title": "Adding a simple product to the index"
+    }
+  },
+  "official_result": {
+    "instance_id": "coreshop/features/domain/filter/load_index_with_raw_results.feature:15",
+    "project": "coreshop",
+    "view": "th",
+    "outcome": "generation_failure",
+    "passed": false,
+    "api_f1": null,
+    "coverage_j": null,
+    "recall": null,
+    "kill_complete": false,
+    "kill_complete_strict": false,
+    "kill_complete_95": false,
+    "mutation_status": "not_passed",
+    "mutation_baseline": null,
+    "behaviour_status": "measured",
+    "n_gt_kills": 138,
+    "n_scored": 0,
+    "n_killed": 0,
+    "n_dropped": 0,
+    "n_crash_kills": 0,
+    "n_timeout_kills": 0,
+    "exclusion": null,
+    "engine_outcome": "no_files_returned",
+    "harness_version": 27,
+    "rejected_files": []
+  },
+  "population_exclusion": null,
+  "generated_files": [],
+  "final_agent_message": "I couldn’t complete a reliable step definition. The missing domain contexts need to create and persist a store, product, index, columns, and filter using CoreShop’s factories and repositories; I couldn’t establish the necessary service IDs and setup contracts from the retained code. I made no changes.",
+  "denied_commands": [
+    {
+      "id": "item_1",
+      "type": "command_execution",
+      "command": "/usr/bin/bash -lc 'rg --files repo/src/CoreShop repo | head -n 80'",
+      "aggregated_output": "/usr/bin/bash: line 1: /usr/bin/rg: Permission denied\n",
+      "exit_code": 0,
+      "status": "completed"
+    }
+  ],
+  "diagnostic_addendum": null,
+  "trace_path": "results/test-generation-20261114/req2test/tasks/55f822431477c623effe/trajectory-excerpt.json"
+}

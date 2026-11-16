@@ -1,0 +1,103 @@
+{
+  "item_id": "coreshop/features/domain/payment_provider/payment_provider_rules/customer_condition.feature:23",
+  "outcome": "container_error",
+  "outcomes_all_runs": [
+    "container_error"
+  ],
+  "per_step": [],
+  "index_errors": {},
+  "stdout_tail": "                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              \n\n",
+  "bench_meta": {
+    "dependency_profile": [
+      "database"
+    ],
+    "live_background_step_count": 8,
+    "live_step_count": 4,
+    "n_closure_contexts": 13,
+    "n_closure_files": 15,
+    "n_oracle_steps": 1,
+    "round_trip_seconds": 11.59,
+    "signature": "f241820c9115",
+    "steps_removable": 12,
+    "steps_retained": 0,
+    "tags": [
+      "@domain",
+      "@payment_provider"
+    ],
+    "upstream_selected": true
+  },
+  "written_files": [
+    "src/CoreShop/Behat/Context/Domain/PaymentProvider/PaymentProviderRuleContext.php"
+  ],
+  "_source": "/root/lby-docker/req2test/user/benchmark/runs/req2test-recovery8-20261113-v1-coreshop/coreshop/th/exec.jsonl",
+  "requirement": {
+    "feature": {
+      "background": "  Background:\n    Given the site operates on a store in \"Austria\"\n    And the site has a currency \"Euro\" with iso \"EUR\"\n    And I am in country \"Austria\"\n    And the site has a customer \"some-customer@something.com\"\n    And I am customer \"some-customer@something.com\"\n    And the site has a product \"Shoe\" priced at 10000\n    And I add the product \"Shoe\" to my cart\n    And There is a payment provider \"Bankwire\" using factory \"Bankwire\"",
+      "file_path": "features/domain/payment_provider/payment_provider_rules/customer_condition.feature",
+      "narrative": "  In order to calculate payment provider\n  I'll create a new payment-provider-rule\n  with an customer condition",
+      "title": "Adding a new Payment Provider Rule"
+    },
+    "scenario": {
+      "gherkin": "  Scenario: Add a new customer payment-provider-rule which is inactive\n    Given adding a payment-provider-rule named \"customer\"\n    And the payment-provider-rule is inactive\n    And the payment-provider-rule has a condition customers with customer \"some-customer@something.com\"\n    Then the payment-provider-rule should be invalid for my cart with payment provider \"Bankwire\"",
+      "kind": "scenario",
+      "line": 23,
+      "tags": [
+        "@domain",
+        "@payment_provider"
+      ],
+      "title": "Add a new customer payment-provider-rule which is inactive"
+    }
+  },
+  "official_result": {
+    "instance_id": "coreshop/features/domain/payment_provider/payment_provider_rules/customer_condition.feature:23",
+    "project": "coreshop",
+    "view": "th",
+    "outcome": "compilation_failure",
+    "passed": false,
+    "api_f1": null,
+    "coverage_j": null,
+    "recall": null,
+    "kill_complete": false,
+    "kill_complete_strict": false,
+    "kill_complete_95": false,
+    "mutation_status": "not_passed",
+    "mutation_baseline": null,
+    "behaviour_status": "measured",
+    "n_gt_kills": 132,
+    "n_scored": 0,
+    "n_killed": 0,
+    "n_dropped": 0,
+    "n_crash_kills": 0,
+    "n_timeout_kills": 0,
+    "exclusion": null,
+    "engine_outcome": "container_error",
+    "harness_version": 27,
+    "rejected_files": []
+  },
+  "population_exclusion": null,
+  "generated_files": [
+    {
+      "path": "src/CoreShop/Behat/Context/Domain/PaymentProvider/PaymentProviderRuleContext.php",
+      "sha256": "520bf6e1608b98c22009dbb46dee90bab650f4d566ea6307da3e2c4a68899a9f"
+    }
+  ],
+  "final_agent_message": "Added [PaymentProviderRuleContext.php](/root/lby-docker/req2test/user/runs/full-baseline-20261111-v1/generation/5c59be0448e482d7c11b/attempt-1/workspaces/0000/repo/src/CoreShop/Behat/Context/Domain/PaymentProvider/PaymentProviderRuleContext.php) with steps to create a rule, deactivate it, add its customer condition, and assert it is invalid for the cart.\n\nI haven’t run the scenario. This context does not define the Background steps; it relies on those being provided by other registered contexts.",
+  "denied_commands": [
+    {
+      "id": "item_1",
+      "type": "command_execution",
+      "command": "/usr/bin/bash -lc 'rg --files repo/src/CoreShop | head -50 && rg -n \"payment-provider-rule|PaymentProviderRule|RuleValidationProcessor|SharedStorageInterface\" repo/src repo/features repo/TARGET_CONTRACTS.md'",
+      "aggregated_output": "/usr/bin/bash: line 1: /usr/bin/rg: Permission denied\n/usr/bin/bash: line 1: /usr/bin/rg: Permission denied\n",
+      "exit_code": 126,
+      "status": "failed"
+    }
+  ],
+  "diagnostic_addendum": {
+    "instance_id": "coreshop/features/domain/payment_provider/payment_provider_rules/customer_condition.feature:23",
+    "outcome": "container_error",
+    "full_stdout_source": "/root/lby-docker/req2test/user/runs/req2test-recovery8-20261113-v1/evaluation-diagnostics/5c59be0448e482d7c11b-229062-1794559020479562733.json",
+    "message": "In DefinitionErrorExceptionPass.php line 48: Cannot autowire service \"CoreShop\\Behat\\Context\\Domain\\PaymentProvider\\PaymentProviderRuleContext\": argument \"$conditionFactory\" of method \"__construct()\" references interface \"CoreShop\\Component\\Resource\\Factory\\FactoryInterface\" but no such service exists. Did you mean to target one of \"car factory\", \"rule condition factory\", \"rule action factory\", \"configuration factory\", \"cart price rule factory\", \"cart price rule translation factory\", \"cart price rule voucher code factory\", \"cart price rule voucher code customer factory\", \"order factory\", \"order item factory\", \"order shipment factory\", \"order shipment item factory\", \"order invoice factory\", \"order invoice item factory\", \"cart price rule item factory\", \"price rule item factory\", \"adjustment factory\", \"order item attribute factory\", \"customer group factory\", \"customer factory\", \"company factory\", \"user factory\", \"attribute group factory\", \"attribute value factory\", \"attribute color factory\", \"product unit definition price factory\", \"product price rule factory\", \"product price rule translation factory\", \"product specific price rule factory\", \"product specific price rule translation factory\", \"product unit factory\", \"product unit translation factory\", \"product unit definitions factory\", \"product unit definition factory\", \"category factory\", \"product factory\", \"manufacturer factory\", \"country factory\", \"country translation factory\", \"zone factory\", \"state factory\", \"state translation factory\", \"address identifier factory\", \"address factory\", \"currency factory\", \"exchange rate factory\", \"tax rule factory\", \"tax rate factory\", \"tax rate translation factory\", \"tax rule group facto",
+    "baseline_score_kept": true
+  },
+  "trace_path": "results/test-generation-20261114/req2test/tasks/5c59be0448e482d7c11b/trajectory-excerpt.json"
+}

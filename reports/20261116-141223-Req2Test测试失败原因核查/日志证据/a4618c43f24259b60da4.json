@@ -1,0 +1,135 @@
+{
+  "item_id": "coddy-agent/features/llm_limit_wait.feature:67",
+  "outcome": "failed",
+  "outcomes_all_runs": [
+    "failed"
+  ],
+  "per_step": [
+    {
+      "error": "func expected more arguments than given: expected 1 arguments, matched 0 from step",
+      "result": "failed",
+      "seconds": 7.0723e-05,
+      "text": "an agent whose provider first reports a limit that lifts in 30 s and then answers \"done\""
+    },
+    {
+      "error": null,
+      "result": "skipped",
+      "seconds": 4.8611e-05,
+      "text": "wait_for_limit_reset is on"
+    },
+    {
+      "error": null,
+      "result": "skipped",
+      "seconds": 7.3838e-05,
+      "text": "the user sends a turn and stops it while it waits"
+    },
+    {
+      "error": null,
+      "result": "skipped",
+      "seconds": 3.8973e-05,
+      "text": "the turn ends as cancelled after 1 provider call"
+    },
+    {
+      "error": null,
+      "result": "skipped",
+      "seconds": 4.0165e-05,
+      "text": "the turn took less than 1000 ms"
+    }
+  ],
+  "index_errors": {},
+  "stdout_tail": "=== RUN   TestLLMLimitWaitFeature\n=== RUN   TestLLMLimitWaitFeature/Stop_during_the_wait_ends_the_turn_as_cancelled\n    suite.go:640: func expected more arguments than given: expected 1 arguments, matched 0 from step\nR2T_GODOG_EXIT TestLLMLimitWaitFeature 1\n=== NAME  TestLLMLimitWaitFeature\n    bdd_limit_wait_test.go:81: godog suite failed\n--- FAIL: TestLLMLimitWaitFeature (0.01s)\n    --- FAIL: TestLLMLimitWaitFeature/Stop_during_the_wait_ends_the_turn_as_cancelled (0.00s)\nFAIL\nFAIL\tgithub.com/EvilFreelancer/coddy-agent/internal/agent\t0.035s\nFAIL\n",
+  "bench_meta": {
+    "dependency_profile": [],
+    "live_background_step_count": 0,
+    "live_step_count": 5,
+    "n_closure_contexts": 0,
+    "n_closure_files": 4,
+    "n_oracle_steps": 2,
+    "round_trip_seconds": 126.46,
+    "signature": "17ee539cee31",
+    "steps_removable": 5,
+    "steps_retained": 0,
+    "tags": [],
+    "upstream_selected": null
+  },
+  "written_files": [
+    "internal/agent/bdd_compaction_test.go",
+    "internal/agent/bdd_limit_wait_test.go",
+    "internal/agent/bdd_loop_guard_test.go",
+    "internal/agent/bdd_subagents_test.go"
+  ],
+  "_source": "/root/lby-docker/req2test/user/benchmark/runs/req2test-recovery8-20261113-v1-coddy-agent/coddy-agent/th/exec.jsonl",
+  "requirement": {
+    "feature": {
+      "background": null,
+      "file_path": "features/llm_limit_wait.feature",
+      "narrative": "  Claude Desktop's \"auto-continue when limits reset\". A provider that names\n  the moment its limit reopens (a Retry-After far beyond the retry budget)\n  ends the turn with the error by default; with agent.wait_for_limit_reset\n  the top-level turn waits under the turn context, keeps the countdown on\n  every surface with a provider_usage update, and then re-issues the same\n  call. The user message is persisted before the call, so nothing repeats.",
+      "title": "Coddy waits for a hit usage limit to lift when asked to"
+    },
+    "scenario": {
+      "gherkin": "  Scenario: Stop during the wait ends the turn as cancelled\n    Given an agent whose provider first reports a limit that lifts in 30 s and then answers \"done\"\n    And wait_for_limit_reset is on\n    When the user sends a turn and stops it while it waits\n    Then the turn ends as cancelled after 1 provider call\n    And the turn took less than 1000 ms",
+      "kind": "scenario",
+      "line": 67,
+      "tags": [],
+      "title": "Stop during the wait ends the turn as cancelled"
+    }
+  },
+  "official_result": {
+    "instance_id": "coddy-agent/features/llm_limit_wait.feature:67",
+    "project": "coddy-agent",
+    "view": "th",
+    "outcome": "assertion_failure",
+    "passed": false,
+    "api_f1": null,
+    "coverage_j": null,
+    "recall": null,
+    "kill_complete": false,
+    "kill_complete_strict": false,
+    "kill_complete_95": false,
+    "mutation_status": "not_passed",
+    "mutation_baseline": null,
+    "behaviour_status": "measured",
+    "n_gt_kills": 154,
+    "n_scored": 0,
+    "n_killed": 0,
+    "n_dropped": 0,
+    "n_crash_kills": 0,
+    "n_timeout_kills": 0,
+    "exclusion": null,
+    "engine_outcome": "failed",
+    "harness_version": 27,
+    "rejected_files": []
+  },
+  "population_exclusion": null,
+  "generated_files": [
+    {
+      "path": "internal/agent/bdd_compaction_test.go",
+      "sha256": "c950b8708ac8978296da6490efdb6df3d4835a1917f47221fffcddab76c5a8a7"
+    },
+    {
+      "path": "internal/agent/bdd_limit_wait_test.go",
+      "sha256": "74cdc63218bfd1a7e84f3ecd0132e1c0819b3716dd20fde0eaa725165442a18d"
+    },
+    {
+      "path": "internal/agent/bdd_loop_guard_test.go",
+      "sha256": "c950b8708ac8978296da6490efdb6df3d4835a1917f47221fffcddab76c5a8a7"
+    },
+    {
+      "path": "internal/agent/bdd_subagents_test.go",
+      "sha256": "c950b8708ac8978296da6490efdb6df3d4835a1917f47221fffcddab76c5a8a7"
+    }
+  ],
+  "final_agent_message": "Added the requested four Go files, with the Godog suite and limit-wait steps in [bdd_limit_wait_test.go](/root/lby-docker/req2test/user/runs/full-baseline-20261111-v1/generation/a4618c43f24259b60da4/attempt-1/workspaces/0000/repo/internal/agent/bdd_limit_wait_test.go).\n\nI couldn’t verify the suite: `go test` fails because retained ordinary tests reference helpers that are absent from the supplied files (for example, `scriptedProvider` and `transcriptText`). The run also exposed a Godog `Options` pointer mismatch, which I corrected, but the remaining compile errors prevent confirming the scenario.",
+  "denied_commands": [
+    {
+      "id": "item_1",
+      "type": "command_execution",
+      "command": "/usr/bin/bash -lc \"rg --files repo/internal/agent repo | rg '(TARGET_CONTRACTS|\\\\.feature\"'$|_test'\"\\\\.go\"'$)'\"' | head -120\"",
+      "aggregated_output": "/usr/bin/bash: line 1: /usr/bin/rg: Permission denied\n/usr/bin/bash: line 1: /usr/bin/rg: Permission denied\n",
+      "exit_code": 0,
+      "status": "completed"
+    }
+  ],
+  "diagnostic_addendum": null,
+  "trace_path": "results/test-generation-20261114/req2test/tasks/a4618c43f24259b60da4/trajectory-excerpt.json"
+}

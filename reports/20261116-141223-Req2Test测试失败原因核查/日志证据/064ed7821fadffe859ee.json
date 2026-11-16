@@ -1,0 +1,72 @@
+{
+  "item_id": "prestashop/tests/Integration/Behaviour/Features/Scenario/Product/update_product_type.feature:168",
+  "outcome": "no_files_returned",
+  "outcomes_all_runs": null,
+  "per_step": null,
+  "index_errors": {},
+  "stdout_tail": null,
+  "bench_meta": null,
+  "written_files": [],
+  "_source": "/root/lby-docker/req2test/user/benchmark/runs/req2test-recovery8-20261113-v1-prestashop/prestashop/th/exec.jsonl",
+  "requirement": {
+    "feature": {
+      "background": "  Background:\n    Given language with iso code \"en\" is the default one\n    And category \"home\" in default language named \"Home\" exists\n    And category \"home\" is the default one\n    And attribute group \"Size\" named \"Size\" in en language exists\n    And attribute group \"Color\" named \"Color\" in en language exists\n    And attribute \"S\" named \"S\" in en language exists\n    And attribute \"M\" named \"M\" in en language exists\n    And attribute \"L\" named \"L\" in en language exists\n    And attribute \"White\" named \"White\" in en language exists\n    And attribute \"Black\" named \"Black\" in en language exists\n    And attribute \"Blue\" named \"Blue\" in en language exists\n    And attribute \"Red\" named \"Red\" in en language exists\n    And I identify tax rules group named \"US-AL Rate (4%)\" as \"us-al-tax-rate\"\n    And I identify tax rules group named \"US-KS Rate (5.3%)\" as \"us-ks-tax-rate\"",
+      "file_path": "tests/Integration/Behaviour/Features/Scenario/Product/update_product_type.feature",
+      "narrative": "  As a BO user\n  I need to be able to add new product with basic information from the BO",
+      "title": "Add basic product from Back Office (BO)"
+    },
+    "scenario": {
+      "gherkin": "  Scenario: Changing combinations type should remove all combinations (and stock is reset to zero)\n    Given I add product \"productCombinations3\" with following information:\n      | name[en-US] | universal T-shirt |\n      | type        | combinations      |\n    And product productCombinations3 type should be combinations\n    And I generate combinations for product productCombinations3 using following attributes:\n      | Size  | [S,M]              |\n      | Color | [White,Black,Blue] |\n    Then product \"productCombinations3\" should have following combinations:\n      | id reference               | combination name        | reference | attributes           | impact on price | quantity | is default | combination reference |\n      | productCombinations3SWhite | Size - S, Color - White |           | [Size:S,Color:White] | 0               | 0        | true       |                       |\n      | productCombinations3SBlack | Size - S, Color - Black |           | [Size:S,Color:Black] | 0               | 0        | false      |                       |\n      | productCombinations3Blue   | Size - S, Color - Blue  |           | [Size:S,Color:Blue]  | 0               | 0        | false      |                       |\n      | productCombinations3MWhite | Size - M, Color - White |           | [Size:M,Color:White] | 0               | 0        | false      |                       |\n      | productCombinations3MBlack | Size - M, Color - Black |           | [Size:M,Color:Black] | 0               | 0        | false      |                       |\n      | productCombinations3MBlue  | Size - M, Color - Blue  |           | [Size:M,Color:Blue]  | 0               | 0        | false      |                       |\n    When I update combination \"productCombinations3SWhite\" stock with following details:\n      | delta quantity | 100 |\n    Then combination \"productCombinations3SWhite\" should have following stock details:\n      | combination stock detail   | value |\n      | quantity                   | 100   |\n      | minimal quantity           | 1     |\n      | low stock threshold        | 0     |\n      | low stock alert is enabled | false |\n      | location                   |       |\n      | available date             |       |\n    And combination \"productCombinations3SWhite\" last stock movements should be:\n      | employee   | delta_quantity |\n      | Puffin Mummy | 100            |\n    And combination \"productCombinations3SWhite\" last stock movement increased by 100\n    When I update combination \"productCombinations3SBlack\" stock with following details:\n      | delta quantity | 50 |\n    Then combination \"productCombinations3SBlack\" should have following stock details:\n      | combination stock detail   | value |\n      | quantity                   | 50    |\n      | minimal quantity           | 1     |\n      | low stock threshold        | 0     |\n      | low stock alert is enabled | false |\n      | location                   |       |\n      | available date             |       |\n    And combination \"productCombinations3SBlack\" last stock movements should be:\n      | employee   | delta_quantity |\n      | Puffin Mummy | 50             |\n    And combination \"productCombinations3SBlack\" last stock movement increased by 50\n    # Product stock is the sum of all combinations\n    And product \"productCombinations3\" should have following stock information:\n      | quantity            | 150   |\n      | minimal_quantity    | 1     |\n      | location            |       |\n      | low_stock_threshold | 0     |\n      | low_stock_alert     | false |\n      | available_date      |       |\n    And product \"productCombinations3\" should have no stock movements\n    When I update product \"productCombinations3\" type to standard\n    Then product \"productCombinations3\" type should be standard\n    And product \"productCombinations3\" should have no combinations\n    And product \"productCombinations3\" should have following stock information:\n      | quantity            | 0     |\n      | minimal_quantity    | 1     |\n      | location            |       |\n      | low_stock_threshold | 0     |\n      | low_stock_alert     | false |\n      | available_date      |       |\n    And product \"productCombinations3\" last stock movements should be:\n      | employee   | delta_quantity |\n      | Puffin Mummy | -150           |\n    And product \"productCombinations3\" last stock movement decreased by 150",
+      "kind": "scenario",
+      "line": 168,
+      "tags": [
+        "@restore-products-before-feature",
+        "@clear-cache-before-feature",
+        "@clear-cache-after-feature",
+        "@update-product-type"
+      ],
+      "title": "Changing combinations type should remove all combinations (and stock is reset to zero)"
+    }
+  },
+  "official_result": {
+    "instance_id": "prestashop/tests/Integration/Behaviour/Features/Scenario/Product/update_product_type.feature:168",
+    "project": "prestashop",
+    "view": "th",
+    "outcome": "generation_failure",
+    "passed": false,
+    "api_f1": null,
+    "coverage_j": null,
+    "recall": null,
+    "kill_complete": false,
+    "kill_complete_strict": false,
+    "kill_complete_95": false,
+    "mutation_status": "not_passed",
+    "mutation_baseline": null,
+    "behaviour_status": "measured",
+    "n_gt_kills": 34,
+    "n_scored": 0,
+    "n_killed": 0,
+    "n_dropped": 0,
+    "n_crash_kills": 0,
+    "n_timeout_kills": 0,
+    "exclusion": null,
+    "engine_outcome": "no_files_returned",
+    "harness_version": 27,
+    "rejected_files": []
+  },
+  "population_exclusion": null,
+  "generated_files": [],
+  "final_agent_message": "I couldn’t complete the requested step definitions. The retained helpers provide useful building blocks, but this scenario still needs definitions for its Background steps and for product creation, combination generation and assertions, and stock movements. I haven’t added a file or verified a runnable solution.",
+  "denied_commands": [
+    {
+      "id": "item_2",
+      "type": "command_execution",
+      "command": "/usr/bin/bash -lc \"pwd && rg --files repo/tests/Integration/Behaviour/Features/Context | head -100 && rg -n \\\"generate combinations|combination stock|product type should|add product|StockMovement\\\" repo/tests/Integration/Behaviour/Features repo/src/Core/Domain/Product -g '*.php' -g '*.feature'\"",
+      "aggregated_output": "/root/lby-docker/req2test/user/runs/req2test-subset160-20261112-v1/generation/064ed7821fadffe859ee/attempt-1/workspaces/0000\n/usr/bin/bash: line 1: /usr/bin/rg: Permission denied\n/usr/bin/bash: line 1: /usr/bin/rg: Permission denied\n",
+      "exit_code": 126,
+      "status": "failed"
+    }
+  ],
+  "diagnostic_addendum": null,
+  "trace_path": "results/test-generation-20261114/req2test/tasks/064ed7821fadffe859ee/trajectory-excerpt.json"
+}

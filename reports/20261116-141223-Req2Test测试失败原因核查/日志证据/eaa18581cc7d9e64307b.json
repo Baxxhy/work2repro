@@ -1,0 +1,104 @@
+{
+  "item_id": "prestashop/tests/Integration/Behaviour/Features/Scenario/Discount/FO/discount_with_code.feature:14",
+  "outcome": "undefined_steps",
+  "outcomes_all_runs": [
+    "undefined_steps"
+  ],
+  "per_step": [
+    {
+      "error": null,
+      "result": "undefined",
+      "seconds": 0.0125,
+      "text": "there is a customer named \"testCustomer\" whose email is \"pub2@prestashop.com\""
+    }
+  ],
+  "index_errors": {},
+  "stdout_tail": "And my cart \"dummy_cart\" should have the following details:\n      | total_products | $30.00 |\n      | shipping       | $7.00  |\n      | total_discount | $0.00  |\n      | total          | $37.00 |\n    When I use a voucher \"free_shipping_discount_with_minimum_amount_code\" on the cart \"dummy_cart\"\n    Then I should get cart rule validation error\n    And cart \"dummy_cart\" total with tax included should be '$37.00'\n    And my cart \"dummy_cart\" should have the following details:\n      | total_products | $30.00 |\n      | shipping       | $7.00  |\n      | total_discount | $0.00  |\n      | total          | $37.00 |\n    When I add 1 product \"product1\" to the cart \"dummy_cart\"\n    And cart \"dummy_cart\" total with tax included should be '$47.00'\n    And my cart \"dummy_cart\" should have the following details:\n      | total_products | $40.00 |\n      | shipping       | $7.00  |\n      | total_discount | $0.00  |\n      | total          | $47.00 |\n    When I use a voucher \"free_shipping_discount_with_minimum_amount_code\" on the cart \"dummy_cart\"\n    And cart \"dummy_cart\" total with tax included should be '$40.00'\n    And my cart \"dummy_cart\" should have the following details:\n      | total_products | $40.00 |\n      | shipping       | $7.00  |\n      | total_discount | -$7.00 |\n      | total          | $40.00 |\n\n1 scenario (1 undefined)\n22 steps (7 undefined, 15 skipped)\n2m34.43s (183.44Mb)\n\n--- Use --snippets-for CLI option to generate snippets for following bench suite steps:\n\n    Given there is a customer named \"testCustomer\" whose email is \"pub2@prestashop.com\"\n    Given language with iso code \"en\" is the default one\n    And language \"french\" with locale \"fr-FR\" exists\n    Given shop \"shop1\" with name \"test_shop\" exists\n    And there is a currency named \"usd\" with iso code \"USD\" and exchange rate of 0.92\n    And there is a product in the catalog named \"product1\" with a price of 10.00 and 1000 items in stock\n    Given I create an empty cart \"dummy_cart\" for customer \"testCustomer\"\n\n",
+  "bench_meta": {
+    "dependency_profile": [
+      "database"
+    ],
+    "live_background_step_count": 5,
+    "live_step_count": 17,
+    "n_closure_contexts": 9,
+    "n_closure_files": 9,
+    "n_oracle_steps": 10,
+    "round_trip_seconds": 114.04,
+    "signature": "e7842d763bd6",
+    "steps_removable": 22,
+    "steps_retained": 0,
+    "tags": [
+      "@restore-all-tables-before-feature",
+      "@discount-with-code"
+    ],
+    "upstream_selected": null
+  },
+  "written_files": [
+    "tests/Integration/Behaviour/Features/Context/Domain/Discount/DiscountFeatureContext.php"
+  ],
+  "_source": "/root/lby-docker/req2test/user/benchmark/runs/req2test-recovery8-20261113-v1-prestashop/prestashop/th/exec.jsonl",
+  "requirement": {
+    "feature": {
+      "background": "  Background:\n    Given there is a customer named \"testCustomer\" whose email is \"pub2@prestashop.com\"\n    Given language with iso code \"en\" is the default one\n    And language \"french\" with locale \"fr-FR\" exists\n    Given shop \"shop1\" with name \"test_shop\" exists\n    And there is a currency named \"usd\" with iso code \"USD\" and exchange rate of 0.92",
+      "file_path": "tests/Integration/Behaviour/Features/Scenario/Discount/FO/discount_with_code.feature",
+      "narrative": "  PrestaShop allows discounts with promo code or not",
+      "title": "Full UX discount test"
+    },
+    "scenario": {
+      "gherkin": "  Scenario: Create a discount with free shipping with promo code\n    And there is a product in the catalog named \"product1\" with a price of 10.00 and 1000 items in stock\n    When I create a \"free_shipping\" discount \"free_shipping_discount_with_minimum_amount_code\" with following properties:\n      | name[en-US]                      | Minimum amount gives free shipping  |\n      | name[fr-FR]                      | Montant minimum donne envoi gratuit |\n      | active                           | true                                |\n      | valid_from                       | 2025-01-01 11:05:00                 |\n      | valid_to                         | 2026-12-01 00:00:00                 |\n      | code                             | FREE_SHIPPING_MIN_AMOUNT            |\n      | minimum_amount                   | 40.00                               |\n      | minimum_amount_currency          | usd                                 |\n      | minimum_amount_tax_included      | true                                |\n      | minimum_amount_shipping_included | true                                |\n    And discount \"free_shipping_discount_with_minimum_amount_code\" should have the following properties:\n      | name[en-US]                      | Minimum amount gives free shipping  |\n      | name[fr-FR]                      | Montant minimum donne envoi gratuit |\n      | active                           | true                                |\n      | valid_from                       | 2025-01-01 11:05:00                 |\n      | valid_to                         | 2026-12-01 00:00:00                 |\n      | code                             | FREE_SHIPPING_MIN_AMOUNT            |\n      | minimum_amount                   | 40.00                               |\n      | minimum_amount_currency          | usd                                 |\n      | minimum_amount_tax_included      | true                                |\n      | minimum_amount_shipping_included | true                                |\n    Given I create an empty cart \"dummy_cart\" for customer \"testCustomer\"\n    When I add 3 product \"product1\" to the cart \"dummy_cart\"\n    And cart \"dummy_cart\" total with tax included should be '$37.00'\n    And my cart \"dummy_cart\" should have the following details:\n      | total_products | $30.00 |\n      | shipping       | $7.00  |\n      | total_discount | $0.00  |\n      | total          | $37.00 |\n    When I use a voucher \"free_shipping_discount_with_minimum_amount_code\" on the cart \"dummy_cart\"\n    Then I should get cart rule validation error\n    # First try the condition is not met so the cart remains unchanged\n    And cart \"dummy_cart\" total with tax included should be '$37.00'\n    And my cart \"dummy_cart\" should have the following details:\n      | total_products | $30.00 |\n      | shipping       | $7.00  |\n      | total_discount | $0.00  |\n      | total          | $37.00 |\n    # Now we add another product to increase the cart amount\n    When I add 1 product \"product1\" to the cart \"dummy_cart\"\n    And cart \"dummy_cart\" total with tax included should be '$47.00'\n    And my cart \"dummy_cart\" should have the following details:\n      | total_products | $40.00 |\n      | shipping       | $7.00  |\n      | total_discount | $0.00  |\n      | total          | $47.00 |\n    When I use a voucher \"free_shipping_discount_with_minimum_amount_code\" on the cart \"dummy_cart\"\n    # Now the condition is met so the cart shipping is offered\n    And cart \"dummy_cart\" total with tax included should be '$40.00'\n    And my cart \"dummy_cart\" should have the following details:\n      | total_products | $40.00 |\n      | shipping       | $7.00  |\n      | total_discount | -$7.00 |\n      | total          | $40.00 |",
+      "kind": "scenario",
+      "line": 14,
+      "tags": [
+        "@restore-all-tables-before-feature",
+        "@discount-with-code"
+      ],
+      "title": "Create a discount with free shipping with promo code"
+    }
+  },
+  "official_result": {
+    "instance_id": "prestashop/tests/Integration/Behaviour/Features/Scenario/Discount/FO/discount_with_code.feature:14",
+    "project": "prestashop",
+    "view": "th",
+    "outcome": "binding_failure",
+    "passed": false,
+    "api_f1": null,
+    "coverage_j": null,
+    "recall": null,
+    "kill_complete": false,
+    "kill_complete_strict": false,
+    "kill_complete_95": false,
+    "mutation_status": "not_passed",
+    "mutation_baseline": null,
+    "behaviour_status": "measured",
+    "n_gt_kills": 34,
+    "n_scored": 0,
+    "n_killed": 0,
+    "n_dropped": 0,
+    "n_crash_kills": 0,
+    "n_timeout_kills": 0,
+    "exclusion": null,
+    "engine_outcome": "undefined_steps",
+    "harness_version": 27,
+    "rejected_files": []
+  },
+  "population_exclusion": null,
+  "generated_files": [
+    {
+      "path": "tests/Integration/Behaviour/Features/Context/Domain/Discount/DiscountFeatureContext.php",
+      "sha256": "2861bfd55677fe9870207c484d8698c635675f7f73f283dd57201f07944e21d3"
+    }
+  ],
+  "final_agent_message": "I added [DiscountFeatureContext.php](/root/lby-docker/req2test/user/runs/req2test-subset160-20261112-v1/generation/eaa18581cc7d9e64307b/attempt-2/workspaces/0000/repo/tests/Integration/Behaviour/Features/Context/Domain/Discount/DiscountFeatureContext.php), and PHP syntax validation passes.\n\nThis is incomplete: it defines discount creation/checking and several cart steps, but not the scenario’s background setup, product creation, empty-cart creation, or every cart-rule assertion needed to run the scenario. I can’t claim it makes the scenario pass.",
+  "denied_commands": [
+    {
+      "id": "item_1",
+      "type": "command_execution",
+      "command": "/usr/bin/bash -lc 'rg --files repo/tests/Integration/Behaviour/Features | head -100 && rg -n \"discount_with_code|minimum_amount|free_shipping\" repo/tests/Integration/Behaviour/Features repo/src repo/classes | head -100'",
+      "aggregated_output": "/usr/bin/bash: line 1: /usr/bin/rg: Permission denied\n/usr/bin/bash: line 1: /usr/bin/rg: Permission denied\n",
+      "exit_code": 0,
+      "status": "completed"
+    }
+  ],
+  "diagnostic_addendum": null,
+  "trace_path": "results/test-generation-20261114/req2test/tasks/eaa18581cc7d9e64307b/trajectory-excerpt.json"
+}

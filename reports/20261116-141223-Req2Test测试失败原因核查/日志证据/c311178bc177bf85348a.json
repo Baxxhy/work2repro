@@ -1,0 +1,158 @@
+{
+  "item_id": "sylius/features/admin/product/viewing_price_history/seeing_price_history_of_simple_product_after_changes_to_catalog_promotions.feature:17",
+  "outcome": "undefined_steps",
+  "outcomes_all_runs": [
+    "undefined_steps"
+  ],
+  "per_step": [
+    {
+      "error": null,
+      "result": "passed",
+      "seconds": 0.2689,
+      "text": "the store operates on a single channel in \"United States\""
+    },
+    {
+      "error": null,
+      "result": "passed",
+      "seconds": 0.4964,
+      "text": "the store has a product \"Wyborowa Vodka\" priced at \"$100.00\" in \"United States\" channel"
+    },
+    {
+      "error": null,
+      "result": "passed",
+      "seconds": 0.0487,
+      "text": "there is disabled catalog promotion named \"Winter sale\""
+    },
+    {
+      "error": null,
+      "result": "passed",
+      "seconds": 0.0233,
+      "text": "the catalog promotion \"Winter sale\" is available in \"United States\""
+    },
+    {
+      "error": null,
+      "result": "passed",
+      "seconds": 0.1679,
+      "text": "it applies on \"Wyborowa Vodka\" product"
+    },
+    {
+      "error": null,
+      "result": "passed",
+      "seconds": 0.035,
+      "text": "it reduces price by \"90%\""
+    },
+    {
+      "error": null,
+      "result": "passed",
+      "seconds": 0.0799,
+      "text": "I am logged in as an administrator"
+    },
+    {
+      "error": null,
+      "result": "passed",
+      "seconds": 0.153,
+      "text": "the \"Winter sale\" catalog promotion is enabled"
+    },
+    {
+      "error": null,
+      "result": "undefined",
+      "seconds": 0.0099,
+      "text": "I disable \"Winter sale\" catalog promotion"
+    }
+  ],
+  "index_errors": {},
+  "stdout_tail": "@viewing_price_history_after_catalog_promotions\nFeature: Seeing the price history of a simple product after changes to catalog promotions\n  In order to be aware of historical simple product prices\n  As an Administrator\n  I want to browse the catalog price history of a simple product\n\n  Background:\n    Given the store operates on a single channel in \"United States\"\n    And the store has a product \"Wyborowa Vodka\" priced at \"$100.00\" in \"United States\" channel\n    And there is disabled catalog promotion named \"Winter sale\"\n    And the catalog promotion \"Winter sale\" is available in \"United States\"\n    And it applies on \"Wyborowa Vodka\" product\n    And it reduces price by \"90%\"\n    And I am logged in as an administrator\n\n  @api @ui\n  Scenario: Seeing the catalog price history of a simple product\n    Given the \"Winter sale\" catalog promotion is enabled\n    When I disable \"Winter sale\" catalog promotion\n    And I go to the price history of a variant with code \"WYBOROWA_VODKA\"\n    Then I should see 3 log entries in the catalog price history\n    And there should be a log entry on the 1st position with the \"$100.00\" selling price, \"$100.00\" original price and datetime of the price change\n    And there should be a log entry on the 2nd position with the \"$10.00\" selling price, \"$100.00\" original price and datetime of the price change\n    And there should be a log entry on the 3rd position with the \"$100.00\" selling price, no original price and datetime of the price change\n\n1 scenario (1 undefined)\n14 steps (8 passed, 1 undefined, 5 skipped)\n1m16.64s (254.99Mb)\n\n--- Use --snippets-for CLI option to generate snippets for following bench suite steps:\n\n    When I disable \"Winter sale\" catalog promotion\n\n",
+  "bench_meta": {
+    "dependency_profile": [
+      "database"
+    ],
+    "live_background_step_count": 7,
+    "live_step_count": 7,
+    "n_closure_contexts": 2,
+    "n_closure_files": 4,
+    "n_oracle_steps": 4,
+    "round_trip_seconds": 13.72,
+    "signature": "bf78d5751a4a",
+    "steps_removable": 6,
+    "steps_retained": 8,
+    "tags": [
+      "@viewing_price_history_after_catalog_promotions",
+      "@api",
+      "@ui"
+    ],
+    "upstream_selected": null
+  },
+  "written_files": [
+    "src/Sylius/Behat/Context/Api/Admin/ViewingCatalogPriceHistoryContext.php"
+  ],
+  "_source": "/root/lby-docker/req2test/user/benchmark/runs/req2test-recovery8-20261113-v1-sylius/sylius/th/exec.jsonl",
+  "requirement": {
+    "feature": {
+      "background": "    Background:\n        Given the store operates on a single channel in \"United States\"\n        And the store has a product \"Wyborowa Vodka\" priced at \"$100.00\" in \"United States\" channel\n        And there is disabled catalog promotion named \"Winter sale\"\n        And the catalog promotion \"Winter sale\" is available in \"United States\"\n        And it applies on \"Wyborowa Vodka\" product\n        And it reduces price by \"90%\"\n        And I am logged in as an administrator",
+      "file_path": "features/admin/product/viewing_price_history/seeing_price_history_of_simple_product_after_changes_to_catalog_promotions.feature",
+      "narrative": "    In order to be aware of historical simple product prices\n    As an Administrator\n    I want to browse the catalog price history of a simple product",
+      "title": "Seeing the price history of a simple product after changes to catalog promotions"
+    },
+    "scenario": {
+      "gherkin": "    Scenario: Seeing the catalog price history of a simple product\n        Given the \"Winter sale\" catalog promotion is enabled\n        When I disable \"Winter sale\" catalog promotion\n        And I go to the price history of a variant with code \"WYBOROWA_VODKA\"\n        Then I should see 3 log entries in the catalog price history\n        And there should be a log entry on the 1st position with the \"$100.00\" selling price, \"$100.00\" original price and datetime of the price change\n        And there should be a log entry on the 2nd position with the \"$10.00\" selling price, \"$100.00\" original price and datetime of the price change\n        And there should be a log entry on the 3rd position with the \"$100.00\" selling price, no original price and datetime of the price change",
+      "kind": "scenario",
+      "line": 17,
+      "tags": [
+        "@viewing_price_history_after_catalog_promotions",
+        "@api",
+        "@ui"
+      ],
+      "title": "Seeing the catalog price history of a simple product"
+    }
+  },
+  "official_result": {
+    "instance_id": "sylius/features/admin/product/viewing_price_history/seeing_price_history_of_simple_product_after_changes_to_catalog_promotions.feature:17",
+    "project": "sylius",
+    "view": "th",
+    "outcome": "binding_failure",
+    "passed": false,
+    "api_f1": null,
+    "coverage_j": null,
+    "recall": null,
+    "kill_complete": false,
+    "kill_complete_strict": false,
+    "kill_complete_95": false,
+    "mutation_status": "not_passed",
+    "mutation_baseline": null,
+    "behaviour_status": "measured",
+    "n_gt_kills": 192,
+    "n_scored": 0,
+    "n_killed": 0,
+    "n_dropped": 0,
+    "n_crash_kills": 0,
+    "n_timeout_kills": 0,
+    "exclusion": null,
+    "engine_outcome": "undefined_steps",
+    "harness_version": 27,
+    "rejected_files": []
+  },
+  "population_exclusion": null,
+  "generated_files": [
+    {
+      "path": "behat_services.yml",
+      "sha256": "70ee84b74a9f300e47a2bca6e0aa0de584c21f4b16db7916f77e6a279a54c0c7"
+    },
+    {
+      "path": "src/Sylius/Behat/Context/Api/Admin/ViewingCatalogPriceHistoryContext.php",
+      "sha256": "2d57d291f864dc0e6249914d48a3f025cbeffb8348f79c13a58b36dcc10f4023"
+    }
+  ],
+  "final_agent_message": "Added [ViewingCatalogPriceHistoryContext.php](/root/lby-docker/req2test/user/runs/req2test-subset160-20261112-v1/generation/c311178bc177bf85348a/attempt-1/workspaces/0000/repo/src/Sylius/Behat/Context/Api/Admin/ViewingCatalogPriceHistoryContext.php) for the history-page navigation and log-entry assertions, plus [behat_services.yml](/root/lby-docker/req2test/user/runs/req2test-subset160-20261112-v1/generation/c311178bc177bf85348a/attempt-1/workspaces/0000/repo/behat_services.yml) for repository and test-client wiring.\n\nI couldn’t verify it with the scenario: the combined lint/status command stalled, so execution remains unconfirmed.",
+  "denied_commands": [
+    {
+      "id": "item_2",
+      "type": "command_execution",
+      "command": "/usr/bin/bash -lc 'pwd; rg --files repo/src/Sylius/Behat | head -100; rg -n \"price history|catalog promotion is enabled|disable .*catalog promotion|catalog price history\" repo/src/Sylius/Behat repo/sylius/features/admin/product/viewing_price_history repo/TARGET_CONTRACTS.md'",
+      "aggregated_output": "/root/lby-docker/req2test/user/runs/req2test-subset160-20261112-v1/generation/c311178bc177bf85348a/attempt-1/workspaces/0000\n/usr/bin/bash: line 1: /usr/bin/rg: Permission denied\n/usr/bin/bash: line 1: /usr/bin/rg: Permission denied\n",
+      "exit_code": 126,
+      "status": "failed"
+    }
+  ],
+  "diagnostic_addendum": null,
+  "trace_path": "results/test-generation-20261114/req2test/tasks/c311178bc177bf85348a/trajectory-excerpt.json"
+}

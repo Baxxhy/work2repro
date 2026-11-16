@@ -1,0 +1,105 @@
+{
+  "item_id": "algorand-sdk/features/unit/v2indexerclient_paths.feature:248",
+  "outcome": "parse_or_compile_error",
+  "outcomes_all_runs": [
+    "no_scenario_ran"
+  ],
+  "per_step": [],
+  "index_errors": {
+    "src/test/java/com/algorand/algosdk/unit/IndexerAccountAssetsPathSteps.java": "24:44 unreported exception java.security.NoSuchAlgorithmException; must be caught or declared to be thrown"
+  },
+  "stdout_tail": "to target/test-classes\n[INFO] \n[INFO] --- compiler:3.8.1:testCompile (default-testCompile) @ algosdk ---\n[INFO] Changes detected - recompiling the module!\n[INFO] Compiling 37 source files to /work/target/test-classes\n[INFO] /work/src/test/java/com/algorand/algosdk/transaction/TestTransaction.java: Some input files use or override a deprecated API.\n[INFO] /work/src/test/java/com/algorand/algosdk/transaction/TestTransaction.java: Recompile with -Xlint:deprecation for details.\n[INFO] -------------------------------------------------------------\n[ERROR] COMPILATION ERROR : \n[INFO] -------------------------------------------------------------\n[ERROR] /work/src/test/java/com/algorand/algosdk/unit/IndexerAccountAssetsPathSteps.java:[24,44] unreported exception java.security.NoSuchAlgorithmException; must be caught or declared to be thrown\n[INFO] 1 error\n[INFO] -------------------------------------------------------------\n[INFO] ------------------------------------------------------------------------\n[INFO] BUILD FAILURE\n[INFO] ------------------------------------------------------------------------\n[INFO] Total time:  5.663 s\n[INFO] Finished at: 2026-11-12T12:29:16Z\n[INFO] ------------------------------------------------------------------------\n[ERROR] Failed to execute goal org.apache.maven.plugins:maven-compiler-plugin:3.8.1:testCompile (default-testCompile) on project algosdk: Compilation failure\n[ERROR] /work/src/test/java/com/algorand/algosdk/unit/IndexerAccountAssetsPathSteps.java:[24,44] unreported exception java.security.NoSuchAlgorithmException; must be caught or declared to be thrown\n[ERROR] -> [Help 1]\n[ERROR] \n[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.\n[ERROR] Re-run Maven using the -X switch to enable full debug logging.\n[ERROR] \n[ERROR] For more information about the errors and possible solutions, please read the following articles:\n[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/MojoFailureException\n",
+  "bench_meta": {
+    "dependency_profile": [],
+    "live_background_step_count": 1,
+    "live_step_count": 2,
+    "n_closure_contexts": 2,
+    "n_closure_files": 2,
+    "n_oracle_steps": 1,
+    "round_trip_seconds": null,
+    "signature": "469dd0537148",
+    "steps_removable": 18,
+    "steps_retained": 0,
+    "tags": [
+      "@unit",
+      "@unit.indexer.ledger_refactoring"
+    ],
+    "upstream_selected": null
+  },
+  "written_files": [
+    "src/test/java/com/algorand/algosdk/unit/IndexerAccountAssetsPathSteps.java"
+  ],
+  "_source": "/root/lby-docker/req2test/user/benchmark/runs/req2test-recovery8-20261113-v1-algorand-sdk/algorand-sdk/th/exec.jsonl",
+  "requirement": {
+    "feature": {
+      "background": "  Background:\n    Given mock server recording request paths",
+      "file_path": "features/unit/v2indexerclient_paths.feature",
+      "narrative": null,
+      "title": "Indexer Client v2 Paths"
+    },
+    "scenario": {
+      "gherkin": "  Scenario Outline: LookupAccountAssets path\n    When we make a LookupAccountAssets call with accountID \"<account-id>\" assetID <asset-id> includeAll \"<include-all>\" limit <limit> next \"<next>\"\n    Then expect the path used to be \"<path>\"\n\n    Examples:\n      | path                                                                     | account-id | asset-id | include-all | limit | next |\n      | /v2/accounts/7ZUECA7HFLZTXENRV24SHLU4AVPUTMTTDUFUBNBD64C73F3UHRTHAIOF6Q/assets                                                  | 7ZUECA7HFLZTXENRV24SHLU4AVPUTMTTDUFUBNBD64C73F3UHRTHAIOF6Q        | 0        | false       | 0     |      |\n      | /v2/accounts/7ZUECA7HFLZTXENRV24SHLU4AVPUTMTTDUFUBNBD64C73F3UHRTHAIOF6Q/assets?asset-id=123                                     | 7ZUECA7HFLZTXENRV24SHLU4AVPUTMTTDUFUBNBD64C73F3UHRTHAIOF6Q        | 123      | false       | 0     |      |\n      | /v2/accounts/7ZUECA7HFLZTXENRV24SHLU4AVPUTMTTDUFUBNBD64C73F3UHRTHAIOF6Q/assets?include-all=true                                 | 7ZUECA7HFLZTXENRV24SHLU4AVPUTMTTDUFUBNBD64C73F3UHRTHAIOF6Q        | 0        | true        | 0     |      |\n      | /v2/accounts/7ZUECA7HFLZTXENRV24SHLU4AVPUTMTTDUFUBNBD64C73F3UHRTHAIOF6Q/assets?limit=123                                        | 7ZUECA7HFLZTXENRV24SHLU4AVPUTMTTDUFUBNBD64C73F3UHRTHAIOF6Q        | 0        | false       | 123   |      |\n      | /v2/accounts/7ZUECA7HFLZTXENRV24SHLU4AVPUTMTTDUFUBNBD64C73F3UHRTHAIOF6Q/assets?next=def                                         | 7ZUECA7HFLZTXENRV24SHLU4AVPUTMTTDUFUBNBD64C73F3UHRTHAIOF6Q        | 0        | false       | 0     | def  |\n      | /v2/accounts/7ZUECA7HFLZTXENRV24SHLU4AVPUTMTTDUFUBNBD64C73F3UHRTHAIOF6Q/assets?asset-id=123&include-all=true&limit=456&next=def | 7ZUECA7HFLZTXENRV24SHLU4AVPUTMTTDUFUBNBD64C73F3UHRTHAIOF6Q        | 123      | true        | 456   | def  |",
+      "kind": "outline",
+      "line": 248,
+      "tags": [
+        "@unit",
+        "@unit.indexer.ledger_refactoring"
+      ],
+      "title": "LookupAccountAssets path"
+    }
+  },
+  "official_result": {
+    "instance_id": "algorand-sdk/features/unit/v2indexerclient_paths.feature:248",
+    "project": "algorand-sdk",
+    "view": "th",
+    "outcome": "compilation_failure",
+    "passed": false,
+    "api_f1": null,
+    "coverage_j": null,
+    "recall": null,
+    "kill_complete": false,
+    "kill_complete_strict": false,
+    "kill_complete_95": false,
+    "mutation_status": "not_passed",
+    "mutation_baseline": null,
+    "behaviour_status": "measured",
+    "n_gt_kills": 38,
+    "n_scored": 0,
+    "n_killed": 0,
+    "n_dropped": 0,
+    "n_crash_kills": 0,
+    "n_timeout_kills": 0,
+    "exclusion": null,
+    "engine_outcome": "parse_or_compile_error",
+    "harness_version": 27,
+    "rejected_files": []
+  },
+  "population_exclusion": null,
+  "generated_files": [
+    {
+      "path": "src/test/java/com/algorand/algosdk/unit/IndexerAccountAssetsPathSteps.java",
+      "sha256": "4383d5e9f2d5a4d3ba97c7eb46ecf72afdb86b410d3081b58d7f1a9724486019"
+    }
+  ],
+  "final_agent_message": "Added [IndexerAccountAssetsPathSteps.java](/root/lby-docker/req2test/user/runs/full-baseline-20261111-v1/generation/af99ed139275f0572bd2/attempt-1/workspaces/0000/repo/src/test/java/com/algorand/algosdk/unit/IndexerAccountAssetsPathSteps.java). It builds the `LookupAccountAssets` query with the outline’s values and asserts its generated request path; it does not execute a request.",
+  "denied_commands": [
+    {
+      "id": "item_2",
+      "type": "command_execution",
+      "command": "/usr/bin/bash -lc 'rg --files repo/src/test/java/com/algorand/algosdk/unit'",
+      "aggregated_output": "/usr/bin/bash: line 1: /usr/bin/rg: Permission denied\n",
+      "exit_code": 126,
+      "status": "failed"
+    },
+    {
+      "id": "item_3",
+      "type": "command_execution",
+      "command": "/usr/bin/bash -lc 'rg -n \"LookupAccountAssets|mock server recording request paths|expect the path used\" repo/src/test'",
+      "aggregated_output": "/usr/bin/bash: line 1: /usr/bin/rg: Permission denied\n",
+      "exit_code": 126,
+      "status": "failed"
+    }
+  ],
+  "diagnostic_addendum": null,
+  "trace_path": "results/test-generation-20261114/req2test/tasks/af99ed139275f0572bd2/trajectory-excerpt.json"
+}

@@ -1,0 +1,200 @@
+{
+  "item_id": "sylius/features/admin/promotion/managing_catalog_promotions/creating_catalog_promotion.feature:97",
+  "outcome": "failed",
+  "outcomes_all_runs": [
+    "failed"
+  ],
+  "per_step": [
+    {
+      "error": null,
+      "result": "passed",
+      "seconds": 0.2657,
+      "text": "the store operates on a single channel in \"United States\""
+    },
+    {
+      "error": null,
+      "result": "passed",
+      "seconds": 0.2015,
+      "text": "the store has \"Clothes\" taxonomy"
+    },
+    {
+      "error": null,
+      "result": "passed",
+      "seconds": 0.0736,
+      "text": "the store has a \"T-Shirt\" configurable product"
+    },
+    {
+      "error": null,
+      "result": "passed",
+      "seconds": 0.0753,
+      "text": "this product belongs to \"Clothes\""
+    },
+    {
+      "error": null,
+      "result": "passed",
+      "seconds": 0.0753,
+      "text": "this product has \"PHP T-Shirt\" variant priced at \"$20.00\""
+    },
+    {
+      "error": null,
+      "result": "passed",
+      "seconds": 0.0722,
+      "text": "this product has \"Kotlin T-Shirt\" variant priced at \"$40.00\""
+    },
+    {
+      "error": null,
+      "result": "passed",
+      "seconds": 0.0917,
+      "text": "I am logged in as an administrator"
+    },
+    {
+      "error": null,
+      "result": "passed",
+      "seconds": 0.009,
+      "text": "I want to create a new catalog promotion"
+    },
+    {
+      "error": null,
+      "result": "passed",
+      "seconds": 0.0157,
+      "text": "I specify its code as \"winter_sale\""
+    },
+    {
+      "error": null,
+      "result": "passed",
+      "seconds": 0.0157,
+      "text": "I name it \"Winter sale\""
+    },
+    {
+      "error": null,
+      "result": "passed",
+      "seconds": 0.0217,
+      "text": "I add scope that applies on \"T-Shirt\" product"
+    },
+    {
+      "error": null,
+      "result": "passed",
+      "seconds": 0.0175,
+      "text": "I add action that gives \"50%\" percentage discount"
+    },
+    {
+      "error": "Expected a value equal to 201. Got: 422",
+      "result": "failed",
+      "seconds": 19.4632,
+      "text": "I add it"
+    }
+  ],
+  "index_errors": {},
+  "stdout_tail": "@managing_catalog_promotions\nFeature: Creating a catalog promotion\n  In order to set up a catalog promotion for some special occasions\n  As an Administrator\n  I want to have an option to configure such a promotion\n\n  Background:\n    Given the store operates on a single channel in \"United States\"\n    And the store has \"Clothes\" taxonomy\n    And the store has a \"T-Shirt\" configurable product\n    And this product belongs to \"Clothes\"\n    And this product has \"PHP T-Shirt\" variant priced at \"$20.00\"\n    And this product has \"Kotlin T-Shirt\" variant priced at \"$40.00\"\n    And I am logged in as an administrator\n\n  @api @ui @mink:chromedriver\n  Scenario: Creating a catalog promotion for product\n    When I want to create a new catalog promotion\n    And I specify its code as \"winter_sale\"\n    And I name it \"Winter sale\"\n    And I add scope that applies on \"T-Shirt\" product\n    And I add action that gives \"50%\" percentage discount\n    And I add it\n      Expected a value equal to 201. Got: 422 (Webmozart\\Assert\\InvalidArgumentException)\n    Then there should be 1 new catalog promotion on the list\n    And it should have \"winter_sale\" code and \"Winter sale\" name\n    And the \"Winter sale\" catalog promotion should apply to all variants of \"T-Shirt\" product\n\n--- Failed scenarios:\n\n    _bench/item.feature:17 (on line 23)\n\n1 scenario (1 failed)\n16 steps (12 passed, 1 failed, 3 skipped)\n1m33.69s (377.92Mb)\n",
+  "bench_meta": {
+    "dependency_profile": [
+      "database"
+    ],
+    "live_background_step_count": 7,
+    "live_step_count": 9,
+    "n_closure_contexts": 1,
+    "n_closure_files": 3,
+    "n_oracle_steps": 3,
+    "round_trip_seconds": 10.29,
+    "signature": "7752a1cb83be",
+    "steps_removable": 9,
+    "steps_retained": 7,
+    "tags": [
+      "@managing_catalog_promotions",
+      "@api",
+      "@ui",
+      "@mink:chromedriver"
+    ],
+    "upstream_selected": null
+  },
+  "written_files": [
+    "src/Sylius/Behat/Context/Api/Admin/ManagingCatalogPromotionsContext.php"
+  ],
+  "_source": "/root/lby-docker/req2test/user/benchmark/runs/req2test-recovery8-20261113-v1-sylius/sylius/th/exec.jsonl",
+  "requirement": {
+    "feature": {
+      "background": "    Background:\n        Given the store operates on a single channel in \"United States\"\n        And the store has \"Clothes\" taxonomy\n        And the store has a \"T-Shirt\" configurable product\n        And this product belongs to \"Clothes\"\n        And this product has \"PHP T-Shirt\" variant priced at \"$20.00\"\n        And this product has \"Kotlin T-Shirt\" variant priced at \"$40.00\"\n        And I am logged in as an administrator",
+      "file_path": "features/admin/promotion/managing_catalog_promotions/creating_catalog_promotion.feature",
+      "narrative": "    In order to set up a catalog promotion for some special occasions\n    As an Administrator\n    I want to have an option to configure such a promotion",
+      "title": "Creating a catalog promotion"
+    },
+    "scenario": {
+      "gherkin": "    Scenario: Creating a catalog promotion for product\n        When I want to create a new catalog promotion\n        And I specify its code as \"winter_sale\"\n        And I name it \"Winter sale\"\n        And I add scope that applies on \"T-Shirt\" product\n        And I add action that gives \"50%\" percentage discount\n        And I add it\n        Then there should be 1 new catalog promotion on the list\n        And it should have \"winter_sale\" code and \"Winter sale\" name\n        And the \"Winter sale\" catalog promotion should apply to all variants of \"T-Shirt\" product",
+      "kind": "scenario",
+      "line": 97,
+      "tags": [
+        "@managing_catalog_promotions",
+        "@api",
+        "@ui",
+        "@mink:chromedriver"
+      ],
+      "title": "Creating a catalog promotion for product"
+    }
+  },
+  "official_result": {
+    "instance_id": "sylius/features/admin/promotion/managing_catalog_promotions/creating_catalog_promotion.feature:97",
+    "project": "sylius",
+    "view": "th",
+    "outcome": "assertion_failure",
+    "passed": false,
+    "api_f1": null,
+    "coverage_j": null,
+    "recall": null,
+    "kill_complete": false,
+    "kill_complete_strict": false,
+    "kill_complete_95": false,
+    "mutation_status": "not_passed",
+    "mutation_baseline": null,
+    "behaviour_status": "measured",
+    "n_gt_kills": 130,
+    "n_scored": 0,
+    "n_killed": 0,
+    "n_dropped": 0,
+    "n_crash_kills": 0,
+    "n_timeout_kills": 0,
+    "exclusion": null,
+    "engine_outcome": "failed",
+    "harness_version": 27,
+    "rejected_files": []
+  },
+  "population_exclusion": "census_pass",
+  "generated_files": [
+    {
+      "path": "behat_services.yml",
+      "sha256": "b663f1ed1425f8e181803b9afbe5c19aabfe8aaed0cbaeca740e9a463454f745"
+    },
+    {
+      "path": "src/Sylius/Behat/Context/Api/Admin/ManagingCatalogPromotionsContext.php",
+      "sha256": "6b318dc1d58a2fe401cdaf0636c3ce878f0532818f037946309a4943a1341375"
+    }
+  ],
+  "final_agent_message": "Added [ManagingCatalogPromotionsContext.php](/root/lby-docker/req2test/user/runs/req2test-subset160-20261112-v1/generation/55d9663eecb01bdaf0fe/attempt-1/workspaces/0000/repo/src/Sylius/Behat/Context/Api/Admin/ManagingCatalogPromotionsContext.php) and [behat_services.yml](/root/lby-docker/req2test/user/runs/req2test-subset160-20261112-v1/generation/55d9663eecb01bdaf0fe/attempt-1/workspaces/0000/repo/behat_services.yml) for the creation and assertion steps. The PHP file passes syntax checking.\n\nI ran the requested scenario, but it did not pass: the API returned 422 when the action amount was `50` and 500 when it was `0.5`. So the step definitions are in place, but the scenario still needs the correct action payload to pass.",
+  "denied_commands": [
+    {
+      "id": "item_2",
+      "type": "command_execution",
+      "command": "/usr/bin/bash -lc 'rg --files repo/src/Sylius/Behat'",
+      "aggregated_output": "/usr/bin/bash: line 1: /usr/bin/rg: Permission denied\n",
+      "exit_code": 126,
+      "status": "failed"
+    },
+    {
+      "id": "item_3",
+      "type": "command_execution",
+      "command": "/usr/bin/bash -lc 'rg -n \"catalog promotion|CatalogPromotion|catalog_promotions|promotion\" repo/src/Sylius/Behat repo/src/Sylius/Bundle repo/src/Sylius/Component | head -200'",
+      "aggregated_output": "/usr/bin/bash: line 1: /usr/bin/rg: Permission denied\n",
+      "exit_code": 0,
+      "status": "completed"
+    },
+    {
+      "id": "item_7",
+      "type": "command_execution",
+      "command": "/usr/bin/bash -lc 'rg -n \"class .*CatalogPromotion|catalog-promotions|catalog_promotions\" repo/src/Sylius/Bundle/ApiBundle repo/src/Sylius/Component/CatalogPromotion repo/src/Sylius/Bundle/CatalogPromotionBundle | head -150'",
+      "aggregated_output": "/usr/bin/bash: line 1: /usr/bin/rg: Permission denied\n",
+      "exit_code": 0,
+      "status": "completed"
+    }
+  ],
+  "diagnostic_addendum": null,
+  "trace_path": "results/test-generation-20261114/req2test/tasks/55d9663eecb01bdaf0fe/trajectory-excerpt.json"
+}

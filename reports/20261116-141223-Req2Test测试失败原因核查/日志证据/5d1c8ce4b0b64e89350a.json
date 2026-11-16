@@ -1,0 +1,114 @@
+{
+  "item_id": "algorand-sdk/features/unit/v2algodclient_paths.feature:58",
+  "outcome": "failed",
+  "outcomes_all_runs": [
+    "failed"
+  ],
+  "per_step": [
+    {
+      "error": null,
+      "result": "passed",
+      "seconds": 0.00042,
+      "text": "mock server recording request paths"
+    },
+    {
+      "error": null,
+      "result": "passed",
+      "seconds": 0.001649,
+      "text": "we make a Get Block call for round 123 with format \"msgpack\" and header-only \"false\""
+    },
+    {
+      "error": "org.opentest4j.AssertionFailedError: \nexpected: \"/v2/blocks/123?format=msgpack\"\n but was: \"/v2/blocks/123?format=msgpack&header-only=false\"",
+      "result": "failed",
+      "seconds": 0.013674,
+      "text": "expect the path used to be \"/v2/blocks/123?format=msgpack\""
+    }
+  ],
+  "index_errors": {},
+  "stdout_tail": "\n[INFO] Tests are skipped.\n[INFO] \n[INFO] --- surefire:3.0.0-M5:test (unit-tests) @ algosdk ---\n[INFO] \n[INFO] -------------------------------------------------------\n[INFO]  T E S T S\n[INFO] -------------------------------------------------------\n[INFO] Running com.algorand.algosdk.unit.R2TBenchCucumberTest\n[ERROR] Tests run: 2, Failures: 1, Errors: 0, Skipped: 0, Time elapsed: 0.842 s <<< FAILURE! - in com.algorand.algosdk.unit.R2TBenchCucumberTest\n[ERROR] Algod REST API v2 Paths.Get Block, header-only #2  Time elapsed: 0.028 s  <<< FAILURE!\norg.opentest4j.AssertionFailedError: \n\nexpected: \"/v2/blocks/123?format=msgpack\"\n but was: \"/v2/blocks/123?format=msgpack&header-only=false\"\n\n[INFO] \n[INFO] Results:\n[INFO] \n[ERROR] Failures: \n[ERROR]   \nexpected: \"/v2/blocks/123?format=msgpack\"\n but was: \"/v2/blocks/123?format=msgpack&header-only=false\"\n[INFO] \n[ERROR] Tests run: 2, Failures: 1, Errors: 0, Skipped: 0\n[INFO] \n[INFO] ------------------------------------------------------------------------\n[INFO] BUILD FAILURE\n[INFO] ------------------------------------------------------------------------\n[INFO] Total time:  11.268 s\n[INFO] Finished at: 2026-11-12T12:29:24Z\n[INFO] ------------------------------------------------------------------------\n[ERROR] Failed to execute goal org.apache.maven.plugins:maven-surefire-plugin:3.0.0-M5:test (unit-tests) on project algosdk: There are test failures.\n[ERROR] \n[ERROR] Please refer to /work/target/surefire-reports for the individual test results.\n[ERROR] Please refer to dump files (if any exist) [date].dump, [date]-jvmRun[N].dump and [date].dumpstream.\n[ERROR] -> [Help 1]\n[ERROR] \n[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.\n[ERROR] Re-run Maven using the -X switch to enable full debug logging.\n[ERROR] \n[ERROR] For more information about the errors and possible solutions, please read the following articles:\n[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/MojoFailureException\n",
+  "bench_meta": {
+    "dependency_profile": [],
+    "live_background_step_count": 1,
+    "live_step_count": 2,
+    "n_closure_contexts": 2,
+    "n_closure_files": 2,
+    "n_oracle_steps": 1,
+    "round_trip_seconds": null,
+    "signature": "d90d4b65319e",
+    "steps_removable": 6,
+    "steps_retained": 0,
+    "tags": [
+      "@unit",
+      "@unit.algod"
+    ],
+    "upstream_selected": null
+  },
+  "written_files": [
+    "src/test/java/com/algorand/algosdk/unit/AlgodBlockHeaderPathSteps.java"
+  ],
+  "_source": "/root/lby-docker/req2test/user/benchmark/runs/req2test-recovery8-20261113-v1-algorand-sdk/algorand-sdk/th/exec.jsonl",
+  "requirement": {
+    "feature": {
+      "background": "  Background:\n    Given mock server recording request paths",
+      "file_path": "features/unit/v2algodclient_paths.feature",
+      "narrative": null,
+      "title": "Algod REST API v2 Paths"
+    },
+    "scenario": {
+      "gherkin": "  Scenario Outline: Get Block, header-only\n    When we make a Get Block call for round <round> with format \"<format>\" and header-only \"<header-only>\"\n    Then expect the path used to be \"<path>\"\n    Examples:\n      | path                                            | round | format   | header-only  |\n      | /v2/blocks/123?format=msgpack&header-only=true  | 123   | msgpack  | true         |\n      | /v2/blocks/123?format=msgpack                   | 123   | msgpack  | false        |",
+      "kind": "outline",
+      "line": 58,
+      "tags": [
+        "@unit",
+        "@unit.algod"
+      ],
+      "title": "Get Block, header-only"
+    }
+  },
+  "official_result": {
+    "instance_id": "algorand-sdk/features/unit/v2algodclient_paths.feature:58",
+    "project": "algorand-sdk",
+    "view": "th",
+    "outcome": "assertion_failure",
+    "passed": false,
+    "api_f1": null,
+    "coverage_j": null,
+    "recall": null,
+    "kill_complete": false,
+    "kill_complete_strict": false,
+    "kill_complete_95": false,
+    "mutation_status": "not_passed",
+    "mutation_baseline": null,
+    "behaviour_status": "measured",
+    "n_gt_kills": 20,
+    "n_scored": 0,
+    "n_killed": 0,
+    "n_dropped": 0,
+    "n_crash_kills": 0,
+    "n_timeout_kills": 0,
+    "exclusion": null,
+    "engine_outcome": "failed",
+    "harness_version": 27,
+    "rejected_files": []
+  },
+  "population_exclusion": null,
+  "generated_files": [
+    {
+      "path": "src/test/java/com/algorand/algosdk/unit/AlgodBlockHeaderPathSteps.java",
+      "sha256": "e31a96a6dba1eacda00448ae20c65f45f75617d1db841fd6be860b4058c3f86e"
+    }
+  ],
+  "final_agent_message": "Added [AlgodBlockHeaderPathSteps.java](/root/lby-docker/req2test/user/runs/full-baseline-20261111-v1/generation/5d1c8ce4b0b64e89350a/attempt-2/workspaces/0000/repo/src/test/java/com/algorand/algosdk/unit/AlgodBlockHeaderPathSteps.java). It defines the Background and scenario steps, builds the expected path through `GetBlock`/`getRequestUrl()`, and asserts it. The format option is added to the request query data because `GetBlock` has no format fluent setter.",
+  "denied_commands": [
+    {
+      "id": "item_1",
+      "type": "command_execution",
+      "command": "/usr/bin/bash -lc \"pwd && rg --files repo/src/test/java/com/algorand/algosdk/unit repo/src/main/java/com/algorand/algosdk/v2/client | head -80 && rg -n \\\"class RunCucumber|ClientMocker|GetBlock\\\\(|headerOnly|getRequestUrl\\\" repo/src/test/java repo/src/main/java/com/algorand/algosdk/v2/client/algod repo/src/main/java/com/algorand/algosdk/v2/client/common | head -160\"",
+      "aggregated_output": "/root/lby-docker/req2test/user/runs/full-baseline-20261111-v1/generation/5d1c8ce4b0b64e89350a/attempt-2/workspaces/0000\n/usr/bin/bash: line 1: /usr/bin/rg: Permission denied\n/usr/bin/bash: line 1: /usr/bin/rg: Permission denied\n",
+      "exit_code": 0,
+      "status": "completed"
+    }
+  ],
+  "diagnostic_addendum": null,
+  "trace_path": "results/test-generation-20261114/req2test/tasks/5d1c8ce4b0b64e89350a/trajectory-excerpt.json"
+}

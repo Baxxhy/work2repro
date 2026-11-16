@@ -1,0 +1,101 @@
+{
+  "item_id": "coreshop/features/domain/product/price_rules/store_condition.feature:21",
+  "outcome": "container_error",
+  "outcomes_all_runs": [
+    "container_error"
+  ],
+  "per_step": [],
+  "index_errors": {},
+  "stdout_tail": "\nIn CheckExceptionOnInvalidReferenceBehaviorPass.php line 116:\n                                                                                                                                                               \n  The service \"CoreShop\\Behat\\Context\\Domain\\Product\\PriceRules\\StoreConditionContext\" has a dependency on a non-existent service \"coreshop.context.shopper\".  \n                                                                                                                                                               \n\n",
+  "bench_meta": {
+    "dependency_profile": [
+      "database"
+    ],
+    "live_background_step_count": 6,
+    "live_step_count": 4,
+    "n_closure_contexts": 12,
+    "n_closure_files": 14,
+    "n_oracle_steps": 1,
+    "round_trip_seconds": 12.11,
+    "signature": "76e60087b4a2",
+    "steps_removable": 10,
+    "steps_retained": 0,
+    "tags": [
+      "@domain",
+      "@product"
+    ],
+    "upstream_selected": true
+  },
+  "written_files": [
+    "src/CoreShop/Behat/Context/Domain/Product/PriceRules/StoreConditionContext.php"
+  ],
+  "_source": "/root/lby-docker/req2test/user/benchmark/runs/req2test-recovery8-20261113-v1-coreshop/coreshop/th/exec.jsonl",
+  "requirement": {
+    "feature": {
+      "background": "  Background:\n    Given the site operates on a store in \"Austria\"\n    And the site has a product \"Shoe\" priced at 100\n    And the site has a currency \"YEN\" with iso \"YEN\"\n    And the site has a country \"China\" with currency \"YEN\"\n    And the site has a store \"Asia\" with country \"China\" and currency \"Yen\"\n    Then the product \"Shoe\" should be priced at \"100\"",
+      "file_path": "features/domain/product/price_rules/store_condition.feature",
+      "narrative": "  In order to extend my catalog\n  the catalog has a price-rule for a store\n  I want to create a new product",
+      "title": "Adding a new Product"
+    },
+    "scenario": {
+      "gherkin": "  Scenario: Add a new store category price rule which is invalid\n    Given adding a product price rule named \"store-discount\"\n    And the price rule is active\n    And the price rule has a condition stores with store \"Asia\"\n    Then the price rule should be invalid for product \"Shoe\"",
+      "kind": "scenario",
+      "line": 21,
+      "tags": [
+        "@domain",
+        "@product"
+      ],
+      "title": "Add a new store category price rule which is invalid"
+    }
+  },
+  "official_result": {
+    "instance_id": "coreshop/features/domain/product/price_rules/store_condition.feature:21",
+    "project": "coreshop",
+    "view": "th",
+    "outcome": "compilation_failure",
+    "passed": false,
+    "api_f1": null,
+    "coverage_j": null,
+    "recall": null,
+    "kill_complete": false,
+    "kill_complete_strict": false,
+    "kill_complete_95": false,
+    "mutation_status": "not_passed",
+    "mutation_baseline": null,
+    "behaviour_status": "measured",
+    "n_gt_kills": 100,
+    "n_scored": 0,
+    "n_killed": 0,
+    "n_dropped": 0,
+    "n_crash_kills": 0,
+    "n_timeout_kills": 0,
+    "exclusion": null,
+    "engine_outcome": "container_error",
+    "harness_version": 27,
+    "rejected_files": []
+  },
+  "population_exclusion": null,
+  "generated_files": [
+    {
+      "path": "behat_services.yml",
+      "sha256": "6b20b9e772fb2fc88928da30c4cee2bc3e15fc3b3353276322f48c0e669a9749"
+    },
+    {
+      "path": "src/CoreShop/Behat/Context/Domain/Product/PriceRules/StoreConditionContext.php",
+      "sha256": "b290818e9c9cf77c0917540717b0f4703d76d32ae70ec3e6dc1404d0dc6d5983"
+    }
+  ],
+  "final_agent_message": "Added [StoreConditionContext.php](/root/lby-docker/req2test/user/runs/full-baseline-20261111-v1/generation/2c56c7029cf3ec52192c/attempt-1/workspaces/0000/repo/src/CoreShop/Behat/Context/Domain/Product/PriceRules/StoreConditionContext.php) and [behat_services.yml](/root/lby-docker/req2test/user/runs/full-baseline-20261111-v1/generation/2c56c7029cf3ec52192c/attempt-1/workspaces/0000/repo/behat_services.yml). The context looks up the product and Asia store, builds a `stores` condition, and asserts the production processor rejects the rule.\n\nI could not run the scenario here. The background’s currency, country, and store steps currently assume those records are supplied by fixture setup; the currency/country step bodies do not create them.",
+  "denied_commands": [
+    {
+      "id": "item_1",
+      "type": "command_execution",
+      "command": "/usr/bin/bash -lc 'pwd && ls repo && rg -n \"class .*Context|@Given|SharedStorageInterface|ShopperContext|RuleValidationProcessor|store_condition\" repo/src repo/features repo/TARGET_CONTRACTS.md'",
+      "aggregated_output": "/root/lby-docker/req2test/user/runs/full-baseline-20261111-v1/generation/2c56c7029cf3ec52192c/attempt-1/workspaces/0000\nFORM_CONTRACTS.md\nRESOURCE_CONTRACTS.md\nTARGET_CONTRACTS.md\n_bench\nbehat-bootstrap.php\nbin\ncomposer.json\ncomposer.lock\nconfig\nfeatures\npublic\nsrc\ntemplates\nvar\nvendor\n/usr/bin/bash: line 1: /usr/bin/rg: Permission denied\n",
+      "exit_code": 126,
+      "status": "failed"
+    }
+  ],
+  "diagnostic_addendum": null,
+  "trace_path": "results/test-generation-20261114/req2test/tasks/2c56c7029cf3ec52192c/trajectory-excerpt.json"
+}

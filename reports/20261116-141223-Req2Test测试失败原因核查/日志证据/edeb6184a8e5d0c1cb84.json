@@ -1,0 +1,168 @@
+{
+  "item_id": "sylius/features/shop/promotion/applying_promotion_coupon/e2e/not_invalidating_own_coupon_with_items_total_rule.feature:15",
+  "outcome": "failed",
+  "outcomes_all_runs": [
+    "failed"
+  ],
+  "per_step": [
+    {
+      "error": null,
+      "result": "passed",
+      "seconds": 0.3415,
+      "text": "the store operates on a single channel in \"United States\""
+    },
+    {
+      "error": null,
+      "result": "passed",
+      "seconds": 0.5369,
+      "text": "the store has a product \"PHP T-Shirt\" priced at \"$22.00\""
+    },
+    {
+      "error": null,
+      "result": "passed",
+      "seconds": 0.0833,
+      "text": "the store has promotion \"Black Friday\" with coupon \"BUGME10\""
+    },
+    {
+      "error": null,
+      "result": "passed",
+      "seconds": 0.0622,
+      "text": "this promotion gives \"$30.00\" discount to every order with items total at least \"$40.00\""
+    },
+    {
+      "error": null,
+      "result": "passed",
+      "seconds": 0.114,
+      "text": "I am a logged in customer"
+    },
+    {
+      "error": null,
+      "result": "passed",
+      "seconds": 0.261,
+      "text": "I added 2 products \"PHP T-Shirt\" to the cart"
+    },
+    {
+      "error": null,
+      "result": "passed",
+      "seconds": 0.0155,
+      "text": "I check the details of my cart"
+    },
+    {
+      "error": null,
+      "result": "passed",
+      "seconds": 0.1237,
+      "text": "I use coupon with code \"BUGME10\""
+    },
+    {
+      "error": null,
+      "result": "passed",
+      "seconds": 0.1294,
+      "text": "I change product \"PHP T-Shirt\" quantity to 3 in my cart"
+    },
+    {
+      "error": null,
+      "result": "passed",
+      "seconds": 0.0272,
+      "text": "my cart total should be \"$36.00\""
+    },
+    {
+      "error": "Expected a value identical to -3000. Got: 0",
+      "result": "failed",
+      "seconds": 0.0304,
+      "text": "my discount should be \"-$30.00\""
+    }
+  ],
+  "index_errors": {},
+  "stdout_tail": "@applying_promotion_coupon\nFeature: Not invalidating own coupon with items total rule\n  In order to keep my legitimately applied discount while editing my cart\n  As a Customer\n  I want the items total rule to not count its own promotion's discount when revalidating the coupon\n\n  Background:\n    Given the store operates on a single channel in \"United States\"\n    And the store has a product \"PHP T-Shirt\" priced at \"$22.00\"\n    And the store has promotion \"Black Friday\" with coupon \"BUGME10\"\n    And this promotion gives \"$30.00\" discount to every order with items total at least \"$40.00\"\n    And I am a logged in customer\n\n  @api @ui @mink:chromedriver\n  Scenario: Keeping the discount after increasing quantity while the coupon stays eligible\n    Given I added 2 products \"PHP T-Shirt\" to the cart\n    When I check the details of my cart\n    And I use coupon with code \"BUGME10\"\n    And I change product \"PHP T-Shirt\" quantity to 3 in my cart\n    Then my cart total should be \"$36.00\"\n    And my discount should be \"-$30.00\"\n      Expected a value identical to -3000. Got: 0 (Webmozart\\Assert\\InvalidArgumentException)\n\n--- Failed scenarios:\n\n    _bench/item.feature:15 (on line 21)\n\n1 scenario (1 failed)\n11 steps (10 passed, 1 failed)\n1m14.06s (260.43Mb)\n",
+  "bench_meta": {
+    "dependency_profile": [
+      "database"
+    ],
+    "live_background_step_count": 5,
+    "live_step_count": 6,
+    "n_closure_contexts": 4,
+    "n_closure_files": 5,
+    "n_oracle_steps": 2,
+    "round_trip_seconds": 14.59,
+    "signature": "5118de63cfe6",
+    "steps_removable": 5,
+    "steps_retained": 6,
+    "tags": [
+      "@applying_promotion_coupon",
+      "@api",
+      "@ui",
+      "@mink:chromedriver"
+    ],
+    "upstream_selected": null
+  },
+  "written_files": [
+    "src/Sylius/Behat/Context/Api/Shop/CartPromotionContext.php"
+  ],
+  "_source": "/root/lby-docker/req2test/user/benchmark/runs/req2test-recovery8-20261113-v1-sylius/sylius/th/exec.jsonl",
+  "requirement": {
+    "feature": {
+      "background": "    Background:\n        Given the store operates on a single channel in \"United States\"\n        And the store has a product \"PHP T-Shirt\" priced at \"$22.00\"\n        And the store has promotion \"Black Friday\" with coupon \"BUGME10\"\n        And this promotion gives \"$30.00\" discount to every order with items total at least \"$40.00\"\n        And I am a logged in customer",
+      "file_path": "features/shop/promotion/applying_promotion_coupon/e2e/not_invalidating_own_coupon_with_items_total_rule.feature",
+      "narrative": "    In order to keep my legitimately applied discount while editing my cart\n    As a Customer\n    I want the items total rule to not count its own promotion's discount when revalidating the coupon",
+      "title": "Not invalidating own coupon with items total rule"
+    },
+    "scenario": {
+      "gherkin": "    Scenario: Keeping the discount after increasing quantity while the coupon stays eligible\n        Given I added 2 products \"PHP T-Shirt\" to the cart\n        When I check the details of my cart\n        And I use coupon with code \"BUGME10\"\n        And I change product \"PHP T-Shirt\" quantity to 3 in my cart\n        Then my cart total should be \"$36.00\"\n        And my discount should be \"-$30.00\"",
+      "kind": "scenario",
+      "line": 15,
+      "tags": [
+        "@applying_promotion_coupon",
+        "@api",
+        "@ui",
+        "@mink:chromedriver"
+      ],
+      "title": "Keeping the discount after increasing quantity while the coupon stays eligible"
+    }
+  },
+  "official_result": {
+    "instance_id": "sylius/features/shop/promotion/applying_promotion_coupon/e2e/not_invalidating_own_coupon_with_items_total_rule.feature:15",
+    "project": "sylius",
+    "view": "th",
+    "outcome": "assertion_failure",
+    "passed": false,
+    "api_f1": null,
+    "coverage_j": null,
+    "recall": null,
+    "kill_complete": false,
+    "kill_complete_strict": false,
+    "kill_complete_95": false,
+    "mutation_status": "not_passed",
+    "mutation_baseline": null,
+    "behaviour_status": "measured",
+    "n_gt_kills": 424,
+    "n_scored": 0,
+    "n_killed": 0,
+    "n_dropped": 0,
+    "n_crash_kills": 0,
+    "n_timeout_kills": 0,
+    "exclusion": null,
+    "engine_outcome": "failed",
+    "harness_version": 27,
+    "rejected_files": []
+  },
+  "population_exclusion": null,
+  "generated_files": [
+    {
+      "path": "src/Sylius/Behat/Context/Api/Shop/CartPromotionContext.php",
+      "sha256": "d4402993a221b27ab11429d5a0aef165d23eb5b4bcfe07a66618795dd158dc29"
+    }
+  ],
+  "final_agent_message": "Added [CartPromotionContext.php](/root/lby-docker/req2test/user/runs/req2test-subset160-20261112-v1/generation/edeb6184a8e5d0c1cb84/attempt-1/workspaces/0000/repo/src/Sylius/Behat/Context/Api/Shop/CartPromotionContext.php) with the missing cart detail, coupon, quantity-change, and total/discount steps. PHP syntax validation passed.",
+  "denied_commands": [
+    {
+      "id": "item_1",
+      "type": "command_execution",
+      "command": "/usr/bin/bash -lc \"pwd && rg --files repo/src/Sylius/Behat | head -200 && rg --files repo | rg 'TARGET_CONTRACTS|not_invalidating_own_coupon|behat_services'\"",
+      "aggregated_output": "/root/lby-docker/req2test/user/runs/req2test-subset160-20261112-v1/generation/edeb6184a8e5d0c1cb84/attempt-1/workspaces/0000\n/usr/bin/bash: line 1: /usr/bin/rg: Permission denied\n/usr/bin/bash: line 1: /usr/bin/rg: Permission denied\n/usr/bin/bash: line 1: /usr/bin/rg: Permission denied\n",
+      "exit_code": 126,
+      "status": "failed"
+    }
+  ],
+  "diagnostic_addendum": null,
+  "trace_path": "results/test-generation-20261114/req2test/tasks/edeb6184a8e5d0c1cb84/trajectory-excerpt.json"
+}

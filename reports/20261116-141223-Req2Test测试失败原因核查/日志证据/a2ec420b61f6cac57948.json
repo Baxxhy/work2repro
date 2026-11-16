@@ -1,0 +1,138 @@
+{
+  "item_id": "prestashop/tests/Integration/Behaviour/Features/Scenario/Product/Shop/update_options_multishop.feature:109",
+  "outcome": "failed",
+  "outcomes_all_runs": [
+    "failed"
+  ],
+  "per_step": [
+    {
+      "error": null,
+      "result": "passed",
+      "seconds": 0.0279,
+      "text": "shop \"shop1\" with name \"test_shop\" exists"
+    },
+    {
+      "error": null,
+      "result": "passed",
+      "seconds": 0.1458,
+      "text": "manufacturer studioDesign named \"Studio Design\" exists"
+    },
+    {
+      "error": null,
+      "result": "passed",
+      "seconds": 0.0294,
+      "text": "manufacturer graphicCorner named \"Graphic Corner\" exists"
+    },
+    {
+      "error": null,
+      "result": "passed",
+      "seconds": 0.0267,
+      "text": "shop group \"default_shop_group\" with name \"Default\" exists"
+    },
+    {
+      "error": "Deprecated: Creation of dynamic property Shop::$id_theme is deprecated in /var/www/html/tests/Integration/Behaviour/Features/Context/Domain/Product/ProductSearchIndexationMultishopContext.php line 61",
+      "result": "failed",
+      "seconds": 0.0226,
+      "text": "I add a shop \"shop2\" with name \"default_shop_group\" and color \"red\" for the group \"default_shop_group\""
+    }
+  ],
+  "index_errors": {},
+  "stdout_tail": "t \"product1\":\n      | source shop | shop1       |\n      | shops       | shop1,shop2 |\n    Then product \"product1\" should have following options for shops \"shop1,shop2\":\n      | product option      | value        |\n      | visibility          | catalog      |\n      | available_for_order | false        |\n      | online_only         | true         |\n      | show_price          | false        |\n      | condition           | used         |\n      | show_condition      | true         |\n      | manufacturer        | studioDesign |\n    And product \"product1\" should be disabled for shops \"shop1,shop2\"\n    And product \"product1\" should not be indexed for shops \"shop1,shop2\"\n\n  Scenario: I update product search indexation related values in different shops\n    Given product \"product1\" should not be indexed for shops \"shop1,shop2\"\n    And product \"product1\" should be disabled for shops \"shop2\"\n    When I enable product \"product1\"\n    And I update product \"product1\" for shop \"shop1\" with following values:\n      | visibility          | search       |\n      | available_for_order | true         |\n      | online_only         | true         |\n      | show_price          | false        |\n      | condition           | used         |\n      | show_condition      | true         |\n      | manufacturer        | studioDesign |\n    Then product \"product1\" should be enabled for shops \"shop1\"\n    And product \"product1\" should be indexed for shops \"shop1\"\n    But product \"product1\" should be disabled for shops \"shop2\"\n    And product \"product1\" should not be indexed for shops \"shop2\"\n\n--- Failed scenarios:\n\n    _bench/item.feature:52 (on line 11)\n\n1 scenario (1 failed)\n25 steps (4 passed, 2 failed, 2 undefined, 17 skipped)\n2m30.95s (183.70Mb)\n\n--- Use --snippets-for CLI option to generate snippets for following bench suite steps:\n\n    And I add a shop group \"test_second_shop_group\" with name \"Test second shop group\" and color \"green\"\n    And product \"product1\" should be indexed for shops \"shop1\"\n\n",
+  "bench_meta": {
+    "dependency_profile": [
+      "database"
+    ],
+    "live_background_step_count": 17,
+    "live_step_count": 8,
+    "n_closure_contexts": 11,
+    "n_closure_files": 11,
+    "n_oracle_steps": 6,
+    "round_trip_seconds": 84.65,
+    "signature": "9e76e12c11c8",
+    "steps_removable": 25,
+    "steps_retained": 0,
+    "tags": [
+      "@restore-products-before-feature",
+      "@clear-cache-before-feature",
+      "@restore-shops-after-feature",
+      "@restore-languages-after-feature",
+      "@clear-cache-after-feature",
+      "@product-multishop",
+      "@update-options-multishop"
+    ],
+    "upstream_selected": null
+  },
+  "written_files": [
+    "tests/Integration/Behaviour/Features/Context/Domain/Product/ProductSearchIndexationMultishopContext.php"
+  ],
+  "_source": "/root/lby-docker/req2test/user/benchmark/runs/req2test-recovery8-20261113-v1-prestashop/prestashop/th/exec.jsonl",
+  "requirement": {
+    "feature": {
+      "background": "  Background:\n    Given shop \"shop1\" with name \"test_shop\" exists\n    And manufacturer studioDesign named \"Studio Design\" exists\n    And manufacturer graphicCorner named \"Graphic Corner\" exists\n    And shop group \"default_shop_group\" with name \"Default\" exists\n    And I add a shop \"shop2\" with name \"default_shop_group\" and color \"red\" for the group \"default_shop_group\"\n    And I add a shop group \"test_second_shop_group\" with name \"Test second shop group\" and color \"green\"\n    And I add a shop \"shop3\" with name \"test_third_shop\" and color \"blue\" for the group \"test_second_shop_group\"\n    And I add a shop \"shop4\" with name \"test_shop_without_url\" and color \"blue\" for the group \"test_second_shop_group\"\n    And single shop context is loaded\n    And language \"french\" with locale \"fr-FR\" exists\n    Given I add product \"product1\" with following information:\n      | name[en-US] | Presta camera |\n      | type        | standard      |\n    And product \"product1\" should have following options:\n      | product option      | value |\n      | visibility          | both  |\n      | available_for_order | true  |\n      | online_only         | false |\n      | show_price          | true  |\n      | condition           | new   |\n      | show_condition      | false |\n      | manufacturer        |       |\n    When I update product \"product1\" with following values:\n      | visibility          | catalog      |\n      | available_for_order | false        |\n      | online_only         | true         |\n      | show_price          | false        |\n      | condition           | used         |\n      | show_condition      | true         |\n      | manufacturer        | studioDesign |\n    And I set following shops for product \"product1\":\n      | source shop | shop1       |\n      | shops       | shop1,shop2 |\n    Then product \"product1\" should have following options for shops \"shop1,shop2\":\n      | product option      | value        |\n      | visibility          | catalog      |\n      | available_for_order | false        |\n      | online_only         | true         |\n      | show_price          | false        |\n      | condition           | used         |\n      | show_condition      | true         |\n      | manufacturer        | studioDesign |\n    And product \"product1\" should be disabled for shops \"shop1,shop2\"\n    And product \"product1\" should not be indexed for shops \"shop1,shop2\"",
+      "file_path": "tests/Integration/Behaviour/Features/Scenario/Product/Shop/update_options_multishop.feature",
+      "narrative": "  As a BO user\n  I want to be able to update product fields associated with options in multiple shops.",
+      "title": "Feature: Update product options from Back Office (BO) for multiple shops"
+    },
+    "scenario": {
+      "gherkin": "  Scenario: I update product search indexation related values in different shops\n    Given product \"product1\" should not be indexed for shops \"shop1,shop2\"\n    And product \"product1\" should be disabled for shops \"shop2\"\n#   @todo: UpdateProductStatus command does not yet support multishop, so it silently updates only single shop from context\n#          need to improve this scenario once UpdateProductStatus command supports multishop\n    When I enable product \"product1\"\n    And I update product \"product1\" for shop \"shop1\" with following values:\n      | visibility          | search       |\n      | available_for_order | true         |\n      | online_only         | true         |\n      | show_price          | false        |\n      | condition           | used         |\n      | show_condition      | true         |\n      | manufacturer        | studioDesign |\n    Then product \"product1\" should be enabled for shops \"shop1\"\n    And product \"product1\" should be indexed for shops \"shop1\"\n    But product \"product1\" should be disabled for shops \"shop2\"\n    And product \"product1\" should not be indexed for shops \"shop2\"",
+      "kind": "scenario",
+      "line": 109,
+      "tags": [
+        "@restore-products-before-feature",
+        "@clear-cache-before-feature",
+        "@restore-shops-after-feature",
+        "@restore-languages-after-feature",
+        "@clear-cache-after-feature",
+        "@product-multishop",
+        "@update-options-multishop"
+      ],
+      "title": "I update product search indexation related values in different shops"
+    }
+  },
+  "official_result": {
+    "instance_id": "prestashop/tests/Integration/Behaviour/Features/Scenario/Product/Shop/update_options_multishop.feature:109",
+    "project": "prestashop",
+    "view": "th",
+    "outcome": "assertion_failure",
+    "passed": false,
+    "api_f1": null,
+    "coverage_j": null,
+    "recall": null,
+    "kill_complete": false,
+    "kill_complete_strict": false,
+    "kill_complete_95": false,
+    "mutation_status": "not_passed",
+    "mutation_baseline": null,
+    "behaviour_status": "measured",
+    "n_gt_kills": 25,
+    "n_scored": 0,
+    "n_killed": 0,
+    "n_dropped": 0,
+    "n_crash_kills": 0,
+    "n_timeout_kills": 0,
+    "exclusion": null,
+    "engine_outcome": "failed",
+    "harness_version": 27,
+    "rejected_files": []
+  },
+  "population_exclusion": null,
+  "generated_files": [
+    {
+      "path": "tests/Integration/Behaviour/Features/Context/Domain/Product/ProductSearchIndexationMultishopContext.php",
+      "sha256": "11a21832fb69b6a514720dd7051d179a908f9d5b28719324836d7e550705c890"
+    }
+  ],
+  "final_agent_message": "Added [ProductSearchIndexationMultishopContext.php](/root/lby-docker/req2test/user/runs/req2test-subset160-20261112-v1/generation/a2ec420b61f6cac57948/attempt-1/workspaces/0000/repo/tests/Integration/Behaviour/Features/Context/Domain/Product/ProductSearchIndexationMultishopContext.php) with step definitions for the Background and scenario, including product updates and enabled/indexed checks. PHP syntax validation passes. I could not run the scenario here, so runtime behavior remains unverified.",
+  "denied_commands": [
+    {
+      "id": "item_1",
+      "type": "command_execution",
+      "command": "/usr/bin/bash -lc 'rg --files repo/tests/Integration/Behaviour/Features/Context repo/tests/Integration/Behaviour/Features | head -100 && rg -n \"update product|product .*indexed|manufacturer .*exists|shop .*exists|single shop context\" repo/tests/Integration/Behaviour/Features/Context repo/tests/Integration/Behaviour/Features/Scenario/Product/Shop/update_options_multishop.feature'",
+      "aggregated_output": "/usr/bin/bash: line 1: /usr/bin/rg: Permission denied\n/usr/bin/bash: line 1: /usr/bin/rg: Permission denied\n",
+      "exit_code": 126,
+      "status": "failed"
+    }
+  ],
+  "diagnostic_addendum": null,
+  "trace_path": "results/test-generation-20261114/req2test/tasks/a2ec420b61f6cac57948/trajectory-excerpt.json"
+}

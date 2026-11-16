@@ -1,0 +1,87 @@
+{
+  "item_id": "kapua/qa/integration/src/test/resources/features/account/FindSelfAccount.feature:76",
+  "outcome": "no_files_returned",
+  "outcomes_all_runs": null,
+  "per_step": null,
+  "index_errors": {},
+  "stdout_tail": null,
+  "bench_meta": null,
+  "written_files": [],
+  "_source": "/root/lby-docker/req2test/user/benchmark/runs/req2test-recovery8-20261113-v1-kapua/kapua/th/exec.jsonl",
+  "requirement": {
+    "feature": {
+      "background": null,
+      "file_path": "qa/integration/src/test/resources/features/account/FindSelfAccount.feature",
+      "narrative": "  Finding self accounts require a different logic to be applied to the permission",
+      "title": "Self account find feature"
+    },
+    "scenario": {
+      "gherkin": "  Scenario: Find self account by name\n    When I login as user with name \"kapua-sys\" and password \"kapua-password\"\n    And I configure account service\n      | type    | name                   | value |\n      | boolean | infiniteChildEntities  | true  |\n      | integer | maxNumberChildEntities | 50    |\n    Given Account\n      | name         | scopeId |\n      | test-account | 1       |\n    And I configure user service\n      | type    | name                   | value |\n      | boolean | infiniteChildEntities  | true  |\n      | integer | maxNumberChildEntities | 50    |\n    And A generic user\n      | name      | displayName | email             | phoneNumber     | status  | userType |\n      | test-user | Test User A | kapua_a@kapua.com | +386 31 323 444 | ENABLED | INTERNAL |\n    And I add credentials\n      | name      | password          | enabled |\n      | test-user | ToManySecrets123# | true    |\n    And Add permissions to the last created user\n      | domain  | action |\n      | account | read   |\n    Given I login as user with name \"test-user\" and password \"ToManySecrets123#\"\n    And I look for my account by name\n    Then I am able to read my account info",
+      "kind": "scenario",
+      "line": 76,
+      "tags": [
+        "@account",
+        "@accountFindSelf",
+        "@env_none"
+      ],
+      "title": "Find self account by name"
+    }
+  },
+  "official_result": {
+    "instance_id": "kapua/qa/integration/src/test/resources/features/account/FindSelfAccount.feature:76",
+    "project": "kapua",
+    "view": "th",
+    "outcome": "generation_failure",
+    "passed": false,
+    "api_f1": null,
+    "coverage_j": null,
+    "recall": null,
+    "kill_complete": false,
+    "kill_complete_strict": false,
+    "kill_complete_95": false,
+    "mutation_status": "not_passed",
+    "mutation_baseline": null,
+    "behaviour_status": "measured",
+    "n_gt_kills": 38,
+    "n_scored": 0,
+    "n_killed": 0,
+    "n_dropped": 0,
+    "n_crash_kills": 0,
+    "n_timeout_kills": 0,
+    "exclusion": null,
+    "engine_outcome": "no_files_returned",
+    "harness_version": 27,
+    "rejected_files": []
+  },
+  "population_exclusion": null,
+  "generated_files": [],
+  "final_agent_message": "I couldn’t produce a reliable, executable step-definition implementation in this turn. The retained `BasicSteps` does not define the requested actions, and I didn’t verify the account, user, credential, and permission creation APIs needed to implement them safely. I created the requested package directory, but it contains no step-definition code.",
+  "denied_commands": [
+    {
+      "id": "item_2",
+      "type": "command_execution",
+      "command": "/usr/bin/bash -lc 'rg -n \"look for my account by name|read my account info|generic user|configure account service|Add permissions to the last created user|I login as user with name\" qa'",
+      "aggregated_output": "/usr/bin/bash: line 1: /usr/bin/rg: Permission denied\n",
+      "exit_code": 126,
+      "status": "failed"
+    },
+    {
+      "id": "item_3",
+      "type": "command_execution",
+      "command": "/usr/bin/bash -lc 'rg --files qa/common | head -100'",
+      "aggregated_output": "/usr/bin/bash: line 1: /usr/bin/rg: Permission denied\n",
+      "exit_code": 0,
+      "status": "completed"
+    },
+    {
+      "id": "item_5",
+      "type": "command_execution",
+      "command": "/usr/bin/bash -lc 'rg --files qa/integration/src/test/java/org/eclipse/kapua/integration/service/account | head -80'",
+      "aggregated_output": "/usr/bin/bash: line 1: /usr/bin/rg: Permission denied\n",
+      "exit_code": 0,
+      "status": "completed"
+    }
+  ],
+  "diagnostic_addendum": null,
+  "trace_path": "results/test-generation-20261114/req2test/tasks/9c7842c7178e4b66031a/trajectory-excerpt.json"
+}

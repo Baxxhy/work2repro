@@ -1,0 +1,108 @@
+{
+  "item_id": "python-docx/features/tbl-props.feature:19",
+  "outcome": "failed",
+  "outcomes_all_runs": [
+    "failed"
+  ],
+  "per_step": [
+    {
+      "error": null,
+      "result": "passed",
+      "seconds": 0.040558,
+      "text": "a table having inherited alignment"
+    },
+    {
+      "error": "'NoneType' object has no attribute 'alignment'",
+      "result": "failed",
+      "seconds": 0.001496,
+      "text": "I assign WD_TABLE_ALIGNMENT.LEFT to table.alignment"
+    },
+    {
+      "error": null,
+      "result": "skipped",
+      "seconds": 0.0,
+      "text": "table.alignment is WD_TABLE_ALIGNMENT.LEFT"
+    }
+  ],
+  "index_errors": {},
+  "stdout_tail": ")\n        File \"features/steps/table_alignment.py\", line 21, in given_table_alignment\n          context.table.alignment = _ALIGNMENTS[alignment]\n                                    ~~~~~~~~~~~^^^^^^^^^^^\n      KeyError: 'right'\n\n    When I assign WD_TABLE_ALIGNMENT.CENTER to table.alignment                            # None\n    Then table.alignment is WD_TABLE_ALIGNMENT.CENTER                                     # None\n\n  Scenario Outline: Set table alignment -- @1.4 results of assignment to table.alignment  # features/_bench_item.feature:16\n    Given a table having center alignment                                                 # features/steps/table_alignment.py:17\n      Traceback (most recent call last):\n        File \"/usr/local/lib/python3.12/site-packages/behave/model.py\", line 1991, in run\n          match.run(runner.context)\n        File \"/usr/local/lib/python3.12/site-packages/behave/matchers.py\", line 105, in run\n          self.func(context, *args, **kwargs)\n        File \"features/steps/table_alignment.py\", line 21, in given_table_alignment\n          context.table.alignment = _ALIGNMENTS[alignment]\n                                    ~~~~~~~~~~~^^^^^^^^^^^\n      KeyError: 'center'\n\n    When I assign None to table.alignment                                                 # None\n    Then table.alignment is None                                                          # None\n\n\nErrored scenarios:\n  features/_bench_item.feature:13  Set table alignment -- @1.1 results of assignment to table.alignment\n  features/_bench_item.feature:14  Set table alignment -- @1.2 results of assignment to table.alignment\n  features/_bench_item.feature:15  Set table alignment -- @1.3 results of assignment to table.alignment\n  features/_bench_item.feature:16  Set table alignment -- @1.4 results of assignment to table.alignment\n\n0 features passed, 0 failed, 1 error, 0 skipped\n0 scenarios passed, 0 failed, 4 error, 0 skipped\n1 step passed, 0 failed, 4 error, 7 skipped\nTook 0min 0.141s\n",
+  "bench_meta": {
+    "dependency_profile": [],
+    "live_background_step_count": 0,
+    "live_step_count": 3,
+    "n_closure_contexts": 1,
+    "n_closure_files": 2,
+    "n_oracle_steps": 1,
+    "round_trip_seconds": 2.3,
+    "signature": "b1b1f9d228cc",
+    "steps_removable": 12,
+    "steps_retained": 0,
+    "tags": [],
+    "upstream_selected": null
+  },
+  "written_files": [
+    "features/steps/table_alignment.py"
+  ],
+  "_source": "/root/lby-docker/req2test/user/benchmark/runs/req2test-recovery8-20261113-v1-python-docx/python-docx/th/exec.jsonl",
+  "requirement": {
+    "feature": {
+      "background": null,
+      "file_path": "features/tbl-props.feature",
+      "narrative": "  In order to format a table to my requirements\n  As a developer using python-docx\n  I need a way to get and set a table's properties",
+      "title": "Get and set table properties"
+    },
+    "scenario": {
+      "gherkin": "  Scenario Outline: Set table alignment\n    Given a table having <alignment> alignment\n     When I assign <value> to table.alignment\n     Then table.alignment is <value>\n\n    Examples: results of assignment to table.alignment\n      | alignment | value                     |\n      | inherited | WD_TABLE_ALIGNMENT.LEFT   |\n      | left      | WD_TABLE_ALIGNMENT.RIGHT  |\n      | right     | WD_TABLE_ALIGNMENT.CENTER |\n      | center    | None                      |",
+      "kind": "outline",
+      "line": 19,
+      "tags": [],
+      "title": "Set table alignment"
+    }
+  },
+  "official_result": {
+    "instance_id": "python-docx/features/tbl-props.feature:19",
+    "project": "python-docx",
+    "view": "th",
+    "outcome": "assertion_failure",
+    "passed": false,
+    "api_f1": null,
+    "coverage_j": null,
+    "recall": null,
+    "kill_complete": false,
+    "kill_complete_strict": false,
+    "kill_complete_95": false,
+    "mutation_status": "not_passed",
+    "mutation_baseline": null,
+    "behaviour_status": "measured",
+    "n_gt_kills": 128,
+    "n_scored": 0,
+    "n_killed": 0,
+    "n_dropped": 0,
+    "n_crash_kills": 0,
+    "n_timeout_kills": 0,
+    "exclusion": null,
+    "engine_outcome": "failed",
+    "harness_version": 27,
+    "rejected_files": []
+  },
+  "population_exclusion": null,
+  "generated_files": [
+    {
+      "path": "features/steps/table_alignment.py",
+      "sha256": "3d8e3f918c2e76f3b537990580245f45cde1e1dbfa9c9b0f04ad411f65257d37"
+    }
+  ],
+  "final_agent_message": "Added the step definitions in [table_alignment.py](/root/lby-docker/req2test/user/runs/req2test-subset160-20261112-v1/generation/d091b036afe5d519f84a/attempt-1/workspaces/0000/repo/features/steps/table_alignment.py). They create a one-cell table, set its starting alignment, assign the requested value, and assert the getter returns it.",
+  "denied_commands": [
+    {
+      "id": "item_1",
+      "type": "command_execution",
+      "command": "/usr/bin/bash -lc 'ls repo/features && rg -n \"Set table alignment|table having|Table alignment\" repo/features repo/TARGET_CONTRACTS.md; rg -n \"class WD_TABLE_ALIGNMENT|def alignment\" repo/src/docx/table.py repo/src/docx/enum/table.py'",
+      "aggregated_output": "api-open-document.feature\nblk-add-paragraph.feature\nblk-add-table.feature\nblk-iter-inner-content.feature\ncmt-mutations.feature\ncmt-props.feature\ndoc-access-collections.feature\ndoc-access-sections.feature\ndoc-add-comment.feature\ndoc-add-heading.feature\ndoc-add-page-break.feature\ndoc-add-paragraph.feature\ndoc-add-picture.feature\ndoc-add-section.feature\ndoc-add-table.feature\ndoc-comments.feature\ndoc-coreprops.feature\ndoc-settings.feature\ndoc-styles.feature\nenvironment.py\nhdr-header-footer.feature\nhlk-props.feature\nimg-characterize-image.feature\nnum-access-numbering-part.feature\npar-access-inner-content.feature\npar-access-parfmt.feature\npar-add-run.feature\npar-alignment-prop.feature\npar-clear-paragraph.feature\npar-insert-paragraph.feature\npar-set-text.feature\npar-style-prop.feature\npbk-split-para.feature\nrun-access-font.feature\nrun-access-inner-content.feature\nrun-add-content.feature\nrun-add-picture.feature\nrun-char-style.feature\nrun-clear-run.feature\nrun-enum-props.feature\nsct-section.feature\nshp-inline-shape-access.feature\nshp-inline-shape-size.feature\nsteps\nsty-access-font.feature\nsty-access-latent-styles.feature\nsty-access-parfmt.feature\nsty-add-style.feature\nsty-delete-style.feature\nsty-latent-add-del.feature\nsty-latent-props.feature\nsty-style-props.feature\ntab-access-tabs.feature\ntab-tabstop-props.feature\ntbl-add-row-or-col.feature\ntbl-cell-access.feature\ntbl-cell-add-table.feature\ntbl-cell-props.feature\ntbl-cell-text.feature\ntbl-col-props.feature\ntbl-item-access.feature\ntbl-merge-cells.feature\ntbl-props.feature\ntbl-row-props.feature\ntbl-style.feature\ntxt-add-break.feature\ntxt-font-color.feature\ntxt-font-props.feature\ntxt-parfmt-props.feature\n/usr/bin/bash: line 1: /usr/bin/rg: Permission denied\n/usr/bin/bash: line 1: /usr/bin/rg: Permission denied\n",
+      "exit_code": 126,
+      "status": "failed"
+    }
+  ],
+  "diagnostic_addendum": null,
+  "trace_path": "results/test-generation-20261114/req2test/tasks/d091b036afe5d519f84a/trajectory-excerpt.json"
+}

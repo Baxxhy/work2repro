@@ -1,0 +1,122 @@
+{
+  "item_id": "kapua/qa/integration/src/test/resources/features/authorization/DomainService.feature:79",
+  "outcome": "failed",
+  "outcomes_all_runs": [
+    "failed"
+  ],
+  "per_step": [
+    {
+      "error": null,
+      "result": "passed",
+      "seconds": 1.382493,
+      "text": "I login as user with name \"kapua-sys\" and password \"kapua-password\""
+    },
+    {
+      "error": null,
+      "result": "passed",
+      "seconds": 0.068889,
+      "text": "I create the domain"
+    },
+    {
+      "error": "java.lang.NullPointerException: Cannot invoke \"org.eclipse.kapua.service.authorization.domain.Domain.getId()\" because \"this.created\" is null",
+      "result": "failed",
+      "seconds": 0.002087,
+      "text": "I search for the last created domain"
+    },
+    {
+      "error": null,
+      "result": "skipped",
+      "seconds": 7.6e-05,
+      "text": "The domain matches the creator"
+    }
+  ],
+  "index_errors": {},
+  "stdout_tail": "a-extras ....................................... SUCCESS [  0.002 s]\n[INFO] kapua-foreignkeys .................................. SUCCESS [  0.036 s]\n[INFO] kapua-rest-api-web ................................. SUCCESS [  0.043 s]\n[INFO] kapua-qa-integration-steps ......................... SUCCESS [  0.052 s]\n[INFO] kapua-security-test-steps .......................... SUCCESS [  0.051 s]\n[INFO] kapua-device-management-job-internal ............... SUCCESS [  0.050 s]\n[INFO] kapua-endpoint-test-steps .......................... SUCCESS [  0.037 s]\n[INFO] kapua-device-management-bundle-job ................. SUCCESS [  0.039 s]\n[INFO] kapua-device-management-asset-job .................. SUCCESS [  0.037 s]\n[INFO] kapua-device-management-packages-job ............... SUCCESS [  0.050 s]\n[INFO] kapua-device-management-command-job ................ SUCCESS [  0.039 s]\n[INFO] kapua-device-management-configuration-job .......... SUCCESS [  0.038 s]\n[INFO] kapua-device-management-keystore-job ............... SUCCESS [  0.039 s]\n[INFO] kapua-scheduler-test-steps ......................... SUCCESS [  0.035 s]\n[INFO] kapua-datastore-test-steps ......................... SUCCESS [  0.035 s]\n[INFO] kapua-service-camel ................................ SUCCESS [  0.041 s]\n[INFO] kapua-consumer ..................................... SUCCESS [  0.001 s]\n[INFO] kapua-consumer-lifecycle ........................... SUCCESS [  0.040 s]\n[INFO] kapua-consumer-telemetry ........................... SUCCESS [  0.041 s]\n[INFO] kapua-service-authentication ....................... SUCCESS [  0.048 s]\n[INFO] kapua-qa-integration ............................... SUCCESS [  0.034 s]\n[INFO] ------------------------------------------------------------------------\n[INFO] BUILD SUCCESS\n[INFO] ------------------------------------------------------------------------\n[INFO] Total time:  10.281 s\n[INFO] Finished at: 2026-11-12T17:32:25Z\n[INFO] ------------------------------------------------------------------------\n",
+  "bench_meta": {
+    "dependency_profile": [],
+    "live_background_step_count": 0,
+    "live_step_count": 4,
+    "n_closure_contexts": 2,
+    "n_closure_files": 2,
+    "n_oracle_steps": 1,
+    "round_trip_seconds": 130.993,
+    "signature": "e9b46e29cb6a",
+    "steps_removable": 4,
+    "steps_retained": 0,
+    "tags": [
+      "@security",
+      "@domainService",
+      "@env_none"
+    ],
+    "upstream_selected": null
+  },
+  "written_files": [
+    "qa/integration/src/test/java/org/eclipse/kapua/integration/service/authorization/r2t/generated/DomainFindSteps.java"
+  ],
+  "_source": "/root/lby-docker/req2test/user/benchmark/runs/req2test-recovery8-20261113-v1-kapua/kapua/th/exec.jsonl",
+  "requirement": {
+    "feature": {
+      "background": null,
+      "file_path": "qa/integration/src/test/resources/features/authorization/DomainService.feature",
+      "narrative": null,
+      "title": "Domain Service tests"
+    },
+    "scenario": {
+      "gherkin": "  Scenario: Find the last created domain entry\n  It must be possible to find a dmain entry based on its unique ID.\n\n    When I login as user with name \"kapua-sys\" and password \"kapua-password\"\n    Given I create the domain\n      | name        | actions      |\n      | test_name_2 | read,execute |\n    When I search for the last created domain\n    Then The domain matches the creator",
+      "kind": "scenario",
+      "line": 79,
+      "tags": [
+        "@security",
+        "@domainService",
+        "@env_none"
+      ],
+      "title": "Find the last created domain entry"
+    }
+  },
+  "official_result": {
+    "instance_id": "kapua/qa/integration/src/test/resources/features/authorization/DomainService.feature:79",
+    "project": "kapua",
+    "view": "th",
+    "outcome": "assertion_failure",
+    "passed": false,
+    "api_f1": null,
+    "coverage_j": null,
+    "recall": null,
+    "kill_complete": false,
+    "kill_complete_strict": false,
+    "kill_complete_95": false,
+    "mutation_status": "not_passed",
+    "mutation_baseline": null,
+    "behaviour_status": "measured",
+    "n_gt_kills": 47,
+    "n_scored": 0,
+    "n_killed": 0,
+    "n_dropped": 0,
+    "n_crash_kills": 0,
+    "n_timeout_kills": 0,
+    "exclusion": null,
+    "engine_outcome": "failed",
+    "harness_version": 27,
+    "rejected_files": []
+  },
+  "population_exclusion": null,
+  "generated_files": [
+    {
+      "path": "qa/integration/src/test/java/org/eclipse/kapua/integration/service/authorization/r2t/generated/DomainFindSteps.java",
+      "sha256": "e2d59750c0b1ff66b23cd95ce37c6c33792ab358b941249ac1223b5f2d585bf7"
+    }
+  ],
+  "final_agent_message": "Added [DomainFindSteps.java](/root/lby-docker/req2test/user/runs/full-baseline-20261111-v1/generation/aa57788c35a399663cfe/attempt-1/workspaces/0000/repo/qa/integration/src/test/java/org/eclipse/kapua/integration/service/authorization/r2t/generated/DomainFindSteps.java). It logs in, creates the domain from the retained `CucDomain` table type, finds it by ID in the system scope, and checks its name and actions against the creator.\n\nI couldn’t run the scenario in this workspace.",
+  "denied_commands": [
+    {
+      "id": "item_2",
+      "type": "command_execution",
+      "command": "/usr/bin/bash -lc 'pwd && rg --files repo/qa | head -80 && rg -n \"Domain|domain\" repo/qa/common/src/test repo/qa/integration/src/test/java/org/eclipse/kapua/integration/service/authorization 2>/dev/null | head -100'",
+      "aggregated_output": "/root/lby-docker/req2test/user/runs/full-baseline-20261111-v1/generation/aa57788c35a399663cfe/attempt-1/workspaces/0000\n/usr/bin/bash: line 1: /usr/bin/rg: Permission denied\n",
+      "exit_code": 0,
+      "status": "completed"
+    }
+  ],
+  "diagnostic_addendum": null,
+  "trace_path": "results/test-generation-20261114/req2test/tasks/aa57788c35a399663cfe/trajectory-excerpt.json"
+}

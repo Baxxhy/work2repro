@@ -1,0 +1,162 @@
+{
+  "item_id": "sylius/features/shop/checkout/seeing_order_summary/seeing_discount_on_order_item_on_summary_page.feature:17",
+  "outcome": "undefined_steps",
+  "outcomes_all_runs": [
+    "undefined_steps"
+  ],
+  "per_step": [
+    {
+      "error": null,
+      "result": "passed",
+      "seconds": 0.3237,
+      "text": "the store operates on a single channel in \"United States\""
+    },
+    {
+      "error": null,
+      "result": "passed",
+      "seconds": 0.5103,
+      "text": "the store has a product \"Lannister Coat\" priced at \"$100.00\""
+    },
+    {
+      "error": null,
+      "result": "passed",
+      "seconds": 0.0847,
+      "text": "there is a promotion \"Christmas sale\""
+    },
+    {
+      "error": null,
+      "result": "passed",
+      "seconds": 0.0803,
+      "text": "this promotion gives \"10%\" off on every product with minimum price at \"$50.00\""
+    },
+    {
+      "error": null,
+      "result": "passed",
+      "seconds": 0.0636,
+      "text": "the store ships everywhere for Free"
+    },
+    {
+      "error": null,
+      "result": "passed",
+      "seconds": 0.0791,
+      "text": "the store allows paying Offline"
+    },
+    {
+      "error": null,
+      "result": "passed",
+      "seconds": 0.1163,
+      "text": "I am a logged in customer"
+    },
+    {
+      "error": null,
+      "result": "passed",
+      "seconds": 0.2687,
+      "text": "I added product \"Lannister Coat\" to the cart"
+    },
+    {
+      "error": null,
+      "result": "undefined",
+      "seconds": 0.0203,
+      "text": "I specified the billing address as \"Ankh Morpork\", \"Frost Alley\", \"90210\", \"United States\" for \"Jon Snow\""
+    }
+  ],
+  "index_errors": {},
+  "stdout_tail": "@checkout\nFeature: Seeing a order item discount\n  In order to be aware of discounts applied to an order\n  As a Customer\n  I want to see discounts of specific order item\n\n  Background:\n    Given the store operates on a single channel in \"United States\"\n    And the store has a product \"Lannister Coat\" priced at \"$100.00\"\n    And there is a promotion \"Christmas sale\"\n    And this promotion gives \"10%\" off on every product with minimum price at \"$50.00\"\n    And the store ships everywhere for Free\n    And the store allows paying Offline\n    And I am a logged in customer\n\n  @api @ui\n  Scenario: Seeing a discounted price on order item\n    Given I added product \"Lannister Coat\" to the cart\n    And I specified the billing address as \"Ankh Morpork\", \"Frost Alley\", \"90210\", \"United States\" for \"Jon Snow\"\n    When I proceed with \"Free\" shipping method and \"Offline\" payment\n    Then I should be on the checkout summary step\n    And the \"Lannister Coat\" product should have unit price discounted by \"$10.00\"\n    And my order total should be \"$90.00\"\n\n1 scenario (1 undefined)\n13 steps (8 passed, 2 undefined, 3 skipped)\n1m11.53s (261.18Mb)\n\n--- Use --snippets-for CLI option to generate snippets for following bench suite steps:\n\n    And I specified the billing address as \"Ankh Morpork\", \"Frost Alley\", \"90210\", \"United States\" for \"Jon Snow\"\n    When I proceed with \"Free\" shipping method and \"Offline\" payment\n\n",
+  "bench_meta": {
+    "dependency_profile": [
+      "database"
+    ],
+    "live_background_step_count": 7,
+    "live_step_count": 6,
+    "n_closure_contexts": 3,
+    "n_closure_files": 4,
+    "n_oracle_steps": 3,
+    "round_trip_seconds": 16.14,
+    "signature": "d62583c18293",
+    "steps_removable": 5,
+    "steps_retained": 8,
+    "tags": [
+      "@checkout",
+      "@api",
+      "@ui"
+    ],
+    "upstream_selected": null
+  },
+  "written_files": [
+    "src/Sylius/Behat/Context/Api/Shop/SeeingOrderItemDiscountContext.php"
+  ],
+  "_source": "/root/lby-docker/req2test/user/benchmark/runs/req2test-recovery8-20261113-v1-sylius/sylius/th/exec.jsonl",
+  "requirement": {
+    "feature": {
+      "background": "    Background:\n        Given the store operates on a single channel in \"United States\"\n        And the store has a product \"Lannister Coat\" priced at \"$100.00\"\n        And there is a promotion \"Christmas sale\"\n        And this promotion gives \"10%\" off on every product with minimum price at \"$50.00\"\n        And the store ships everywhere for Free\n        And the store allows paying Offline\n        And I am a logged in customer",
+      "file_path": "features/shop/checkout/seeing_order_summary/seeing_discount_on_order_item_on_summary_page.feature",
+      "narrative": "    In order to be aware of discounts applied to an order\n    As a Customer\n    I want to see discounts of specific order item",
+      "title": "Seeing a order item discount"
+    },
+    "scenario": {
+      "gherkin": "    Scenario: Seeing a discounted price on order item\n        Given I added product \"Lannister Coat\" to the cart\n        And I specified the billing address as \"Ankh Morpork\", \"Frost Alley\", \"90210\", \"United States\" for \"Jon Snow\"\n        When I proceed with \"Free\" shipping method and \"Offline\" payment\n        Then I should be on the checkout summary step\n        And the \"Lannister Coat\" product should have unit price discounted by \"$10.00\"\n        And my order total should be \"$90.00\"",
+      "kind": "scenario",
+      "line": 17,
+      "tags": [
+        "@checkout",
+        "@api",
+        "@ui"
+      ],
+      "title": "Seeing a discounted price on order item"
+    }
+  },
+  "official_result": {
+    "instance_id": "sylius/features/shop/checkout/seeing_order_summary/seeing_discount_on_order_item_on_summary_page.feature:17",
+    "project": "sylius",
+    "view": "th",
+    "outcome": "binding_failure",
+    "passed": false,
+    "api_f1": null,
+    "coverage_j": null,
+    "recall": null,
+    "kill_complete": false,
+    "kill_complete_strict": false,
+    "kill_complete_95": false,
+    "mutation_status": "not_passed",
+    "mutation_baseline": null,
+    "behaviour_status": "measured",
+    "n_gt_kills": 503,
+    "n_scored": 0,
+    "n_killed": 0,
+    "n_dropped": 0,
+    "n_crash_kills": 0,
+    "n_timeout_kills": 0,
+    "exclusion": null,
+    "engine_outcome": "undefined_steps",
+    "harness_version": 27,
+    "rejected_files": []
+  },
+  "population_exclusion": null,
+  "generated_files": [
+    {
+      "path": "src/Sylius/Behat/Context/Api/Shop/SeeingOrderItemDiscountContext.php",
+      "sha256": "062850cb6db173e44cee043ad5ae581ec4dfbefd6edc4943a2cfb8c9343988b4"
+    }
+  ],
+  "final_agent_message": "Added [SeeingOrderItemDiscountContext.php](/root/lby-docker/req2test/user/runs/req2test-subset160-20261112-v1/generation/414416999a43fc7fdbd5/attempt-1/workspaces/0000/repo/src/Sylius/Behat/Context/Api/Shop/SeeingOrderItemDiscountContext.php) with the checkout-summary, item-discount, and order-total steps. PHP syntax validation passed.",
+  "denied_commands": [
+    {
+      "id": "item_0",
+      "type": "command_execution",
+      "command": "/usr/bin/bash -lc 'pwd; ls repo; rg --files repo/src/Sylius/Behat | head'",
+      "aggregated_output": "/root/lby-docker/req2test/user/runs/req2test-subset160-20261112-v1/generation/414416999a43fc7fdbd5/attempt-1/workspaces/0000\nTARGET_CONTRACTS.md\n_bench\nbehat.dist.php\nbin\ncomposer.json\ncomposer.lock\nconfig\netc\nfeatures\npublic\nsrc\nsymfony.lock\ntemplates\ntranslations\nvar\nvendor\n/usr/bin/bash: line 1: /usr/bin/rg: Permission denied\n",
+      "exit_code": 0,
+      "status": "completed"
+    },
+    {
+      "id": "item_17",
+      "type": "command_execution",
+      "command": "/usr/bin/bash -lc \"rg 'STATE.*CHECKOUT|CHECKOUT_STATE|CHECKOUT_COMPLETED' repo/src/Sylius/Component/Core\"",
+      "aggregated_output": "/usr/bin/bash: line 1: /usr/bin/rg: Permission denied\n",
+      "exit_code": 126,
+      "status": "failed"
+    }
+  ],
+  "diagnostic_addendum": null,
+  "trace_path": "results/test-generation-20261114/req2test/tasks/414416999a43fc7fdbd5/trajectory-excerpt.json"
+}

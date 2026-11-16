@@ -1,0 +1,130 @@
+{
+  "item_id": "coddy-agent/features/cli_tui.feature:124",
+  "outcome": "failed",
+  "outcomes_all_runs": [
+    "failed"
+  ],
+  "per_step": [
+    {
+      "error": null,
+      "result": "passed",
+      "seconds": 0.2464936,
+      "text": "a coddy console app over a stub agent runner"
+    },
+    {
+      "error": null,
+      "result": "passed",
+      "seconds": 0.039935563,
+      "text": "a previous console session with the prompt \"continue me\" and the reply \"continued\""
+    },
+    {
+      "error": null,
+      "result": "passed",
+      "seconds": 0.158419469,
+      "text": "the console app starts continuing the latest session"
+    },
+    {
+      "error": "transcript does not contain user text \"continue me\"",
+      "result": "failed",
+      "seconds": 0.165765447,
+      "text": "the transcript shows a user message block containing \"continue me\""
+    },
+    {
+      "error": null,
+      "result": "skipped",
+      "seconds": 7.8818e-05,
+      "text": "the transcript shows the assistant text \"continued\""
+    }
+  ],
+  "index_errors": {},
+  "stdout_tail": "=== RUN   TestCLITUIFeature\n=== RUN   TestCLITUIFeature/Continuing_reopens_the_most_recent_session_in_this_folder\n    suite.go:640: transcript does not contain user text \"continue me\"\nR2T_GODOG_EXIT TestCLITUIFeature 1\n=== NAME  TestCLITUIFeature\n    bdd_cli_tui_test.go:116: Godog feature failed\n--- FAIL: TestCLITUIFeature (0.62s)\n    --- FAIL: TestCLITUIFeature/Continuing_reopens_the_most_recent_session_in_this_folder (0.61s)\nFAIL\nFAIL\tgithub.com/EvilFreelancer/coddy-agent/external/cli\t0.674s\nFAIL\n",
+  "bench_meta": {
+    "dependency_profile": [
+      "network"
+    ],
+    "live_background_step_count": 1,
+    "live_step_count": 4,
+    "n_closure_contexts": 0,
+    "n_closure_files": 1,
+    "n_oracle_steps": 2,
+    "round_trip_seconds": 131.34,
+    "signature": "068d90dd1857",
+    "steps_removable": 5,
+    "steps_retained": 0,
+    "tags": [],
+    "upstream_selected": null
+  },
+  "written_files": [
+    "external/cli/bdd_cli_tui_test.go"
+  ],
+  "_source": "/root/lby-docker/req2test/user/benchmark/runs/req2test-recovery8-20261113-v1-coddy-agent/coddy-agent/th/exec.jsonl",
+  "requirement": {
+    "feature": {
+      "background": "  Background:\n    Given a coddy console app over a stub agent runner",
+      "file_path": "features/cli_tui.feature",
+      "narrative": "  Running coddy with no arguments on a terminal starts an interactive console\n  session that renders the conversation with the same machinery every other\n  surface uses: the session manager, the agent runner, and ACP updates.",
+      "title": "Interactive console TUI"
+    },
+    "scenario": {
+      "gherkin": "  Scenario: Continuing reopens the most recent session in this folder\n    Given a previous console session with the prompt \"continue me\" and the reply \"continued\"\n    When the console app starts continuing the latest session\n    Then the transcript shows a user message block containing \"continue me\"\n    And the transcript shows the assistant text \"continued\"",
+      "kind": "scenario",
+      "line": 124,
+      "tags": [],
+      "title": "Continuing reopens the most recent session in this folder"
+    }
+  },
+  "official_result": {
+    "instance_id": "coddy-agent/features/cli_tui.feature:124",
+    "project": "coddy-agent",
+    "view": "th",
+    "outcome": "assertion_failure",
+    "passed": false,
+    "api_f1": null,
+    "coverage_j": null,
+    "recall": null,
+    "kill_complete": false,
+    "kill_complete_strict": false,
+    "kill_complete_95": false,
+    "mutation_status": "not_passed",
+    "mutation_baseline": null,
+    "behaviour_status": "measured",
+    "n_gt_kills": 384,
+    "n_scored": 0,
+    "n_killed": 0,
+    "n_dropped": 0,
+    "n_crash_kills": 0,
+    "n_timeout_kills": 0,
+    "exclusion": null,
+    "engine_outcome": "failed",
+    "harness_version": 27,
+    "rejected_files": []
+  },
+  "population_exclusion": null,
+  "generated_files": [
+    {
+      "path": "external/cli/bdd_cli_tui_test.go",
+      "sha256": "ca99077c6a2e4f67481d4e9fd8284ded68e7bc3fb93bd3ad0616453e211a710a"
+    }
+  ],
+  "final_agent_message": "[repo/external/cli/bdd_cli_tui_test.go](/root/lby-docker/req2test/user/runs/req2test-recovery8-20261113-v1/generation/7ceb2cbda79af4e91e67/attempt-1/workspaces/0000/repo/external/cli/bdd_cli_tui_test.go)\n\nVerified with `go test -tags cli ./external/cli -run '^TestCLITUIFeature$' -count=1`.",
+  "denied_commands": [
+    {
+      "id": "item_1",
+      "type": "command_execution",
+      "command": "/usr/bin/bash -lc \"rg --files repo/external/cli repo | rg '(TARGET_CONTRACTS|feature|_test\\\\.go)\"'$|cli_tui'\"'\"",
+      "aggregated_output": "/usr/bin/bash: line 1: /usr/bin/rg: Permission denied\n/usr/bin/bash: line 1: /usr/bin/rg: Permission denied\n",
+      "exit_code": 126,
+      "status": "failed"
+    },
+    {
+      "id": "item_6",
+      "type": "command_execution",
+      "command": "/usr/bin/bash -lc \"rg -n \\\"newTestApp|type .*Terminal|func \\\\(.*Run\\\\(|StartContinue|godog|StubAgent|stub.*runner\\\" repo/external/cli repo/internal | head -150\"",
+      "aggregated_output": "/usr/bin/bash: line 1: /usr/bin/rg: Permission denied\n",
+      "exit_code": 0,
+      "status": "completed"
+    }
+  ],
+  "diagnostic_addendum": null,
+  "trace_path": "results/test-generation-20261114/req2test/tasks/7ceb2cbda79af4e91e67/trajectory-excerpt.json"
+}

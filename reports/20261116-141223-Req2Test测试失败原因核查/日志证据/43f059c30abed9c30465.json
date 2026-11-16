@@ -1,0 +1,87 @@
+{
+  "item_id": "prestashop/tests/Integration/Behaviour/Features/Scenario/Order/order_address.feature:159",
+  "outcome": "no_files_returned",
+  "outcomes_all_runs": null,
+  "per_step": null,
+  "index_errors": {},
+  "stdout_tail": null,
+  "bench_meta": null,
+  "written_files": [],
+  "_source": "/root/lby-docker/req2test/user/benchmark/runs/req2test-recovery8-20261113-v1-prestashop/prestashop/th/exec.jsonl",
+  "requirement": {
+    "feature": {
+      "background": "  Background:\n    Given email sending is disabled\n    And the current currency is \"USD\"\n    And country \"US\" is enabled\n    And country \"FR\" is enabled\n    And country \"ES\" is enabled\n    And the module \"dummy_payment\" is installed\n    And I am logged in as \"test@prestashop.com\" employee\n    And there is customer \"testCustomer\" with email \"pub@prestashop.com\"\n    And customer \"testCustomer\" has address in \"US\" country\n    And I create an empty cart \"dummy_cart\" for customer \"testCustomer\"\n    And I add 2 products \"Mug The best is yet to come\" to the cart \"dummy_cart\"",
+      "file_path": "tests/Integration/Behaviour/Features/Scenario/Order/order_address.feature",
+      "narrative": "  In order to manage orders for FO customers\n  As a BO user\n  I need to be able to customize orders from the BO",
+      "title": "Order from Back Office (BO)"
+    },
+    "scenario": {
+      "gherkin": "  Scenario: Check shipping details after updating carrier tracking number & url\n    And I create carrier \"tracking-carrier\" with specified properties:\n      | name        | tracking-carrier |\n      | trackingUrl |                  |\n    And I add order \"bo_order1\" with the following details:\n      | cart                | dummy_cart                 |\n      | message             | test                       |\n      | payment module name | dummy_payment              |\n      | status              | Awaiting bank wire payment |\n    And I update order \"bo_order1\" Tracking number to \"\" and Carrier to \"tracking-carrier\"\n    Then order \"bo_order1\" should have \"tracking-carrier\" as a carrier\n    And the preview order \"bo_order1\" has following shipping details\n      | Tracking number |  |\n      | Tracking URL    |  |\n    Given I update order \"bo_order1\" Tracking number to \"42424242\" and Carrier to \"tracking-carrier\"\n    When I edit carrier \"tracking-carrier\" with specified properties I get a new carrier referenced as \"new-tracking-carrier\":\n      | trackingUrl | http://tracking.url/@ |\n    Then order \"bo_order1\" should have \"tracking-carrier\" as a carrier\n    And the preview order \"bo_order1\" has following shipping details\n      | Tracking number | 42424242            |\n      | Tracking URL    |  |\n    Given I update order \"bo_order1\" Tracking number to \"42424242\" and Carrier to \"new-tracking-carrier\"\n    Then the preview order \"bo_order1\" has following shipping details\n      | Tracking number | 42424242                     |\n      | Tracking URL    | http://tracking.url/42424242 |",
+      "kind": "scenario",
+      "line": 159,
+      "tags": [
+        "@restore-all-tables-before-feature",
+        "@order-address",
+        "@clear-cache-before-feature"
+      ],
+      "title": "Check shipping details after updating carrier tracking number & url"
+    }
+  },
+  "official_result": {
+    "instance_id": "prestashop/tests/Integration/Behaviour/Features/Scenario/Order/order_address.feature:159",
+    "project": "prestashop",
+    "view": "th",
+    "outcome": "generation_failure",
+    "passed": false,
+    "api_f1": null,
+    "coverage_j": null,
+    "recall": null,
+    "kill_complete": false,
+    "kill_complete_strict": false,
+    "kill_complete_95": false,
+    "mutation_status": "not_passed",
+    "mutation_baseline": null,
+    "behaviour_status": "measured",
+    "n_gt_kills": 21,
+    "n_scored": 0,
+    "n_killed": 0,
+    "n_dropped": 0,
+    "n_crash_kills": 0,
+    "n_timeout_kills": 0,
+    "exclusion": null,
+    "engine_outcome": "no_files_returned",
+    "harness_version": 27,
+    "rejected_files": []
+  },
+  "population_exclusion": null,
+  "generated_files": [],
+  "final_agent_message": "I can’t honestly return step-definition code that makes this whole scenario pass yet. Its Background requires customer, cart, product, module, currency, country, and employee setup steps, and those definitions were removed too. The retained files do not provide that setup, and I haven’t established a reliable replacement for it. Supplying only carrier and shipping-detail steps would leave the scenario undefined at runtime.\n\nI inspected the retained context helpers and the carrier/order APIs, but made no repository changes. A complete solution needs working definitions for the Background steps as well as the scenario steps.",
+  "denied_commands": [
+    {
+      "id": "item_1",
+      "type": "command_execution",
+      "command": "/usr/bin/bash -lc 'ls repo/tests/Integration/Behaviour/Features/Context && rg --files repo/tests/Integration/Behaviour/Features/Context | head -60'",
+      "aggregated_output": "AbstractPrestaShopFeatureContext.php\nCartAwareTrait.php\nCommonFeatureContext.php\nConfiguration\nContextFeatureContext.php\nDomain\nLastExceptionTrait.php\nOrderMessageContext.php\nSharedStorage.php\nSharedStorageTrait.php\nUtil\n/usr/bin/bash: line 1: /usr/bin/rg: Permission denied\n",
+      "exit_code": 0,
+      "status": "completed"
+    },
+    {
+      "id": "item_5",
+      "type": "command_execution",
+      "command": "/usr/bin/bash -lc \"rg -n 'I create carrier|add order|update order .*Tracking|preview order.*shipping|empty cart|products .*to the cart|customer .*address|logged in as|email sending is disabled|current currency|country .*enabled|module .*installed' repo/tests/Integration/Behaviour/Features/Scenario/Order repo/src repo/classes\"",
+      "aggregated_output": "/usr/bin/bash: line 1: /usr/bin/rg: Permission denied\n",
+      "exit_code": 126,
+      "status": "failed"
+    },
+    {
+      "id": "item_6",
+      "type": "command_execution",
+      "command": "/usr/bin/bash -lc \"rg -n 'CreateCarrier|EditCarrierCommand|UpdateOrder|CarrierId|OrderPreview' repo/src/Adapter repo/src/Core/Domain/{Carrier,Order} | head -100\"",
+      "aggregated_output": "/usr/bin/bash: line 1: /usr/bin/rg: Permission denied\n",
+      "exit_code": 0,
+      "status": "completed"
+    }
+  ],
+  "diagnostic_addendum": null,
+  "trace_path": "results/test-generation-20261114/req2test/tasks/43f059c30abed9c30465/trajectory-excerpt.json"
+}

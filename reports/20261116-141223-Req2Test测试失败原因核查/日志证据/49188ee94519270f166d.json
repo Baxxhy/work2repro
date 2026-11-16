@@ -1,0 +1,117 @@
+{
+  "item_id": "python-docx/features/sty-add-style.feature:7",
+  "outcome": "failed",
+  "outcomes_all_runs": [
+    "failed"
+  ],
+  "per_step": [
+    {
+      "error": null,
+      "result": "passed",
+      "seconds": 0.028558,
+      "text": "a document having known styles"
+    },
+    {
+      "error": "document already contains style 'Heading 1'",
+      "result": "failed",
+      "seconds": 0.027269,
+      "text": "I call add_style('Heading 1', WD_STYLE_TYPE.PARAGRAPH, builtin=True)"
+    },
+    {
+      "error": null,
+      "result": "skipped",
+      "seconds": 0.0,
+      "text": "the document has one additional style"
+    },
+    {
+      "error": null,
+      "result": "skipped",
+      "seconds": 0.0,
+      "text": "styles['Heading 1'] is a style"
+    },
+    {
+      "error": null,
+      "result": "skipped",
+      "seconds": 0.0,
+      "text": "style.type is WD_STYLE_TYPE.PARAGRAPH"
+    },
+    {
+      "error": null,
+      "result": "skipped",
+      "seconds": 0.0,
+      "text": "style.builtin is True"
+    }
+  ],
+  "index_errors": {},
+  "stdout_tail": "       self.func(context, *args, **kwargs)\n        File \"features/steps/sty_add_style_steps.py\", line 33, in when_call_add_style\n          context.style = context.styles.add_style(name, style_type, builtin=builtin_value)\n                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n        File \"/work/src/docx/styles/styles.py\", line 63, in add_style\n          raise ValueError(\"document already contains style '%s'\" % name)\n      ValueError: document already contains style 'List Bullet'\n\n    Then the document has one additional style                             # None\n    And styles['List Bullet'] is a style                                   # None\n    And style.type is WD_STYLE_TYPE.LIST                                   # None\n    And style.builtin is True                                              # None\n\n  Scenario Outline: Add a style -- @1.4 New style varieties                # features/_bench_item.feature:19\n    Given a document having known styles                                   # features/steps/sty_add_style_steps.py:22\n    When I call add_style('Shipments', WD_STYLE_TYPE.TABLE, builtin=False) # features/steps/sty_add_style_steps.py:29\n    Then the document has one additional style                             # features/steps/sty_add_style_steps.py:39\n    And styles['Shipments'] is a style                                     # features/steps/sty_add_style_steps.py:48\n    And style.type is WD_STYLE_TYPE.TABLE                                  # features/steps/sty_add_style_steps.py:55\n    And style.builtin is False                                             # features/steps/sty_add_style_steps.py:63\n\n\nErrored scenarios:\n  features/_bench_item.feature:16  Add a style -- @1.1 New style varieties\n  features/_bench_item.feature:18  Add a style -- @1.3 New style varieties\n\n0 features passed, 0 failed, 1 error, 0 skipped\n2 scenarios passed, 0 failed, 2 error, 0 skipped\n14 steps passed, 0 failed, 2 error, 8 skipped\nTook 0min 0.199s\n",
+  "bench_meta": {
+    "dependency_profile": [],
+    "live_background_step_count": 0,
+    "live_step_count": 6,
+    "n_closure_contexts": 1,
+    "n_closure_files": 2,
+    "n_oracle_steps": 4,
+    "round_trip_seconds": 2.38,
+    "signature": "c62f452d13a4",
+    "steps_removable": 24,
+    "steps_retained": 0,
+    "tags": [],
+    "upstream_selected": null
+  },
+  "written_files": [
+    "features/steps/sty_add_style_steps.py"
+  ],
+  "_source": "/root/lby-docker/req2test/user/benchmark/runs/req2test-recovery8-20261113-v1-python-docx/python-docx/th/exec.jsonl",
+  "requirement": {
+    "feature": {
+      "background": null,
+      "file_path": "features/sty-add-style.feature",
+      "narrative": "  In order to customize the available styles in a document\n  As a developer using python-docx\n  I need a way to add a new style",
+      "title": "Add a style"
+    },
+    "scenario": {
+      "gherkin": "  Scenario Outline: Add a style\n    Given a document having known styles\n     When I call add_style('<name>', <type>, builtin=<builtin>)\n     Then the document has one additional style\n      And styles['<name>'] is a style\n      And style.type is <type>\n      And style.builtin is <builtin>\n\n    Examples: New style varieties\n      | name        | type                    | builtin |\n      | Heading 1   | WD_STYLE_TYPE.PARAGRAPH | True    |\n      | Inline Code | WD_STYLE_TYPE.CHARACTER | False   |\n      | List Bullet | WD_STYLE_TYPE.LIST      | True    |\n      | Shipments   | WD_STYLE_TYPE.TABLE     | False   |",
+      "kind": "outline",
+      "line": 7,
+      "tags": [],
+      "title": "Add a style"
+    }
+  },
+  "official_result": {
+    "instance_id": "python-docx/features/sty-add-style.feature:7",
+    "project": "python-docx",
+    "view": "th",
+    "outcome": "assertion_failure",
+    "passed": false,
+    "api_f1": null,
+    "coverage_j": null,
+    "recall": null,
+    "kill_complete": false,
+    "kill_complete_strict": false,
+    "kill_complete_95": false,
+    "mutation_status": "not_passed",
+    "mutation_baseline": null,
+    "behaviour_status": "measured",
+    "n_gt_kills": 145,
+    "n_scored": 0,
+    "n_killed": 0,
+    "n_dropped": 0,
+    "n_crash_kills": 0,
+    "n_timeout_kills": 0,
+    "exclusion": null,
+    "engine_outcome": "failed",
+    "harness_version": 27,
+    "rejected_files": []
+  },
+  "population_exclusion": null,
+  "generated_files": [
+    {
+      "path": "features/steps/sty_add_style_steps.py",
+      "sha256": "9ebd1c67173589de6bdcfa0d034175b15cbfde93b1f06ded78a7f082ca903390"
+    }
+  ],
+  "final_agent_message": "Added the step definitions in [sty_add_style_steps.py](/root/lby-docker/req2test/user/runs/req2test-subset160-20261112-v1/generation/49188ee94519270f166d/attempt-1/workspaces/0000/repo/features/steps/sty_add_style_steps.py). They create a fresh document, call `add_style` with the requested enum and builtin value, then check the style count and properties.\n\nThe file passes Python syntax compilation. I did not run the behave scenario.",
+  "denied_commands": [],
+  "diagnostic_addendum": null,
+  "trace_path": "results/test-generation-20261114/req2test/tasks/49188ee94519270f166d/trajectory-excerpt.json"
+}

@@ -1,0 +1,142 @@
+{
+  "item_id": "sylius/features/admin/user/managing_administrators/deleting_administrators.feature:13",
+  "outcome": "failed",
+  "outcomes_all_runs": [
+    "failed"
+  ],
+  "per_step": [
+    {
+      "error": null,
+      "result": "passed",
+      "seconds": 0.1714,
+      "text": "there is an administrator \"mr.banana@example.com\""
+    },
+    {
+      "error": null,
+      "result": "passed",
+      "seconds": 0.015,
+      "text": "there is also an administrator \"ted@example.com\""
+    },
+    {
+      "error": null,
+      "result": "passed",
+      "seconds": 0.1877,
+      "text": "I am logged in as \"ted@example.com\" administrator"
+    },
+    {
+      "error": null,
+      "result": "passed",
+      "seconds": 17.2891,
+      "text": "I want to browse administrators"
+    },
+    {
+      "error": "Expected exactly one administrator with email \"mr.banana@example.com\".",
+      "result": "failed",
+      "seconds": 0.2138,
+      "text": "I delete administrator with email \"mr.banana@example.com\""
+    }
+  ],
+  "index_errors": {},
+  "stdout_tail": "@managing_administrators\nFeature: Deleting an administrator\n  In order to get rid of deprecated administrators\n  As an Administrator\n  I want to be able to delete other administrator account\n\n  Background:\n    Given there is an administrator \"mr.banana@example.com\"\n    And there is also an administrator \"ted@example.com\"\n    And I am logged in as \"ted@example.com\" administrator\n\n  @api @ui\n  Scenario: Deleting an administrator\n    When I want to browse administrators\n    And I delete administrator with email \"mr.banana@example.com\"\n      Expected exactly one administrator with email \"mr.banana@example.com\". (Webmozart\\Assert\\InvalidArgumentException)\n    Then I should be notified that it has been successfully deleted\n    And there should not be \"mr.banana@example.com\" administrator anymore\n\n--- Failed scenarios:\n\n    _bench/item.feature:13 (on line 15)\n\n1 scenario (1 failed)\n7 steps (4 passed, 1 failed, 2 skipped)\n1m27.01s (377.47Mb)\n",
+  "bench_meta": {
+    "dependency_profile": [
+      "database"
+    ],
+    "live_background_step_count": 3,
+    "live_step_count": 4,
+    "n_closure_contexts": 1,
+    "n_closure_files": 2,
+    "n_oracle_steps": 2,
+    "round_trip_seconds": 12.45,
+    "signature": "4cf938d99306",
+    "steps_removable": 4,
+    "steps_retained": 3,
+    "tags": [
+      "@managing_administrators",
+      "@api",
+      "@ui"
+    ],
+    "upstream_selected": null
+  },
+  "written_files": [
+    "src/Sylius/Behat/Context/Api/ManagingAdministratorsContext.php"
+  ],
+  "_source": "/root/lby-docker/req2test/user/benchmark/runs/req2test-recovery8-20261113-v1-sylius/sylius/th/exec.jsonl",
+  "requirement": {
+    "feature": {
+      "background": "    Background:\n        Given there is an administrator \"mr.banana@example.com\"\n        And there is also an administrator \"ted@example.com\"\n        And I am logged in as \"ted@example.com\" administrator",
+      "file_path": "features/admin/user/managing_administrators/deleting_administrators.feature",
+      "narrative": "    In order to get rid of deprecated administrators\n    As an Administrator\n    I want to be able to delete other administrator account",
+      "title": "Deleting an administrator"
+    },
+    "scenario": {
+      "gherkin": "    Scenario: Deleting an administrator\n        When I want to browse administrators\n        And I delete administrator with email \"mr.banana@example.com\"\n        Then I should be notified that it has been successfully deleted\n        And there should not be \"mr.banana@example.com\" administrator anymore",
+      "kind": "scenario",
+      "line": 13,
+      "tags": [
+        "@managing_administrators",
+        "@api",
+        "@ui"
+      ],
+      "title": "Deleting an administrator"
+    }
+  },
+  "official_result": {
+    "instance_id": "sylius/features/admin/user/managing_administrators/deleting_administrators.feature:13",
+    "project": "sylius",
+    "view": "th",
+    "outcome": "assertion_failure",
+    "passed": false,
+    "api_f1": null,
+    "coverage_j": null,
+    "recall": null,
+    "kill_complete": false,
+    "kill_complete_strict": false,
+    "kill_complete_95": false,
+    "mutation_status": "not_passed",
+    "mutation_baseline": null,
+    "behaviour_status": "measured",
+    "n_gt_kills": 76,
+    "n_scored": 0,
+    "n_killed": 0,
+    "n_dropped": 0,
+    "n_crash_kills": 0,
+    "n_timeout_kills": 0,
+    "exclusion": null,
+    "engine_outcome": "failed",
+    "harness_version": 27,
+    "rejected_files": []
+  },
+  "population_exclusion": null,
+  "generated_files": [
+    {
+      "path": "behat_services.yml",
+      "sha256": "631075158a5f25ab92cdf71422cdc144e5f9fd18e92ec27614b4a5057546aff1"
+    },
+    {
+      "path": "src/Sylius/Behat/Context/Api/ManagingAdministratorsContext.php",
+      "sha256": "fb0a34e1d0a045430279612ac5801d92e5f9ab39a7e4a6292c1121dfd626ebad"
+    }
+  ],
+  "final_agent_message": "Added [ManagingAdministratorsContext.php](/root/lby-docker/req2test/user/runs/req2test-subset160-20261112-v1/generation/07ee338c267d287ba20c/attempt-1/workspaces/0000/repo/src/Sylius/Behat/Context/Api/ManagingAdministratorsContext.php) and [behat_services.yml](/root/lby-docker/req2test/user/runs/req2test-subset160-20261112-v1/generation/07ee338c267d287ba20c/attempt-1/workspaces/0000/repo/behat_services.yml). The steps look up the administrator by email, delete it through the admin API, check the deletion response, and verify the filtered collection is empty.\n\nI couldn’t complete the PHP syntax check: the `php -l` process remained running without output.",
+  "denied_commands": [
+    {
+      "id": "item_3",
+      "type": "command_execution",
+      "command": "/usr/bin/bash -lc 'rg --files repo/src/Sylius/Behat'",
+      "aggregated_output": "/usr/bin/bash: line 1: /usr/bin/rg: Permission denied\n",
+      "exit_code": 126,
+      "status": "failed"
+    },
+    {
+      "id": "item_4",
+      "type": "command_execution",
+      "command": "/usr/bin/bash -lc 'rg -n \"browse administrators|administrator with email|successfully deleted|administrators\" repo/src repo/features repo/TARGET_CONTRACTS.md'",
+      "aggregated_output": "/usr/bin/bash: line 1: /usr/bin/rg: Permission denied\n",
+      "exit_code": 126,
+      "status": "failed"
+    }
+  ],
+  "diagnostic_addendum": null,
+  "trace_path": "results/test-generation-20261114/req2test/tasks/07ee338c267d287ba20c/trajectory-excerpt.json"
+}

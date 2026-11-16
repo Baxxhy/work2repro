@@ -1,0 +1,127 @@
+{
+  "item_id": "coddy-agent/features/ask_mode_http.feature:22",
+  "outcome": "passed",
+  "outcomes_all_runs": [
+    "passed"
+  ],
+  "per_step": [
+    {
+      "error": null,
+      "result": "passed",
+      "seconds": 0.002962336,
+      "text": "a coddy gateway backed by a streaming stub model that writes a file, then answers"
+    },
+    {
+      "error": null,
+      "result": "passed",
+      "seconds": 0.012256118,
+      "text": "a client sends a streaming \"agent\" prompt over POST /v1/responses"
+    },
+    {
+      "error": null,
+      "result": "passed",
+      "seconds": 0.000145392,
+      "text": "the workspace file was written"
+    },
+    {
+      "error": null,
+      "result": "passed",
+      "seconds": 4.3913e-05,
+      "text": "the model was offered the full agent tool set"
+    },
+    {
+      "error": null,
+      "result": "passed",
+      "seconds": 0.000179196,
+      "text": "the transcript reports the session in \"agent\" mode"
+    }
+  ],
+  "index_errors": {},
+  "stdout_tail": "=== RUN   TestAskModeHTTPE2E\n=== RUN   TestAskModeHTTPE2E/The_same_model_in_agent_mode_still_writes_the_file\n2026/11/13 08:53:35 INFO session created id=sess_ce9fc3dc6a9bb39de7538727 cwd=/r2t-go/tmp/coddy-ask-bdd-310029379 mode=agent\nR2T_GODOG_EXIT TestAskModeHTTPE2E 0\n--- PASS: TestAskModeHTTPE2E (0.02s)\n    --- PASS: TestAskModeHTTPE2E/The_same_model_in_agent_mode_still_writes_the_file (0.02s)\nPASS\nok  \tgithub.com/EvilFreelancer/coddy-agent/external/httpserver\t0.063s\n",
+  "bench_meta": {
+    "dependency_profile": [
+      "network"
+    ],
+    "live_background_step_count": 0,
+    "live_step_count": 5,
+    "n_closure_contexts": 0,
+    "n_closure_files": 2,
+    "n_oracle_steps": 3,
+    "round_trip_seconds": 165.69,
+    "signature": "9d50f57d07e6",
+    "steps_removable": 5,
+    "steps_retained": 0,
+    "tags": [],
+    "upstream_selected": null
+  },
+  "written_files": [
+    "external/httpserver/bdd_ask_mode_e2e_test.go",
+    "external/httpserver/bdd_compaction_http_test.go"
+  ],
+  "_source": "/root/lby-docker/req2test/user/benchmark/runs/req2test-recovery8-20261113-v1-coddy-agent/coddy-agent/th/exec.jsonl",
+  "requirement": {
+    "feature": {
+      "background": null,
+      "file_path": "features/ask_mode_http.feature",
+      "narrative": "  The ask profile is a session mode like agent and plan: POST /v1/responses with\n  model \"ask\" runs the ReAct loop over the real OpenAI-compatible transport with\n  the read-only tool set, and a mutating call the model emits anyway is refused\n  on its way to the tool. Agent and plan keep the tool sets they had, so the\n  third mode changes nothing for the two that already exist.",
+      "title": "The HTTP gateway serves the read-only ask mode end to end"
+    },
+    "scenario": {
+      "gherkin": "  Scenario: The same model in agent mode still writes the file\n    Given a coddy gateway backed by a streaming stub model that writes a file, then answers\n    When a client sends a streaming \"agent\" prompt over POST /v1/responses\n    Then the workspace file was written\n    And the model was offered the full agent tool set\n    And the transcript reports the session in \"agent\" mode",
+      "kind": "scenario",
+      "line": 22,
+      "tags": [],
+      "title": "The same model in agent mode still writes the file"
+    }
+  },
+  "official_result": {
+    "instance_id": "coddy-agent/features/ask_mode_http.feature:22",
+    "project": "coddy-agent",
+    "view": "th",
+    "outcome": "pass",
+    "passed": true,
+    "api_f1": 0.6,
+    "coverage_j": 0.2571373826403526,
+    "recall": 0.3556701030927835,
+    "kill_complete": false,
+    "kill_complete_strict": false,
+    "kill_complete_95": false,
+    "mutation_status": "scored",
+    "mutation_baseline": "passed",
+    "behaviour_status": "measured",
+    "n_gt_kills": 388,
+    "n_scored": 388,
+    "n_killed": 138,
+    "n_dropped": 0,
+    "n_crash_kills": 34,
+    "n_timeout_kills": 0,
+    "exclusion": null,
+    "engine_outcome": "passed",
+    "harness_version": 27,
+    "rejected_files": []
+  },
+  "population_exclusion": null,
+  "generated_files": [
+    {
+      "path": "external/httpserver/bdd_ask_mode_e2e_test.go",
+      "sha256": "4c9e05d6fbcf0ab4dfa40658ae07f5f99e66a49fcfa716ac81c794670dd879a4"
+    },
+    {
+      "path": "external/httpserver/bdd_compaction_http_test.go",
+      "sha256": "bd2b2f75df455bb3f841d5c00af0f87bbd3345640dc68a60d90621bca5de037c"
+    }
+  ],
+  "final_agent_message": "Added the requested files:\n\n- [bdd_ask_mode_e2e_test.go](/root/lby-docker/req2test/user/runs/req2test-recovery8-20261113-v1/generation/af2db3aaa3d3aed0e730/attempt-1/workspaces/0000/repo/external/httpserver/bdd_ask_mode_e2e_test.go)\n- [bdd_compaction_http_test.go](/root/lby-docker/req2test/user/runs/req2test-recovery8-20261113-v1/generation/af2db3aaa3d3aed0e730/attempt-1/workspaces/0000/repo/external/httpserver/bdd_compaction_http_test.go)\n\nI did not run the suite.",
+  "denied_commands": [
+    {
+      "id": "item_1",
+      "type": "command_execution",
+      "command": "/usr/bin/bash -lc \"ls repo/external/httpserver && rg --files repo | rg '(httpserver|TARGET_CONTRACTS|ask_mode_http|_test.go)\"'$'\"' | head -100\"",
+      "aggregated_output": "auth.go\nbackground_http.go\nbridge.go\nbridge_relay_sender_test.go\nbridge_test.go\ncoddy_branches.go\ncoddy_coddy.go\ncoddy_coddy_created_at_test.go\ncoddy_compact.go\ncoddy_plans.go\ncoddy_plans_test.go\ncoddy_toolcalls_test.go\ncodex_auth_http.go\ncodex_auth_http_test.go\ncommands.go\ncomposer_stream_http.go\ncomposer_stream_http_test.go\ncomposer_stream_relay.go\ncomposer_stream_relay_test.go\ncomposer_stream_resume_test.go\ncomposer_watch_test.go\nconfig_http.go\ncors.go\ndoc.go\nenhance_prompt.go\nenhance_prompt_test.go\nevents_http.go\nevents_http_test.go\nevents_hub.go\nhooks_http.go\nhttp_model_kind.go\nlisten.go\nmcp_config_http_test.go\nmcp_mgmt.go\nmemory_http.go\nmemory_http_stub.go\nmemory_http_test.go\nneuraldeep_auth_http.go\nneuraldeep_auth_http_test.go\nopenapi.go\nopenapi_embed.go\npermission_resume.go\npermission_resume_test.go\npermissionhub.go\nproviders_models_http.go\nproviders_models_http_test.go\nproviders_usage_http.go\nproviders_usage_http_test.go\nquestionhub.go\nreasoning_levels_http.go\nreasoning_test.go\nscheduler_http.go\nscheduler_http_stub.go\nscheduler_http_test.go\nserver.go\nserver_direct.go\nserver_metadata.go\nserver_no_ui_test.go\nserver_test.go\nserver_ui_embed_test.go\nskills_mgmt.go\nslash_commands.go\nspa_embed_ui.go\nspa_no_ui.go\nsubagents_http.go\nsubagents_http_test.go\nswagger-static\nworkspace_context.go\nworkspace_context_test.go\nworkspace_file.go\nworkspace_file_test.go\nworkspace_files.go\n/usr/bin/bash: line 1: /usr/bin/rg: Permission denied\n/usr/bin/bash: line 1: /usr/bin/rg: Permission denied\n",
+      "exit_code": 0,
+      "status": "completed"
+    }
+  ],
+  "diagnostic_addendum": null,
+  "trace_path": "results/test-generation-20261114/req2test/tasks/af2db3aaa3d3aed0e730/trajectory-excerpt.json"
+}

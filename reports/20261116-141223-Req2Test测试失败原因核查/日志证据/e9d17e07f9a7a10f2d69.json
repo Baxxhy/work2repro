@@ -1,0 +1,97 @@
+{
+  "item_id": "kapua/qa/integration/src/test/resources/features/account/AccountGroupService.feature:105",
+  "outcome": "parse_or_compile_error",
+  "outcomes_all_runs": [
+    "no_scenario_ran"
+  ],
+  "per_step": [],
+  "index_errors": {
+    "qa/integration/src/test/java/org/eclipse/kapua/integration/service/account/r2t/generated/AccountGroupServiceSteps.java": "61:44 error: incompatible types: Object cannot be converted to CucConfig"
+  },
+  "stdout_tail": "7]\n[INFO] No sources to compile\n[INFO] \n[INFO] --- resources:3.3.0:testResources (default-testResources) @ kapua-qa-integration ---\n[INFO] Copying 113 resources\n[INFO] \n[INFO] --- compiler:3.6.1:testCompile (default-testCompile) @ kapua-qa-integration ---\n[INFO] Toolchain in maven-compiler-plugin: JDK[/opt/r2t/jdk17]\n[INFO] Changes detected - recompiling the module!\n[INFO] Compiling 83 source files to /work/qa/integration/target/test-classes\n[INFO] -------------------------------------------------------------\n[ERROR] COMPILATION ERROR : \n[INFO] -------------------------------------------------------------\n[ERROR] /work/qa/integration/src/test/java/org/eclipse/kapua/integration/service/account/r2t/generated/AccountGroupServiceSteps.java:[61,44] error: incompatible types: Object cannot be converted to CucConfig\n[INFO] 1 error\n[INFO] -------------------------------------------------------------\n[INFO] ------------------------------------------------------------------------\n[INFO] BUILD FAILURE\n[INFO] ------------------------------------------------------------------------\n[INFO] Total time:  6.824 s\n[INFO] Finished at: 2026-11-12T17:30:20Z\n[INFO] ------------------------------------------------------------------------\n[ERROR] Failed to execute goal org.apache.maven.plugins:maven-compiler-plugin:3.6.1:testCompile (default-testCompile) on project kapua-qa-integration: Compilation failure\n[ERROR] /work/qa/integration/src/test/java/org/eclipse/kapua/integration/service/account/r2t/generated/AccountGroupServiceSteps.java:[61,44] error: incompatible types: Object cannot be converted to CucConfig\n[ERROR] -> [Help 1]\n[ERROR] \n[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.\n[ERROR] Re-run Maven using the -X switch to enable full debug logging.\n[ERROR] \n[ERROR] For more information about the errors and possible solutions, please read the following articles:\n[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/MojoFailureException\n",
+  "bench_meta": {
+    "dependency_profile": [],
+    "live_background_step_count": 0,
+    "live_step_count": 9,
+    "n_closure_contexts": 3,
+    "n_closure_files": 3,
+    "n_oracle_steps": 8,
+    "round_trip_seconds": 93.748,
+    "signature": "45842760f0b6",
+    "steps_removable": 8,
+    "steps_retained": 1,
+    "tags": [
+      "@group",
+      "@env_none"
+    ],
+    "upstream_selected": null
+  },
+  "written_files": [
+    "qa/integration/src/test/java/org/eclipse/kapua/integration/service/account/r2t/generated/AccountGroupServiceSteps.java"
+  ],
+  "_source": "/root/lby-docker/req2test/user/benchmark/runs/req2test-recovery8-20261113-v1-kapua/kapua/th/exec.jsonl",
+  "requirement": {
+    "feature": {
+      "background": null,
+      "file_path": "qa/integration/src/test/resources/features/account/AccountGroupService.feature",
+      "narrative": null,
+      "title": "Account Group Service Integration Tests"
+    },
+    "scenario": {
+      "gherkin": "  Scenario: Creating Groups And Then Changing InfiniteChildGroups To False And Set MaxNumberChildGroups\n  Login as kapua-sys, create an account\n  Configure GroupService of that account, set infiniteChildGroups to true\n  Create 2 Groups\n  Configure GroupService of that account, set infiniteChildGroups to false and maxNumberChildGroups to 2\n  No exception should be thrown\n\n    Given I login as user with name \"kapua-sys\" and password \"kapua-password\"\n    Then I create an account with name \"acc1\", organization name \"acc1\" and email address \"acc1@org.com\"\n    And I configure the group service\n      | type    | name                   | value |\n      | boolean | infiniteChildEntities  | true  |\n      | integer | maxNumberChildEntities | 0     |\n    Then I select account \"acc1\"\n    And I create a group with name \"Group1\"\n    And I create a group with name \"Group2\"\n    And I configure the group service\n      | type    | name                   | value |\n      | boolean | infiniteChildEntities  | false |\n      | integer | maxNumberChildEntities | 2     |\n    Then No exception was thrown\n    And I logout",
+      "kind": "scenario",
+      "line": 105,
+      "tags": [
+        "@group",
+        "@env_none"
+      ],
+      "title": "Creating Groups And Then Changing InfiniteChildGroups To False And Set MaxNumberChildGroups"
+    }
+  },
+  "official_result": {
+    "instance_id": "kapua/qa/integration/src/test/resources/features/account/AccountGroupService.feature:105",
+    "project": "kapua",
+    "view": "th",
+    "outcome": "compilation_failure",
+    "passed": false,
+    "api_f1": null,
+    "coverage_j": null,
+    "recall": null,
+    "kill_complete": false,
+    "kill_complete_strict": false,
+    "kill_complete_95": false,
+    "mutation_status": "not_passed",
+    "mutation_baseline": null,
+    "behaviour_status": "measured",
+    "n_gt_kills": 44,
+    "n_scored": 0,
+    "n_killed": 0,
+    "n_dropped": 0,
+    "n_crash_kills": 0,
+    "n_timeout_kills": 0,
+    "exclusion": null,
+    "engine_outcome": "parse_or_compile_error",
+    "harness_version": 27,
+    "rejected_files": []
+  },
+  "population_exclusion": null,
+  "generated_files": [
+    {
+      "path": "qa/integration/src/test/java/org/eclipse/kapua/integration/service/account/r2t/generated/AccountGroupServiceSteps.java",
+      "sha256": "c532528a60cc1592b8737eb8b5a7ee9f9029b217c577776d3960d64d6a602335"
+    }
+  ],
+  "final_agent_message": "Added [AccountGroupServiceSteps.java](/root/lby-docker/req2test/user/runs/full-baseline-20261111-v1/generation/e9d17e07f9a7a10f2d69/attempt-1/workspaces/0000/repo/qa/integration/src/test/java/org/eclipse/kapua/integration/service/account/r2t/generated/AccountGroupServiceSteps.java) with the login, account creation, group-service configuration, account selection, group creation, and logout steps. It uses the retained `BasicSteps` assertion and `CucConfig` table conversion. I couldn’t run the harness here, so execution against the separate implementation remains unverified.",
+  "denied_commands": [
+    {
+      "id": "item_1",
+      "type": "command_execution",
+      "command": "/usr/bin/bash -lc 'rg --files repo/qa/common repo/qa/integration/src/test/java | head -100; rg -n \"configure the group service|create a group with name|create an account with name|No exception was thrown|StepData\" repo/qa'",
+      "aggregated_output": "/usr/bin/bash: line 1: /usr/bin/rg: Permission denied\n/usr/bin/bash: line 1: /usr/bin/rg: Permission denied\n",
+      "exit_code": 126,
+      "status": "failed"
+    }
+  ],
+  "diagnostic_addendum": null,
+  "trace_path": "results/test-generation-20261114/req2test/tasks/e9d17e07f9a7a10f2d69/trajectory-excerpt.json"
+}

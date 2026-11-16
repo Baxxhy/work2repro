@@ -1,0 +1,105 @@
+{
+  "item_id": "sylius/features/admin/order/managing_orders/resending_order_confirmation_email.feature:43",
+  "outcome": "container_error",
+  "outcomes_all_runs": [
+    "container_error"
+  ],
+  "per_step": [],
+  "index_errors": {},
+  "stdout_tail": "\nIn CheckExceptionOnInvalidReferenceBehaviorPass.php line 116:\n                                                                                                                                                                                                                                                        \n  The service \"Sylius\\Behat\\Context\\Api\\Admin\\ResendingOrderConfirmationEmailContext\" has a dependency on a non-existent service \"Sylius\\Behat\\Service\\Checker\\EmailChecker\". Did you mean this: \"Sylius\\Behat\\Service\\Checker\\EmailCheckerInterface\"?  \n                                                                                                                                                                                                                                                        \n\n",
+  "bench_meta": {
+    "dependency_profile": [
+      "database"
+    ],
+    "live_background_step_count": 10,
+    "live_step_count": 4,
+    "n_closure_contexts": 2,
+    "n_closure_files": 4,
+    "n_oracle_steps": 2,
+    "round_trip_seconds": 11.53,
+    "signature": "537dd56744e3",
+    "steps_removable": 4,
+    "steps_retained": 10,
+    "tags": [
+      "@managing_orders",
+      "@api",
+      "@ui",
+      "@email"
+    ],
+    "upstream_selected": null
+  },
+  "written_files": [
+    "src/Sylius/Behat/Context/Api/Admin/ResendingOrderConfirmationEmailContext.php"
+  ],
+  "_source": "/root/lby-docker/req2test/user/benchmark/runs/req2test-recovery8-20261113-v1-sylius/sylius/th/exec.jsonl",
+  "requirement": {
+    "feature": {
+      "background": "    Background:\n        Given the store operates on a single channel in \"United States\"\n        And that channel allows to shop using \"English (United States)\" and \"Polish (Poland)\" locales\n        And the store has a product \"Angel T-Shirt\"\n        And the store ships everywhere for Free\n        And the store allows paying with \"Cash on Delivery\"\n        And there is a customer \"lucy@teamlucifer.com\" that placed an order \"#00000666\"\n        And the customer bought a single \"Angel T-Shirt\"\n        And the customer \"Lucifer Morningstar\" addressed it to \"Seaside Fwy\", \"90802\" \"Los Angeles\" in the \"United States\" with identical billing address\n        And the customer chose \"Free\" shipping method with \"Cash on Delivery\" payment\n        And I am logged in as an administrator",
+      "file_path": "features/admin/order/managing_orders/resending_order_confirmation_email.feature",
+      "narrative": "    In order to be able to send a lost email again\n    As an Administrator\n    I want to have the order confirmation email for a chosen order sent to the customer",
+      "title": "Resending an order confirmation email for a chosen order"
+    },
+    "scenario": {
+      "gherkin": "    Scenario: Not being able to resend a confirmation email for an order with wrong state\n        When I view the summary of the order \"#00000666\"\n        And I cancel this order\n        Then I should not be able to resend the order confirmation email\n        And an email with the confirmation of the order \"#00000666\" should not be sent to \"lucy@teamlucifer.com\"",
+      "kind": "scenario",
+      "line": 43,
+      "tags": [
+        "@managing_orders",
+        "@api",
+        "@ui",
+        "@email"
+      ],
+      "title": "Not being able to resend a confirmation email for an order with wrong state"
+    }
+  },
+  "official_result": {
+    "instance_id": "sylius/features/admin/order/managing_orders/resending_order_confirmation_email.feature:43",
+    "project": "sylius",
+    "view": "th",
+    "outcome": "compilation_failure",
+    "passed": false,
+    "api_f1": null,
+    "coverage_j": null,
+    "recall": null,
+    "kill_complete": false,
+    "kill_complete_strict": false,
+    "kill_complete_95": false,
+    "mutation_status": "not_passed",
+    "mutation_baseline": null,
+    "behaviour_status": "measured",
+    "n_gt_kills": 273,
+    "n_scored": 0,
+    "n_killed": 0,
+    "n_dropped": 0,
+    "n_crash_kills": 0,
+    "n_timeout_kills": 0,
+    "exclusion": null,
+    "engine_outcome": "container_error",
+    "harness_version": 27,
+    "rejected_files": []
+  },
+  "population_exclusion": null,
+  "generated_files": [
+    {
+      "path": "behat_services.yml",
+      "sha256": "1ef49a85f557e489d02aafeb2de8068b6c60923fabd73b5902f9ab280296776c"
+    },
+    {
+      "path": "src/Sylius/Behat/Context/Api/Admin/ResendingOrderConfirmationEmailContext.php",
+      "sha256": "fda653f5a78a0a0b3d7b79fdd19e09f3bd822ff6685663fe47160a4c9bdcf27c"
+    }
+  ],
+  "final_agent_message": "Added [ResendingOrderConfirmationEmailContext.php](/root/lby-docker/req2test/user/runs/req2test-subset160-20261112-v1/generation/8e69ef9483376dabe14f/attempt-1/workspaces/0000/repo/src/Sylius/Behat/Context/Api/Admin/ResendingOrderConfirmationEmailContext.php) with steps to view the order, cancel it, attempt a resend, and check that no email went to the customer. Added [behat_services.yml](/root/lby-docker/req2test/user/runs/req2test-subset160-20261112-v1/generation/8e69ef9483376dabe14f/attempt-1/workspaces/0000/repo/behat_services.yml) to wire the admin API client and email checker.\n\nPHP syntax validation passed. I couldn’t run the scenario in this workspace.",
+  "denied_commands": [
+    {
+      "id": "item_1",
+      "type": "command_execution",
+      "command": "/usr/bin/bash -lc 'ls repo/src/Sylius/Behat; rg -n \"resend|confirmation email|cancel this order|view the summary of the order|order confirmation\" repo/src/Sylius/Behat repo/features/admin/order/managing_orders/resending_order_confirmation_email.feature'",
+      "aggregated_output": "Application\nBehaviour\nBench\nClient\nContext\nElement\nException\nNotificationType.php\nPage\nResources\nService\ntests\n/usr/bin/bash: line 1: /usr/bin/rg: Permission denied\n",
+      "exit_code": 126,
+      "status": "failed"
+    }
+  ],
+  "diagnostic_addendum": null,
+  "trace_path": "results/test-generation-20261114/req2test/tasks/8e69ef9483376dabe14f/trajectory-excerpt.json"
+}

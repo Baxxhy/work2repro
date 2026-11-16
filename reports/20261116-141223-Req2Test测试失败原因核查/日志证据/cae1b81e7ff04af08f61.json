@@ -1,0 +1,99 @@
+{
+  "item_id": "kapua/qa/integration/src/test/resources/features/authorization/GroupService.feature:119",
+  "outcome": "parse_or_compile_error",
+  "outcomes_all_runs": [
+    "no_scenario_ran"
+  ],
+  "per_step": [],
+  "index_errors": {
+    "qa/integration/src/test/java/org/eclipse/kapua/integration/service/authorization/r2t/generated/GroupFalseIdSteps.java": "39:23 error: method getService in interface KapuaServiceLoader cannot be applied to given types;"
+  },
+  "stdout_tail": "------------------------------\n[INFO] ------------------------------------------------------------------------\n[INFO] BUILD FAILURE\n[INFO] ------------------------------------------------------------------------\n[INFO] Total time:  7.260 s\n[INFO] Finished at: 2026-11-12T17:33:13Z\n[INFO] ------------------------------------------------------------------------\n[ERROR] Failed to execute goal org.apache.maven.plugins:maven-compiler-plugin:3.6.1:testCompile (default-testCompile) on project kapua-qa-integration: Compilation failure: Compilation failure: \n[ERROR] /work/qa/integration/src/test/java/org/eclipse/kapua/integration/service/authorization/r2t/generated/GroupFalseIdSteps.java:[39,23] error: method getService in interface KapuaServiceLoader cannot be applied to given types;\n[ERROR]   required: Class<S>\n[ERROR]   found:    Class<CredentialsFactory>\n[ERROR]   reason: inference variable S has incompatible bounds\n[ERROR]     equality constraints: CredentialsFactory\n[ERROR]     lower bounds: KapuaService\n[ERROR]   where S is a type-variable:\n[ERROR]     S extends KapuaService declared in method <S>getService(Class<S>)\n[ERROR] /work/qa/integration/src/test/java/org/eclipse/kapua/integration/service/authorization/r2t/generated/GroupFalseIdSteps.java:[78,20] error: no suitable constructor found for KapuaEid(long)\n[ERROR]     constructor KapuaEid.KapuaEid(BigInteger) is not applicable\n[ERROR]       (argument mismatch; long cannot be converted to BigInteger)\n[ERROR]     constructor KapuaEid.KapuaEid(KapuaId) is not applicable\n[ERROR]       (argument mismatch; long cannot be converted to KapuaId)\n[ERROR] -> [Help 1]\n[ERROR] \n[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.\n[ERROR] Re-run Maven using the -X switch to enable full debug logging.\n[ERROR] \n[ERROR] For more information about the errors and possible solutions, please read the following articles:\n[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/MojoFailureException\n",
+  "bench_meta": {
+    "dependency_profile": [],
+    "live_background_step_count": 0,
+    "live_step_count": 9,
+    "n_closure_contexts": 2,
+    "n_closure_files": 2,
+    "n_oracle_steps": 5,
+    "round_trip_seconds": 126.65800000000002,
+    "signature": "f42e1e529fbf",
+    "steps_removable": 7,
+    "steps_retained": 2,
+    "tags": [
+      "@security",
+      "@groupService",
+      "@env_none"
+    ],
+    "upstream_selected": null
+  },
+  "written_files": [
+    "qa/integration/src/test/java/org/eclipse/kapua/integration/service/authorization/r2t/generated/GroupFalseIdSteps.java"
+  ],
+  "_source": "/root/lby-docker/req2test/user/benchmark/runs/req2test-recovery8-20261113-v1-kapua/kapua/th/exec.jsonl",
+  "requirement": {
+    "feature": {
+      "background": null,
+      "file_path": "qa/integration/src/test/resources/features/authorization/GroupService.feature",
+      "narrative": null,
+      "title": "Group Service tests"
+    },
+    "scenario": {
+      "gherkin": "  Scenario: Update a group entry with a false ID\n  Create a regular group entry. Modify the group object ID to a random value.\n  Trying to update such an group object should raise an exception.\n\n    When I login as user with name \"kapua-sys\" and password \"kapua-password\"\n    When I configure the group service\n      | type    | name                   | value | scopeId | parentId |\n      | boolean | infiniteChildEntities  | true  | 0       | 1        |\n      | integer | maxNumberChildEntities | 5     | 0       | 1        |\n    Given I create the group\n      | scope | name        |\n      | 0     | test_name_4 |\n    Then A group was created\n    And The group matches the creator\n    Given I expect the exception \"KapuaEntityNotFoundException\" with the text \"The entity of type group\"\n    When I update the group with an incorrect ID\n    Then An exception was thrown\n    And I logout",
+      "kind": "scenario",
+      "line": 119,
+      "tags": [
+        "@security",
+        "@groupService",
+        "@env_none"
+      ],
+      "title": "Update a group entry with a false ID"
+    }
+  },
+  "official_result": {
+    "instance_id": "kapua/qa/integration/src/test/resources/features/authorization/GroupService.feature:119",
+    "project": "kapua",
+    "view": "th",
+    "outcome": "compilation_failure",
+    "passed": false,
+    "api_f1": null,
+    "coverage_j": null,
+    "recall": null,
+    "kill_complete": false,
+    "kill_complete_strict": false,
+    "kill_complete_95": false,
+    "mutation_status": "not_passed",
+    "mutation_baseline": null,
+    "behaviour_status": "measured",
+    "n_gt_kills": 47,
+    "n_scored": 0,
+    "n_killed": 0,
+    "n_dropped": 0,
+    "n_crash_kills": 0,
+    "n_timeout_kills": 0,
+    "exclusion": null,
+    "engine_outcome": "parse_or_compile_error",
+    "harness_version": 27,
+    "rejected_files": []
+  },
+  "population_exclusion": null,
+  "generated_files": [
+    {
+      "path": "qa/integration/src/test/java/org/eclipse/kapua/integration/service/authorization/r2t/generated/GroupFalseIdSteps.java",
+      "sha256": "9391156fc8b481fc3ad385a07307cf4023d9c3342e3cdc350e2d6be11f303ede"
+    }
+  ],
+  "final_agent_message": "Added the generated step definitions in [GroupFalseIdSteps.java](/root/lby-docker/req2test/user/runs/full-baseline-20261111-v1/generation/cae1b81e7ff04af08f61/attempt-1/workspaces/0000/repo/qa/integration/src/test/java/org/eclipse/kapua/integration/service/authorization/r2t/generated/GroupFalseIdSteps.java). The class handles login, group-service configuration, group creation and checks, the incorrect-ID update, and logout. I haven’t run it in the harness.",
+  "denied_commands": [
+    {
+      "id": "item_2",
+      "type": "command_execution",
+      "command": "/usr/bin/bash -lc 'rg --files repo/qa/common repo/qa/integration/src/test/java | head -n 100'",
+      "aggregated_output": "/usr/bin/bash: line 1: /usr/bin/rg: Permission denied\n",
+      "exit_code": 0,
+      "status": "completed"
+    }
+  ],
+  "diagnostic_addendum": null,
+  "trace_path": "results/test-generation-20261114/req2test/tasks/cae1b81e7ff04af08f61/trajectory-excerpt.json"
+}

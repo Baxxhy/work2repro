@@ -1,0 +1,99 @@
+{
+  "item_id": "kapua/qa/integration/src/test/resources/features/authorization/DomainService.feature:95",
+  "outcome": "parse_or_compile_error",
+  "outcomes_all_runs": [
+    "no_scenario_ran"
+  ],
+  "per_step": [],
+  "index_errors": {
+    "qa/integration/src/test/java/org/eclipse/kapua/integration/service/authorization/r2t/generated/DomainServiceSteps.java": "48:60 error: incompatible types: Object cannot be converted to CucDomain"
+  },
+  "stdout_tail": "7]\n[INFO] No sources to compile\n[INFO] \n[INFO] --- resources:3.3.0:testResources (default-testResources) @ kapua-qa-integration ---\n[INFO] Copying 113 resources\n[INFO] \n[INFO] --- compiler:3.6.1:testCompile (default-testCompile) @ kapua-qa-integration ---\n[INFO] Toolchain in maven-compiler-plugin: JDK[/opt/r2t/jdk17]\n[INFO] Changes detected - recompiling the module!\n[INFO] Compiling 83 source files to /work/qa/integration/target/test-classes\n[INFO] -------------------------------------------------------------\n[ERROR] COMPILATION ERROR : \n[INFO] -------------------------------------------------------------\n[ERROR] /work/qa/integration/src/test/java/org/eclipse/kapua/integration/service/authorization/r2t/generated/DomainServiceSteps.java:[48,60] error: incompatible types: Object cannot be converted to CucDomain\n[INFO] 1 error\n[INFO] -------------------------------------------------------------\n[INFO] ------------------------------------------------------------------------\n[INFO] BUILD FAILURE\n[INFO] ------------------------------------------------------------------------\n[INFO] Total time:  6.927 s\n[INFO] Finished at: 2026-11-12T17:32:00Z\n[INFO] ------------------------------------------------------------------------\n[ERROR] Failed to execute goal org.apache.maven.plugins:maven-compiler-plugin:3.6.1:testCompile (default-testCompile) on project kapua-qa-integration: Compilation failure\n[ERROR] /work/qa/integration/src/test/java/org/eclipse/kapua/integration/service/authorization/r2t/generated/DomainServiceSteps.java:[48,60] error: incompatible types: Object cannot be converted to CucDomain\n[ERROR] -> [Help 1]\n[ERROR] \n[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.\n[ERROR] Re-run Maven using the -X switch to enable full debug logging.\n[ERROR] \n[ERROR] For more information about the errors and possible solutions, please read the following articles:\n[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/MojoFailureException\n",
+  "bench_meta": {
+    "dependency_profile": [],
+    "live_background_step_count": 0,
+    "live_step_count": 7,
+    "n_closure_contexts": 2,
+    "n_closure_files": 2,
+    "n_oracle_steps": 2,
+    "round_trip_seconds": 135.926,
+    "signature": "ce83771cc416",
+    "steps_removable": 7,
+    "steps_retained": 0,
+    "tags": [
+      "@security",
+      "@domainService",
+      "@env_none"
+    ],
+    "upstream_selected": null
+  },
+  "written_files": [
+    "qa/integration/src/test/java/org/eclipse/kapua/integration/service/authorization/r2t/generated/DomainServiceSteps.java"
+  ],
+  "_source": "/root/lby-docker/req2test/user/benchmark/runs/req2test-recovery8-20261113-v1-kapua/kapua/th/exec.jsonl",
+  "requirement": {
+    "feature": {
+      "background": null,
+      "file_path": "qa/integration/src/test/resources/features/authorization/DomainService.feature",
+      "narrative": null,
+      "title": "Domain Service tests"
+    },
+    "scenario": {
+      "gherkin": "  Scenario: Delete the last created domain entry\n  It must be possible to delete an entry from the domain table. The domain is deleted\n  based on its ID.\n\n    When I login as user with name \"kapua-sys\" and password \"kapua-password\"\n    Given I create the domain\n      | name        | actions      |\n      | test_name_2 | read,execute |\n    When I search for the last created domain\n    Then The domain matches the creator\n    When I delete the last created domain\n    And I search for the last created domain\n    Then There is no domain",
+      "kind": "scenario",
+      "line": 95,
+      "tags": [
+        "@security",
+        "@domainService",
+        "@env_none"
+      ],
+      "title": "Delete the last created domain entry"
+    }
+  },
+  "official_result": {
+    "instance_id": "kapua/qa/integration/src/test/resources/features/authorization/DomainService.feature:95",
+    "project": "kapua",
+    "view": "th",
+    "outcome": "compilation_failure",
+    "passed": false,
+    "api_f1": null,
+    "coverage_j": null,
+    "recall": null,
+    "kill_complete": false,
+    "kill_complete_strict": false,
+    "kill_complete_95": false,
+    "mutation_status": "not_passed",
+    "mutation_baseline": null,
+    "behaviour_status": "measured",
+    "n_gt_kills": 41,
+    "n_scored": 0,
+    "n_killed": 0,
+    "n_dropped": 0,
+    "n_crash_kills": 0,
+    "n_timeout_kills": 0,
+    "exclusion": null,
+    "engine_outcome": "parse_or_compile_error",
+    "harness_version": 27,
+    "rejected_files": []
+  },
+  "population_exclusion": null,
+  "generated_files": [
+    {
+      "path": "qa/integration/src/test/java/org/eclipse/kapua/integration/service/authorization/r2t/generated/DomainServiceSteps.java",
+      "sha256": "3b0ef1c9d41d7672ec81a35e23efae79e0a7a48641595106ae4d7afb580c7341"
+    }
+  ],
+  "final_agent_message": "Added the domain lifecycle steps in [DomainServiceSteps.java](/root/lby-docker/req2test/user/runs/full-baseline-20261111-v1/generation/1a813a0c953718dfbf62/attempt-1/workspaces/0000/repo/qa/integration/src/test/java/org/eclipse/kapua/integration/service/authorization/r2t/generated/DomainServiceSteps.java). They log in, create and find the domain, compare it with the creator, delete it, then verify it is absent. I couldn’t run the scenario in this workspace.",
+  "denied_commands": [
+    {
+      "id": "item_1",
+      "type": "command_execution",
+      "command": "/usr/bin/bash -lc \"rg --files repo/qa | rg '(BasicSteps|StepData|Domain|LocatorConfiguration|TARGET_CONTRACTS|Run.*Authorization)'\"",
+      "aggregated_output": "/usr/bin/bash: line 1: /usr/bin/rg: Permission denied\n/usr/bin/bash: line 1: /usr/bin/rg: Permission denied\n",
+      "exit_code": 126,
+      "status": "failed"
+    }
+  ],
+  "diagnostic_addendum": null,
+  "trace_path": "results/test-generation-20261114/req2test/tasks/1a813a0c953718dfbf62/trajectory-excerpt.json"
+}
