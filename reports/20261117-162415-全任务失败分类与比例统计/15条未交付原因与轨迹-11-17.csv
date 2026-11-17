@@ -1,0 +1,122 @@
+instance_id,observed_reason,actual_status,agent_final_message,confidence
+coreshop/features/domain/cart/cart_units_taxation_gross.feature:55,Agent表示未能重建所需准备及业务上下文,没有交付接受范围内的文件,"I can’t provide executable step definitions from this workspace’s visible APIs alone: the Background needs to create and connect stores, tax rates and rules, product units, products, and unit prices, but the Behat setup contexts that normally do that have been removed. The target contract exposes only the cart access and total methods; it doesn’t specify the creation APIs needed to build the scenario’s data. Guessing those APIs would risk producing code that doesn’t run against production.
+
+If you can provide the former domain setup context or the relevant factory and model contracts, I can write the scenario-specific definitions under `src/CoreShop/Behat/Context/Domain/`.",Agent自述与未交付结果一致；信息客观不可得尚未证实
+coreshop/features/domain/cart/rules/discount_over_100_percent.feature:17,Agent表示未能重建所需准备及业务上下文,没有交付接受范围内的文件,I haven’t added a step-definition file: I couldn’t establish a reliable setup path for the Background or the cart-rule creation and voucher application from the APIs inspected. Code that only asserts the cart totals—or treats those setup steps as no-ops—would not make this scenario pass against production.,Agent自述与未交付结果一致；信息客观不可得尚未证实
+coreshop/features/domain/filter/load_index_with_raw_results.feature:15,Agent表示未能重建所需准备及业务上下文,没有交付接受范围内的文件,"I couldn’t complete a reliable step definition. The missing domain contexts need to create and persist a store, product, index, columns, and filter using CoreShop’s factories and repositories; I couldn’t establish the necessary service IDs and setup contracts from the retained code. I made no changes.",Agent自述与未交付结果一致；信息客观不可得尚未证实
+coreshop/features/domain/payment_provider/payment_provider_rules/carrier_condition.feature:18,Agent表示未能重建所需准备及业务上下文,没有交付接受范围内的文件,"I wasn’t able to produce a reliable implementation. The required scenario depends on the Background steps to create a store, product, cart, carrier, and payment provider, but their Behat contexts were removed. The production code and target contracts don’t reveal enough fixture setup to recreate those steps safely; making them no-ops would leave the final validity check without the required objects.
+
+No files were changed.",Agent自述与未交付结果一致；信息客观不可得尚未证实
+coreshop/features/domain/product/price_rules/category_condition.feature:29,Agent表示未能重建所需准备及业务上下文,没有交付接受范围内的文件,"`Jacket` must be a real product in the product repository, and the `""Shoes""` category must be a real category; otherwise the production category checker can’t evaluate the condition. Since the removed Behat contexts also supplied the background fixtures, a minimal context with no-op background steps would not make this scenario reliably pass.
+
+I haven’t added code: the retained files don’t show enough fixture setup to recreate those products, categories, store, and currency safely. The needed context should define the background fixture steps, create and persist those objects, build an active `ProductPriceRule` with a `categories` condition configured for `""Shoes""`, then assert that the rule-validation processor returns `false` for `Jacket`.",Agent自述与未交付结果一致；信息客观不可得尚未证实
+coreshop/features/domain/product/price_rules/customer_group_condition.feature:24,Agent表示未能重建所需准备及业务上下文,没有交付接受范围内的文件,"I wasn’t able to produce a reliable, runnable context within the constraints. The scenario needs setup definitions for the store, currency, customer group, customer, login, and product, plus product-price-rule creation and validation. Those definitions were removed, and the remaining repository APIs don’t establish enough of their setup behavior to safely recreate it. No files were changed.",Agent自述与未交付结果一致；信息客观不可得尚未证实
+coreshop/features/domain/shipping/shipping_rules/country_condition.feature:24,Agent表示未能重建所需准备及业务上下文,没有交付接受范围内的文件,"I can’t make the requested scenario pass with only the shipping-rule steps: the feature’s Background also needs step definitions, and those were removed from the repository. A context containing only the three scenario steps would leave the Background undefined.
+
+The scenario steps can be implemented in a context like this, assuming the Background contexts populate `SharedStorageInterface` with the country and carrier, and store the cart in `CompositeCartContext`:
+
+```php
+<?php
+
+declare(strict_types=1);
+
+namespace CoreShop\Behat\Context\Domain\Shipping;
+
+use Behat\Behat\Context\Context;
+use CoreShop\Component\Address\Model\CountryInterface;
+use CoreShop\Component\Order\Context\CompositeCartContext;
+use CoreShop\Component\Rule\Condition\RuleValidationProcessorInterface;
+use CoreShop\Component\Rule\Model\Condition;
+use CoreShop\Component\Shipping\Model\CarrierInterface;
+use CoreShop\Component\Shipping\Model\ShippingRule;
+use CoreShop\Component\Shipping\Model\ShippingRuleInterface;
+use CoreShop\Bundle\TestBundle\Service\SharedStorageInterface;
+use Webmozart\Assert\Assert;
+
+final class ShippingRuleContext implements Context
+{
+    private ?ShippingRuleInterface $shippingRule = null;
+
+    public function __construct(
+        private SharedStorageInterface $sharedStorage,
+        private CompositeCartContext $cartContext,
+        private RuleValidationProcessorInterface $ruleValidationProcessor,
+    ) {
+    }
+
+    /** @Given /^adding a shipping rule named ""([^""]+)""$/ */
+    public function addingAShippingRuleNamed(string $name): void
+    {
+        $rule = new ShippingRule();
+        $rule->setName($name);
+
+        $this->shippingRule = $rule;
+        $this->sharedStorage->set('shipping_rule', $rule);
+    }
+
+    /** @Given /^the shipping rule is active$/ */
+    public function theShippingRuleIsActive(): void
+    {
+        $this->getShippingRule()->activate();
+    }
+
+    /** @Given /^the shipping rule has a condition countries with country ""([^""]+)""$/ */
+    public function theShippingRuleHasACountriesCondition(string $countryName): void
+    {
+        $country = $this->sharedStorage->get('country');
+        Assert::isInstanceOf($country, CountryInterface::class);
+        Assert::same($countryName, $country->getName());
+
+        $condition = (new Condition())
+            ->setType('countries')
+            ->setSort(0)
+            ->setConfiguration(['countries' => [$country->getId()]]);
+
+        $this->getShippingRule()->addCondition($condition);
+    }
+
+    /** @Then /^the shipping rule should be valid for my cart with carrier ""([^""]+)""$/ */
+    public function theShippingRuleShouldBeValidForMyCartWithCarrier(string $carrierName): void
+    {
+        $carrier = $this->sharedStorage->get('carrier');
+        Assert::isInstanceOf($carrier, CarrierInterface::class);
+        Assert::same($carrierName, $carrier->getIdentifier());
+
+        $cart = $this->cartContext->getCart();
+        Assert::notNull($cart->getShippingAddress());
+
+        Assert::true($this->ruleValidationProcessor->isValid($carrier, $this->getShippingRule(), [
+            'carrier' => $carrier,
+            'shippable' => $cart,
+            'address' => $cart->getShippingAddress(),
+        ]));
+    }
+
+    private function getShippingRule(): ShippingRuleInterface
+    {
+        Assert::notNull($this->shippingRule);
+
+        return $this->shippingRule;
+    }
+}
+```
+
+This is not a complete submission for the requested feature: the Background definitions and their fixture/setup helpers are still required, and the exact shared-storage keys for country and carrier must match those helpers.",Agent自述与未交付结果一致；信息客观不可得尚未证实
+coreshop/features/domain/shipping/shipping_rules/postcode_condition.feature:50,Agent表示未能重建所需准备及业务上下文,没有交付接受范围内的文件,"The retained TestBundle does not provide the domain contexts needed by this feature. The Background creates the customer, address, cart and carrier, so implementing only the scenario’s three steps would leave it undefined; replacing those setup steps with no-ops would also leave the rule check without the real cart and address it needs.
+
+I haven’t added code because I can’t establish a reliable setup path from the visible repository. The key check needs the shipping-rule processor wired as `coreshop.shipping_rule.processor`, and the postcode condition is registered under `postcodes`. A complete context would also need to recreate the removed customer, cart, address and carrier setup.",Agent自述与未交付结果一致；信息客观不可得尚未证实
+kapua/qa/integration/src/test/resources/features/account/FindSelfAccount.feature:76,Agent表示未能重建所需准备及业务上下文,没有交付接受范围内的文件,"I couldn’t produce a reliable, executable step-definition implementation in this turn. The retained `BasicSteps` does not define the requested actions, and I didn’t verify the account, user, credential, and permission creation APIs needed to implement them safely. I created the requested package directory, but it contains no step-definition code.",Agent自述与未交付结果一致；信息客观不可得尚未证实
+prestashop/tests/Integration/Behaviour/Features/Scenario/Order/order_address.feature:159,Agent表示未能重建所需准备及业务上下文,没有交付接受范围内的文件,"I can’t honestly return step-definition code that makes this whole scenario pass yet. Its Background requires customer, cart, product, module, currency, country, and employee setup steps, and those definitions were removed too. The retained files do not provide that setup, and I haven’t established a reliable replacement for it. Supplying only carrier and shipping-detail steps would leave the scenario undefined at runtime.
+
+I inspected the retained context helpers and the carrier/order APIs, but made no repository changes. A complete solution needs working definitions for the Background steps as well as the scenario steps.",Agent自述与未交付结果一致；信息客观不可得尚未证实
+prestashop/tests/Integration/Behaviour/Features/Scenario/Order/order_shipping_recalculate.feature:26,Agent表示未能重建所需准备及业务上下文,没有交付接受范围内的文件,"I can’t provide a complete step-definition file that makes this scenario pass from the available interfaces alone. The scenario’s Background requires definitions and fixture setup for the employee, customer, address, three carriers, cart, and products. Those definitions are among the removed code; the retained helpers don’t create those fixtures. The available context also doesn’t identify the original suite’s registered contexts or the carrier/product setup conventions.
+
+The scenario-specific order steps can be implemented with the command and query APIs shown, but that would leave the Background undefined and wouldn’t make the scenario runnable. A partial file would therefore fail Behat’s strict undefined-step check rather than satisfy the request.",Agent自述与未交付结果一致；信息客观不可得尚未证实
+prestashop/tests/Integration/Behaviour/Features/Scenario/Product/Shop/product_management_shop_collection.feature:486,Agent表示未能重建所需准备及业务上下文,没有交付接受范围内的文件,"I can’t provide a complete, passing context from the available information without inventing substantial setup behavior. The scenario’s Background requires definitions for creating languages, attributes, manufacturers, image types, shops, and a product; the scenario then requires product-update and image-upload definitions as well as the duplicate checks. Those definitions were removed, and the retained abstract helpers don’t implement that setup.
+
+The repository does expose the core duplication API: resolve the source product and selected shop IDs, then call `MessengerCommandBus::handle(new DuplicateProductCommand($productId, ShopConstraint::shop($shopId)))`. But that alone won’t make this scenario pass: its setup and every other step still need executable definitions. I’d need the original step implementations or an approved way to reconstruct the missing setup and update flows before I can return a credible, passing implementation.",Agent自述与未交付结果一致；信息客观不可得尚未证实
+prestashop/tests/Integration/Behaviour/Features/Scenario/Product/Shop/shop_management.feature:290,Agent表示未能重建所需准备及业务上下文,没有交付接受范围内的文件,"I can’t provide a credible implementation that makes this scenario pass from the available context alone. It needs definitions for the full Background and scenario, including shop setup, product creation and updates, multishop association changes, and detailed per-shop assertions. The retained helpers provide command/query-bus access, but not the setup or the product steps needed to complete that flow.
+
+I haven’t added a partial step-definition file: matching steps without performing or checking the required behavior would risk a vacuous pass, and strict Behat execution would still fail on the undefined steps.",Agent自述与未交付结果一致；信息客观不可得尚未证实
+prestashop/tests/Integration/Behaviour/Features/Scenario/Product/update_product_type.feature:168,Agent表示未能重建所需准备及业务上下文,没有交付接受范围内的文件,"I couldn’t complete the requested step definitions. The retained helpers provide useful building blocks, but this scenario still needs definitions for its Background steps and for product creation, combination generation and assertions, and stock movements. I haven’t added a file or verified a runnable solution.",Agent自述与未交付结果一致；信息客观不可得尚未证实
+sylius/features/admin/promotion/managing_catalog_promotions/editing_catalog_promotion.feature:140,API测试与表单提示契约不匹配,没有交付接受范围内的文件,"The retained `CatalogPromotionContext` already defines the scenario’s `Given` step. I can’t provide a reliable API step definition for the remaining steps from the available details: this feature’s expected notification is a Symfony form validation message, but the API suite uses HTTP requests and does not expose that form notification. An API implementation would need a different, verified assertion contract.",Agent自述与未交付结果一致；信息客观不可得尚未证实
