@@ -12,7 +12,7 @@ def writecsv(name,rows):
     if not rows:return
     keys=list(dict.fromkeys(k for row in rows for k in row))
     with (OUT/name).open('w') as f:
-        w=csv.DictWriter(f,keys);w.writeheader();w.writerows(rows)
+        w=csv.DictWriter(f,keys,lineterminator='\n');w.writeheader();w.writerows({k:'\n'.join(line.rstrip() for line in str(v).split('\n')) if isinstance(v,str) else v for k,v in row.items()} for row in rows)
 def pct(n,d):return round(n/d*100,2) if d else None
 def clean(text):
     text=re.sub(r'/root/[^\s\]"\')]+','[实验目录]',str(text))
