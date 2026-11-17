@@ -15,6 +15,9 @@ Req2Test 每个项目随机选取 20 条，共 8 个项目，种子为 20261112�
 
 ## 从这里查看
 
+- [导师汇报：数据集特点、复现结果、真实代码与原因分析](reports/20261116-104005-需求驱动测试通俗汇报/导师一页汇报-11-16.md)
+- [325条任务分类及已确认问题比例](reports/20261117-162415-全任务失败分类与比例统计/全任务失败分类与比例报告-11-17.md)
+
 - [完整复现报告与说明](reports/test-generation-20261114/README.md)
 - [官方原始报告、逐任务指标和各项目结果](results/test-generation-20261114/reports/)
 - [325 条任务的生成产物与原始位置索引](results/test-generation-20261114/task-artifacts.json)
@@ -23,7 +26,7 @@ Req2Test 每个项目随机选取 20 条，共 8 个项目，种子为 20261112�
 - [实际运行代码与环境补丁](code/test-generation-20261114/)
 - [版本、预算、任务选择和环境记录](environment/test-generation-20261114/)
 
-## 最新研究动机报告
+## 早期研究动机报告（后续修订见导师汇报）
 
 [从真实商城案例读起](research/problem-discovery-final/科研动机报告-11-16.md) · [文献、证据册与验证计划](research/problem-discovery-final/本轮调研说明-11-16.md)
 
