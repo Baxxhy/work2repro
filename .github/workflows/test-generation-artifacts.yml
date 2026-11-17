@@ -17,3 +17,7 @@ jobs:
         run: python3 -m unittest -v test_generation_outcome.py test_seed_evaluation.py
       - name: Verify empirical research evidence snapshot
         run: python3 scripts/verify_research_publication.py
+      - name: Verify full Req2Test delivery and recovery bookkeeping
+        run: |
+          python3 'reports/20261118-010456-Req2Test全量尾项恢复与统计修正/verify_full_delivery.py'
+          python3 -m unittest discover -s 'reports/20261118-010456-Req2Test全量尾项恢复与统计修正/' -p test_project_status.py
