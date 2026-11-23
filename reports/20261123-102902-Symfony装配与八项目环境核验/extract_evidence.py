@@ -52,7 +52,9 @@ def extract(d):
     return result
 if __name__=='__main__':
     evidence={}
-    for p in sorted(runs.glob('r2t-di-*'+work.name[:15]+'-*')):
+    diagnostic_dirs = list(runs.glob('r2t-di-*'+work.name[:15]+'-*'))
+    original_gold = [runs/('req2test-paired80-gold-1123-'+project) for project in ('sylius', 'coreshop')]
+    for p in sorted(diagnostic_dirs + original_gold):
         r=extract(p)
         if not r:continue
         envs=[]
