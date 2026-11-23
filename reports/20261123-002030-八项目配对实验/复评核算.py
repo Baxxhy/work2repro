@@ -20,7 +20,7 @@ for arm in 'ab':
                 g,y=matches[0]; e=next(z for z in rows(g.with_name('exec.jsonl')) if z['item_id']==i)
                 gold=base/('req2test-paired80-gold-1123-'+project)/project/'th/exec.jsonl'
                 z=next(z for z in rows(gold) if z['item_id']==i)
-                audit.append(dict(arm=arm,project=project,id=i,first=x['engine_outcome'],replay=y['engine_outcome'],official=y['outcome'],gold=z['outcome'],exit_first=orig[i]['exit_codes'],exit_replay=e['exit_codes'],exit_gold=z['exit_codes'],first_file=str(f.with_name('exec/raw')),replay_file=str(g.with_name('exec/raw')),gold_file=str(gold.parent/'exec/raw'),detail=' '.join(e['stdout_tail'].split())[:300]))
+                audit.append(dict(arm=arm,project=project,id=i,first=x['engine_outcome'],replay=y['engine_outcome'],official=y['outcome'],gold=z['outcome'],exit_first=orig[i]['exit_codes'],exit_replay=e['exit_codes'],exit_gold=z['exit_codes'],first_file=str(f.parent/'exec'/'raw'),replay_file=str(g.parent/'exec'/'raw'),gold_file=str(gold.parent/'exec/raw'),detail=' '.join(e['stdout_tail'].split())[:300]))
                 x=y
             assert i not in scored
             scored[i]=x
