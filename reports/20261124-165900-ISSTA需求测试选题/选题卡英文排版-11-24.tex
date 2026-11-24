@@ -1,0 +1,79 @@
+\documentclass[10pt,a4paper]{article}
+\usepackage[margin=1.55cm]{geometry}
+\usepackage{xcolor}
+\usepackage{amsmath,amssymb}
+\usepackage{graphicx}
+\usepackage{enumitem}
+\usepackage{fontspec}
+\usepackage[CJKmath=true]{xeCJK}
+% CJK main font is resolved at COMPILE time on the actual machine, not baked in at
+% generation time, so a .tex generated on one OS still renders on another (the older
+% Python-side probe hardcoded one OS's font name into the file and broke when moved).
+% Walk a cross-platform priority list and use the first font that exists; AutoFakeBold
+% + AutoFakeSlant give bold/italic CJK even on faces that ship no bold/italic cut.
+\newcommand{\setCJKto}[1]{\setCJKmainfont{#1}[AutoFakeBold=true,AutoFakeSlant=0.2]}
+\IfFontExistsTF{Noto Sans CJK SC}{\setCJKto{Noto Sans CJK SC}}{%        % Linux (fonts-noto-cjk); cross-platform if installed
+ \IfFontExistsTF{Source Han Sans SC}{\setCJKto{Source Han Sans SC}}{%   % Adobe 思源黑体; cross-platform
+  \IfFontExistsTF{PingFang SC}{\setCJKto{PingFang SC}}{%               % macOS 10.11+
+   \IfFontExistsTF{Hiragino Sans GB}{\setCJKto{Hiragino Sans GB}}{%    % older macOS
+    \IfFontExistsTF{Microsoft YaHei}{\setCJKto{Microsoft YaHei}}{%     % Windows
+     \IfFontExistsTF{WenQuanYi Micro Hei}{\setCJKto{WenQuanYi Micro Hei}}{% % older Linux
+      \setCJKto{Songti SC}}}}}}}                                       % macOS bottom fallback
+\definecolor{cblue}{HTML}{4C72B0}
+\setlength{\parskip}{3pt}\setlength{\parindent}{0pt}
+\setlist[enumerate]{topsep=2pt,itemsep=2pt,parsep=1pt,partopsep=0pt}
+\setlist[itemize]{topsep=2pt,itemsep=2pt,parsep=1pt,partopsep=0pt}
+% Let prose-embedded inline math break across lines and absorb small overflows, so simple
+% formulas inserted mid-sentence stop running past the right margin.
+\tolerance=1200
+\emergencystretch=2.5em
+\relpenalty=20
+\binoppenalty=40
+\hfuzz=1pt
+\begin{document}
+
+\section*{Which Requirement Distinctions Do Generated Assertions Enforce?}
+\textbf{Method.} Requirement-guided assertion replay
+\section*{Motivation}
+In a review of 44 passing tests from eight Req2Test-Bench projects, eight tests (18.2\%) missed part of the requested behavior across seven projects. Four gaps lay in the assertion, the code that decides whether a result passes. One python-docx test detected all 93 deliberately altered program versions used for scoring. But take the three distinguishable tables in the original Word document, keep its paragraphs in place and return the tables in different orders. The same test accepted all six orders. Only one was in document order. The replay used real table objects read from the file. Whether a released product ever returned a wrong order remains open.
+
+Consider a file search instead. Its two matching files may appear in either order, but each must appear once. The ast-grep test accepted both permitted orders and also accepted the same filename twice. Requiring one exact list would wrongly reject a permitted order. The requirement and sample files already tell us how to label these particular results. Running the existing check on them tells us where its decisions differ.
+
+TestPrism measures whole suites on different implementations. Ma and Eisty already generated checks directly from written requirements. Our question is whether an example that the original check misjudges helps someone edit that check. A useful edit should catch additional independently documented bugs and still accept the allowed alternatives. The product-level comparison remains open.
+\section*{Method}
+\subsection*{Background}
+\begin{enumerate}[leftmargin=*,start=1]
+  \item For each project, record the clause, the test action and the line that receives its result. Count all screened cases, including missing actions and results the test cannot observe. Fourteen of 165 TestSuiteBench specifications explicitly allow order changes. Reserve fresh repositories before tuning. The three replays and the 44 reviewed passes guide development. All eight Req2Test-Bench projects occur in those 44 passes. Keep one row per test, clause and sample input. Save their versions and the lines that perform the action, receive the result and check it. Count distinct tasks separately when one task provides several clauses.
+\par\emph{Why:} A change to the check can only help if the test reaches the behavior and can observe the required difference. New examples from the same project measure within-project replication.
+\end{enumerate}
+\subsection*{Read the rule and replay the check}
+\emph{Find a specific value on which the public clause and the existing test disagree.}
+\begin{enumerate}[leftmargin=*,start=2]
+  \item Give one fixed model the public requirement, test, sample input and permitted interface description. Save its version, prompt and settings. Check the exact words for this scenario and how the returned items can be identified in the sample. Record how often each item must occur, the exact order, or which items must come first. Build one result of the right type. Where several items could go next, choose the earliest in the sample whose required predecessors are in place. Record unclear rules, conflicting order or unreadable identities as unknown. In the Word case the test author had already printed the middle table’s distinctive text. Later inspection also distinguished the first and last tables by their structure.
+\par\emph{Why:} ‘Each file once’, ‘in document order’ and ‘parent before child’ allow different results. The applicable rule and the identity of each item need evidence in this test.
+  \item Use the starting result and sample items. Add at most one same-type item known to be absent. Make up to two insertions, deletions, replacements or swaps, holding other fields fixed. Sort by number of changes, operation names in alphabetical order, positions and item identifiers. Keep the first 64 different raw results, including the starting one, preserving repeated items and their order. Before labeling, use a fingerprint of each case and result to set neutral identifiers and display order. Mark a violation only if the other affected rules still hold. Feed each value to the original code that reads, parses and checks it. Record a missed violation when a forbidden value passes and a mistaken rejection when an allowed value fails at the intended check. Keep uncertain labels, unrelated failures and unsupported returns as unknown. Save the source, edits and failing line. In the original Word file, replay on genuine objects read by python-docx 1.2.0 accepted one correct order and five wrong ones.
+\noindent\emph{A is the old assertion’s verdict on the supplied result and L is the clause’s judgment. A value of 1 means acceptance. D is +1 for a missed violation, \(- 1\) for a rejected lawful result and 0 for agreement. Leave D unknown if either judgment is unknown.}
+\par\noindent{\small\ttfamily [eq~1, raw LaTeX, not typeset] D=A-L,\textbackslash\{\}qquad A,L\textbackslash\{\}in\textbackslash\{\}\{0,1\textbackslash\{\}\}}
+\par\emph{Why:} A wrongly accepted or rejected value is an example another reader can verify. Its occurrence in an actual product is a separate empirical question.
+\end{enumerate}
+\subsection*{Choose a predicate edit}
+\emph{Test whether attaching the right feedback to the right result matters.}
+\begin{enumerate}[leftmargin=*,start=4]
+  \item Both editors see the same requirement, sample, old test, all result rows and old verdicts. Group rows by old verdict, type, fields, length and sequence of change operations. In each group sort agreements and disagreements separately by the whole result’s identifying key. Pair first with first, second with second. One editor gets the real differences, the other gets each pair’s differences exchanged. Subtract the assigned difference from the old verdict to get the answer its edited check should return. Both the editor and its filter use that assignment. Hide the original labels, reasons, starting-result flags, pair identities and examples picked by true error. Leave rows without a partner or a known judgment visible and unscored. In one response propose up to four edits to one condition. Keep an edit only if it reaches the intended check and gives every assigned answer. Choose the fewest edited syntax-tree parts, then the earliest source position and code text order. Keep the old test if none qualify or no targets exist. Once locked, release one example and its starting result for each observed error direction and report pair counts.
+\noindent\emph{For a matched row, the assigned disagreement D* and the old verdict A give the verdict Y that the edited assertion must return. Pairing rows with the same A keeps Y binary.}
+\par\noindent{\small\ttfamily [eq~2, raw LaTeX, not typeset] Y=A-D\textasciicircum{}\{\textbackslash\{\}ast\}}
+\par\emph{Why:} Each editor sees the same examples and feedback values. Swapping which result gets which feedback tests whether the link between a particular result and its error helps.
+\end{enumerate}
+\subsection*{Verify the diagnosis and its effect on products}
+\emph{Establish what the public evidence supports and evaluate a committed edit on independent implementations.}
+\begin{enumerate}[leftmargin=*,start=5]
+  \item Save the diagnosis made from public sources, then repeat on a separate copy with available development run records. Keep the model, time allowance and maximum examples fixed. Two readers independently check the requirement judgments without seeing the group or the old test verdict. Replay the test verdict separately and count confirmed, disputed, unknown and unavailable cases out of all screened cases and out of eligible cases. For every run record, keep the version, sample input and raw result. 【author decision: choose which development versions and runs may provide these records before comparing groups.】 Ask each reader for a source quote and an independent allowed, forbidden or unknown answer. Confirm an error if both support the label and another replay reproduces the old verdict. Count each case with any confirmed error once, flag cases confirmed only with a run record, and retain cases with zero errors in both relevant totals.
+\par\emph{Why:} This measures how many diagnoses public information can support and which ones become possible only after seeing a run.
+  \item Compare the original test, a blind edit, direct translation of the clause, unguided same-type output changes and the two feedback assignments. For direct translation, supply the whole clause, fixture, action, readout, original assertion and the same unlabeled results. Let its editor run its own proposed check with the same call and replay limits and commit one change. Record calls, replays and reader time. Treat an abstention as keeping the original test. Give the blind editor the public materials and ask it to review the existing check. Ask the direct editor to express the stated rule itself, for example comparing the two expected filenames and how often each appears. For unguided changes choose items and positions using their types alone. Save each group’s inputs and chosen change, keeping the sample, action and code that reads the result fixed.
+\par\emph{Why:} If direct translation reaches both product outcomes with the same resources, the evidence gives no added benefit to using examples misjudged by the old test.
+  \item Before scoring, ask reviewers who have seen neither the diagnostic examples nor the edits to record each old bug, its own fix, the rule, sample input and run command. Record which independent implementations actually produced a documented allowed variation under that input. 【author decision: choose the independent archives and which releases or separate implementations count as distinct lawful alternatives.】 Count a bug once per project when the full test fails at the intended check on the buggy version and passes on its own fix. Subtract newly missed bugs from newly caught bugs, divide by all eligible bugs in the project, then average the project rates. Separately count previously passing lawful variants that now fail the intended check, out of all eligible lawful variants. Report unrelated failures, unavailable runs and benchmark mutants linked to a clause separately. A missing panel leaves that outcome open. Only three of 833 archived test--surviving-mutant pairs already have a documented clause link.
+\noindent\emph{In project p, \(G_{p}\) and \(M_{p}\) count gained and lost detections among \(B_{p}\) eligible bugs. \(J_{p}\) counts previously accepted lawful alternatives newly rejected among all \(V_{p}\) eligible alternatives. A zero denominator leaves that endpoint unassessed.}
+\par\noindent{\small\ttfamily [eq~3, raw LaTeX, not typeset] g\_p=\textbackslash\{\}frac\{G\_p-M\_p\}\{B\_p\},\textbackslash\{\}qquad r\_p=\textbackslash\{\}frac\{J\_p\}\{V\_p\}}
+\par\emph{Why:} An edit that fails on both the buggy and fixed version earns zero detections. A project without eligible faults or lawful variants leaves the corresponding question open.
+\end{enumerate}
+\end{document}
