@@ -1,0 +1,14 @@
+{
+  "S3": {
+    "instance_id": "pytest-dev__pytest.68016f0e.raises_group.c28bf36a.lv1",
+    "spec": "This function specifically unescapes the following characters when they are preceded by a backslash: {}()+-.*?^$[]\\s (curly braces, parentheses, plus, minus, dot, asterisk, question mark, caret, dollar sign, square brackets, whitespace, and backslash itself).",
+    "mutant_patch": "diff --git a/src/_pytest/raises.py b/src/_pytest/raises.py\nindex 2a53a5a14..4137a233c 100644\n--- a/src/_pytest/raises.py\n+++ b/src/_pytest/raises.py\n@@ -370,7 +370,7 @@ def is_fully_escaped(s: str) -> bool:\n \n \n def unescape(s: str) -> str:\n-    return re.sub(r\"\\\\([{}()+-.*?^$\\[\\]\\s\\\\])\", r\"\\1\", s)\n+    return re.sub(r\"\\\\([{}()+-.*?^$\\[\\]\\s\\\\|])\", r\"\\1\", s)\n \n \n # These classes conceptually differ from ExceptionInfo in that ExceptionInfo is tied, and\n",
+    "reference": "import re\ndef unescape(s: str) -> str:\n    return re.sub(r\"\\\\([{}()+-.*?^$\\[\\]\\s\\\\])\", r\"\\1\", s)\n"
+  },
+  "S4": {
+    "instance_id": "pytest-dev__pytest.68016f0e.raises_group.c28bf36a.lv1",
+    "spec": "Args:\n    s (str): The escaped regular expression string to unescape.\n\nReturns:\n    str: The unescaped string with backslash escapes removed from metacharacters.",
+    "mutant_patch": "diff --git a/src/_pytest/raises.py b/src/_pytest/raises.py\nindex 2a53a5a14..b8a44b06e 100644\n--- a/src/_pytest/raises.py\n+++ b/src/_pytest/raises.py\n@@ -369,8 +369,8 @@ def is_fully_escaped(s: str) -> bool:\n     )\n \n \n-def unescape(s: str) -> str:\n-    return re.sub(r\"\\\\([{}()+-.*?^$\\[\\]\\s\\\\])\", r\"\\1\", s)\n+def unescape(string: str) -> str:\n+    return re.sub(r\"\\\\([{}()+-.*?^$\\[\\]\\s\\\\])\", r\"\\1\", string)\n \n \n # These classes conceptually differ from ExceptionInfo in that ExceptionInfo is tied, and\n",
+    "reference": "import re\ndef unescape(s: str) -> str:\n    return re.sub(r\"\\\\([{}()+-.*?^$\\[\\]\\s\\\\])\", r\"\\1\", s)\n"
+  }
+}
